@@ -6,16 +6,15 @@
 "use strict";
 
 import React from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Link} from 'react-router';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const Main = (props) => {
     return (
         <MuiThemeProvider>
             <div>
-                <h1>Main Component</h1>
+                <h1>Home Component</h1>
                 <Link to="/login">Login</Link>
-                {props.children}
             </div>
         </MuiThemeProvider>
     );

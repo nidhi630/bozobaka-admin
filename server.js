@@ -1,15 +1,16 @@
 "use strict";
 
-let express = require('express');
+const express = require('express');
+const path = require('path');
 
 // create our app
 let app = express();
 
 app.use(express.static('public'));
 
-// redirect all urls to /
-app.use(function (req, res, next) {
-    res.redirect('/');
+// send all requests to index.html so browserHistory in React Router works
+app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'public/index.html'))
 });
 
 app.listen(3000, function () {

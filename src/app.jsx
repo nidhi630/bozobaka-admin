@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import {Router, Route, browserHistory} from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import Main from './components/Main.jsx';
+import Home from './components/Home.jsx';
 import LoginComponent from './components/LoginComponent.jsx';
 
 // Needed for onTouchTap
@@ -14,9 +14,8 @@ injectTapEventPlugin();
 
 ReactDOM.render(
     <Router history={browserHistory}>
-        <Route path="/" component={Main}>
-            <Route path="/login" component={LoginComponent} />
-        </Route>
+        <Route path="/" component={Home} />
+        <Route path="/login" component={LoginComponent} />
     </Router>
     ,
     document.querySelector("#app")
