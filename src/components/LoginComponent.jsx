@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class LoginComponent extends React.Component {
     constructor(props) {
@@ -11,7 +12,9 @@ class LoginComponent extends React.Component {
     }
     render() {
         return (
-            <h2>Login Component</h2>
+            <MuiThemeProvider>
+                <h2>Login Component</h2>
+            </MuiThemeProvider>
         )
     }
 }
