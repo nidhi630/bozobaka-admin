@@ -4,12 +4,15 @@
 
 "use strict";
 
+const path = require('path');
+const AssetsPlugin = require('assets-webpack-plugin');
+
 let config = {
     devtool: 'cheap-module-source-map',
     entry: './src/app.jsx',
     output: {
         path: __dirname,
-        filename: './public/js/bundle.js'
+        filename: './public/js/bundle-[chunkhash].js'
     },
     resolve: {
         extensions: ['.js', '.jsx']
@@ -26,7 +29,12 @@ let config = {
             }
         ]
     },
-    plugins: []
+    plugins: [
+        new AssetsPlugin({
+            filename: 'manifest.json',
+            prettyPrint: true
+        })
+    ]
 };
 
 module.exports = config;
