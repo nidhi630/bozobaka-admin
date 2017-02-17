@@ -4,7 +4,8 @@
 
 const Constants = {
     TITLE: 'Bozobaka',
-    ACCESS_TOKEN_KEY: 'token'
+    ACCESS_TOKEN_KEY: 'token',
+    ACCESS_TOKEN: undefined
 };
 
 export default Constants;
