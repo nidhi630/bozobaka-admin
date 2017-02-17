@@ -1,22 +1,38 @@
 "use strict";
 
 import React from "react";
-import ReactDOM from "react-dom";
+import {render} from "react-dom";
 import {Router, Route, browserHistory} from "react-router";
 import injectTapEventPlugin from "react-tap-event-plugin";
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
 
-import Main from './components/Main';
-import LoginComponent from './components/LoginComponent';
+import reducers from './reducers/reducers';
+import MainContainer from './containers/MainContainer';
+import LoginService from './services/LoginService';
+import Actions from './actions/actions';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-ReactDOM.render(
+let store = createStore(reducers);
+
+const App = () => {
+    store.dispatch(
+        Actions.toggleLoginStatus(LoginService.checkIfLoggedIn())
+    );
+
+    return (
+        <Provider store={store}>
+            <MainContainer/>
+        </Provider>
+    );
+};
+
+render(
     <Router history={browserHistory}>
-        <Route path="/" component={Main}>
-            <Route path="login" component={LoginComponent} />
-        </Route>
+        <Route path="/" component={App} />
     </Router>
     ,
     document.querySelector("#app")

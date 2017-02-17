@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import {browserHistory} from 'react-router';
 import CircularProgress from 'material-ui/CircularProgress';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -17,10 +18,15 @@ class LoginComponent extends React.Component {
         super(props);
         this.state = {
             checkingLoginState: false,
-            isLoggedIn: false
         };
     }
-
+    componentWillReceiveProps(nextProps) {
+    }
+    componentWillMount() {
+        if (this.props.isLoggedIn) {
+            browserHistory.push('/');
+        }
+    }
     onFormSubmit(event) {
         event.preventDefault();
         this.setState({
@@ -33,6 +39,7 @@ class LoginComponent extends React.Component {
             this.setState({
                 checkingLoginState: false
             });
+            browserHistory.push('/');
             console.log("res");
         }).catch((err) => {
             this.setState({

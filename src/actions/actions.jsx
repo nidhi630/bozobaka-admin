@@ -4,10 +4,12 @@
 
 "use strict";
 
-let Actions = {
+import ActionConstants from './ActionConstants';
+
+const Actions = {
     toggleLoginStatus(newStatus) {
         return {
-            type: 'TOGGLE_LOGIN_STATUS',
+            type: ActionConstants.TOGGLE_LOGIN_STATUS,
             status: newStatus
         };
     }

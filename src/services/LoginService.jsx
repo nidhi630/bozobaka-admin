@@ -6,8 +6,16 @@
 
 import APIEndpoints from './../models/APIEndpoints';
 import APIHelpers from './../Helpers/APIHelpers';
+import Constants from './../models/Constants';
 
-let LoginService = {
+import axios from 'axios';
+
+const LoginService = {
+    checkIfLoggedIn() {
+        let token = window.localStorage.getItem(Constants.ACCESS_TOKEN_KEY);
+        return token ? true : false;
+    },
+
     login(credentials) {
         return new Promise((resolve, reject) => {
             if (credentials.email && credentials.password) {
@@ -26,4 +34,4 @@ let LoginService = {
     }
 };
 
-module.exports = LoginService;
+export default LoginService;
