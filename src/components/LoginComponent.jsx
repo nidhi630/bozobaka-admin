@@ -2,16 +2,15 @@
  created by: Aditya Jha
  date: 13-02-2017
  */
-
-import React from 'react';
-import {browserHistory} from 'react-router';
-import CircularProgress from 'material-ui/CircularProgress';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-
-import Constants from '../models/Constants.jsx';
-import SectionTitle from './SectionTitle';
-import LoginService from './../services/LoginService';
+import React from "react";
+import {browserHistory} from "react-router";
+import CircularProgress from "material-ui/CircularProgress";
+import TextField from "material-ui/TextField";
+import RaisedButton from "material-ui/RaisedButton";
+import Checkbox from "material-ui/Checkbox";
+import Constants from "../models/Constants.jsx";
+import SectionTitle from "./SectionTitle";
+import LoginService from "./../services/LoginService";
 
 class LoginComponent extends React.Component {
     constructor(props) {
@@ -20,30 +19,31 @@ class LoginComponent extends React.Component {
             checkingLoginState: false
         }
     }
+
     componentWillReceiveProps(nextProps) {
     }
+
     componentWillMount() {
         if (this.props.isLoggedIn) {
             browserHistory.push('/');
         }
     }
+
     _login() {
         LoginService.login({
             email: this.refs.email.input.value,
-            password: this.refs.password.input.value
+            password: this.refs.password.input.value,
+            rememberMe: this.refs.rememberMe.state.switched
         }).then((res) => {
-            this.setState({
-                checkingLoginState: false
-            });
-            browserHistory.push('/');
+            this.props.toggleLoader(false);
+            this.props.toggleLoginStatus(true);
             console.log("res");
         }).catch((err) => {
-            this.setState({
-                checkingLoginState: false
-            });
+            this.props.toggleLoader(false);
             console.log(err);
         });
     }
+
     onFormSubmit(event) {
         event.preventDefault();
         this.props.toggleLoader(true);
@@ -54,20 +54,36 @@ class LoginComponent extends React.Component {
     }
 
     render() {
-        let buttonSection = this.props.showLoader ?
-            <CircularProgress /> : <RaisedButton label="Log in" primary={true} type="submit"/>;
-
         return (
             <div>
                 <h1>{Constants.title}</h1>
                 <SectionTitle title="Login"/>
                 <form onSubmit={this.onFormSubmit.bind(this)}>
-                    <TextField ref="email" type="email" hintText="Enter your email" floatingLabelText="Email" required/>
+                    <TextField
+                        defaultValue="a@j.com"
+                        ref="email"
+                        type="email"
+                        hintText="Enter your email"
+                        floatingLabelText="Email"
+                        required/>
                     <br />
-                    <TextField ref="password" title="Minimum 6 characters required" pattern=".{6,}" type="password" hintText="Enter your password" floatingLabelText="Password" required/>
+                    <TextField
+                        defaultValue="111111"
+                        ref="password"
+                        title="Minimum 6 characters required"
+                        pattern=".{6,}"
+                        type="password"
+                        hintText="Enter your password"
+                        floatingLabelText="Password"
+                        required/>
                     <br />
                     <br />
-                    {buttonSection}
+                    <Checkbox
+                        ref="rememberMe"
+                        label="Remember Me"/>
+                    <br />
+                    {this.props.showLoader ? <CircularProgress /> :
+                        <RaisedButton label="Log in" primary={true} type="submit"/>}
                 </form>
             </div>
         );

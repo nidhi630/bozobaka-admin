@@ -4,11 +4,10 @@
 
 "use strict";
 
-import APIEndpoints from './../models/APIEndpoints';
-import APIHelpers from './../Helpers/APIHelpers';
-import Constants from './../models/Constants';
-
-import axios from 'axios';
+import APIEndpoints from "./../models/APIEndpoints";
+import APIHelpers from "./../Helpers/APIHelpers";
+import Constants from "./../models/Constants";
+import axios from "axios";
 
 const LoginService = {
     checkIfLoggedIn() {

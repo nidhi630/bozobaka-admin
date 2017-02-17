@@ -6,7 +6,7 @@
 import ActionConstants from './../actions/ActionConstants';
 
 const GlobalReducer = (state = {}, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case ActionConstants.TOGGLE_LOGIN_STATUS:
             return {
                 ...state,

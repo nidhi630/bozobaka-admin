@@ -32,7 +32,7 @@ const App = () => {
 
 render(
     <Router history={browserHistory}>
-        <Route path="/" component={App} />
+        <Route path="/" component={App}/>
     </Router>
     ,
     document.querySelector("#app")

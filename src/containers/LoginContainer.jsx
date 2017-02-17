@@ -5,10 +5,9 @@
 
 "use strict";
 
-import {connect} from 'react-redux';
-
-import GlobalActions from '../actions/GlobalActions';
-import LoginComponent from './../components/LoginComponent';
+import {connect} from "react-redux";
+import GlobalActions from "../actions/GlobalActions";
+import LoginComponent from "./../components/LoginComponent";
 
 const mapStateToProps = (state) => {
     return {
@@ -20,6 +19,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         toggleLoader: (status) => {
             dispatch(GlobalActions.toggleLoader(status));
+        },
+        toggleLoginStatus: (status) => {
+            dispatch(GlobalActions.toggleLoginStatus(status));
         }
     };
 };
