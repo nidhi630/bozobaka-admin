@@ -7,24 +7,12 @@
 import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import LoginComponent from './LoginComponent';
+import LoginContainer from './../containers/LoginContainer';
 
 const MainComponent = (props) => {
-    let children;
-
-    if (!props.isLoggedIn) {
-        children = (
-            <LoginComponent />
-        )
-    } else {
-        children = (
-            <div>To be done</div>
-        )
-    }
-
     return (
         <MuiThemeProvider>
-            {children}
+            {props.isLoggedIn ? <div>To be done</div> : <LoginContainer/> }
         </MuiThemeProvider>
     )
 };

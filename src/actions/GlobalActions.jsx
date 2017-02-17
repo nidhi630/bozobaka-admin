@@ -6,13 +6,19 @@
 
 import ActionConstants from './ActionConstants';
 
-const Actions = {
+const GlobalActions = {
     toggleLoginStatus(newStatus) {
         return {
             type: ActionConstants.TOGGLE_LOGIN_STATUS,
             status: newStatus
         };
+    },
+    toggleLoader(newStatus) {
+        return {
+            type: ActionConstants.TOGGLE_LOADER,
+            status: newStatus
+        }
     }
 };
 
-export default Actions;
+export default GlobalActions;

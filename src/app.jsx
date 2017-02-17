@@ -10,7 +10,7 @@ import {createStore} from 'redux';
 import reducers from './reducers/reducers';
 import MainContainer from './containers/MainContainer';
 import LoginService from './services/LoginService';
-import Actions from './actions/actions';
+import GlobalActions from './actions/GlobalActions';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -20,7 +20,7 @@ let store = createStore(reducers);
 
 const App = () => {
     store.dispatch(
-        Actions.toggleLoginStatus(LoginService.checkIfLoggedIn())
+        GlobalActions.toggleLoginStatus(LoginService.checkIfLoggedIn())
     );
 
     return (

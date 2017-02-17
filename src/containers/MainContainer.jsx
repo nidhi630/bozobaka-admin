@@ -11,7 +11,7 @@ import MainComponent from '../components/MainComponent';
 
 const mapStateToProps = (state) => {
     return {
-        ...state.UserReducer
+        ...state.GlobalReducer
     }
 };
 

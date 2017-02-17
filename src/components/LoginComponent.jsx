@@ -17,8 +17,8 @@ class LoginComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            checkingLoginState: false,
-        };
+            checkingLoginState: false
+        }
     }
     componentWillReceiveProps(nextProps) {
     }
@@ -27,11 +27,7 @@ class LoginComponent extends React.Component {
             browserHistory.push('/');
         }
     }
-    onFormSubmit(event) {
-        event.preventDefault();
-        this.setState({
-            checkingLoginState: true
-        });
+    _login() {
         LoginService.login({
             email: this.refs.email.input.value,
             password: this.refs.password.input.value
@@ -48,9 +44,17 @@ class LoginComponent extends React.Component {
             console.log(err);
         });
     }
+    onFormSubmit(event) {
+        event.preventDefault();
+        this.props.toggleLoader(true);
+
+        setTimeout(() => {
+            this._login();
+        }, 2000);
+    }
 
     render() {
-        let buttonSection = this.state.checkingLoginState ?
+        let buttonSection = this.props.showLoader ?
             <CircularProgress /> : <RaisedButton label="Log in" primary={true} type="submit"/>;
 
         return (

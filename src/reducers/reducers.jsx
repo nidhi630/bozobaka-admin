@@ -7,9 +7,11 @@
 import { combineReducers } from 'redux'
 
 import UserReducer from './UserReducer';
+import GlobalReducer from  './GlobalReducer';
 
 const reducers = combineReducers({
-    user: UserReducer
+    UserReducer,
+    GlobalReducer
 });
 
 export default reducers;
