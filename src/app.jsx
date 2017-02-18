@@ -8,6 +8,7 @@ import {createStore} from "redux";
 import {Provider} from 'react-redux'
 import reducers from "./reducers/reducers";
 import AppContainer from './containers/AppContainer';
+import AddQuestionContainer from './containers/AddQuestionContainer';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -15,16 +16,14 @@ injectTapEventPlugin();
 
 let store = createStore(reducers);
 
-const App = () => (
-    <Provider store={store}>
-        <AppContainer />
-    </Provider>
-);
-
 render(
-    <Router history={browserHistory}>
-        <Route path="/" component={App}>
-        </Route>
-    </Router>,
+    <Provider store={store}>
+        <Router history={browserHistory}>
+            <Route path="/" component={AppContainer}>
+                <Route path="add-question" component={AddQuestionContainer}/>
+            </Route>
+        </Router>
+    </Provider>
+    ,
     document.querySelector("#app")
 );
