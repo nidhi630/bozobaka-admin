@@ -8,11 +8,12 @@ import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import LoginContainer from './../containers/LoginContainer';
+import DashboardContainer from './../containers/DashboardContainer';
 
 const MainComponent = (props) => {
     return (
         <MuiThemeProvider>
-            {props.isLoggedIn ? <div>To be done</div> : <LoginContainer/> }
+            <h1>Main Component</h1>
         </MuiThemeProvider>
     )
 };
