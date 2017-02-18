@@ -42,7 +42,7 @@ class HeaderComponent extends React.Component {
                     </SelectField>
                 </div>
                 <div>
-                    <RaisedButton label="Logout" onClick={this.props.logout.bind(this)}/>
+                    <RaisedButton label="Logout" primary={true} onClick={this.props.logout.bind(this)}/>
                 </div>
             </div>
         );
