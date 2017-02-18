@@ -6,7 +6,8 @@ import HeaderComponent from './../components/HeaderComponent';
 
 const mapStateToProps = (state) => {
     return {
-        ...state.GlobalReducer
+        ...state.GlobalReducer,
+        ...state.UserReducer
     }
 };
 

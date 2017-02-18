@@ -7,6 +7,8 @@ import ActionConstants from './../actions/ActionConstants';
 
 const UserReducer = (state = {}, action) => {
     switch(action.type) {
+        case ActionConstants.GET_USER_ROLE:
+            return state.userRole;
         default:
             return state;
     }

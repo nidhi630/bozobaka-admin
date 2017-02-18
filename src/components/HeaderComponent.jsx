@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import SectionTitle from './SectionTitle';
+
 class HeaderComponent extends React.Component {
     constructor(props) {
         super(props)
@@ -9,7 +11,9 @@ class HeaderComponent extends React.Component {
 
     render() {
         return (
-            <h1>Header Component</h1>
+            <div>
+                <SectionTitle title={this.props.userRole}/>
+            </div>
         );
     }
 }
