@@ -7,13 +7,20 @@
 import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import LoginContainer from './../containers/LoginContainer';
 import DashboardContainer from './../containers/DashboardContainer';
+import SidebarContainer from './../containers/SidebarContainer';
+import HeaderContainer from './../containers/HeaderContainer';
 
 const MainComponent = (props) => {
     return (
         <MuiThemeProvider>
-            <h1>Main Component</h1>
+            <div>
+                <HeaderContainer />
+                <div>
+                    <SidebarContainer />
+                    {props.children ? props.children : <DashboardContainer/>}
+                </div>
+            </div>
         </MuiThemeProvider>
     )
 };

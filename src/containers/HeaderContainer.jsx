@@ -1,13 +1,8 @@
-/*
- created by aditya on 17-02-2017
- set props for main component
- */
-
 "use strict";
 
 import {connect} from 'react-redux';
 
-import MainComponent from '../components/MainComponent';
+import HeaderComponent from './../components/HeaderComponent';
 
 const mapStateToProps = (state) => {
     return {
@@ -19,9 +14,9 @@ const mapDispatchToProps = (dispatch) => {
     return {};
 };
 
-const MainContainer = connect(
+const HeaderContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(MainComponent);
+)(HeaderComponent);
 
-export default MainContainer;
+export default HeaderContainer;
