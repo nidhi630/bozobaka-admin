@@ -11,7 +11,6 @@ import Checkbox from "material-ui/Checkbox";
 import Constants from "../models/Constants.jsx";
 import SectionTitle from "./SectionTitle";
 import LoginService from "./../services/LoginService";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class LoginComponent extends React.Component {
     constructor(props) {
@@ -56,39 +55,37 @@ class LoginComponent extends React.Component {
 
     render() {
         return (
-            <MuiThemeProvider>
-                <div>
-                    <h1>{Constants.title}</h1>
-                    <SectionTitle title="Login"/>
-                    <form onSubmit={this.onFormSubmit.bind(this)}>
-                        <TextField
-                            defaultValue="a@j.com"
-                            ref="email"
-                            type="email"
-                            hintText="Enter your email"
-                            floatingLabelText="Email"
-                            required/>
-                        <br />
-                        <TextField
-                            defaultValue="111111"
-                            ref="password"
-                            title="Minimum 6 characters required"
-                            pattern=".{6,}"
-                            type="password"
-                            hintText="Enter your password"
-                            floatingLabelText="Password"
-                            required/>
-                        <br />
-                        <br />
-                        <Checkbox
-                            ref="rememberMe"
-                            label="Remember Me"/>
-                        <br />
-                        {this.props.showLoader ? <CircularProgress /> :
-                            <RaisedButton label="Log in" primary={true} type="submit"/>}
-                    </form>
-                </div>
-            </MuiThemeProvider>
+            <div>
+                <h1>{Constants.title}</h1>
+                <SectionTitle title="Login"/>
+                <form onSubmit={this.onFormSubmit.bind(this)}>
+                    <TextField
+                        defaultValue="a@j.com"
+                        ref="email"
+                        type="email"
+                        hintText="Enter your email"
+                        floatingLabelText="Email"
+                        required/>
+                    <br />
+                    <TextField
+                        defaultValue="111111"
+                        ref="password"
+                        title="Minimum 6 characters required"
+                        pattern=".{6,}"
+                        type="password"
+                        hintText="Enter your password"
+                        floatingLabelText="Password"
+                        required/>
+                    <br />
+                    <br />
+                    <Checkbox
+                        ref="rememberMe"
+                        label="Remember Me"/>
+                    <br />
+                    {this.props.showLoader ? <CircularProgress /> :
+                        <RaisedButton label="Log in" primary={true} type="submit"/>}
+                </form>
+            </div>
         );
     }
 }

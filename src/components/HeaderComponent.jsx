@@ -1,18 +1,49 @@
 "use strict";
 
 import React from 'react';
-
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import SectionTitle from './SectionTitle';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class HeaderComponent extends React.Component {
     constructor(props) {
         super(props)
     }
 
+    componentWillMount() {
+        if (!this.props.courses || this.props.courses.length <= 0) {
+            this.courses = [{
+                id: 1,
+                value: 'Course 1'
+            }, {
+                id: 2,
+                value: 'Course 2'
+            }]
+        } else {
+            this.courses = this.props.courses;
+        }
+    }
+
     render() {
         return (
             <div>
-                <SectionTitle title={this.props.userRole}/>
+                <div>
+                    <SectionTitle title={this.props.userRole}/>
+                </div>
+                <div>
+                    <SelectField
+                        ref="selectedCourse"
+                        value={this.props.selectedCourse}
+                        onChange={this.props.handleCourseChange}>
+                        {this.courses.map(
+                            (course) => <MenuItem key={course.id} value={course.id} primaryText={course.value}/>
+                        )}
+                    </SelectField>
+                </div>
+                <div>
+                    <RaisedButton label="Logout" onClick={this.props.logout.bind(this)}/>
+                </div>
             </div>
         );
     }
