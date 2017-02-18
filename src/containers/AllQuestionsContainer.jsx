@@ -1,8 +1,8 @@
 "use strict";
 
 import {connect} from 'react-redux';
-import React from 'react';
-import AddQuestionComponent from './../components/AddQuestionComponent';
+import AllQuestionsComponent from './../components/AllQuestionsComponent';
+
 
 const mapStateToProps = (state) => {
     return {
@@ -16,10 +16,9 @@ const mapDispatchToProps = (dispatch) => {
     return {}
 };
 
-
-const AddQuestionContainer = connect(
+const AllQuestionsContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(AddQuestionComponent);
+)(AllQuestionsComponent);
 
-export default AddQuestionContainer;
+export default AllQuestionsContainer;
