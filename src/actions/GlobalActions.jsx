@@ -18,6 +18,12 @@ const GlobalActions = {
             type: ActionConstants.TOGGLE_LOADER,
             status: newStatus
         }
+    },
+    toggleNavigationDrawer(newStatus) {
+        return {
+            type: ActionConstants.TOGGLE_NAVIGATION_DRAWER,
+            status: newStatus
+        }
     }
 };
 

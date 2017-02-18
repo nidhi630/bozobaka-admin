@@ -3,15 +3,20 @@
 import {connect} from 'react-redux';
 
 import SidebarComponent from './../components/SidebarComponent';
+import GlobalActions from './../actions/GlobalActions';
 
 const mapStateToProps = (state) => {
     return {
-        ...state.GlobalReducer
+        ...state.GlobalReducer,
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {};
+    return {
+        toggleDrawer: (newStatus) => {
+            dispatch(GlobalActions.toggleNavigationDrawer(newStatus));
+        }
+    };
 };
 
 const SidebarContainer = connect(

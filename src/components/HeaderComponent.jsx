@@ -5,6 +5,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import SectionTitle from './SectionTitle';
 import RaisedButton from 'material-ui/RaisedButton';
+import NavigationMenu from 'react-material-icons/icons/navigation/menu';
 
 class HeaderComponent extends React.Component {
     constructor(props) {
@@ -29,6 +30,7 @@ class HeaderComponent extends React.Component {
         return (
             <div>
                 <div>
+                    <NavigationMenu onTouchTap={this.props.toggleNavigationDrawer}/>
                     <SectionTitle title={this.props.userRole}/>
                 </div>
                 <div>

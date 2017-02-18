@@ -5,7 +5,13 @@
 
 import ActionConstants from './../actions/ActionConstants';
 
-const GlobalReducer = (state = {}, action) => {
+let defaultState = {
+    isLoggedIn: false,
+    showLoader: false,
+    openNavigationDrawer: false
+};
+
+const GlobalReducer = (state = defaultState, action) => {
     switch (action.type) {
         case ActionConstants.TOGGLE_LOGIN_STATUS:
             return {
@@ -16,6 +22,11 @@ const GlobalReducer = (state = {}, action) => {
             return {
                 ...state,
                 showLoader: action.status
+            };
+        case ActionConstants.TOGGLE_NAVIGATION_DRAWER:
+            return {
+                ...state,
+                openNavigationDrawer: action.status
             };
         default:
             return state;
