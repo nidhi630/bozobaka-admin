@@ -5,7 +5,11 @@
 
 import ActionConstants from './../actions/ActionConstants';
 
-const UserReducer = (state = {}, action) => {
+const defaultState = {
+    userRole: 'Content Writer'
+};
+
+const UserReducer = (state = defaultState, action) => {
     switch(action.type) {
         case ActionConstants.GET_USER_ROLE:
             return state.userRole;

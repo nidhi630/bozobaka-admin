@@ -1,0 +1,28 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Roboto", sans-serif;
+}
+
+.header-container {
+    background-color: #ccc;
+    padding-left: 10px;
+    padding-right: 10px;
+
+
+.user-role-section > h2{
+    display: inline-block;
+    padding-left: 10px;
+}
+
+.header-actions {
+    padding-top: 12px;
+}}
+
+.user-role-section {
+    padding-top: 15px;
+}
+
+.user-role-section > span {
+    cursor: pointer;
+}
