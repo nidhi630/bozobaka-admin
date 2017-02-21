@@ -8,7 +8,7 @@
     background-color: #ccc;
     padding-left: 10px;
     padding-right: 10px;
-
+}
 
 .user-role-section > h2{
     display: inline-block;
@@ -17,7 +17,7 @@
 
 .header-actions {
     padding-top: 12px;
-}}
+}
 
 .user-role-section {
     padding-top: 15px;
