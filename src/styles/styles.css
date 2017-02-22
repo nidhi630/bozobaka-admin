@@ -26,3 +26,15 @@
 .user-role-section > span {
     cursor: pointer;
 }
+
+.login-container {
+    text-align: center;
+    max-width: 300px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.login-container-inner {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

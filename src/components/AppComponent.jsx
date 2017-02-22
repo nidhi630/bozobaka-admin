@@ -17,7 +17,7 @@ class AppComponent extends React.Component {
     render() {
         return (
             <MuiThemeProvider>
-                {!this.props.isLoggedIn ?
+                {this.props.isLoggedIn ?
                     <div>
                         <HeaderContainer />
                         <div>

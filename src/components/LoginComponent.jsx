@@ -9,15 +9,12 @@ import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
 import Checkbox from "material-ui/Checkbox";
 import Constants from "../models/Constants.jsx";
-import SectionTitle from "./SectionTitle";
 import LoginService from "./../services/LoginService";
+import Paper from "material-ui/Paper";
 
-class LoginComponent extends React.Component {
+export default class LoginComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            checkingLoginState: false
-        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -48,46 +45,59 @@ class LoginComponent extends React.Component {
         event.preventDefault();
         this.props.toggleLoader(true);
 
-        setTimeout(() => {
-            this._login();
-        }, 2000);
+        this._login();
     }
 
     render() {
+        const paperStyle = {
+            paddingTop: 10,
+            paddingBottom: 10
+        };
+
+        const submitButtonStyle = {
+            paddingLeft: 20,
+            paddingRight: 20
+        };
+
         return (
-            <div>
-                <h1>{Constants.title}</h1>
-                <SectionTitle title="Login"/>
-                <form onSubmit={this.onFormSubmit.bind(this)}>
-                    <TextField
-                        defaultValue="a@j.com"
-                        ref="email"
-                        type="email"
-                        hintText="Enter your email"
-                        floatingLabelText="Email"
-                        required/>
+            <div className="login-container">
+                <Paper zDepth={1} rounded={false} style={paperStyle}>
+                    <h1>{Constants.TITLE}</h1>
                     <br />
-                    <TextField
-                        defaultValue="111111"
-                        ref="password"
-                        title="Minimum 6 characters required"
-                        pattern=".{6,}"
-                        type="password"
-                        hintText="Enter your password"
-                        floatingLabelText="Password"
-                        required/>
-                    <br />
-                    <br />
-                    <Checkbox
-                        ref="rememberMe"
-                        label="Remember Me"/>
-                    <br />
-                    {this.props.showLoader ? <CircularProgress /> :
-                        <RaisedButton label="Log in" primary={true} type="submit"/>}
-                </form>
+                    <h2>Login</h2>
+                    <form onSubmit={this.onFormSubmit.bind(this)}>
+                        <TextField
+                            defaultValue="a@j.com"
+                            ref="email"
+                            type="email"
+                            hintText="Enter your email"
+                            floatingLabelText="Email"
+                            required/>
+                        <br />
+                        <TextField
+                            defaultValue="111111"
+                            ref="password"
+                            title="Minimum 6 characters required"
+                            pattern=".{6,}"
+                            type="password"
+                            hintText="Enter your password"
+                            floatingLabelText="Password"
+                            required/>
+                        <br />
+                        <br />
+                        <Checkbox
+                            style={{paddingLeft: 20, textAlign: 'left'}}
+                            ref="rememberMe"
+                            label="Remember Me"/>
+                        <br />
+                        {this.props.showLoader ? <CircularProgress /> :
+                            <div style={submitButtonStyle}>
+                                <RaisedButton label="Log in" primary={true} type="submit" fullWidth={true}/>
+                            </div>
+                        }
+                    </form>
+                </Paper>
             </div>
         );
     }
 }
-
-module.exports = LoginComponent;
