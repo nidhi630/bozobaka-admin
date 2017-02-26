@@ -11,6 +11,7 @@ import AppContainer from './containers/AppContainer';
 import AddQuestionContainer from './containers/AddQuestionContainer';
 import AllQuestionsContainer from './containers/AllQuestionsContainer';
 import DashboardContainer from './containers/DashboardContainer';
+import Urls from "./models/Urls";
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -21,10 +22,10 @@ let store = createStore(reducers);
 render(
     <Provider store={store}>
         <Router history={browserHistory}>
-            <Route path="/" component={AppContainer}>
+            <Route path={Urls.HOME} component={AppContainer}>
                 <IndexRoute component={DashboardContainer}/>
-                <Route path="add-question" component={AddQuestionContainer}/>
-                <Route path="all-questions" component={AllQuestionsContainer}/>
+                <Route path={Urls.ADD_QUESTION} component={AddQuestionContainer}/>
+                <Route path={Urls.ALL_QUESTION} component={AllQuestionsContainer}/>
             </Route>
         </Router>
     </Provider>
