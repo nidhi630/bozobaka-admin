@@ -4,7 +4,6 @@
 
 "use strict";
 
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const path = require("path");
 
 let config = {
@@ -35,7 +34,7 @@ let config = {
                 loader: "style-loader!css-loader?modules",
                 include: /flexboxgrid/,
             }
-        ]
+        ],
     },
     plugins: [
     ]
