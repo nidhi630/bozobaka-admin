@@ -21,9 +21,9 @@ export default class DashboardComponent extends React.Component {
     render() {
         return (
             <Grid>
-                <Row>
+                <Row center="xs">
                     <Col xs={12}>
-                        <h2>Hi, {this.props.username}</h2>
+                        <h3>Hi, {this.props.username}</h3>
                     </Col>
                 </Row>
                 <Row between="sm">

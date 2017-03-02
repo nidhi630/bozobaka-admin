@@ -5,7 +5,7 @@
 }
 
 .header-container {
-    background-color: #ccc;
+    border: 1px solid #b51414;
     padding-left: 10px;
     padding-right: 10px;
 }

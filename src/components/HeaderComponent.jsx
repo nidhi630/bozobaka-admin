@@ -35,7 +35,7 @@ class HeaderComponent extends React.Component {
                     <span>
                         <NavigationMenu onTouchTap={this.props.toggleNavigationDrawer}/>
                     </span>
-                    <h2>{this.props.userRole}</h2>
+                    <h2>BrownBoard</h2>
                 </Col>
                 <Col xs={4}>
                     <SelectField

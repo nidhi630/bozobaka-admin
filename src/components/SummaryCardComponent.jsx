@@ -11,8 +11,8 @@ export default class SummaryCardComponent extends React.Component {
     render() {
         return (
             <Paper zDepth={1} rounded={false}>
-                <h4>{this.props.title}</h4>
-                <p>{this.props.value}</p>
+                <h1>{this.props.value}</h1>
+                <p>{this.props.title}</p>
             </Paper>
         );
     }
