@@ -3,9 +3,9 @@
 import React from "react";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
-import RaisedButton from "material-ui/RaisedButton";
+import FlatButton from 'material-ui/FlatButton';
 import NavigationMenu from "react-material-icons/icons/navigation/menu";
-import {Grid, Row, Col} from "react-flexbox-grid";
+import {Row, Col} from "react-flexbox-grid";
 
 require("style-loader!css-loader!./../styles/styles.css");
 
@@ -31,13 +31,13 @@ class HeaderComponent extends React.Component {
     render() {
         return (
             <Row className="header-container">
-                <Col xs={4} className="user-role-section">
+                <Col xs={12} sm={4} className="user-role-section">
                     <span>
                         <NavigationMenu onTouchTap={this.props.toggleNavigationDrawer}/>
                     </span>
                     <h2>BrownBoard</h2>
                 </Col>
-                <Col xs={4}>
+                <Col xs={12} sm={4}>
                     <SelectField
                         ref="selectedCourse"
                         value={this.props.selectedCourse}
@@ -47,13 +47,10 @@ class HeaderComponent extends React.Component {
                         )}
                     </SelectField>
                 </Col>
-                <Col xs={4} className="header-actions">
+                <Col xs={12} sm={4} className="header-actions">
                     <Row end="xs">
-                        <Col xs={4}>
-                            <RaisedButton label="Logout" primary={true} onClick={this.props.logout.bind(this)}/>
-                        </Col>
-                        <Col xs={4}>
-                            <h3>7417485915</h3>
+                        <Col xs={12}>
+                            <FlatButton label="Logout" onClick={this.props.logout.bind(this)}/>
                         </Col>
                     </Row>
                 </Col>
