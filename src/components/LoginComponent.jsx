@@ -67,7 +67,6 @@ export default class LoginComponent extends React.Component {
                     <h2>Login</h2>
                     <form onSubmit={this.onFormSubmit.bind(this)}>
                         <TextField
-                            defaultValue="a@j.com"
                             ref="email"
                             type="email"
                             hintText="Enter your email"
@@ -75,7 +74,6 @@ export default class LoginComponent extends React.Component {
                             required/>
                         <br />
                         <TextField
-                            defaultValue="111111"
                             ref="password"
                             title="Minimum 6 characters required"
                             pattern=".{6,}"

@@ -13,7 +13,12 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {}
+    return {
+        handleSectionChange: (event, index, value) => {
+            /* TODO: handleSectionChange */
+            console.log("handle section change");
+        }
+    }
 };
 
 

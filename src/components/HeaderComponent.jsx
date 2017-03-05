@@ -9,7 +9,7 @@ import {Row, Col} from "react-flexbox-grid";
 
 require("style-loader!css-loader!./../styles/styles.css");
 
-class HeaderComponent extends React.Component {
+export default class HeaderComponent extends React.Component {
     constructor(props) {
         super(props)
     }
@@ -59,4 +59,6 @@ class HeaderComponent extends React.Component {
     }
 }
 
-export default HeaderComponent;
+HeaderComponent.defaultProps = {
+    selectedCourse: 1
+};

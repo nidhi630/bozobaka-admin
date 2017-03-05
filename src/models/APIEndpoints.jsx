@@ -6,6 +6,6 @@
 "use strict";
 
 module.exports = {
-    apiBase: 'http://www.wholdus.com',
-    login: '/login'
+    apiBase: "http://52.3.133.9:3000",
+    login: "/api/users/login"
 };
