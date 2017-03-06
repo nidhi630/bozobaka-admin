@@ -3,7 +3,7 @@
  */
 "use strict";
 
-var expect = require('expect');
+const expect = require('expect');
 
 it("should run test", function () {
     expect(1).toBe(1);
