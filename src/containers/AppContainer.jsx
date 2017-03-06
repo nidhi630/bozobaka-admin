@@ -6,7 +6,6 @@ import AppComponent from './../components/AppComponent';
 const mapStateToProps = (state) => {
     return {
         ...state.GlobalReducer,
-        ...state.UserReducer,
         ...state.ContentReducer
     }
 };

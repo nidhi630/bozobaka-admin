@@ -4,6 +4,12 @@
     font-family: "Roboto", sans-serif;
 }
 
+.page-loader {
+    height: 100vh;
+    text-align: center;
+    margin-top: 20vh;
+}
+
 .header-container {
     border: 1px solid #b51414;
     padding-left: 10px;

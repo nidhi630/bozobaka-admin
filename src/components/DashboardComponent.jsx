@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Grid, Row, Col} from "react-flexbox-grid";
 import SummaryCardComponent from "./SummaryCardComponent";
 import {browserHistory} from "react-router";
-import Urls from "./../models/Urls";
+import URLs from "./../models/Urls";
 
 export default class DashboardComponent extends React.Component {
     constructor(props) {
@@ -14,7 +14,7 @@ export default class DashboardComponent extends React.Component {
     }
 
     addQuestionButton() {
-        browserHistory.push(Urls.ADD_QUESTION);
+        browserHistory.push(URLs.ADD_QUESTION);
     }
 
     render() {

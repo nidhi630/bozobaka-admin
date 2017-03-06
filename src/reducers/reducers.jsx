@@ -6,12 +6,10 @@
 
 import {combineReducers} from 'redux'
 
-import UserReducer from './UserReducer';
 import GlobalReducer from  './GlobalReducer';
 import ContentReducer from './ContentReducer';
 
 const reducers = combineReducers({
-    UserReducer,
     GlobalReducer,
     ContentReducer
 });

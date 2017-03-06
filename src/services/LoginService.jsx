@@ -36,9 +36,8 @@ const LoginService = {
             if (credentials.email && credentials.password) {
                 let request = APIService.makeRequest({
                     url: APIEndpoints.login,
-                    method: 'post',
+                    method: "post",
                     data: credentials,
-
                 });
                 request.then((res) => {
                     this._loginHelper(res.data);

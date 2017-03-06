@@ -10,7 +10,6 @@ import GlobalActions from './../actions/GlobalActions';
 const mapStateToProps = (state) => {
     return {
         ...state.GlobalReducer,
-        ...state.UserReducer,
         ...state.ContentReducer
     }
 };

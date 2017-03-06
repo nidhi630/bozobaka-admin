@@ -7,7 +7,6 @@ import AddQuestionComponent from './../components/AddQuestionComponent';
 const mapStateToProps = (state) => {
     return {
         ...state.GlobalReducer,
-        ...state.UserReducer,
         ...state.ContentReducer
     }
 };
