@@ -13,6 +13,8 @@ import AllQuestionsContainer from './containers/AllQuestionsContainer';
 import DashboardContainer from './containers/DashboardContainer';
 import Urls from "./models/Urls";
 
+require("style-loader!css-loader!./styles/styles.css");
+
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();

@@ -5,6 +5,8 @@ import Constants from "./../models/Constants";
 import APIEndpoints from "./../models/APIEndpoints";
 
 const ContentService = {
+    courses: [],
+
     fetchCourses(courseID) {
         return new Promise((resolve, reject) => {
             let request = APIService.makeRequest({
@@ -16,11 +18,12 @@ const ContentService = {
             });
 
             request.then((res) => {
-                console.log(res);
+                this.courses = res.data;
                 resolve(res.data);
+                console.log(res.data);
             }).catch((err) => {
                 console.log(err);
-                reject(err.data);
+                reject(err.response);
             });
         });
     }

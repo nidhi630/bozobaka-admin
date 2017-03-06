@@ -5,27 +5,17 @@ import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
 import FlatButton from 'material-ui/FlatButton';
 import NavigationMenu from "react-material-icons/icons/navigation/menu";
-import {Row, Col} from "react-flexbox-grid";
-
-require("style-loader!css-loader!./../styles/styles.css");
+import {Grid, Row, Col} from "react-flexbox-grid";
+import ContentService from "./../services/ContentService";
+import {browserHistory} from "react-router";
 
 export default class HeaderComponent extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
     }
 
     componentWillMount() {
-        if (!this.props.courses || this.props.courses.length <= 0) {
-            this.courses = [{
-                id: 1,
-                value: "Course 1"
-            }, {
-                id: 2,
-                value: "Course 2"
-            }]
-        } else {
-            this.courses = this.props.courses;
-        }
+        this.courses = ContentService.courses;
     }
 
     render() {
@@ -40,10 +30,10 @@ export default class HeaderComponent extends React.Component {
                 <Col xs={12} sm={4}>
                     <SelectField
                         ref="selectedCourse"
-                        value={this.props.selectedCourse}
-                        onChange={this.props.handleCourseChange}>
+                        value={this.props.selectedCourse.id}
+                        onChange={this.handleCourseChange.bind(this)}>
                         {this.courses.map(
-                            (course) => <MenuItem key={course.id} value={course.id} primaryText={course.value}/>
+                            (course) => <MenuItem key={course.id} value={course.id} primaryText={course.name}/>
                         )}
                     </SelectField>
                 </Col>
@@ -56,6 +46,11 @@ export default class HeaderComponent extends React.Component {
                 </Col>
             </Row>
         );
+    }
+
+    handleCourseChange(event, index, value) {
+        browserHistory.push(window.location.pathname + "?selectedCourse=" + value);
+        this.props.handleCourseChange(event, index, value);
     }
 }
 

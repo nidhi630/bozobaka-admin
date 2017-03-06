@@ -11,6 +11,7 @@ import UserService from "./../services/UserService";
 import ContentService from "./../services/ContentService";
 import axios from "axios";
 import Snackbar from 'material-ui/Snackbar';
+import {browserHistory} from "react-router";
 
 class AppComponent extends React.Component {
     constructor(props) {
@@ -21,11 +22,16 @@ class AppComponent extends React.Component {
         };
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps, "next props");
+        this.setSelectedCourse(ContentService.courses, nextProps);
+    }
+
     componentDidMount() {
         if (this.props.isLoggedIn) {
             axios.all([UserService.getUserProfile(), ContentService.fetchCourses()])
                 .then(axios.spread((user, courses) => {
-                    /* TODO: set courses in state */
+                    this.setSelectedCourse(courses, this.props);
                     this.setState({
                         showLoader: false,
                         error: false
@@ -66,6 +72,31 @@ class AppComponent extends React.Component {
                 }
             </MuiThemeProvider>
         )
+    }
+
+    setSelectedCourse(courses, props) {
+        let selectedCourseInUrl = props.location.query.selectedCourse;
+        if (!selectedCourseInUrl) {
+            props.setSelectedCourse(courses[0].id);
+        } else if(!props.selectedCourse) {
+            props.setSelectedCourse(selectedCourseInUrl);
+        } else if (selectedCourseInUrl === this.props.selectedCourse.id) {
+            return;
+        } else {
+            let found = false;
+            for (let i = 0; i < courses.length; i++) {
+                if (courses[i].id === selectedCourseInUrl) {
+                    found = true;
+                    props.setSelectedCourse(courses[i].id);
+                    break;
+                }
+            }
+
+            if (!found) {
+                browserHistory.push(this.props.location.pathname + "?selectedCourse=" + courses[0].id);
+                props.setSelectedCourse(courses[0].id);
+            }
+        }
     }
 }
 
