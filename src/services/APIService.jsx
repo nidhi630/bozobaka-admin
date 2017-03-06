@@ -10,8 +10,8 @@ import APIEndpoints from './../models/APIEndpoints';
 import LoginService from './LoginService';
 
 axios.interceptors.request.use((config) => {
-    config.headers['Authorization'] = LoginService.getAccessToken();
-
+    config.headers["Authorization"] = LoginService.getAccessToken();
+    config.headers["Content-Type"] = "application/json";
     return config;
 });
 
