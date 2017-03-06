@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch) => {
         },
         logout: () => {
             LoginService.logout();
-            dispatch(GlobalActions.toggleLoginStatus(true));
+            dispatch(GlobalActions.toggleLoginStatus(false));
         },
         toggleNavigationDrawer: () => {
             dispatch(GlobalActions.toggleNavigationDrawer(true));
