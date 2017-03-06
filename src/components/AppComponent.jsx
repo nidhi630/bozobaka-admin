@@ -8,17 +8,34 @@ import SidebarContainer from "./../containers/SidebarContainer";
 import HeaderContainer from "./../containers/HeaderContainer";
 import CircularProgress from 'material-ui/CircularProgress';
 import UserService from "./../services/UserService";
+import ContentService from "./../services/ContentService";
+import axios from "axios";
+import Snackbar from 'material-ui/Snackbar';
 
 class AppComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showLoader: this.props.isLoggedIn
+            showLoader: this.props.isLoggedIn,
+            error: false
         };
+    }
 
+    componentDidMount() {
         if (this.props.isLoggedIn) {
-            /* TODO: make api to fetch user details and courses */
-            UserService.getUserProfile();
+            axios.all([UserService.getUserProfile(), ContentService.fetchCourses()])
+                .then(axios.spread((user, courses) => {
+                    /* TODO: set courses in state */
+                    this.setState({
+                        showLoader: false,
+                        error: false
+                    })
+                }))
+                .catch(() => {
+                    this.setState({
+                        error: true
+                    });
+                });
         }
     }
 
@@ -27,7 +44,13 @@ class AppComponent extends React.Component {
             <MuiThemeProvider>
                 {this.state.showLoader ?
                     <div className="page-loader">
-                        <CircularProgress size={80} thickness={5} />
+                        <CircularProgress size={100} thickness={4}/>
+                        <Snackbar
+                            open={this.state.error}
+                            message="Something went wrong"
+                            autoHideDuration={100000}
+                            onRequestClose={this.handleRequestClose}
+                        />
                     </div>
                     :
                     this.props.isLoggedIn ?

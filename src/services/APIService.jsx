@@ -4,10 +4,9 @@
 
 "use strict";
 
-import axios from 'axios';
-
-import APIEndpoints from './../models/APIEndpoints';
-import LoginService from './LoginService';
+import axios from "axios";
+import APIEndpoints from "./../models/APIEndpoints";
+import LoginService from "./LoginService";
 
 axios.interceptors.request.use((config) => {
     config.headers["Authorization"] = LoginService.getAccessToken();

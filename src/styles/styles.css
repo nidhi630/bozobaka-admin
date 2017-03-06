@@ -5,9 +5,9 @@
 }
 
 .page-loader {
-    height: 100vh;
+    height: 60vh;
     text-align: center;
-    margin-top: 20vh;
+    padding-top: 20vh;
 }
 
 .header-container {
@@ -16,7 +16,7 @@
     padding-right: 10px;
 }
 
-.user-role-section > h2{
+.user-role-section > h2 {
     display: inline-block;
     padding-left: 10px;
 }
