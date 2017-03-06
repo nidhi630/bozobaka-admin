@@ -3,9 +3,9 @@
  */
 
 const Constants = {
-    TITLE: 'Bozobaka',
+    TITLE: 'BrownBoard',
     ACCESS_TOKEN_KEY: 'token',
-    ACCESS_TOKEN: undefined
+    USER_ID_KEY: 'userId'
 };
 
 export default Constants;

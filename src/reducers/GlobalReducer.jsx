@@ -3,10 +3,11 @@
  */
 "use strict";
 
-import ActionConstants from './../actions/ActionConstants';
+import ActionConstants from "./../actions/ActionConstants";
+import LoginService from "./../services/LoginService";
 
 let defaultState = {
-    isLoggedIn: false,
+    isLoggedIn: LoginService.checkIfLoggedIn(),
     showLoader: false,
     openNavigationDrawer: false
 };
