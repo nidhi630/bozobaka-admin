@@ -1,9 +1,17 @@
 "use strict";
 
-const Urls = {
-    HOME: "/",
+const URLs = {
+    DASHBOARD: "/",
     ADD_QUESTION: "add-question",
-    ALL_QUESTION: "all-questions"
+    DRAFTS: "drafts",
+    MANAGE: "manage",
+    LIST_QUESTIONS: "list-questions",
+    LIST_THEORY: "list-theory",
+    ADD_THEORY: "add-theory",
+    PUBLISH: "publish",
+    TRASH: "trash",
+    REVIEW_QUESTION: "review-question",
+    MARKED_LATER: "marked-later"
 };
 
-export default Urls;
+export default URLs;

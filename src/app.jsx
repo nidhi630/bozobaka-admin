@@ -22,10 +22,10 @@ let store = createStore(reducers);
 render(
     <Provider store={store}>
         <Router history={browserHistory}>
-            <Route path={Urls.HOME} component={AppContainer}>
+            <Route path={Urls.DASHBOARD} component={AppContainer}>
                 <IndexRoute component={DashboardContainer}/>
                 <Route path={Urls.ADD_QUESTION} component={AddQuestionContainer}/>
-                <Route path={Urls.ALL_QUESTION} component={AllQuestionsContainer}/>
+                <Route path={Urls.LIST_QUESTIONS} component={AllQuestionsContainer}/>
             </Route>
         </Router>
     </Provider>
