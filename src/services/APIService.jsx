@@ -11,7 +11,10 @@ import LoginService from './LoginService';
 
 axios.interceptors.request.use((config) => {
     config.headers["Authorization"] = LoginService.getAccessToken();
-    config.headers["Content-Type"] = "application/json";
+
+    if (!config.headers["Content-Type"]) {
+        config.headers["Content-Type"] = "application/json";
+    }
     return config;
 });
 
