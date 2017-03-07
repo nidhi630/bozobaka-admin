@@ -3,9 +3,9 @@
 import React from "react";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
-import FlatButton from 'material-ui/FlatButton';
+import FlatButton from "material-ui/FlatButton";
 import NavigationMenu from "react-material-icons/icons/navigation/menu";
-import {Grid, Row, Col} from "react-flexbox-grid";
+import {Row, Col} from "react-flexbox-grid";
 import ContentService from "./../services/ContentService";
 import {browserHistory} from "react-router";
 
