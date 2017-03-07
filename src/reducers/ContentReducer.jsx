@@ -3,7 +3,11 @@
 
 import ActionConstants from './../actions/ActionConstants';
 
-const ContentReducer = (state = {}, action) => {
+const defaultState = {
+    selectedCourse: {}
+};
+
+const ContentReducer = (state = defaultState, action) => {
     switch (action.type) {
         case ActionConstants.GET_SELECTED_COURSE:
             return state.selectedCourse;
