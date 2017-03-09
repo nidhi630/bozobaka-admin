@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import AppComponent from './../components/AppComponent';
 import ContentService from "./../services/ContentService";
 import ContentActions from "./../actions/ContentActions";
+import GlobalActions from "./../actions/GlobalActions";
 
 const mapStateToProps = (state) => {
     return {
@@ -22,6 +23,10 @@ const mapDispatchToProps = (dispatch) => {
                     break;
                 }
             }
+        },
+
+        setLoggedInUser: (user) => {
+            dispatch(GlobalActions.setLoggedInUser(user));
         }
     }
 };

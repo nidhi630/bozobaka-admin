@@ -9,6 +9,7 @@ import URLs from "../models/Urls";
 class SidebarComponent extends React.Component {
     constructor(props) {
         super(props);
+
         this.urlConfig = {
             "Dashboard": URLs.DASHBOARD,
             "Add Question": URLs.ADD_QUESTION,
@@ -18,7 +19,7 @@ class SidebarComponent extends React.Component {
             "List Of Theory": URLs.LIST_THEORY,
             "Add Theory": URLs.ADD_THEORY,
             "Publish": URLs.PUBLISH,
-            "Manage Course": URLs.MANAGE,
+            "Manage Course": URLs.MANAGE_COURSE,
             "Trash": URLs.TRASH,
             "Review Of Questions": URLs.REVIEW_QUESTION,
             "Marked For Later": URLs.MARKED_LATER
@@ -33,7 +34,7 @@ class SidebarComponent extends React.Component {
     }
 
     componentWillMount() {
-        this.componentOptions = this.roleOptionsMap.superAdmin;
+        this.componentOptions = this.roleOptionsMap[this.props.loggedInUser.role];
     }
 
     render() {

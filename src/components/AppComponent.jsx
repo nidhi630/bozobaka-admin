@@ -12,6 +12,7 @@ import ContentService from "./../services/ContentService";
 import axios from "axios";
 import Snackbar from 'material-ui/Snackbar';
 import {browserHistory} from "react-router";
+import {Grid} from "react-flexbox-grid";
 
 class AppComponent extends React.Component {
     constructor(props) {
@@ -31,6 +32,7 @@ class AppComponent extends React.Component {
         if (this.props.isLoggedIn) {
             axios.all([UserService.getUserProfile(), ContentService.fetchCourses()])
                 .then(axios.spread((user, courses) => {
+                    this.props.setLoggedInUser(user);
                     this.setSelectedCourse(courses, this.props);
                     this.setState({
                         showLoader: false,
@@ -64,7 +66,9 @@ class AppComponent extends React.Component {
                             <HeaderContainer />
                             <div>
                                 <SidebarContainer />
-                                {this.props.children ? this.props.children : <DashboardContainer/>}
+                                <Grid>
+                                    {this.props.children ? this.props.children : <DashboardContainer/>}
+                                </Grid>
                             </div>
                         </div>
                         :

@@ -9,7 +9,8 @@ import LoginService from "./../services/LoginService";
 let defaultState = {
     isLoggedIn: LoginService.checkIfLoggedIn(),
     showLoader: false,
-    openNavigationDrawer: false
+    openNavigationDrawer: false,
+    loggedInUser: {}
 };
 
 const GlobalReducer = (state = defaultState, action) => {
@@ -28,6 +29,11 @@ const GlobalReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 openNavigationDrawer: action.status
+            };
+        case ActionConstants.SET_LOGGED_IN_USER:
+            return {
+                ...state,
+                loggedInUser: action.loggedInUser
             };
         default:
             return state;

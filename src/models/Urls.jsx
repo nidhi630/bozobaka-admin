@@ -5,6 +5,7 @@ const URLs = {
     ADD_QUESTION: "add-question",
     DRAFTS: "drafts",
     MANAGE: "manage",
+    MANAGE_COURSE: "manage-course",
     LIST_QUESTIONS: "list-questions",
     LIST_THEORY: "list-theory",
     ADD_THEORY: "add-theory",

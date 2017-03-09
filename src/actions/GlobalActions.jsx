@@ -24,6 +24,12 @@ const GlobalActions = {
             type: ActionConstants.TOGGLE_NAVIGATION_DRAWER,
             status: newStatus
         }
+    },
+    setLoggedInUser(user) {
+        return {
+            type: ActionConstants.SET_LOGGED_IN_USER,
+            loggedInUser: user
+        }
     }
 };
 
