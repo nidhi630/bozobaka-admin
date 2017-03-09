@@ -15,8 +15,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setSelectedCourse: (newCourseID) => {
-            let courses = ContentService.courses;
+        updateCourses: (courses) => {
+            dispatch(ContentActions.updateCourses(courses));
+        },
+
+        setSelectedCourse: (courses, newCourseID) => {
             for (let i=0; i<courses.length; i++) {
                 if (courses[i].id === newCourseID) {
                     dispatch(ContentActions.updateSelectedCourse(courses[i]));

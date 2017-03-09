@@ -14,12 +14,9 @@ export default class HeaderComponent extends React.Component {
         super(props);
     }
 
-    componentWillMount() {
-        this.courses = ContentService.courses;
-    }
-
     render() {
-        return (
+
+        let toRender = (
             <Row className="header-container">
                 <Col xs={12} sm={4} className="user-role-section">
                     <span>
@@ -32,7 +29,7 @@ export default class HeaderComponent extends React.Component {
                         ref="selectedCourse"
                         value={this.props.selectedCourse.id}
                         onChange={this.handleCourseChange.bind(this)}>
-                        {this.courses.map(
+                        {this.props.courses.map(
                             (course) => <MenuItem key={course.id} value={course.id} primaryText={course.name}/>
                         )}
                     </SelectField>
@@ -45,12 +42,13 @@ export default class HeaderComponent extends React.Component {
                     </Row>
                 </Col>
             </Row>
-        );
+        )
+        return (toRender);
     }
 
     handleCourseChange(event, index, value) {
         browserHistory.push(window.location.pathname + "?selectedCourse=" + value);
-        this.props.handleCourseChange(event, index, value);
+        this.props.handleCourseChange(this.props.courses, value);
     }
 }
 

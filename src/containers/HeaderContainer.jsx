@@ -17,8 +17,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        handleCourseChange: (event, index, value) => {
-            let courses = ContentService.courses;
+        handleCourseChange: (courses, value) => {
             for (let i=0; i<courses.length; i++) {
                 if (courses[i].id === value) {
                     dispatch(ContentActions.updateSelectedCourse(courses[i]));

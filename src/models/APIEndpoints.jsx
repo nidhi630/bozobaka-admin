@@ -9,5 +9,6 @@ module.exports = {
     apiBase: "http://52.3.133.9:3000",
     login: "/api/users/login",
     userProfile: "api/profiles",
-    courses: "/api/courses"
+    courses: "/api/courses",
+    coursesWithCount: "/api/courses/withCount"
 };

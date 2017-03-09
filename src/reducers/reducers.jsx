@@ -4,10 +4,10 @@
 
 "use strict";
 
-import {combineReducers} from 'redux'
+import {combineReducers} from "redux"
 
-import GlobalReducer from  './GlobalReducer';
-import ContentReducer from './ContentReducer';
+import GlobalReducer from  "./GlobalReducer";
+import ContentReducer from "./ContentReducer";
 
 const reducers = combineReducers({
     GlobalReducer,

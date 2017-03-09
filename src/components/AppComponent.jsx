@@ -25,25 +25,12 @@ class AppComponent extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         console.log(nextProps, "next props");
-        this.setSelectedCourse(ContentService.courses, nextProps);
+        this.setSelectedCourse(nextProps.courses, nextProps);
     }
 
     componentDidMount() {
         if (this.props.isLoggedIn) {
-            axios.all([UserService.getUserProfile(), ContentService.fetchCourses()])
-                .then(axios.spread((user, courses) => {
-                    this.props.setLoggedInUser(user);
-                    this.setSelectedCourse(courses, this.props);
-                    this.setState({
-                        showLoader: false,
-                        error: false
-                    })
-                }))
-                .catch(() => {
-                    this.setState({
-                        error: true
-                    });
-                });
+            this.fetchDataFromServer();
         }
     }
 
@@ -78,12 +65,31 @@ class AppComponent extends React.Component {
         )
     }
 
+    fetchDataFromServer() {
+        axios.all([UserService.getUserProfile(), ContentService.fetchCourses()])
+            .then(axios.spread((user, courses) => {
+                this.props.updateCourses(courses);
+                this.props.setLoggedInUser(user);
+                this.setSelectedCourse(courses, this.props);
+                this.setState({
+                    showLoader: false,
+                    error: false
+                })
+            }))
+            .catch((err) => {
+                console.log(err);
+                this.setState({
+                    error: true
+                });
+            });
+    }
+
     setSelectedCourse(courses, props) {
         let selectedCourseInUrl = props.location.query.selectedCourse;
         if (!selectedCourseInUrl) {
-            props.setSelectedCourse(courses[0].id);
+            props.setSelectedCourse(props.courses, courses[0].id);
         } else if(!props.selectedCourse) {
-            props.setSelectedCourse(selectedCourseInUrl);
+            props.setSelectedCourse(props.courses, selectedCourseInUrl);
         } else if (selectedCourseInUrl === this.props.selectedCourse.id) {
             return;
         } else {
@@ -91,14 +97,14 @@ class AppComponent extends React.Component {
             for (let i = 0; i < courses.length; i++) {
                 if (courses[i].id === selectedCourseInUrl) {
                     found = true;
-                    props.setSelectedCourse(courses[i].id);
+                    props.setSelectedCourse(props.courses, courses[i].id);
                     break;
                 }
             }
 
             if (!found) {
                 browserHistory.push(this.props.location.pathname + "?selectedCourse=" + courses[0].id);
-                props.setSelectedCourse(courses[0].id);
+                props.setSelectedCourse(props.courses, courses[0].id);
             }
         }
     }
