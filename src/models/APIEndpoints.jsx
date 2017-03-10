@@ -10,5 +10,7 @@ module.exports = {
     login: "/api/users/login",
     userProfile: "api/profiles",
     courses: "/api/courses",
-    coursesWithCount: "/api/courses/withCount"
+    coursesWithCount: "/api/courses/withCount",
+    reviewers: "api/profiles/reviewers",
+    contentWriters: "api/profiles/reviewers"
 };

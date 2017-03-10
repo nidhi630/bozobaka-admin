@@ -42,7 +42,7 @@ export default class HeaderComponent extends React.Component {
                     </Row>
                 </Col>
             </Row>
-        )
+        );
         return (toRender);
     }
 
