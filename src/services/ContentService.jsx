@@ -1,7 +1,6 @@
 "use strict";
 
 import APIService from "./APIService";
-import Constants from "./../models/Constants";
 import APIEndpoints from "./../models/APIEndpoints";
 import Course from "./../models/Course";
 import Reviewer from "./../models/Reviewer";
@@ -21,6 +20,24 @@ const ContentService = {
             }).catch((err) => {
                 console.log(err);
                 reject(err.response);
+            });
+        });
+    },
+
+    updateCourse(course, config) {
+        return new Promise((resolve, reject) => {
+            let request = APIService.makeRequest({
+                method: config.method,
+                url: config.method == "put" ? APIEndpoints.courses + "/" + course.id : APIEndpoints.courses,
+                data: course
+            });
+
+            request.then((res) => {
+                console.log(res);
+                resolve(new Course(res.data));
+            }).catch((err) => {
+                console.log(err);
+                reject(err);
             });
         });
     },

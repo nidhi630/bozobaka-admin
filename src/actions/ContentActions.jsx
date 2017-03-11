@@ -16,6 +16,13 @@ const ContentActions = {
             type: ActionConstants.UPDATE_SELECTED_COURSE,
             selectedCourse: newCourse
         }
+    },
+
+    updateCourseData(newCourse) {
+        return {
+            type: ActionConstants.UPDATE_COURSE_DATA,
+            course: newCourse
+        }
     }
 };
 

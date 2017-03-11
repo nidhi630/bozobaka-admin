@@ -44,7 +44,6 @@ export default class LoginComponent extends React.Component {
     onFormSubmit(event) {
         event.preventDefault();
         this.props.toggleLoader(true);
-
         this._login();
     }
 

@@ -21,6 +21,28 @@ const ContentReducer = (state = defaultState, action) => {
                 ...state,
                 selectedCourse: action.selectedCourse
             };
+        case ActionConstants.UPDATE_COURSE_DATA: {
+            for (let i=0; i<state.courses.length; i++) {
+                if (state.courses[i].id === action.course.id) { // course was updated
+                    return {
+                        ...state,
+                        courses: [
+                            state.courses.splice(0, i),
+                            action.course,
+                            state.courses.splice(i+1)
+                        ]
+                    }
+                }
+            }
+            // new course to add
+            return {
+                ...state,
+                courses: [
+                    ...state.courses,
+                    action.course
+                ]
+            }
+        }
         default:
             return state;
     }

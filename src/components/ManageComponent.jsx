@@ -20,32 +20,12 @@ export default class ManageComponent extends React.Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.parseProps(nextProps);
+    }
+
     componentWillMount() {
-        if (this.props.loggedInUser.role === "superAdmin") {
-            this.hasAccess = true;
-        }
-        this.courses = this.props.courses;
-        this.admins = {};
-        this.adminIds = [];
-        for (let i = 0; i < this.courses.length; i++) {
-            let adminId = this.courses[i].adminId;
-            if (!adminId) continue;
-            if (adminId in this.adminIds) {
-                this.admins[adminId].courses.push({
-                    displayName: this.courses[i].displayName,
-                    id: this.courses[i].id
-                });
-            } else {
-                this.adminIds.push(adminId);
-                this.admins[adminId] = {
-                    ...this.courses[i].admin,
-                    courses: [{
-                        displayName: this.courses[i].displayName,
-                        id: this.courses[i].id
-                    }]
-                }
-            }
-        }
+        this.parseProps(this.props);
     }
 
     componentDidMount() {
@@ -101,7 +81,7 @@ export default class ManageComponent extends React.Component {
 
                             <TableBody displayRowCheckbox={false} showRowHover={true}>
                                 {this.courses.map((course, index) => (
-                                    <TableRow key={course.id} onRowClick={this.editCourse.bind(this, index)}>
+                                    <TableRow key={index} onRowClick={this.editCourse.bind(this, index)}>
                                         <TableRowColumn>{course.id}</TableRowColumn>
                                         <TableRowColumn>{course.name}</TableRowColumn>
                                         <TableRowColumn>{course.admin.firstName}</TableRowColumn>
@@ -132,8 +112,8 @@ export default class ManageComponent extends React.Component {
 
                             <TableBody displayRowCheckbox={false} showRowHover={true}>
                                 {
-                                    this.adminIds.map((adminId) => (
-                                        <TableRow key={adminId}>
+                                    this.adminIds.map((adminId, index) => (
+                                        <TableRow key={index}>
                                             <TableRowColumn>{adminId}</TableRowColumn>
                                             <TableRowColumn>{this.admins[adminId].firstName}</TableRowColumn>
                                             <TableRowColumn>{this.getCoursesDisplayText(this.admins[adminId].courses)}</TableRowColumn>
@@ -161,8 +141,8 @@ export default class ManageComponent extends React.Component {
 
                             <TableBody displayRowCheckbox={false} showRowHover={true}>
                                 {
-                                    this.state.reviewers.map((reviewer) => (
-                                        <TableRow key={reviewer.id}>
+                                    this.state.reviewers.map((reviewer, index) => (
+                                        <TableRow key={index}>
                                             <TableRowColumn>{reviewer.id}</TableRowColumn>
                                             <TableRowColumn>{reviewer.firstName}</TableRowColumn>
                                         </TableRow>
@@ -189,8 +169,8 @@ export default class ManageComponent extends React.Component {
 
                             <TableBody displayRowCheckbox={false} showRowHover={true}>
                                 {
-                                    this.state.contentWriters.map((contentWriter) => (
-                                        <TableRow key={contentWriter.id}>
+                                    this.state.contentWriters.map((contentWriter, index) => (
+                                        <TableRow key={index}>
                                             <TableRowColumn>{contentWriter.id}</TableRowColumn>
                                             <TableRowColumn>{contentWriter.firstName}</TableRowColumn>
                                         </TableRow>
@@ -199,17 +179,45 @@ export default class ManageComponent extends React.Component {
                         </Table>
                     </Col>
                 </Row>
-                {this.state.openCourseDialog ?
-                    <EditCourseComponent courseToOpen={this.courseToOpen}
-                                         admins={this.admins}
-                                         adminIds={this.adminIds}
-                                         onDialogClose={this.handleDialogClose.bind(this)}/>
-                    :
-                    <div></div>}
+                {this.state.openCourseDialog ? <EditCourseComponent showDialog={this.state.openCourseDialog}
+                                                                    courseToOpen={this.courseToOpen}
+                                                                    admins={this.admins}
+                                                                    adminIds={this.adminIds}
+                                                                    onDialogClose={this.handleDialogClose.bind(this)}
+                                                                    updateCourse={this.props.updateCourseData.bind(this)}/>
+                    : <div></div>}
             </div>
         );
 
         return toRender;
+    }
+
+    parseProps(props) {
+        if (props.loggedInUser.role === "superAdmin") {
+            this.hasAccess = true;
+        }
+        this.courses = props.courses;
+        this.admins = {};
+        this.adminIds = [];
+        for (let i = 0; i < this.courses.length; i++) {
+            let adminId = this.courses[i].adminId;
+            if (!adminId) continue;
+            if (adminId in this.adminIds) {
+                this.admins[adminId].courses.push({
+                    displayName: this.courses[i].displayName,
+                    id: this.courses[i].id
+                });
+            } else {
+                this.adminIds.push(adminId);
+                this.admins[adminId] = {
+                    ...this.courses[i].admin,
+                    courses: [{
+                        displayName: this.courses[i].displayName,
+                        id: this.courses[i].id
+                    }]
+                }
+            }
+        }
     }
 
     editCourse(courseIndex) {

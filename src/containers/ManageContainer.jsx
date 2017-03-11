@@ -2,7 +2,8 @@
 
 import React from "react";
 import ManageComponent from "./../components/ManageComponent";
-import {connect} from 'react-redux';
+import {connect} from "react-redux";
+import ContentActions from "./../actions/ContentActions";
 
 const mapStateToProps = (state) => {
     return {
@@ -12,9 +13,12 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {}
+    return {
+        updateCourseData: (course) => {
+            dispatch(ContentActions.updateCourseData(course));
+        }
+    }
 };
-
 
 const ManageContainer = connect(
     mapStateToProps,
