@@ -284,6 +284,6 @@ export default class ManageComponent extends React.Component {
         this.setState({
             openCourseDialog: false,
             openReviewerContentWriterDialog: false
-        })
+        });
     }
 }
