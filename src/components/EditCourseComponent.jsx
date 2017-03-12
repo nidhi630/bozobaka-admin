@@ -171,11 +171,11 @@ export default class EditCourseComponent extends React.Component {
                 });
                 this.cancelButton();
             }).catch((err) => {
-                this.setState({
-                    openSnackbar: true,
-                    snackbarMessage: err.message,
-                    requestInProgress: false
-                });
+            this.setState({
+                openSnackbar: true,
+                snackbarMessage: err.message,
+                requestInProgress: false
+            });
         });
     }
 

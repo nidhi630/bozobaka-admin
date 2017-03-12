@@ -15,11 +15,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         updateCourseData: (course, remove = false) => {
-            if (remove) {
-                dispatch(ContentActions.deleteCourseData(course.id));
-            } else {
-                dispatch(ContentActions.updateCourseData(course));
-            }
+            remove ? dispatch(ContentActions.deleteCourseData(course.id)) : dispatch(ContentActions.updateCourseData(course));
         }
     }
 };

@@ -121,7 +121,8 @@ export default class ManageComponent extends React.Component {
                                         <TableRow key={index}>
                                             <TableRowColumn>{adminId}</TableRowColumn>
                                             <TableRowColumn>{this.state.admins[adminId].firstName}</TableRowColumn>
-                                            <TableRowColumn style={{whiteSpace: "normal"}}>{this.getCoursesDisplayText(this.state.admins[adminId].courses)}</TableRowColumn>
+                                            <TableRowColumn
+                                                style={{whiteSpace: "normal"}}>{this.getCoursesDisplayText(this.state.admins[adminId].courses)}</TableRowColumn>
                                         </TableRow>
                                     ))}
                             </TableBody>

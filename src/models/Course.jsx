@@ -17,7 +17,7 @@ class Course {
 
     static parseCourses(courses) {
         let courseObjs = [];
-        for (let i=0; i<courses.length; i++) {
+        for (let i = 0; i < courses.length; i++) {
             courseObjs.push(new Course(courses[i]));
         }
         return courseObjs;

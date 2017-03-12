@@ -7,17 +7,6 @@ const defaultState = {
     courses: []
 };
 
-const helpers = {
-    findCourseById(courses, IdToFind) {
-        for (let i = 0; i < courses.length; i++) {
-            if (courses[i].id === IdToFind) {
-                return i;
-            }
-        }
-        return -1;
-    }
-};
-
 const ContentReducer = (state = defaultState, action) => {
     switch (action.type) {
         case ActionConstants.UPDATE_COURSES:
@@ -51,7 +40,7 @@ const ContentReducer = (state = defaultState, action) => {
             };
         case ActionConstants.DELETE_COURSE_DATA:
             updatedCourses = [];
-            for (let i=0; i<state.courses.length; i++) {
+            for (let i = 0; i < state.courses.length; i++) {
                 if (state.courses[i].id !== action.courseId) {
                     updatedCourses.push(state.courses[i]);
                 }
@@ -60,15 +49,6 @@ const ContentReducer = (state = defaultState, action) => {
                 ...state,
                 courses: updatedCourses
             };
-            // const i = helpers.findCourseById(state.courses, action.courseId);
-            // if (i > -1) {
-            //     return {
-            //         ...state,
-            //         courses: [
-            //             ...state.courses.slice(i, 1)
-            //         ]
-            //     };
-            // } else return state;
         default:
             return state;
     }
