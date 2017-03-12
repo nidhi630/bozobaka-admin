@@ -6,8 +6,8 @@ import {Row, Col} from "react-flexbox-grid";
 import NoAccessErrorComponent from "./NoAccessErrorComponent";
 import RaisedButton from "material-ui/RaisedButton";
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from "material-ui/Table";
-
 import EditCourseComponent from "./EditCourseComponent";
+import EditReviewerContentWriterComponent from "./EditReviewerContentWriterComponent";
 
 export default class ManageComponent extends React.Component {
     constructor(props) {
@@ -18,7 +18,8 @@ export default class ManageComponent extends React.Component {
             admins: {},
             reviewers: [],
             contentWriters: [],
-            openCourseDialog: false
+            openCourseDialog: false,
+            openReviewerContentWriterDialog: false,
         }
     }
 
@@ -137,7 +138,7 @@ export default class ManageComponent extends React.Component {
                         <RaisedButton label="Add" onClick={this.editReviewer.bind(this, null)} primary={true}/>
                     </Col>
                     <Col xs={12}>
-                        <Table fixedFooter={false}>
+                        <Table fixedFooter={false} onCellClick={this.editReviewer.bind(this)}>
                             <TableHeader displaySelectAll={false} adjustForCheckbox={false} enableSelectAll={false}>
                                 <TableRow>
                                     <TableHeaderColumn>ID</TableHeaderColumn>
@@ -165,7 +166,7 @@ export default class ManageComponent extends React.Component {
                         <RaisedButton label="Add" onClick={this.editQuestionWriter.bind(this, null)} primary={true}/>
                     </Col>
                     <Col xs={12}>
-                        <Table fixedFooter={false}>
+                        <Table fixedFooter={false} onCellClick={this.editQuestionWriter.bind(this, null)}>
                             <TableHeader displaySelectAll={false} adjustForCheckbox={false} enableSelectAll={false}>
                                 <TableRow>
                                     <TableHeaderColumn>ID</TableHeaderColumn>
@@ -192,6 +193,15 @@ export default class ManageComponent extends React.Component {
                                                                     onDialogClose={this.handleDialogClose.bind(this)}
                                                                     updateCourse={this.props.updateCourseData.bind(this)}/>
                     : <div></div>}
+                {this.state.openReviewerContentWriterDialog ?
+                    <EditReviewerContentWriterComponent showDialog={this.state.openReviewerContentWriterDialog}
+                                                        userRole={this.state.userRole}
+                                                        onDialogClose={this.handleDialogClose.bind(this)}
+                                                        userToOpen={this.userToOpen}
+                                                        updateReviewer={this.props.updateReviewerData.bind(this)}
+                                                        updateContentWriter={this.props.updateContentWriterData.bind(this)}
+                    /> :
+                    <div></div>}
             </div>
         );
     }
@@ -242,12 +252,21 @@ export default class ManageComponent extends React.Component {
 
     }
 
-    editReviewer(reviewerID) {
-
+    editReviewer(index) {
+        (typeof index === "number") ? this.userToOpen = this.state.contentWriters[index] : this.userToOpen = {};
+        this.setState({
+            openReviewerContentWriterDialog: true,
+            userRole: "reviewer",
+            userToOpen: this.state.reviewers[index]
+        });
     }
 
-    editQuestionWriter(questionWriterID) {
-
+    editQuestionWriter(index) {
+        (typeof index === "number") ? this.userToOpen = this.state.contentWriters[index] : this.userToOpen = {};
+        this.setState({
+            openReviewerContentWriterDialog: true,
+            userRole: "contentWriter",
+        });
     }
 
     getCoursesDisplayText(courses = []) {
@@ -261,10 +280,10 @@ export default class ManageComponent extends React.Component {
         return displayText;
     }
 
-    handleDialogClose(type) {
-        console.log(type);
+    handleDialogClose() {
         this.setState({
-            openCourseDialog: false
+            openCourseDialog: false,
+            openReviewerContentWriterDialog: false
         })
     }
 }

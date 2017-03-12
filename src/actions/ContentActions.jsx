@@ -25,10 +25,38 @@ const ContentActions = {
         }
     },
 
+    updateContentWriterData(contentWriter) {
+        return {
+            type: ActionConstants.UPDATE_CONTENT_WRITER_DATA,
+            contentWriter: contentWriter
+        }
+    },
+
+    updateReviewerData(reviewer) {
+        return {
+            type: ActionConstants.UPDATE_REVIEWER_DATA,
+            reviewer: reviewer
+        }
+    },
+
     deleteCourseData(courseId) {
         return {
             type: ActionConstants.DELETE_COURSE_DATA,
             courseId: courseId
+        }
+    },
+
+    deleteContentWriterData(contentWriterId) {
+        return {
+            type: ActionConstants.DELETE_CONTENT_WRITER_DATA,
+            contentWriterId: contentWriterId,
+        }
+    },
+
+    deleteReviewerData(reviewerId) {
+        return {
+            type: ActionConstants.DELETE_REVIEWER_DATA,
+            reviewerId: reviewerId
         }
     }
 };

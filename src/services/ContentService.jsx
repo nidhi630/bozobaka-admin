@@ -78,6 +78,42 @@ const ContentService = {
                 reject(err.response);
             });
         });
+    },
+
+    updateContentWriters(contentWriter, config) {
+        return new Promise((resolve, reject) => {
+            let request = APIService.makeRequest({
+                method: config.method,
+                //url: APIEndpoints.,
+                data: contentWriter
+            });
+
+            request.then((res) => {
+                console.log(res);
+                config.method !== "delete" ? resolve(new ContentWriter(res.data)) : resolve(res.data);
+            }).catch((err) => {
+                console.log(err);
+                reject(err.response);
+            });
+        });
+    },
+
+    updateReviewers(contentWriter, config) {
+        return new Promise((resolve, reject) => {
+            let request = APIService.makeRequest({
+                method: config.method,
+                //url: APIEndpoints.,
+                data: contentWriter
+            });
+
+            request.then((res) => {
+                console.log(res);
+                config.method !== "delete" ? resolve(new Reviewer(res.data)) : resolve(res.data);
+            }).catch((err) => {
+                console.log(err);
+                reject(err.response);
+            });
+        });
     }
 };
 

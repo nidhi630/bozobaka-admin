@@ -91,7 +91,13 @@ export default class EditCourseComponent extends React.Component {
                             </Col>
                         </Row>
                         <br/>
-                        {this.state.requestInProgress ? <CircularProgress/> :
+                        {this.state.requestInProgress ?
+                            <Row center="xs">
+                                <Col xs={12}>
+                                    <CircularProgress/>
+                                </Col>
+                            </Row>
+                            :
                             <Row>
                                 <Col xs={6}>
                                     {this.props.courseToOpen.id ?
@@ -119,7 +125,7 @@ export default class EditCourseComponent extends React.Component {
         this.setState({
             openDialog: false
         });
-        this.props.onDialogClose("courseDialog");
+        this.props.onDialogClose();
     }
 
     setCourseAdmin(event, index, value) {
