@@ -10,6 +10,7 @@ import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
 import ContentService from "./../services/ContentService";
 import CircularProgress from "material-ui/CircularProgress";
+import Snackbar from "material-ui/Snackbar";
 
 export default class EditCourseComponent extends React.Component {
     constructor(props) {
@@ -18,7 +19,9 @@ export default class EditCourseComponent extends React.Component {
             openDialog: false,
             dialogTitle: this.props.courseToOpen.id ? "Edit Course" : "Add New Course",
             courseAdminId: this.props.courseToOpen.adminId,
-            requestInProgress: false
+            requestInProgress: false,
+            openSnackbar: false,
+            snackbarMessage: ""
         }
     }
 
@@ -30,78 +33,85 @@ export default class EditCourseComponent extends React.Component {
 
     render() {
         return (
-            <Dialog title={this.state.dialogTitle} actions={[]} modal={false} open={this.state.openDialog}>
-                <form onSubmit={this.saveCourse.bind(this)}>
-                    <Row>
-                        <Col xs={12} sm={6}>
-                            <TextField
-                                defaultValue={this.props.courseToOpen.name}
-                                ref="courseName"
-                                title="Connot be empty"
-                                pattern=".{1,}"
-                                type="text"
-                                hintText="Enter Course Name"
-                                floatingLabelText="Course Name"
-                                onChange={this.onCourseNameChange.bind(this)}
-                                required/>
-                            <br/>
-                            <TextField
-                                defaultValue={this.props.courseToOpen.language}
-                                ref="courseLanguage"
-                                title="Connot be empty"
-                                pattern=".{1,}"
-                                type="text"
-                                hintText="Enter Language"
-                                floatingLabelText="Language"
-                                onChange={this.onCourseLanguageChange.bind(this)}
-                                required/>
-                        </Col>
-                        <Col xs={12} sm={6}>
-                            <TextField
-                                defaultValue={this.props.courseToOpen.displayName}
-                                ref="courseDisplayName"
-                                title="Connot be empty"
-                                pattern=".{1,}"
-                                type="text"
-                                floatingLabelFixed={true}
-                                floatingLabelText="Display Name"
-                                required/>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs={12}>
-                            <SelectField
-                                ref="courseAdmin"
-                                floatingLabelText="Admin"
-                                value={this.state.courseAdminId}
-                                onChange={this.setCourseAdmin.bind(this)}>
-                                <MenuItem value={null} primaryText="Assign Later"/>
-                                {this.props.adminIds.map((adminId, index) => (
-                                    <MenuItem key={index} value={adminId}
-                                              primaryText={this.props.admins[adminId].firstName}/>
-                                ))}
-                            </SelectField>
-                        </Col>
-                    </Row>
-                    <br/>
-                    {this.state.requestInProgress ? <CircularProgress/> :
+            <div>
+                <Dialog title={this.state.dialogTitle} actions={[]} modal={false} open={this.state.openDialog}>
+                    <form onSubmit={this.saveCourse.bind(this)}>
                         <Row>
-                            <Col xs={6}>
-                                {this.props.courseToOpen.id ?
-                                    <FlatButton secondary={true} label="Delete"
-                                                onTouchTap={this.deleteCourse.bind(this)}/> :
-                                    <div></div>}
+                            <Col xs={12} sm={6}>
+                                <TextField
+                                    defaultValue={this.props.courseToOpen.name}
+                                    ref="courseName"
+                                    title="Connot be empty"
+                                    pattern=".{1,}"
+                                    type="text"
+                                    hintText="Enter Course Name"
+                                    floatingLabelText="Course Name"
+                                    onChange={this.onCourseNameChange.bind(this)}
+                                    required/>
+                                <br/>
+                                <TextField
+                                    defaultValue={this.props.courseToOpen.language}
+                                    ref="courseLanguage"
+                                    title="Connot be empty"
+                                    pattern=".{1,}"
+                                    type="text"
+                                    hintText="Enter Language"
+                                    floatingLabelText="Language"
+                                    onChange={this.onCourseLanguageChange.bind(this)}
+                                    required/>
                             </Col>
-                            <Col xs={3}>
-                                <FlatButton label="Cancel" onTouchTap={this.cancelButton.bind(this)}/>
-                            </Col>
-                            <Col xs={3}>
-                                <RaisedButton primary={true} label="Save" type="submit"/>
+                            <Col xs={12} sm={6}>
+                                <TextField
+                                    defaultValue={this.props.courseToOpen.displayName}
+                                    ref="courseDisplayName"
+                                    title="Connot be empty"
+                                    pattern=".{1,}"
+                                    type="text"
+                                    floatingLabelFixed={true}
+                                    floatingLabelText="Display Name"
+                                    required/>
+                                <br/>
+                                <br/>
+                                <p>courseID: <b>{this.props.courseToOpen.id}</b></p>
                             </Col>
                         </Row>
-                    }
-                </form>
-            </Dialog>
+                        <Row>
+                            <Col xs={12}>
+                                <SelectField
+                                    ref="courseAdmin"
+                                    floatingLabelText="Admin"
+                                    value={this.state.courseAdminId}
+                                    onChange={this.setCourseAdmin.bind(this)}>
+                                    <MenuItem value={null} primaryText="Assign Later"/>
+                                    {this.props.adminIds.map((adminId, index) => (
+                                        <MenuItem key={index} value={adminId}
+                                                  primaryText={this.props.admins[adminId].firstName}/>
+                                    ))}
+                                </SelectField>
+                            </Col>
+                        </Row>
+                        <br/>
+                        {this.state.requestInProgress ? <CircularProgress/> :
+                            <Row>
+                                <Col xs={6}>
+                                    {this.props.courseToOpen.id ?
+                                        <FlatButton secondary={true} label="Delete"
+                                                    onTouchTap={this.deleteCourse.bind(this)}/> :
+                                        <div></div>}
+                                </Col>
+                                <Col xs={3}>
+                                    <FlatButton label="Cancel" onTouchTap={this.cancelButton.bind(this)}/>
+                                </Col>
+                                <Col xs={3}>
+                                    <RaisedButton primary={true} label="Save" type="submit"/>
+                                </Col>
+                            </Row>
+                        }
+                    </form>
+                </Dialog>
+
+                <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMessage} autoHideDuration={2000}/>
+            </div>
         )
     }
 
@@ -142,34 +152,56 @@ export default class EditCourseComponent extends React.Component {
             adminId: this.refs.courseAdmin.props.value
         };
 
-        let config = {method: "put"};
+        let config = {method: "post"};
 
-        if (!this.props.courseToOpen.id) {
-            config.method = "post";
+        if (this.props.courseToOpen.id) {
+            config.method = "put";
+            course.id = this.props.courseToOpen.id;
         }
 
         this.setState({
-            requestInProgress: true
+            requestInProgress: true,
+            openSnackbar: false
         });
         ContentService.updateCourse(course, config)
             .then((res) => {
-                /* TODO: update course in state */
                 this.props.updateCourse(res);
                 this.setState({
                     requestInProgress: false
                 });
                 this.cancelButton();
             }).catch((err) => {
-            /* TODO: show error */
-            this.setState({
-                requestInProgress: false
-            });
+                this.setState({
+                    openSnackbar: true,
+                    snackbarMessage: err.message,
+                    requestInProgress: false
+                });
         });
     }
 
     deleteCourse() {
         if (this.props.courseToOpen.id) {
-            /* TODO: make delete request through ContentService */
+            this.setState({
+                requestInProgress: true,
+                openSnackbar: false
+            });
+            ContentService.updateCourse(this.props.courseToOpen, {
+                method: "delete"
+            }).then((res) => {
+                console.log(res);
+                this.props.updateCourse(this.props.courseToOpen, true);
+                this.setState({
+                    requestInProgress: false
+                });
+                this.cancelButton();
+            }).catch((err) => {
+                console.log(err);
+                this.setState({
+                    openSnackbar: true,
+                    snackbarMessage: err.message,
+                    requestInProgress: false
+                });
+            });
         }
     }
 }

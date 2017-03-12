@@ -7,6 +7,17 @@ const defaultState = {
     courses: []
 };
 
+const helpers = {
+    findCourseById(courses, IdToFind) {
+        for (let i = 0; i < courses.length; i++) {
+            if (courses[i].id === IdToFind) {
+                return i;
+            }
+        }
+        return -1;
+    }
+};
+
 const ContentReducer = (state = defaultState, action) => {
     switch (action.type) {
         case ActionConstants.UPDATE_COURSES:
@@ -21,28 +32,43 @@ const ContentReducer = (state = defaultState, action) => {
                 ...state,
                 selectedCourse: action.selectedCourse
             };
-        case ActionConstants.UPDATE_COURSE_DATA: {
-            for (let i=0; i<state.courses.length; i++) {
-                if (state.courses[i].id === action.course.id) { // course was updated
+        case ActionConstants.UPDATE_COURSE_DATA:
+            let found = false;
+            let updatedCourses = state.courses.map(item => {
+                if (item.id === action.course.id) {
+                    found = true;
                     return {
-                        ...state,
-                        courses: [
-                            state.courses.splice(0, i),
-                            action.course,
-                            state.courses.splice(i+1)
-                        ]
+                        ...item,
+                        ...action.course
                     }
                 }
-            }
-            // new course to add
+                return item;
+            });
+
             return {
                 ...state,
-                courses: [
-                    ...state.courses,
-                    action.course
-                ]
+                courses: found ? updatedCourses : [...updatedCourses, action.course]
+            };
+        case ActionConstants.DELETE_COURSE_DATA:
+            updatedCourses = [];
+            for (let i=0; i<state.courses.length; i++) {
+                if (state.courses[i].id !== action.courseId) {
+                    updatedCourses.push(state.courses[i]);
+                }
             }
-        }
+            return {
+                ...state,
+                courses: updatedCourses
+            };
+            // const i = helpers.findCourseById(state.courses, action.courseId);
+            // if (i > -1) {
+            //     return {
+            //         ...state,
+            //         courses: [
+            //             ...state.courses.slice(i, 1)
+            //         ]
+            //     };
+            // } else return state;
         default:
             return state;
     }

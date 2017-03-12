@@ -14,6 +14,8 @@ export default class ManageComponent extends React.Component {
         super(props);
         this.hasAccess = false;
         this.state = {
+            adminIds: [],
+            admins: {},
             reviewers: [],
             contentWriters: [],
             openCourseDialog: false
@@ -57,7 +59,18 @@ export default class ManageComponent extends React.Component {
             paddingTop: 10
         };
 
-        let toRender = (
+        const coursesTableRows = this.props.courses.map((course, index) => {
+            return (
+                <TableRow key={index}>
+                    <TableRowColumn>{course.id}</TableRowColumn>
+                    <TableRowColumn>{course.displayName}</TableRowColumn>
+                    <TableRowColumn>{course.adminName}</TableRowColumn>
+                    <TableRowColumn>{course.contentWriterCount}</TableRowColumn>
+                    <TableRowColumn>{course.reviewerCount}</TableRowColumn>
+                </TableRow>
+            )
+        });
+        return (
             <div>
                 <h2>Manage</h2>
                 <Row>
@@ -68,7 +81,7 @@ export default class ManageComponent extends React.Component {
                         <RaisedButton label="Add" onClick={this.editCourse.bind(this, null)} primary={true}/>
                     </Col>
                     <Col xs={12}>
-                        <Table fixedFooter={false}>
+                        <Table fixedFooter={false} onCellClick={this.editCourse.bind(this)}>
                             <TableHeader displaySelectAll={false} adjustForCheckbox={false} enableSelectAll={false}>
                                 <TableRow>
                                     <TableHeaderColumn>ID</TableHeaderColumn>
@@ -80,15 +93,7 @@ export default class ManageComponent extends React.Component {
                             </TableHeader>
 
                             <TableBody displayRowCheckbox={false} showRowHover={true}>
-                                {this.courses.map((course, index) => (
-                                    <TableRow key={index} onRowClick={this.editCourse.bind(this, index)}>
-                                        <TableRowColumn>{course.id}</TableRowColumn>
-                                        <TableRowColumn>{course.name}</TableRowColumn>
-                                        <TableRowColumn>{course.admin.firstName}</TableRowColumn>
-                                        <TableRowColumn>{course.contentWriterCount}</TableRowColumn>
-                                        <TableRowColumn>{course.reviewerCount}</TableRowColumn>
-                                    </TableRow>
-                                ))}
+                                {coursesTableRows}
                             </TableBody>
                         </Table>
                     </Col>
@@ -112,11 +117,11 @@ export default class ManageComponent extends React.Component {
 
                             <TableBody displayRowCheckbox={false} showRowHover={true}>
                                 {
-                                    this.adminIds.map((adminId, index) => (
+                                    this.state.adminIds.map((adminId, index) => (
                                         <TableRow key={index}>
                                             <TableRowColumn>{adminId}</TableRowColumn>
-                                            <TableRowColumn>{this.admins[adminId].firstName}</TableRowColumn>
-                                            <TableRowColumn>{this.getCoursesDisplayText(this.admins[adminId].courses)}</TableRowColumn>
+                                            <TableRowColumn>{this.state.admins[adminId].firstName}</TableRowColumn>
+                                            <TableRowColumn style={{whiteSpace: "normal"}}>{this.getCoursesDisplayText(this.state.admins[adminId].courses)}</TableRowColumn>
                                         </TableRow>
                                     ))}
                             </TableBody>
@@ -181,49 +186,51 @@ export default class ManageComponent extends React.Component {
                 </Row>
                 {this.state.openCourseDialog ? <EditCourseComponent showDialog={this.state.openCourseDialog}
                                                                     courseToOpen={this.courseToOpen}
-                                                                    admins={this.admins}
-                                                                    adminIds={this.adminIds}
+                                                                    admins={this.state.admins}
+                                                                    adminIds={this.state.adminIds}
                                                                     onDialogClose={this.handleDialogClose.bind(this)}
                                                                     updateCourse={this.props.updateCourseData.bind(this)}/>
                     : <div></div>}
             </div>
         );
-
-        return toRender;
     }
 
     parseProps(props) {
         if (props.loggedInUser.role === "superAdmin") {
             this.hasAccess = true;
         }
-        this.courses = props.courses;
-        this.admins = {};
-        this.adminIds = [];
-        for (let i = 0; i < this.courses.length; i++) {
-            let adminId = this.courses[i].adminId;
+        let admins = {};
+        let adminIds = [];
+        for (let i = 0; i < props.courses.length; i++) {
+            let adminId = props.courses[i].adminId;
             if (!adminId) continue;
-            if (adminId in this.adminIds) {
-                this.admins[adminId].courses.push({
-                    displayName: this.courses[i].displayName,
-                    id: this.courses[i].id
+            if (adminId in admins) {
+                admins[adminId].courses.push({
+                    displayName: props.courses[i].displayName,
+                    id: props.courses[i].id
                 });
             } else {
-                this.adminIds.push(adminId);
-                this.admins[adminId] = {
-                    ...this.courses[i].admin,
+                adminIds.push(adminId);
+                admins[adminId] = {
+                    ...props.courses[i].admin,
                     courses: [{
-                        displayName: this.courses[i].displayName,
-                        id: this.courses[i].id
+                        displayName: props.courses[i].displayName,
+                        id: props.courses[i].id
                     }]
                 }
             }
         }
+
+        this.setState({
+            admins,
+            adminIds
+        });
     }
 
     editCourse(courseIndex) {
         this.courseToOpen = {};
-        if (courseIndex) {
-            this.courseToOpen = this.courses[courseIndex];
+        if (typeof courseIndex === 'number') {
+            this.courseToOpen = this.props.courses[courseIndex];
         }
         this.setState({
             openCourseDialog: true,
@@ -245,7 +252,10 @@ export default class ManageComponent extends React.Component {
     getCoursesDisplayText(courses = []) {
         let displayText = "";
         for (let i = 0; i < courses.length; i++) {
-            displayText += courses[i].displayName;
+            displayText += courses[i].displayName + ", ";
+        }
+        if (displayText.endsWith(", ")) {
+            displayText = displayText.substr(0, displayText.length - 2);
         }
         return displayText;
     }

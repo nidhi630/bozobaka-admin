@@ -10,8 +10,9 @@ class Course {
         this.language = c.language;
         this.adminId = c.adminId;
         this.admin = new User(c.admin ? c.admin : {});
-        this.reviewerCount = c.reviewerCount;
-        this.contentWriterCount = c.contentWriterCount;
+        this.adminName = this.admin.firstName;
+        this.reviewerCount = c.reviewerCount ? c.reviewerCount : 0;
+        this.contentWriterCount = c.contentWriterCount ? c.contentWriterCount : 0;
     }
 
     static parseCourses(courses) {

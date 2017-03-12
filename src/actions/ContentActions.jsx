@@ -23,6 +23,13 @@ const ContentActions = {
             type: ActionConstants.UPDATE_COURSE_DATA,
             course: newCourse
         }
+    },
+
+    deleteCourseData(courseId) {
+        return {
+            type: ActionConstants.DELETE_COURSE_DATA,
+            courseId: courseId
+        }
     }
 };
 

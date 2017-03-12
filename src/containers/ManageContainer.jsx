@@ -14,8 +14,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateCourseData: (course) => {
-            dispatch(ContentActions.updateCourseData(course));
+        updateCourseData: (course, remove = false) => {
+            if (remove) {
+                dispatch(ContentActions.deleteCourseData(course.id));
+            } else {
+                dispatch(ContentActions.updateCourseData(course));
+            }
         }
     }
 };

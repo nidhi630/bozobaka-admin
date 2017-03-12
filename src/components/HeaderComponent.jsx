@@ -30,7 +30,7 @@ export default class HeaderComponent extends React.Component {
                         value={this.props.selectedCourse.id}
                         onChange={this.handleCourseChange.bind(this)}>
                         {this.props.courses.map(
-                            (course) => <MenuItem key={course.id} value={course.id} primaryText={course.name}/>
+                            (course, index) => <MenuItem key={index} value={course.id} primaryText={course.displayName}/>
                         )}
                     </SelectField>
                 </Col>

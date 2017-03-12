@@ -28,13 +28,17 @@ const ContentService = {
         return new Promise((resolve, reject) => {
             let request = APIService.makeRequest({
                 method: config.method,
-                url: config.method == "put" ? APIEndpoints.courses + "/" + course.id : APIEndpoints.courses,
+                url: config.method === "post" ? APIEndpoints.courses : APIEndpoints.courses + "/" + course.id,
                 data: course
             });
 
             request.then((res) => {
                 console.log(res);
-                resolve(new Course(res.data));
+                if (config.method !== "delete") {
+                    resolve(new Course(res.data));
+                } else {
+                    resolve(res.data);
+                }
             }).catch((err) => {
                 console.log(err);
                 reject(err);
