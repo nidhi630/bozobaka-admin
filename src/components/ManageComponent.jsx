@@ -166,7 +166,7 @@ export default class ManageComponent extends React.Component {
                         <RaisedButton label="Add" onClick={this.editQuestionWriter.bind(this, null)} primary={true}/>
                     </Col>
                     <Col xs={12}>
-                        <Table fixedFooter={false} onCellClick={this.editQuestionWriter.bind(this, null)}>
+                        <Table fixedFooter={false} onCellClick={this.editQuestionWriter.bind(this)}>
                             <TableHeader displaySelectAll={false} adjustForCheckbox={false} enableSelectAll={false}>
                                 <TableRow>
                                     <TableHeaderColumn>ID</TableHeaderColumn>

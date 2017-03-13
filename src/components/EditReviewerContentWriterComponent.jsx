@@ -20,7 +20,9 @@ export default class EditReviewerContentWriterComponent extends React.Component 
             dialogTitle: this.props.userToOpen.id ? "Edit " + this.props.userRole : "Add New " + this.props.userRole,
             requestInProgress: false,
             openSnackbar: false,
-            snackbarMessage: ""
+            snackbarMessage: "",
+            sections: this.props.userToOpen.sections,
+            allCourses: []
         }
     }
 
@@ -30,10 +32,48 @@ export default class EditReviewerContentWriterComponent extends React.Component 
         })
     }
 
+    componentDidMount() {
+        /* TODO: Fetch list of all courses along with the sections */
+        this.setState({
+            allCourses: [{
+                id: "aaa",
+                displayName: "course 1",
+                sections: [{
+                    id: "aab",
+                    displayName: "section 11",
+                }, {
+                    id: "aac",
+                    displayName: "section 12",
+                }]
+            }, {
+                id: "aba",
+                displayName: "course 2",
+                sections: [{
+                    id: "abb",
+                    displayName: "section 21",
+                }, {
+                    id: "abc",
+                    displayName: "section 22",
+                }]
+            }, {
+                id: "aca",
+                displayName: "course 3",
+                sections: [{
+                    id: "acb",
+                    displayName: "section 31",
+                }, {
+                    id: "acc",
+                    displayName: "section 32",
+                }]
+            }]
+        });
+    }
+
     render() {
         return (
             <div>
-                <Dialog title={this.state.dialogTitle} actions={[]} modal={false} open={this.state.openDialog}>
+                <Dialog title={this.state.dialogTitle} actions={[]} modal={false} open={this.state.openDialog}
+                        autoScrollBodyContent={true}>
                     <form onSubmit={this.saveUser.bind(this)}>
                         <Row>
                             <Col xs={12} sm={6}>
@@ -55,7 +95,6 @@ export default class EditReviewerContentWriterComponent extends React.Component 
                                     required/>
                             </Col>
                         </Row>
-                        <br/>
                         <TextField
                             ref="email"
                             type="email"
@@ -74,6 +113,47 @@ export default class EditReviewerContentWriterComponent extends React.Component 
                             defaultValue={this.props.userToOpen.password ? this.props.userToOpen.password : ""}
                             required/>
                         <br />
+                        <br />
+                        {this.state.allCourses.length > 0 ?
+                            <div>
+                                <Row>
+                                    <Col xs={5}>
+                                        <h3>Course</h3>
+                                    </Col>
+                                    <Col xs={5}>
+                                        <h3>Section</h3>
+                                    </Col>
+                                </Row>
+                                {this.state.sections.map((section, index) => (
+                                    <Row key={index}>
+                                        <Col xs={5}>
+                                            <SelectField
+                                                floatingLabelText="Course"
+                                                value={section.course.id}
+                                                onChange={this.updateCourse.bind(this, index)}>
+                                                {this.state.allCourses.map((course, courseIndex) => (
+                                                    <MenuItem key={courseIndex} value={course.id}
+                                                              primaryText={course.displayName}/>
+                                                ))}
+                                            </SelectField>
+                                        </Col>
+                                        <Col xs={5}>
+                                            <SelectField
+                                                floatingLabelText="Section"
+                                                value={section.id}
+                                                onChange={this.updateSection.bind(this, index)}>
+                                                {this.getMenuItemsForSelectedCourse.bind(this, section.course.id)}
+                                            </SelectField>
+                                        </Col>
+                                        <Col xs={2}>
+                                            <RaisedButton secondary={true} label="remove"
+                                                          onTouchTap={this.removeSection.bind(this, index)}/>
+                                        </Col>
+                                    </Row>
+                                ))}
+                            </div>
+                            :
+                            <div></div>}
                         {this.state.requestInProgress ?
                             <Row center="xs">
                                 <Col xs={12}>
@@ -102,6 +182,16 @@ export default class EditReviewerContentWriterComponent extends React.Component 
                 <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMessage} autoHideDuration={2000}/>
             </div>
         )
+    }
+
+    getMenuItemsForSelectedCourse(selectedCourseId) {
+        return this.state.allCourses.map((course, index) => {
+            if (course.id === selectedCourseId) {
+                return course.sections.map((section, sectionIndex) => (
+                    <MenuItem key={index} primaryText={section.name}/>
+                ));
+            }
+        });
     }
 
     cancelButton() {
@@ -192,6 +282,18 @@ export default class EditReviewerContentWriterComponent extends React.Component 
                 });
             });
         }
+    }
+
+    removeSection(index) {
+        console.log("removeSection from index", index);
+    }
+
+    updateCourse(index, event, key, payload) {
+        console.log("updateCourse from index", payload);
+    }
+
+    updateSection(index, event, key, payload) {
+
     }
 }
 
