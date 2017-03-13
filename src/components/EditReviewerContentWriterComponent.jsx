@@ -70,9 +70,33 @@ export default class EditReviewerContentWriterComponent extends React.Component 
     }
 
     render() {
+        const removeButtonStyle = {
+            marginTop: 20
+        };
+
+        const courseSectionTitleStyle = {
+            marginTop: 10
+        };
+
+        const actions = (
+            <Row>
+                <Col xs={3}>
+                    <FlatButton secondary={true} label="Delete"
+                                onTouchTap={this.deleteUser.bind(this)}
+                                disabled={!this.props.userToOpen.id}/>
+                </Col>
+                <Col xs={6}>
+                    <FlatButton label="Cancel" onTouchTap={this.cancelButton.bind(this)}/>
+                </Col>
+                <Col xs={3}>
+                    <RaisedButton primary={true} label="Save" type="submit"/>
+                </Col>
+            </Row>
+        );
+
         return (
             <div>
-                <Dialog title={this.state.dialogTitle} actions={[]} modal={false} open={this.state.openDialog}
+                <Dialog title={this.state.dialogTitle} actions={actions} modal={false} open={this.state.openDialog}
                         autoScrollBodyContent={true}>
                     <form onSubmit={this.saveUser.bind(this)}>
                         <Row>
@@ -114,16 +138,20 @@ export default class EditReviewerContentWriterComponent extends React.Component 
                             required/>
                         <br />
                         <br />
+                        <Row>
+                            <Col xs={5} style={courseSectionTitleStyle}>
+                                <h3>Course</h3>
+                            </Col>
+                            <Col xs={5} style={courseSectionTitleStyle}>
+                                <h3>Section</h3>
+                            </Col>
+                            <Col xs={2}>
+                                <RaisedButton label="Add" primary={true} onTouchTap={this.addSection.bind(this)}/>
+                            </Col>
+                        </Row>
+                        <br />
                         {this.state.allCourses.length > 0 ?
                             <div>
-                                <Row>
-                                    <Col xs={5}>
-                                        <h3>Course</h3>
-                                    </Col>
-                                    <Col xs={5}>
-                                        <h3>Section</h3>
-                                    </Col>
-                                </Row>
                                 {this.state.sections.map((section, index) => (
                                     <Row key={index}>
                                         <Col xs={5}>
@@ -147,7 +175,8 @@ export default class EditReviewerContentWriterComponent extends React.Component 
                                         </Col>
                                         <Col xs={2}>
                                             <RaisedButton secondary={true} label="remove"
-                                                          onTouchTap={this.removeSection.bind(this, index)}/>
+                                                          onTouchTap={this.removeSection.bind(this, index)}
+                                                          style={removeButtonStyle}/>
                                         </Col>
                                     </Row>
                                 ))}
@@ -156,26 +185,8 @@ export default class EditReviewerContentWriterComponent extends React.Component 
                             <div></div>}
                         {this.state.requestInProgress ?
                             <Row center="xs">
-                                <Col xs={12}>
-                                    <CircularProgress/>
-                                </Col>
-                            </Row>
-                            :
-                            <Row>
-                                <Col xs={6}>
-                                    {this.props.userToOpen.id ?
-                                        <FlatButton secondary={true} label="Delete"
-                                                    onTouchTap={this.deleteUser.bind(this)}/> :
-                                        <div></div>}
-                                </Col>
-                                <Col xs={3}>
-                                    <FlatButton label="Cancel" onTouchTap={this.cancelButton.bind(this)}/>
-                                </Col>
-                                <Col xs={3}>
-                                    <RaisedButton primary={true} label="Save" type="submit"/>
-                                </Col>
-                            </Row>
-                        }
+                                <Col xs={12}><CircularProgress/></Col>
+                            </Row> : <div></div>}
                     </form>
                 </Dialog>
 
@@ -284,8 +295,27 @@ export default class EditReviewerContentWriterComponent extends React.Component 
         }
     }
 
+    addSection() {
+        let updatedSections = []
+        for (let i = 0; i < this.state.sections.length; i++) {
+            updatedSections.push(this.state.sections[i]);
+        }
+        updatedSections.length > 0 ? updatedSections.push(updatedSections[0]) : updatedSections.push({});
+        this.setState({
+            sections: updatedSections
+        });
+    }
+
     removeSection(index) {
         console.log("removeSection from index", index);
+        let updatedSections = [];
+        for (let i = 0; i < this.state.sections.length; i++) {
+            if (i !== index) updatedSections.push(this.state.sections[i]);
+        }
+
+        this.setState({
+            sections: updatedSections
+        });
     }
 
     updateCourse(index, event, key, payload) {
