@@ -257,7 +257,6 @@ export default class ManageComponent extends React.Component {
         this.setState({
             openReviewerContentWriterDialog: true,
             userRole: "reviewer",
-            userToOpen: this.state.reviewers[index]
         });
     }
 

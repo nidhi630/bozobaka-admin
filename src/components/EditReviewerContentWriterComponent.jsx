@@ -34,31 +34,69 @@ export default class EditReviewerContentWriterComponent extends React.Component 
         return (
             <div>
                 <Dialog title={this.state.dialogTitle} actions={[]} modal={false} open={this.state.openDialog}>
-                    <h1>{this.props.userToOpen.toString()}</h1>
-                    <h2>{this.props.userRole}</h2>
-
-                    {this.state.requestInProgress ?
-                        <Row center="xs">
-                            <Col xs={12}>
-                                <CircularProgress/>
-                            </Col>
-                        </Row>
-                        :
+                    <form onSubmit={this.saveUser.bind(this)}>
                         <Row>
-                            <Col xs={6}>
-                                {this.props.userToOpen.id ?
-                                    <FlatButton secondary={true} label="Delete"
-                                                onTouchTap={this.deleteUser.bind(this)}/> :
-                                    <div></div>}
+                            <Col xs={12} sm={6}>
+                                <TextField
+                                    ref="firstName"
+                                    type="text"
+                                    hintText="Enter first name"
+                                    floatingLabelText="First Name"
+                                    defaultValue={this.props.userToOpen.firstName}
+                                    required/>
                             </Col>
-                            <Col xs={3}>
-                                <FlatButton label="Cancel" onTouchTap={this.cancelButton.bind(this)}/>
-                            </Col>
-                            <Col xs={3}>
-                                <RaisedButton primary={true} label="Save" type="submit"/>
+                            <Col xs={12} sm={6}>
+                                <TextField
+                                    ref="lastName"
+                                    type="text"
+                                    hintText="Enter last name"
+                                    floatingLabelText="Last Name"
+                                    defaultValue={this.props.userToOpen.lastName}
+                                    required/>
                             </Col>
                         </Row>
-                    }
+                        <br/>
+                        <TextField
+                            ref="email"
+                            type="email"
+                            hintText="Enter email"
+                            floatingLabelText="Email"
+                            defaultValue={this.props.userToOpen.email ? this.props.userToOpen.email : ""}
+                            required/>
+                        <br />
+                        <TextField
+                            ref="password"
+                            title="Minimum 6 characters required"
+                            pattern=".{6,}"
+                            type="password"
+                            hintText="Enter your password"
+                            floatingLabelText="Password"
+                            defaultValue={this.props.userToOpen.password ? this.props.userToOpen.password : ""}
+                            required/>
+                        <br />
+                        {this.state.requestInProgress ?
+                            <Row center="xs">
+                                <Col xs={12}>
+                                    <CircularProgress/>
+                                </Col>
+                            </Row>
+                            :
+                            <Row>
+                                <Col xs={6}>
+                                    {this.props.userToOpen.id ?
+                                        <FlatButton secondary={true} label="Delete"
+                                                    onTouchTap={this.deleteUser.bind(this)}/> :
+                                        <div></div>}
+                                </Col>
+                                <Col xs={3}>
+                                    <FlatButton label="Cancel" onTouchTap={this.cancelButton.bind(this)}/>
+                                </Col>
+                                <Col xs={3}>
+                                    <RaisedButton primary={true} label="Save" type="submit"/>
+                                </Col>
+                            </Row>
+                        }
+                    </form>
                 </Dialog>
 
                 <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMessage} autoHideDuration={2000}/>
@@ -71,6 +109,55 @@ export default class EditReviewerContentWriterComponent extends React.Component 
             openDialog: false
         });
         this.props.onDialogClose();
+    }
+
+    saveUser(event) {
+        event.preventDefault();
+
+        let user = {
+            firstName: this.refs.firstName.input.value,
+            lastName: this.refs.lastName.input.value,
+            email: this.refs.email.input.value,
+            password: this.refs.password.input.value
+        };
+
+        let config = {method: "post"};
+
+        if (this.props.userToOpen.id) {
+            config.method = "put";
+            user.id = this.props.userToOpen.id;
+        }
+
+        this.setState({
+            requestInProgress: true,
+            openSnackbar: false
+        });
+
+        let request;
+        if (this.props.userRole === "contentWriter") {
+            request = ContentService.updateContentWriters(this.props.userToOpen, config);
+        } else {
+            request = ContentService.updateReviewers(this.props.userToOpen, config);
+        }
+        request.then((res) => {
+            console.log(res);
+            if (this.props.userRole === "contentWriter") {
+                this.props.updateContentWriter(this.props.courseToOpen, false);
+            } else {
+                this.props.updateReviewer(this.props.courseToOpen, false);
+            }
+            this.setState({
+                requestInProgress: false
+            });
+            this.cancelButton();
+        }).catch((err) => {
+            console.log(err);
+            this.setState({
+                openSnackbar: true,
+                snackbarMessage: err.message,
+                requestInProgress: false
+            });
+        });
     }
 
     deleteUser() {
