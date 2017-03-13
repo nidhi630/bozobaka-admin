@@ -32,9 +32,25 @@ export default class EditCourseComponent extends React.Component {
     }
 
     render() {
+        const actions = (
+            <Row>
+                <Col xs={3}>
+                    <FlatButton secondary={true} label="Delete"
+                                onTouchTap={this.deleteCourse.bind(this)}
+                                disabled={!this.props.courseToOpen.id}/>
+                </Col>
+                <Col xs={6}>
+                    <FlatButton label="Cancel" onTouchTap={this.cancelButton.bind(this)}/>
+                </Col>
+                <Col xs={3}>
+                    <RaisedButton primary={true} label="Save" type="submit"/>
+                </Col>
+            </Row>
+        );
+
         return (
             <div>
-                <Dialog title={this.state.dialogTitle} actions={[]} modal={false} open={this.state.openDialog}>
+                <Dialog title={this.state.dialogTitle} actions={actions} modal={false} open={this.state.openDialog}>
                     <form onSubmit={this.saveCourse.bind(this)}>
                         <Row>
                             <Col xs={12} sm={6}>
@@ -93,26 +109,8 @@ export default class EditCourseComponent extends React.Component {
                         <br/>
                         {this.state.requestInProgress ?
                             <Row center="xs">
-                                <Col xs={12}>
-                                    <CircularProgress/>
-                                </Col>
-                            </Row>
-                            :
-                            <Row>
-                                <Col xs={6}>
-                                    {this.props.courseToOpen.id ?
-                                        <FlatButton secondary={true} label="Delete"
-                                                    onTouchTap={this.deleteCourse.bind(this)}/> :
-                                        <div></div>}
-                                </Col>
-                                <Col xs={3}>
-                                    <FlatButton label="Cancel" onTouchTap={this.cancelButton.bind(this)}/>
-                                </Col>
-                                <Col xs={3}>
-                                    <RaisedButton primary={true} label="Save" type="submit"/>
-                                </Col>
-                            </Row>
-                        }
+                                <Col xs={12}><CircularProgress/></Col>
+                            </Row> : <br/>}
                     </form>
                 </Dialog>
 
