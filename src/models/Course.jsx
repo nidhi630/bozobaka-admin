@@ -10,7 +10,7 @@ class Course {
         this.language = c.language;
         this.adminId = c.adminId;
         this.admin = new User(c.admin ? c.admin : {});
-        this.adminName = this.admin.firstName;
+        this.adminName = this.admin.displayName;
         this.reviewerCount = c.reviewerCount ? c.reviewerCount : 0;
         this.contentWriterCount = c.contentWriterCount ? c.contentWriterCount : 0;
     }
