@@ -43,7 +43,7 @@ export default class EditCourseComponent extends React.Component {
                     <FlatButton label="Cancel" onTouchTap={this.cancelButton.bind(this)}/>
                 </Col>
                 <Col xs={3}>
-                    <RaisedButton primary={true} label="Save" type="submit"/>
+                    <RaisedButton primary={true} label="Save" onTouchTap={this.saveCourse.bind(this)}/>
                 </Col>
             </Row>
         );
@@ -88,7 +88,7 @@ export default class EditCourseComponent extends React.Component {
                                     required/>
                                 <br/>
                                 <br/>
-                                <p>courseID: <b>{this.props.courseToOpen.id}</b></p>
+                                {this.props.courseToOpen.id ? <p>courseID: <b>{this.props.courseToOpen.id}</b></p> : ""}
                             </Col>
                         </Row>
                         <Row>
@@ -147,6 +147,10 @@ export default class EditCourseComponent extends React.Component {
         this.generateDisplayName();
     }
 
+    validCourse(course) {
+        return course.name.length > 0 && course.language.length > 0 && course.displayName.length > 0;
+    }
+
     saveCourse(event) {
         event.preventDefault();
         let course = {
@@ -155,6 +159,8 @@ export default class EditCourseComponent extends React.Component {
             displayName: this.refs.courseDisplayName.input.value,
             adminId: this.refs.courseAdmin.props.value
         };
+
+        if (!this.validCourse(course)) return;
 
         let config = {method: "post"};
 

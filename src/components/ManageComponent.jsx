@@ -23,16 +23,16 @@ export default class ManageComponent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.parseProps(nextProps);
     }
 
     componentWillMount() {
-        this.parseProps(this.props);
+        if (this.props.loggedInUser.role === "superAdmin") {
+            this.hasAccess = true;
+        }
     }
 
     componentDidMount() {
-        ContentService.fetchAdmins().
-            then((admins) => {
+        ContentService.fetchAdmins().then((admins) => {
             console.log(admins, ManageComponent.toString());
             this.setState({
                 admins: admins
@@ -69,17 +69,6 @@ export default class ManageComponent extends React.Component {
             paddingTop: 10
         };
 
-        const coursesTableRows = this.props.courses.map((course, index) => {
-            return (
-                <TableRow key={index}>
-                    <TableRowColumn>{course.id}</TableRowColumn>
-                    <TableRowColumn>{course.displayName}</TableRowColumn>
-                    <TableRowColumn>{course.adminName}</TableRowColumn>
-                    <TableRowColumn>{course.contentWriterCount}</TableRowColumn>
-                    <TableRowColumn>{course.reviewerCount}</TableRowColumn>
-                </TableRow>
-            )
-        });
         return (
             <div>
                 <h2>Manage</h2>
@@ -103,7 +92,15 @@ export default class ManageComponent extends React.Component {
                             </TableHeader>
 
                             <TableBody displayRowCheckbox={false} showRowHover={true}>
-                                {coursesTableRows}
+                                {this.props.courses.map((course, index) => (
+                                    <TableRow key={index}>
+                                        <TableRowColumn>{course.id}</TableRowColumn>
+                                        <TableRowColumn>{course.displayName}</TableRowColumn>
+                                        <TableRowColumn>{course.adminName}</TableRowColumn>
+                                        <TableRowColumn>{course.contentWriterCount ? course.contentWriterCount : 0}</TableRowColumn>
+                                        <TableRowColumn>{course.reviewerCount ? course.reviewerCount : 0}</TableRowColumn>
+                                    </TableRow>
+                                ))}
                             </TableBody>
                         </Table>
                     </Col>
@@ -211,38 +208,6 @@ export default class ManageComponent extends React.Component {
                     <div></div>}
             </div>
         );
-    }
-
-    parseProps(props) {
-        if (props.loggedInUser.role === "superAdmin") {
-            this.hasAccess = true;
-        }
-        // let admins = {};
-        // let adminIds = [];
-        // for (let i = 0; i < props.courses.length; i++) {
-        //     let adminId = props.courses[i].adminId;
-        //     if (!adminId) continue;
-        //     if (adminId in admins) {
-        //         admins[adminId].courses.push({
-        //             displayName: props.courses[i].displayName,
-        //             id: props.courses[i].id
-        //         });
-        //     } else {
-        //         adminIds.push(adminId);
-        //         admins[adminId] = {
-        //             ...props.courses[i].admin,
-        //             courses: [{
-        //                 displayName: props.courses[i].displayName,
-        //                 id: props.courses[i].id
-        //             }]
-        //         }
-        //     }
-        // }
-        //
-        // this.setState({
-        //     admins,
-        //     adminIds
-        // });
     }
 
     editCourse(courseIndex) {
