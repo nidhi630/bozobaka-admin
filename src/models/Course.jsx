@@ -8,11 +8,20 @@ class Course {
         this.name = c.name;
         this.displayName = c.displayName ? c.displayName : c.name;
         this.language = c.language;
-        this.adminId = c.adminId;
-        this.admin = new User(c.admin ? c.admin : {});
-        this.adminName = this.admin.displayName;
-        this.reviewerCount = c.reviewerCount ? c.reviewerCount : 0;
-        this.contentWriterCount = c.contentWriterCount ? c.contentWriterCount : 0;
+
+        if (c.adminId) {
+            this.adminId = c.adminId;
+            this.admin = new User(c.admin ? c.admin : {});
+            this.adminName = this.admin.displayName;
+        }
+
+        if (typeof c.reviewerCount === "number") {
+            this.reviewerCount = c.reviewerCount
+        }
+
+        if (typeof c.contentWriterCount === "number") {
+            this.contentWriterCount = c.contentWriterCount;
+        }
     }
 
     static parseCourses(courses) {

@@ -1,6 +1,6 @@
 "use strict";
 
-import React from "react";
+import React, {PropTypes} from "react";
 import Dialog from "material-ui/Dialog";
 import TextField from "material-ui/TextField";
 import FlatButton from "material-ui/FlatButton";
@@ -99,9 +99,9 @@ export default class EditCourseComponent extends React.Component {
                                     value={this.state.courseAdminId}
                                     onChange={this.setCourseAdmin.bind(this)}>
                                     <MenuItem value={null} primaryText="Assign Later"/>
-                                    {this.props.adminIds.map((adminId, index) => (
-                                        <MenuItem key={index} value={adminId}
-                                                  primaryText={this.props.admins[adminId].firstName}/>
+                                    {this.props.admins.map((admin, index) => (
+                                        <MenuItem key={index} value={admin.id}
+                                                  primaryText={admin.displayName}/>
                                     ))}
                                 </SelectField>
                             </Col>
@@ -211,9 +211,8 @@ export default class EditCourseComponent extends React.Component {
 }
 
 EditCourseComponent.propTypes = {
-    courseToOpen: React.PropTypes.object.isRequired,
-    showDialog: React.PropTypes.bool.isRequired,
-    admins: React.PropTypes.object.isRequired,
-    adminIds: React.PropTypes.array.isRequired,
-    onDialogClose: React.PropTypes.func.isRequired
+    courseToOpen: PropTypes.object.isRequired,
+    showDialog: PropTypes.bool.isRequired,
+    admins: PropTypes.array.isRequired,
+    onDialogClose: PropTypes.func.isRequired
 };

@@ -6,7 +6,7 @@ import Section from "./Section";
 export default class Reviewer extends User {
     constructor(data) {
         super(data);
-        this.sections = Section.parseSections(data.sections);
+        this.sections = data.sections ? Section.parseSections(data.sections) : [];
     }
 
     static parseReviewers(reviewers = []) {

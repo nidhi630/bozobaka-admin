@@ -14,8 +14,7 @@ export default class ManageComponent extends React.Component {
         super(props);
         this.hasAccess = false;
         this.state = {
-            adminIds: [],
-            admins: {},
+            admins: [],
             reviewers: [],
             contentWriters: [],
             openCourseDialog: false,
@@ -32,6 +31,16 @@ export default class ManageComponent extends React.Component {
     }
 
     componentDidMount() {
+        ContentService.fetchAdmins().
+            then((admins) => {
+            console.log(admins, ManageComponent.toString());
+            this.setState({
+                admins: admins
+            })
+        }).catch((err) => {
+            console.log(err);
+        });
+
         ContentService.fetchReviewers()
             .then((reviewers) => {
                 this.setState({
@@ -117,15 +126,14 @@ export default class ManageComponent extends React.Component {
                             </TableHeader>
 
                             <TableBody displayRowCheckbox={false} showRowHover={true}>
-                                {
-                                    this.state.adminIds.map((adminId, index) => (
-                                        <TableRow key={index}>
-                                            <TableRowColumn>{adminId}</TableRowColumn>
-                                            <TableRowColumn>{this.state.admins[adminId].firstName}</TableRowColumn>
-                                            <TableRowColumn
-                                                style={{whiteSpace: "normal"}}>{this.getCoursesDisplayText(this.state.admins[adminId].courses)}</TableRowColumn>
-                                        </TableRow>
-                                    ))}
+                                {this.state.admins.map((admin, index) => (
+                                    <TableRow key={index}>
+                                        <TableRowColumn>{admin.id}</TableRowColumn>
+                                        <TableRowColumn>{admin.displayName}</TableRowColumn>
+                                        <TableRowColumn
+                                            style={{whiteSpace: "normal"}}>{this.getCoursesDisplayText(admin.courses)}</TableRowColumn>
+                                    </TableRow>
+                                ))}
                             </TableBody>
                         </Table>
                     </Col>
@@ -189,7 +197,6 @@ export default class ManageComponent extends React.Component {
                 {this.state.openCourseDialog ? <EditCourseComponent showDialog={this.state.openCourseDialog}
                                                                     courseToOpen={this.courseToOpen}
                                                                     admins={this.state.admins}
-                                                                    adminIds={this.state.adminIds}
                                                                     onDialogClose={this.handleDialogClose.bind(this)}
                                                                     updateCourse={this.props.updateCourseData.bind(this)}/>
                     : <div></div>}
@@ -210,32 +217,32 @@ export default class ManageComponent extends React.Component {
         if (props.loggedInUser.role === "superAdmin") {
             this.hasAccess = true;
         }
-        let admins = {};
-        let adminIds = [];
-        for (let i = 0; i < props.courses.length; i++) {
-            let adminId = props.courses[i].adminId;
-            if (!adminId) continue;
-            if (adminId in admins) {
-                admins[adminId].courses.push({
-                    displayName: props.courses[i].displayName,
-                    id: props.courses[i].id
-                });
-            } else {
-                adminIds.push(adminId);
-                admins[adminId] = {
-                    ...props.courses[i].admin,
-                    courses: [{
-                        displayName: props.courses[i].displayName,
-                        id: props.courses[i].id
-                    }]
-                }
-            }
-        }
-
-        this.setState({
-            admins,
-            adminIds
-        });
+        // let admins = {};
+        // let adminIds = [];
+        // for (let i = 0; i < props.courses.length; i++) {
+        //     let adminId = props.courses[i].adminId;
+        //     if (!adminId) continue;
+        //     if (adminId in admins) {
+        //         admins[adminId].courses.push({
+        //             displayName: props.courses[i].displayName,
+        //             id: props.courses[i].id
+        //         });
+        //     } else {
+        //         adminIds.push(adminId);
+        //         admins[adminId] = {
+        //             ...props.courses[i].admin,
+        //             courses: [{
+        //                 displayName: props.courses[i].displayName,
+        //                 id: props.courses[i].id
+        //             }]
+        //         }
+        //     }
+        // }
+        //
+        // this.setState({
+        //     admins,
+        //     adminIds
+        // });
     }
 
     editCourse(courseIndex) {

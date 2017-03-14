@@ -5,6 +5,7 @@ import APIEndpoints from "./../models/APIEndpoints";
 import Course from "./../models/Course";
 import Reviewer from "./../models/Reviewer";
 import ContentWriter from "./../models/ContentWriter";
+import Admin from "./../models/Admin";
 
 const ContentService = {
     fetchCourses(courseID) {
@@ -43,6 +44,23 @@ const ContentService = {
                 console.log(err);
                 reject(err);
             });
+        });
+    },
+
+    fetchAdmins() {
+        return new Promise((resolve, reject) => {
+            let request = APIService.makeRequest({
+                method: "get",
+                url: APIEndpoints.admins
+            });
+
+            request.then((res) => {
+                console.log(res);
+                resolve(Admin.parseAdmins(res.data));
+            }).catch((err) => {
+                console.log(err);
+                reject(err);
+            })
         });
     },
 
