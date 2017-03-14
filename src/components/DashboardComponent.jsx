@@ -13,6 +13,13 @@ export default class DashboardComponent extends React.Component {
         super(props);
     }
 
+    componentWillMount() {
+    }
+
+    componentDidMount() {
+        /* TODO: fetch dashboard data from server */
+    }
+
     render() {
         return (
             <Grid>
