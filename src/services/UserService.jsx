@@ -7,6 +7,7 @@
 import APIService from "./APIService";
 import APIEndpoints from "./../models/APIEndpoints";
 import LoginService from "./LoginService";
+import User from "./../models/User";
 
 const UserService = {
     getUserProfile() {
@@ -27,7 +28,7 @@ const UserService = {
             request.then((res) => {
                 console.log(res);
                 if (res.data instanceof Array && res.data.length === 1) {
-                    resolve(res.data[0]);
+                    resolve(new User(res.data[0]));
                 } else {
                     reject();
                 }

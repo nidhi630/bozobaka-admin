@@ -13,16 +13,12 @@ export default class DashboardComponent extends React.Component {
         super(props);
     }
 
-    addQuestionButton() {
-        browserHistory.push(URLs.ADD_QUESTION);
-    }
-
     render() {
         return (
             <Grid>
                 <Row center="xs">
                     <Col xs={12}>
-                        <h3>Hi, {this.props.username}</h3>
+                        <h3>Hi, {this.props.loggedInUser.displayName}</h3>
                     </Col>
                 </Row>
                 <Row between="sm">
@@ -51,12 +47,14 @@ export default class DashboardComponent extends React.Component {
             </Grid>
         );
     }
+
+    addQuestionButton() {
+        browserHistory.push(URLs.ADD_QUESTION);
+    }
 }
 
 DashboardComponent.propTypes = {
-    username: PropTypes.string.isRequired,
+    loggedInUser: PropTypes.object.isRequired,
 };
 
-DashboardComponent.defaultProps = {
-    username: "Aditya Jha"
-};
+DashboardComponent.defaultProps = {};
