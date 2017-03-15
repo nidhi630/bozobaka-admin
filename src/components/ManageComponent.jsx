@@ -40,7 +40,6 @@ export default class ManageComponent extends React.Component {
                     reviewers: reviewers
                 });
             }).catch((err) => {
-            console.log(err);
         });
 
         ContentService.fetchContentWriters()
@@ -205,7 +204,6 @@ export default class ManageComponent extends React.Component {
 
     fetchAdminData() {
         ContentService.fetchAdmins().then((admins) => {
-            console.log(admins, ManageComponent.toString());
             this.setState({
                 admins: admins
             })
