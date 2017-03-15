@@ -70,13 +70,8 @@ export default class EditReviewerContentWriterComponent extends React.Component 
     }
 
     render() {
-        const removeButtonStyle = {
-            marginTop: 20
-        };
-
-        const courseSectionTitleStyle = {
-            marginTop: 10
-        };
+        const courseTitleStyle = {marginTop: 10};
+        const removeButtonStyle = {marginTop: 30};
 
         const actions = (
             <Row>
@@ -174,7 +169,7 @@ export default class EditReviewerContentWriterComponent extends React.Component 
                                             </SelectField>
                                         </Col>
                                         <Col xs={2}>
-                                            <RaisedButton secondary={true} label="remove"
+                                            <FlatButton secondary={true} label="remove"
                                                           onTouchTap={this.removeSection.bind(this, index)}
                                                           style={removeButtonStyle}/>
                                         </Col>
@@ -294,7 +289,7 @@ export default class EditReviewerContentWriterComponent extends React.Component 
     }
 
     addSection() {
-        let updatedSections = []
+        let updatedSections = [];
         for (let i = 0; i < this.state.sections.length; i++) {
             updatedSections.push(this.state.sections[i]);
         }

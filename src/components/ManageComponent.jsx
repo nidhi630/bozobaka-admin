@@ -20,7 +20,7 @@ export default class ManageComponent extends React.Component {
             contentWriters: [],
             openCourseDialog: false,
             openReviewerContentWriterDialog: false,
-            openAdminDialog: false
+            openAdminDialog: false,
         }
     }
 
@@ -28,30 +28,11 @@ export default class ManageComponent extends React.Component {
     }
 
     componentWillMount() {
-        if (this.props.loggedInUser.role === "superAdmin") {
-            this.hasAccess = true;
-        }
+        this.hasAccess = this.props.loggedInUser.role === "superAdmin";
     }
 
     componentDidMount() {
-        this.fetchAdminData();
-
-        ContentService.fetchReviewers()
-            .then((reviewers) => {
-                this.setState({
-                    reviewers: reviewers
-                });
-            }).catch((err) => {
-        });
-
-        ContentService.fetchContentWriters()
-            .then((contentWriters) => {
-                this.setState({
-                    contentWriters: contentWriters
-                })
-            }).catch((err) => {
-            console.log(err);
-        });
+        this.fetchDataFromServer();
     }
 
     render() {
@@ -205,25 +186,46 @@ export default class ManageComponent extends React.Component {
                                         adminToOpen={this.adminToOpen}
                                         courses={this.props.courses}
                                         onDialogClose={this.handleDialogClose.bind(this)}
-                                        updateAdminData={this.fetchAdminData.bind(this)}/>
+                                        updateAdminData={this.fetchDataFromServer.bind(this, true, false, false)}/>
                     : <div></div>
                 }
             </div>
         );
     }
 
-    fetchAdminData() {
-        ContentService.fetchAdmins().then((admins) => {
-            this.setState({
-                admins: admins
-            })
-        }).catch((err) => {
-            console.log(err);
-        });
+    fetchDataFromServer(admin=true, reviewer=true, contentWriter=true) {
+        if (admin) {
+            ContentService.fetchAdmins().then((admins) => {
+                this.setState({
+                    admins: admins
+                })
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+        if (reviewer) {
+            ContentService.fetchReviewers()
+                .then((reviewers) => {
+                    this.setState({
+                        reviewers: reviewers
+                    });
+                }).catch((err) => {
+            });
+        }
+        if (contentWriter) {
+            ContentService.fetchContentWriters()
+                .then((contentWriters) => {
+                    this.setState({
+                        contentWriters: contentWriters
+                    })
+                }).catch((err) => {
+                console.log(err);
+            });
+        }
     }
 
     updateCourseData(course, remove) {
-        this.fetchAdminData();
+        this.fetchDataFromServer(true, false, false);
         this.props.updateCourseData(course, remove);
     }
 

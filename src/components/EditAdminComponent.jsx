@@ -19,7 +19,8 @@ export default class EditAdminComponent extends React.Component {
             openDialog: true,
             openSnackbar: false,
             snackbarMessage: "",
-            requestInProgress: false
+            requestInProgress: false,
+            assignedCourses: this.props.adminToOpen.courses ? this.props.adminToOpen.courses : []
         }
     }
 
@@ -30,6 +31,9 @@ export default class EditAdminComponent extends React.Component {
     }
 
     render() {
+        const courseTitleStyle = {marginTop: 10};
+        const removeButtonStyle = {marginTop: 30};
+
         const actions = (
             <Row>
                 <Col xs={3}>
@@ -48,7 +52,8 @@ export default class EditAdminComponent extends React.Component {
 
         return (
             <div>
-                <Dialog title={this.state.dialogTitle} actions={actions} modal={false} open={this.state.openDialog}>
+                <Dialog title={this.state.dialogTitle} actions={actions} modal={false} open={this.state.openDialog}
+                        autoScrollBodyContent={true}>
                     <Row>
                         <Col xs={12} sm={6}>
                             <TextField
@@ -88,6 +93,39 @@ export default class EditAdminComponent extends React.Component {
                         required/>
                     <br />
                     <br />
+                    <Row>
+                        <Col xs={8} style={courseTitleStyle}>
+                            <h3>Courses</h3>
+                        </Col>
+                        <Col xs={2}>
+                            <RaisedButton label="Add" primary={true} onTouchTap={this.addCourse.bind(this)}
+                                          disabled={!this.props.courses.length}/>
+                        </Col>
+                    </Row>
+                    <br />
+                    {this.props.courses.length > 0 ?
+                        <div>
+                            {this.state.assignedCourses.map((assignedCourse, index) => (
+                                <Row key={index}>
+                                    <Col xs={7}>
+                                        <SelectField
+                                            floatingLabelText="Course"
+                                            value={assignedCourse.id}
+                                            onChange={this.updateCourse.bind(this, index)}>
+                                            {this.props.courses.map((course, courseIndex) => (
+                                                <MenuItem key={courseIndex} value={course.id}
+                                                          primaryText={course.displayName}/>
+                                            ))}
+                                        </SelectField>
+                                    </Col>
+                                    <Col xs={2}>
+                                        <FlatButton secondary={true} label="remove"
+                                                      onTouchTap={this.removeCourse.bind(this, index)}
+                                                      style={removeButtonStyle}/>
+                                    </Col>
+                                </Row>
+                            ))}
+                        </div> : <h3>No Courses</h3>}
                     {this.state.requestInProgress ?
                         <Row center="xs">
                             <Col xs={12}><CircularProgress/></Col>
@@ -97,6 +135,34 @@ export default class EditAdminComponent extends React.Component {
                 <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMessage} autoHideDuration={4000}/>
             </div>
         )
+    }
+
+    addCourse() {
+        this.setState({
+            assignedCourses: [
+                ...this.state.assignedCourses,
+                this.props.courses.length ? this.props.courses[0] : {}
+            ]
+        });
+    }
+
+    updateCourse(index, event, key, payload) {
+        this.setState({
+            assignedCourses: [
+                ...this.state.assignedCourses.splice(0, index),
+                this.props.courses[key],
+                ...this.state.assignedCourses.splice(index + 1)
+            ]
+        });
+    }
+
+    removeCourse(index, event, key, payload) {
+        this.setState({
+            assignedCourses: [
+                ...this.state.assignedCourses.splice(0, index),
+                ...this.state.assignedCourses.splice(index + 1)
+            ]
+        });
     }
 
     deleteAdmin() {
@@ -136,7 +202,8 @@ export default class EditAdminComponent extends React.Component {
             lastName: this.refs.lastName.input.value,
             email: this.refs.email.input.value,
             password: this.refs.password.input.value,
-            role: "admin"
+            role: "admin",
+            courseId: this.state.assignedCourses.map((course) => (course.id))
         };
 
         let config = {method: "post"};
