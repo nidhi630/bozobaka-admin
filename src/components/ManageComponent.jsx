@@ -8,6 +8,7 @@ import RaisedButton from "material-ui/RaisedButton";
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from "material-ui/Table";
 import EditCourseComponent from "./EditCourseComponent";
 import EditReviewerContentWriterComponent from "./EditReviewerContentWriterComponent";
+import EditAdminComponent from "./EditAdminComponent";
 
 export default class ManageComponent extends React.Component {
     constructor(props) {
@@ -19,6 +20,7 @@ export default class ManageComponent extends React.Component {
             contentWriters: [],
             openCourseDialog: false,
             openReviewerContentWriterDialog: false,
+            openAdminDialog: false
         }
     }
 
@@ -105,7 +107,7 @@ export default class ManageComponent extends React.Component {
                         <RaisedButton label="Add" onClick={this.editAdmin.bind(this, null)} primary={true}/>
                     </Col>
                     <Col xs={12}>
-                        <Table fixedFooter={false}>
+                        <Table fixedFooter={false} onCellClick={this.editAdmin.bind(this)}>
                             <TableHeader displaySelectAll={false} adjustForCheckbox={false} enableSelectAll={false}>
                                 <TableRow>
                                     <TableHeaderColumn>ID</TableHeaderColumn>
@@ -198,6 +200,12 @@ export default class ManageComponent extends React.Component {
                                                         updateContentWriter={this.props.updateContentWriterData.bind(this)}
                     /> :
                     <div></div>}
+                {this.state.openAdminDialog ?
+                    <EditAdminComponent showDialog={this.state.openAdminDialog}
+                                        adminToOpen={this.adminToOpen}
+                                        onDialogClose={this.handleDialogClose.bind(this)}/>
+                    : <div></div>
+                }
             </div>
         );
     }
@@ -227,8 +235,11 @@ export default class ManageComponent extends React.Component {
         });
     }
 
-    editAdmin(adminID) {
-
+    editAdmin(adminIndex) {
+        typeof adminIndex === "number" ? this.adminToOpen = this.state.admins[adminIndex] : this.adminToOpen = {};
+        this.setState({
+            openAdminDialog: true
+        });
     }
 
     editReviewer(index) {
@@ -261,7 +272,8 @@ export default class ManageComponent extends React.Component {
     handleDialogClose() {
         this.setState({
             openCourseDialog: false,
-            openReviewerContentWriterDialog: false
+            openReviewerContentWriterDialog: false,
+            openAdminDialog: false
         });
     }
 }
