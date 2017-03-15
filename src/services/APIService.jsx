@@ -26,7 +26,7 @@ const APIService = {
             data: config.data,
             headers: config.headers ? config.headers : {},
             params: config.params,
-            timeout: config.timeout ? config.timeout : 5000,
+            timeout: config.timeout ? config.timeout : 10000,
             cancelToken: config.cancelToken
         });
     }

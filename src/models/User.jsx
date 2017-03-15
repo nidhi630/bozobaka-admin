@@ -7,8 +7,9 @@ class User {
         this.firstName = user.firstName;
         this.lastName = user.lastName;
         this.role = user.role;
-        this.created = user.created;
-        this.updated = user.updated;
+        user.email ? this.email = user.email : null;
+        user.created ? this.created = user.created : null;
+        user.updated ? this.updated = user.updated : null;
     }
 
     get displayName() {

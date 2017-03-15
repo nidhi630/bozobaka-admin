@@ -10,16 +10,12 @@ import Admin from "./../models/Admin";
 const ContentService = {
     fetchCourses(courseID) {
         return new Promise((resolve, reject) => {
-            let request = APIService.makeRequest({
+            APIService.makeRequest({
                 method: "get",
                 url: courseID ? APIEndpoints.coursesWithCount + "/" + courseID : APIEndpoints.coursesWithCount,
-            });
-
-            request.then((res) => {
-                console.log(res.data);
+            }).then((res) => {
                 resolve(Course.parseCourses(res.data));
             }).catch((err) => {
-                console.log(err);
                 reject(err.response);
             });
         });
@@ -27,51 +23,37 @@ const ContentService = {
 
     updateCourse(course, config) {
         return new Promise((resolve, reject) => {
-            let request = APIService.makeRequest({
+            APIService.makeRequest({
                 method: config.method,
                 url: config.method === "post" ? APIEndpoints.courses : APIEndpoints.courses + "/" + course.id,
                 data: course
-            });
-
-            request.then((res) => {
-                console.log(res);
-                if (config.method !== "delete") {
-                    resolve(new Course(res.data));
-                } else {
-                    resolve(res.data);
-                }
+            }).then((res) => {
+                (config.method !== "delete") ? resolve(new Course(res.data)) : resolve(res.data);
             }).catch((err) => {
-                console.log(err);
-                reject(err);
+                reject(err.response);
             });
         });
     },
 
     fetchAdmins() {
         return new Promise((resolve, reject) => {
-            let request = APIService.makeRequest({
+            APIService.makeRequest({
                 method: "get",
                 url: APIEndpoints.admins
-            });
-
-            request.then((res) => {
-                console.log(res);
+            }).then((res) => {
                 resolve(Admin.parseAdmins(res.data));
             }).catch((err) => {
-                console.log(err);
-                reject(err);
+                reject(err.response);
             })
         });
     },
 
     fetchReviewers() {
         return new Promise((resolve, reject) => {
-            let request = APIService.makeRequest({
+            APIService.makeRequest({
                 method: "get",
                 url: APIEndpoints.reviewers,
-            });
-
-            request.then((res) => {
+            }).then((res) => {
                 console.log(res.data);
                 resolve(Reviewer.parseReviewers(res.data));
             }).catch((err) => {
@@ -83,32 +65,40 @@ const ContentService = {
 
     fetchContentWriters() {
         return new Promise((resolve, reject) => {
-            let request = APIService.makeRequest({
+            APIService.makeRequest({
                 method: "get",
                 url: APIEndpoints.contentWriters,
-            });
-
-            request.then((res) => {
-                console.log(res.data);
+            }).then((res) => {
                 resolve(ContentWriter.parseContentWriters(res.data));
             }).catch((err) => {
-                console.log(err);
                 reject(err.response);
             });
+        });
+    },
+
+    updateAdmin(admin, config) {
+        return new Promise((resolve, reject) => {
+            APIService.makeRequest({
+                method: config.method,
+                url: config.method === "post" ? APIEndpoints.addUser : APIEndpoints.admins + "/" + admin.id,
+                data: admin
+            }).then((res) => {
+                resolve(new Admin(res.data[0]));
+            }).catch((err) => {
+                reject(err.response.data.error);
+            })
         });
     },
 
     updateContentWriters(contentWriter, config) {
         return new Promise((resolve, reject) => {
-            let request = APIService.makeRequest({
+            APIService.makeRequest({
                 method: config.method,
-                //url: APIEndpoints.,
+                url: config.method === "post" ? APIEndpoints.addUser : APIEndpoints.contentWriters + "/" + contentWriter.id,
                 data: contentWriter
-            });
-
-            request.then((res) => {
+            }).then((res) => {
                 console.log(res);
-                config.method !== "delete" ? resolve(new ContentWriter(res.data)) : resolve(res.data);
+                config.method !== "delete" ? resolve(new ContentWriter(res.data[0])) : resolve(res.data);
             }).catch((err) => {
                 console.log(err);
                 reject(err.response);
@@ -116,17 +106,15 @@ const ContentService = {
         });
     },
 
-    updateReviewers(contentWriter, config) {
+    updateReviewers(reviewer, config) {
         return new Promise((resolve, reject) => {
-            let request = APIService.makeRequest({
+            APIService.makeRequest({
                 method: config.method,
-                //url: APIEndpoints.,
-                data: contentWriter
-            });
-
-            request.then((res) => {
+                url: config.method === "post" ? APIEndpoints.addUser : APIEndpoints.contentWriters + "/" + reviewer.id,
+                data: reviewer
+            }).then((res) => {
                 console.log(res);
-                config.method !== "delete" ? resolve(new Reviewer(res.data)) : resolve(res.data);
+                config.method !== "delete" ? resolve(new Reviewer(res.data[0])) : resolve(res.data);
             }).catch((err) => {
                 console.log(err);
                 reject(err.response);

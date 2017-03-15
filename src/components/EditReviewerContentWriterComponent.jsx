@@ -89,7 +89,7 @@ export default class EditReviewerContentWriterComponent extends React.Component 
                     <FlatButton label="Cancel" onTouchTap={this.cancelButton.bind(this)}/>
                 </Col>
                 <Col xs={3}>
-                    <RaisedButton primary={true} label="Save" type="submit"/>
+                    <RaisedButton primary={true} label="Save"/>
                 </Col>
             </Row>
         );
@@ -212,9 +212,7 @@ export default class EditReviewerContentWriterComponent extends React.Component 
         this.props.onDialogClose();
     }
 
-    saveUser(event) {
-        event.preventDefault();
-
+    saveUser() {
         let user = {
             firstName: this.refs.firstName.input.value,
             lastName: this.refs.lastName.input.value,

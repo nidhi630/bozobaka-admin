@@ -203,7 +203,9 @@ export default class ManageComponent extends React.Component {
                 {this.state.openAdminDialog ?
                     <EditAdminComponent showDialog={this.state.openAdminDialog}
                                         adminToOpen={this.adminToOpen}
-                                        onDialogClose={this.handleDialogClose.bind(this)}/>
+                                        courses={this.props.courses}
+                                        onDialogClose={this.handleDialogClose.bind(this)}
+                                        updateAdminData={this.fetchAdminData.bind(this)}/>
                     : <div></div>
                 }
             </div>
