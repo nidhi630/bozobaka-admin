@@ -32,14 +32,7 @@ export default class ManageComponent extends React.Component {
     }
 
     componentDidMount() {
-        ContentService.fetchAdmins().then((admins) => {
-            console.log(admins, ManageComponent.toString());
-            this.setState({
-                admins: admins
-            })
-        }).catch((err) => {
-            console.log(err);
-        });
+        this.fetchAdminData();
 
         ContentService.fetchReviewers()
             .then((reviewers) => {
@@ -195,7 +188,7 @@ export default class ManageComponent extends React.Component {
                                                                     courseToOpen={this.courseToOpen}
                                                                     admins={this.state.admins}
                                                                     onDialogClose={this.handleDialogClose.bind(this)}
-                                                                    updateCourse={this.props.updateCourseData.bind(this)}/>
+                                                                    updateCourse={this.updateCourseData.bind(this)}/>
                     : <div></div>}
                 {this.state.openReviewerContentWriterDialog ?
                     <EditReviewerContentWriterComponent showDialog={this.state.openReviewerContentWriterDialog}
@@ -208,6 +201,22 @@ export default class ManageComponent extends React.Component {
                     <div></div>}
             </div>
         );
+    }
+
+    fetchAdminData() {
+        ContentService.fetchAdmins().then((admins) => {
+            console.log(admins, ManageComponent.toString());
+            this.setState({
+                admins: admins
+            })
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
+    updateCourseData(course, remove) {
+        this.fetchAdminData();
+        this.props.updateCourseData(course, remove);
     }
 
     editCourse(courseIndex) {
