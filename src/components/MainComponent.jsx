@@ -6,9 +6,9 @@
 
 import React from 'react';
 
-import DashboardContainer from './../containers/DashboardContainer';
-import SidebarContainer from './../containers/SidebarContainer';
-import HeaderContainer from './../containers/HeaderContainer';
+import DashboardContainer from "./../containers/DashboardContainer";
+import SidebarContainer from "./../containers/SidebarContainer";
+import HeaderContainer from "./../containers/HeaderContainer";
 
 const MainComponent = (props) => {
     return (
