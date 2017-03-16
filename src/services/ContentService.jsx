@@ -83,7 +83,7 @@ const ContentService = {
                 url: config.method === "post" ? APIEndpoints.addUser : APIEndpoints.admins + "/" + admin.id,
                 data: admin
             }).then((res) => {
-                resolve(new Admin(res.data[0]));
+                config.method !== "delete" ? resolve(new Admin(res.data[0])) : resolve(res.data);
             }).catch((err) => {
                 reject(err.response.data.error);
             })
