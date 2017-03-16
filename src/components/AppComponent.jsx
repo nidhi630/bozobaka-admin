@@ -24,7 +24,6 @@ class AppComponent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps, "next props");
         this.setSelectedCourse(nextProps.courses, nextProps);
     }
 

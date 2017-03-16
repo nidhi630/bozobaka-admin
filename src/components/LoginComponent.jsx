@@ -15,6 +15,9 @@ import Paper from "material-ui/Paper";
 export default class LoginComponent extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            showLoader: false
+        };
     }
 
     componentWillReceiveProps(nextProps) {
@@ -32,19 +35,21 @@ export default class LoginComponent extends React.Component {
             password: this.refs.password.input.value,
             rememberMe: this.refs.rememberMe.state.switched
         }).then((res) => {
-            this.props.toggleLoader(false);
+            this.setState({showLoader: false});
             this.props.toggleLoginStatus(true);
             console.log("res");
         }).catch((err) => {
-            this.props.toggleLoader(false);
+            this.setState({showLoader: false});
             console.log(err);
         });
     }
 
     onFormSubmit(event) {
         event.preventDefault();
-        this.props.toggleLoader(true);
-        this._login();
+        if (!this.state.showLoader) {
+            this.setState({showLoader: true});
+            this._login();
+        }
     }
 
     render() {
@@ -87,7 +92,7 @@ export default class LoginComponent extends React.Component {
                             ref="rememberMe"
                             label="Remember Me"/>
                         <br />
-                        {this.props.showLoader ? <CircularProgress /> :
+                        {this.state.showLoader ? <CircularProgress /> :
                             <div style={submitButtonStyle}>
                                 <RaisedButton label="Log in" primary={true} type="submit" fullWidth={true}/>
                             </div>

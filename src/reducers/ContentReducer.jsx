@@ -12,9 +12,7 @@ const ContentReducer = (state = defaultState, action) => {
         case ActionConstants.UPDATE_COURSES:
             return {
                 ...state,
-                courses: [
-                    ...action.courses
-                ]
+                courses: action.courses
             };
         case ActionConstants.UPDATE_SELECTED_COURSE:
             return {
