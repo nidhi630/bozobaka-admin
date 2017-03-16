@@ -26,17 +26,14 @@ export default class EditCourseComponent extends React.Component {
     }
 
     componentWillMount() {
-        this.setState({
-            openDialog: this.props.showDialog
-        })
+        this.setState({openDialog: this.props.showDialog});
     }
 
     render() {
         const actions = (
             <Row>
                 <Col xs={3}>
-                    <FlatButton secondary={true} label="Delete"
-                                onTouchTap={this.deleteCourse.bind(this)}
+                    <FlatButton secondary={true} label="Delete" onTouchTap={this.deleteCourse.bind(this)}
                                 disabled={!this.props.courseToOpen.id}/>
                 </Col>
                 <Col xs={6}>
@@ -119,18 +116,14 @@ export default class EditCourseComponent extends React.Component {
         )
     }
 
-    cancelButton(update=false) {
-        this.setState({
-            openDialog: false
-        });
+    cancelButton(update = false) {
+        this.setState({openDialog: false});
         this.props.onDialogClose(update);
     }
 
     setCourseAdmin(event, index, value) {
         console.log(value);
-        this.setState({
-            courseAdminId: value
-        });
+        this.setState({courseAdminId: value});
     }
 
     generateDisplayName() {
@@ -176,9 +169,7 @@ export default class EditCourseComponent extends React.Component {
         ContentService.updateCourse(course, config)
             .then((res) => {
                 this.props.updateCourse(res);
-                this.setState({
-                    requestInProgress: false
-                });
+                this.setState({requestInProgress: false});
                 this.cancelButton(true);
             }).catch((err) => {
             this.setState({
@@ -191,26 +182,20 @@ export default class EditCourseComponent extends React.Component {
 
     deleteCourse() {
         if (this.props.courseToOpen.id) {
-            this.setState({
-                requestInProgress: true,
-                openSnackbar: false
-            });
-            ContentService.updateCourse(this.props.courseToOpen, {
-                method: "delete"
-            }).then((res) => {
-                console.log(res);
-                this.props.updateCourse(this.props.courseToOpen, true);
-                this.setState({
-                    requestInProgress: false
-                });
-                this.cancelButton(true);
-            }).catch((err) => {
-                console.log(err);
-                this.setState({
-                    openSnackbar: true,
-                    snackbarMessage: err.message,
-                    requestInProgress: false
-                });
+            this.setState({requestInProgress: true, openSnackbar: false});
+            ContentService.updateCourse(this.props.courseToOpen, {method: "delete"})
+                .then((res) => {
+                    console.log(res);
+                    this.props.updateCourse(this.props.courseToOpen, true);
+                    this.setState({requestInProgress: false});
+                    this.cancelButton(true);
+                }).catch((err) => {
+                    console.log(err);
+                    this.setState({
+                        openSnackbar: true,
+                        snackbarMessage: err.message,
+                        requestInProgress: false
+                    });
             });
         }
     }

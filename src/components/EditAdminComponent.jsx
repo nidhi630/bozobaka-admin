@@ -1,6 +1,6 @@
 "use strict";
 
-import React from "react";
+import React, {PropTypes} from "react";
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
 import RaisedButton from "material-ui/RaisedButton";
@@ -26,9 +26,7 @@ export default class EditAdminComponent extends React.Component {
     }
 
     componentWillMount() {
-        this.setState({
-            openDialog: this.props.showDialog
-        })
+        this.setState({openDialog: this.props.showDialog});
     }
 
     render() {
@@ -175,11 +173,10 @@ export default class EditAdminComponent extends React.Component {
         ContentService.updateAdmin(this.props.adminToOpen, {method: "delete"})
             .then((res) => {
                 console.log(res);
-                this.props.updateAdminData(res, false);
                 this.setState({
                     requestInProgress: false
                 });
-                this.cancelButton();
+                this.cancelButton(true);
             }).catch((err) => {
             console.log(err);
             this.setState({
@@ -190,11 +187,9 @@ export default class EditAdminComponent extends React.Component {
         });
     }
 
-    cancelButton() {
-        this.setState({
-            openDialog: false
-        });
-        this.props.onDialogClose();
+    cancelButton(update=false) {
+        this.setState({openDialog: false});
+        this.props.onDialogClose(update);
     }
 
     saveAdmin() {
@@ -221,11 +216,8 @@ export default class EditAdminComponent extends React.Component {
 
         ContentService.updateAdmin(user, config)
             .then((res) => {
-                this.props.updateAdminData(res, false);
-                this.setState({
-                    requestInProgress: false
-                });
-                this.cancelButton();
+                this.setState({requestInProgress: false});
+                this.cancelButton(true);
             }).catch((err) => {
             console.log(err);
             this.setState({
@@ -236,3 +228,10 @@ export default class EditAdminComponent extends React.Component {
         });
     }
 }
+
+EditAdminComponent.propTypes = {
+    showDialog: PropTypes.bool.isRequired,
+    adminToOpen: PropTypes.object.isRequired,
+    courses: PropTypes.array.isRequired,
+    onDialogClose: PropTypes.func.isRequired,
+};

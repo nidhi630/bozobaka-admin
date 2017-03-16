@@ -27,9 +27,7 @@ export default class EditReviewerContentWriterComponent extends React.Component 
     }
 
     componentWillMount() {
-        this.setState({
-            openDialog: this.props.showDialog
-        });
+        this.setState({openDialog: this.props.showDialog});
     }
 
     componentDidMount() {
@@ -198,9 +196,7 @@ export default class EditReviewerContentWriterComponent extends React.Component 
     }
 
     cancelButton(update = false) {
-        this.setState({
-            openDialog: false
-        });
+        this.setState({openDialog: false});
         this.props.onDialogClose(update);
     }
 
@@ -228,9 +224,7 @@ export default class EditReviewerContentWriterComponent extends React.Component 
         let request = (this.props.userRole === "contentWriter") ?
             ContentService.updateContentWriters(user, config) : ContentService.updateReviewers(user, config);
         request.then((res) => {
-            this.setState({
-                requestInProgress: false
-            });
+            this.setState({requestInProgress: false});
             this.cancelButton(true);
         }).catch((err) => {
             console.log(err);
@@ -244,10 +238,7 @@ export default class EditReviewerContentWriterComponent extends React.Component 
 
     deleteUser() {
         if (this.props.userToOpen.id) {
-            this.setState({
-                requestInProgress: true,
-                openSnackbar: false
-            });
+            this.setState({requestInProgress: true, openSnackbar: false});
             let request;
             if (this.props.userRole === "contentWriter") {
                 request = ContentService.updateContentWriters(this.props.userToOpen, {method: "delete"});
@@ -303,8 +294,6 @@ export default class EditReviewerContentWriterComponent extends React.Component 
 }
 
 EditReviewerContentWriterComponent.propTypes = {
-    updateReviewer: React.PropTypes.func.isRequired,
-    updateContentWriter: React.PropTypes.func.isRequired,
     userRole: React.PropTypes.string.isRequired,
     onDialogClose: React.PropTypes.func.isRequired,
     showDialog: React.PropTypes.bool.isRequired,

@@ -103,7 +103,7 @@ export default class ManageComponent extends React.Component {
                                         <TableRowColumn>{admin.id}</TableRowColumn>
                                         <TableRowColumn>{admin.displayName}</TableRowColumn>
                                         <TableRowColumn
-                                            style={{whiteSpace: "normal"}}>{this.getDisplayText(admin.courses)}</TableRowColumn>
+                                            style={{whiteSpace: "normal"}}>{this.getDisplayText.bind(this, admin.courses)}</TableRowColumn>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -176,51 +176,36 @@ export default class ManageComponent extends React.Component {
                     <EditReviewerContentWriterComponent showDialog={this.state.openReviewerContentWriterDialog}
                                                         userRole={this.state.userRole}
                                                         onDialogClose={this.handleDialogClose.bind(this)}
-                                                        userToOpen={this.userToOpen}
-                                                        updateReviewer={this.props.updateReviewerData.bind(this)}
-                                                        updateContentWriter={this.props.updateContentWriterData.bind(this)}
-                    /> :
+                                                        userToOpen={this.userToOpen}/> :
                     <div></div>}
                 {this.state.openAdminDialog ?
                     <EditAdminComponent showDialog={this.state.openAdminDialog}
                                         adminToOpen={this.adminToOpen}
                                         courses={this.props.courses}
-                                        onDialogClose={this.handleDialogClose.bind(this)}
-                                        updateAdminData={this.fetchDataFromServer.bind(this, true, false, false)}/>
+                                        onDialogClose={this.handleDialogClose.bind(this)}/>
                     : <div></div>
                 }
             </div>
         );
     }
 
-    fetchDataFromServer(admin=true, reviewer=true, contentWriter=true) {
+    fetchDataFromServer(admin = true, reviewer = true, contentWriter = true) {
         if (admin) {
             ContentService.fetchAdmins().then((admins) => {
-                this.setState({
-                    admins: admins
-                })
-            }).catch((err) => {
-                console.log(err);
-            });
+                this.setState({admins: admins});
+            }).catch((err) => {console.log(err);});
         }
         if (reviewer) {
             ContentService.fetchReviewers()
                 .then((reviewers) => {
-                    this.setState({
-                        reviewers: reviewers
-                    });
-                }).catch((err) => {
-            });
+                    this.setState({reviewers: reviewers});})
+                .catch((err) => {console.log(err);});
         }
         if (contentWriter) {
             ContentService.fetchContentWriters()
                 .then((contentWriters) => {
-                    this.setState({
-                        contentWriters: contentWriters
-                    })
-                }).catch((err) => {
-                console.log(err);
-            });
+                    this.setState({contentWriters: contentWriters})
+                }).catch((err) => {console.log(err);});
         }
     }
 
@@ -230,36 +215,23 @@ export default class ManageComponent extends React.Component {
     }
 
     editCourse(courseIndex) {
-        this.courseToOpen = {};
-        if (typeof courseIndex === 'number') {
-            this.courseToOpen = this.props.courses[courseIndex];
-        }
-        this.setState({
-            openCourseDialog: true,
-        });
+        this.courseToOpen = typeof courseIndex === 'number' ? this.props.courses[courseIndex] : {};
+        this.setState({openCourseDialog: true});
     }
 
     editAdmin(adminIndex) {
         typeof adminIndex === "number" ? this.adminToOpen = this.state.admins[adminIndex] : this.adminToOpen = {};
-        this.setState({
-            openAdminDialog: true
-        });
+        this.setState({openAdminDialog: true});
     }
 
     editReviewer(index) {
-        (typeof index === "number") ? this.userToOpen = this.state.reviewers[index] : this.userToOpen = {};
-        this.setState({
-            openReviewerContentWriterDialog: true,
-            userRole: "reviewer",
-        });
+        this.userToOpen = (typeof index === "number") ? this.state.reviewers[index] : {};
+        this.setState({openReviewerContentWriterDialog: true, userRole: "reviewer"});
     }
 
     editQuestionWriter(index) {
-        (typeof index === "number") ? this.userToOpen = this.state.contentWriters[index] : this.userToOpen = {};
-        this.setState({
-            openReviewerContentWriterDialog: true,
-            userRole: "contentWriter",
-        });
+        this.userToOpen = (typeof index === "number") ? this.state.contentWriters[index] : {};
+        this.setState({openReviewerContentWriterDialog: true, userRole: "contentWriter",});
     }
 
     getDisplayText(items = []) {
@@ -273,12 +245,19 @@ export default class ManageComponent extends React.Component {
         return displayText;
     }
 
-    handleDialogClose(update=false) {
-        this.setState({
-            openCourseDialog: false,
-            openReviewerContentWriterDialog: false,
-            openAdminDialog: false
+    handleDialogClose(update = false) {
+        this.setState((prevState, props) => {
+            if (prevState.openCourseDialog) {
+                update ? this.fetchDataFromServer() : null;
+                return {openCourseDialog: false};
+            } else if (prevState.openAdminDialog) {
+                update ? this.fetchDataFromServer(true, false, false) : null;
+                return {openAdminDialog: false};
+            } else if (prevState.openReviewerContentWriterDialog) {
+                update ? this.userRole === "reviewer" ? this.fetchDataFromServer(false, true, false)
+                        : this.fetchDataFromServer(false, false, true) : null;
+                return {openReviewerContentWriterDialog: false};
+            }
         });
-        update ? this.fetchDataFromServer() && this.forceUpdate() : null;
     }
 }
