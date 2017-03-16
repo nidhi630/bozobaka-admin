@@ -17,6 +17,7 @@ export default class EditAdminComponent extends React.Component {
         super(props);
         this.state = {
             openDialog: true,
+            dialogTitle: this.props.adminToOpen.id ? "Edit Admin" : "Add New Admin",
             openSnackbar: false,
             snackbarMessage: "",
             requestInProgress: false,

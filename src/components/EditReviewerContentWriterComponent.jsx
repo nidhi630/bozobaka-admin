@@ -70,7 +70,7 @@ export default class EditReviewerContentWriterComponent extends React.Component 
     }
 
     render() {
-        const courseTitleStyle = {marginTop: 10};
+        const courseSectionTitleStyle = {marginTop: 10};
         const removeButtonStyle = {marginTop: 30};
 
         const actions = (
