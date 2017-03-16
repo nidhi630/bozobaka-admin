@@ -72,7 +72,19 @@ const ContentService = {
                 url: config.method === "post" ? APIEndpoints.addUser : APIEndpoints.admins + "/" + admin.id,
                 data: admin
             }).then((res) => {
-                config.method !== "delete" ? resolve(new Admin(res.data[0])) : resolve(res.data);
+                switch (config.method) {
+                    case "delete":
+                        resolve(res.data);
+                        break;
+                    case "post":
+                        resolve(new Admin(res.data));
+                        break;
+                    case "put":
+                        resolve(new Admin(res.data[0]))
+                        break;
+                    default:
+                        reject("not handled");
+                }
             }).catch((err) => APIService.errorHandler(reject, err));
         });
     },
@@ -84,8 +96,19 @@ const ContentService = {
                 url: config.method === "post" ? APIEndpoints.addUser : APIEndpoints.contentWriters + "/" + contentWriter.id,
                 data: contentWriter
             }).then((res) => {
-                console.log(res);
-                config.method !== "delete" ? resolve(new ContentWriter(res.data[0])) : resolve(res.data);
+                switch (config.method) {
+                    case "delete":
+                        resolve(res.data);
+                        break;
+                    case "post":
+                        resolve(new ContentWriter(res.data));
+                        break;
+                    case "put":
+                        resolve(new ContentWriter(res.data[0]))
+                        break;
+                    default:
+                        reject("not handled");
+                }
             }).catch((err) => APIService.errorHandler(reject, err));
         });
     },
@@ -97,8 +120,19 @@ const ContentService = {
                 url: config.method === "post" ? APIEndpoints.addUser : APIEndpoints.reviewers + "/" + reviewer.id,
                 data: reviewer
             }).then((res) => {
-                console.log(res);
-                config.method !== "delete" ? resolve(new Reviewer(res.data[0])) : resolve(res.data);
+                switch (config.method) {
+                    case "delete":
+                        resolve(res.data);
+                        break;
+                    case "post":
+                        resolve(new Reviewer(res.data));
+                        break;
+                    case "put":
+                        resolve(new Reviewer(res.data[0]))
+                        break;
+                    default:
+                        reject("not handled");
+                }
             }).catch((err) => APIService.errorHandler(reject, err));
         });
     }

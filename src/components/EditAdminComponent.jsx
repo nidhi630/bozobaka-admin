@@ -204,7 +204,7 @@ export default class EditAdminComponent extends React.Component {
             email: this.refs.email.input.value,
             password: this.refs.password.input.value,
             role: "admin",
-            courseId: this.state.assignedCourses.map((course) => (course.id))
+            courseId: this.state.assignedCourses.map((course) => course.id)
         };
 
         let config = {method: "post"};

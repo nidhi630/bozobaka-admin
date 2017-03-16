@@ -21,7 +21,7 @@ export default class EditReviewerContentWriterComponent extends React.Component 
             requestInProgress: false,
             openSnackbar: false,
             snackbarMessage: "",
-            sections: this.props.userToOpen.sections,
+            sections: this.props.userToOpen.sections ? this.props.userToOpen.sections : [],
             allCourses: []
         }
     }
@@ -29,7 +29,7 @@ export default class EditReviewerContentWriterComponent extends React.Component 
     componentWillMount() {
         this.setState({
             openDialog: this.props.showDialog
-        })
+        });
     }
 
     componentDidMount() {
@@ -76,15 +76,14 @@ export default class EditReviewerContentWriterComponent extends React.Component 
         const actions = (
             <Row>
                 <Col xs={3}>
-                    <FlatButton secondary={true} label="Delete"
-                                onTouchTap={this.deleteUser.bind(this)}
+                    <FlatButton secondary={true} label="Delete" onTouchTap={this.deleteUser.bind(this)}
                                 disabled={!this.props.userToOpen.id}/>
                 </Col>
                 <Col xs={6}>
                     <FlatButton label="Cancel" onTouchTap={this.cancelButton.bind(this)}/>
                 </Col>
                 <Col xs={3}>
-                    <RaisedButton primary={true} label="Save"/>
+                    <RaisedButton primary={true} label="Save" onTouchTap={this.saveUser.bind(this)}/>
                 </Col>
             </Row>
         );
@@ -93,99 +92,97 @@ export default class EditReviewerContentWriterComponent extends React.Component 
             <div>
                 <Dialog title={this.state.dialogTitle} actions={actions} modal={false} open={this.state.openDialog}
                         autoScrollBodyContent={true}>
-                    <form onSubmit={this.saveUser.bind(this)}>
-                        <Row>
-                            <Col xs={12} sm={6}>
-                                <TextField
-                                    ref="firstName"
-                                    type="text"
-                                    hintText="Enter first name"
-                                    floatingLabelText="First Name"
-                                    defaultValue={this.props.userToOpen.firstName}
-                                    required/>
-                            </Col>
-                            <Col xs={12} sm={6}>
-                                <TextField
-                                    ref="lastName"
-                                    type="text"
-                                    hintText="Enter last name"
-                                    floatingLabelText="Last Name"
-                                    defaultValue={this.props.userToOpen.lastName}
-                                    required/>
-                            </Col>
-                        </Row>
-                        <TextField
-                            ref="email"
-                            type="email"
-                            hintText="Enter email"
-                            floatingLabelText="Email"
-                            defaultValue={this.props.userToOpen.email ? this.props.userToOpen.email : ""}
-                            required/>
-                        <br />
-                        <TextField
-                            ref="password"
-                            title="Minimum 6 characters required"
-                            pattern=".{6,}"
-                            type="password"
-                            hintText="Enter your password"
-                            floatingLabelText="Password"
-                            defaultValue={this.props.userToOpen.password ? this.props.userToOpen.password : ""}
-                            required/>
-                        <br />
-                        <br />
-                        <Row>
-                            <Col xs={5} style={courseSectionTitleStyle}>
-                                <h3>Course</h3>
-                            </Col>
-                            <Col xs={5} style={courseSectionTitleStyle}>
-                                <h3>Section</h3>
-                            </Col>
-                            <Col xs={2}>
-                                <RaisedButton label="Add" primary={true} onTouchTap={this.addSection.bind(this)}/>
-                            </Col>
-                        </Row>
-                        <br />
-                        {this.state.allCourses.length > 0 ?
-                            <div>
-                                {this.state.sections.map((section, index) => (
-                                    <Row key={index}>
-                                        <Col xs={5}>
-                                            <SelectField
-                                                floatingLabelText="Course"
-                                                value={section.course.id}
-                                                onChange={this.updateCourse.bind(this, index)}>
-                                                {this.state.allCourses.map((course, courseIndex) => (
-                                                    <MenuItem key={courseIndex} value={course.id}
-                                                              primaryText={course.displayName}/>
-                                                ))}
-                                            </SelectField>
-                                        </Col>
-                                        <Col xs={5}>
-                                            <SelectField
-                                                floatingLabelText="Section"
-                                                value={section.id}
-                                                onChange={this.updateSection.bind(this, index)}>
-                                                {this.getMenuItemsForSelectedCourse.bind(this, section.course.id)}
-                                            </SelectField>
-                                        </Col>
-                                        <Col xs={2}>
-                                            <FlatButton secondary={true} label="remove"
-                                                          onTouchTap={this.removeSection.bind(this, index)}
-                                                          style={removeButtonStyle}/>
-                                        </Col>
-                                    </Row>
-                                ))}
-                            </div>
-                            :
-                            <div></div>}
-                        {this.state.requestInProgress ?
-                            <Row center="xs">
-                                <Col xs={12}><CircularProgress/></Col>
-                            </Row> : <div></div>}
-                    </form>
+                    <Row>
+                        <Col xs={12} sm={6}>
+                            <TextField
+                                ref="firstName"
+                                type="text"
+                                hintText="Enter first name"
+                                floatingLabelText="First Name"
+                                defaultValue={this.props.userToOpen.firstName}
+                                required/>
+                        </Col>
+                        <Col xs={12} sm={6}>
+                            <TextField
+                                ref="lastName"
+                                type="text"
+                                hintText="Enter last name"
+                                floatingLabelText="Last Name"
+                                defaultValue={this.props.userToOpen.lastName}
+                                required/>
+                        </Col>
+                    </Row>
+                    <TextField
+                        ref="email"
+                        type="email"
+                        hintText="Enter email"
+                        floatingLabelText="Email"
+                        defaultValue={this.props.userToOpen.email ? this.props.userToOpen.email : ""}
+                        required/>
+                    <br />
+                    <TextField
+                        ref="password"
+                        title="Minimum 6 characters required"
+                        pattern=".{6,}"
+                        type="password"
+                        hintText="Enter your password"
+                        floatingLabelText="Password"
+                        defaultValue={this.props.userToOpen.password ? this.props.userToOpen.password : ""}
+                        required/>
+                    <br />
+                    <br />
+                    <Row>
+                        <Col xs={5} style={courseSectionTitleStyle}>
+                            <h3>Course</h3>
+                        </Col>
+                        <Col xs={5} style={courseSectionTitleStyle}>
+                            <h3>Section</h3>
+                        </Col>
+                        <Col xs={2}>
+                            <RaisedButton label="Add" primary={true} onTouchTap={this.addSection.bind(this)}/>
+                        </Col>
+                    </Row>
+                    <br />
+                    {this.state.allCourses.length > 0 ?
+                        <div>
+                            {this.state.sections.map((section, index) => (
+                                <Row key={index}>
+                                    <Col xs={5}>
+                                        <SelectField
+                                            floatingLabelText="Course"
+                                            value={section.course.id}
+                                            onChange={this.updateCourse.bind(this, index)}>
+                                            {this.state.allCourses.map((course, courseIndex) => (
+                                                <MenuItem key={courseIndex} value={course.id}
+                                                          primaryText={course.displayName}/>
+                                            ))}
+                                        </SelectField>
+                                    </Col>
+                                    <Col xs={5}>
+                                        <SelectField
+                                            floatingLabelText="Section"
+                                            value={section.id}
+                                            onChange={this.updateSection.bind(this, index)}>
+                                            {this.getMenuItemsForSelectedCourse.bind(this, section.course.id)}
+                                        </SelectField>
+                                    </Col>
+                                    <Col xs={2}>
+                                        <FlatButton secondary={true} label="remove"
+                                                    onTouchTap={this.removeSection.bind(this, index)}
+                                                    style={removeButtonStyle}/>
+                                    </Col>
+                                </Row>
+                            ))}
+                        </div>
+                        :
+                        <div></div>}
+                    {this.state.requestInProgress ?
+                        <Row center="xs">
+                            <Col xs={12}><CircularProgress/></Col>
+                        </Row> : <div></div>}
                 </Dialog>
 
-                <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMessage} autoHideDuration={2000}/>
+                <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMessage} autoHideDuration={5000}/>
             </div>
         )
     }
@@ -200,11 +197,11 @@ export default class EditReviewerContentWriterComponent extends React.Component 
         });
     }
 
-    cancelButton() {
+    cancelButton(update = false) {
         this.setState({
             openDialog: false
         });
-        this.props.onDialogClose();
+        this.props.onDialogClose(update);
     }
 
     saveUser() {
@@ -212,7 +209,8 @@ export default class EditReviewerContentWriterComponent extends React.Component 
             firstName: this.refs.firstName.input.value,
             lastName: this.refs.lastName.input.value,
             email: this.refs.email.input.value,
-            password: this.refs.password.input.value
+            password: this.refs.password.input.value,
+            role: this.props.userRole
         };
 
         let config = {method: "post"};
@@ -227,23 +225,13 @@ export default class EditReviewerContentWriterComponent extends React.Component 
             openSnackbar: false
         });
 
-        let request;
-        if (this.props.userRole === "contentWriter") {
-            request = ContentService.updateContentWriters(this.props.userToOpen, config);
-        } else {
-            request = ContentService.updateReviewers(this.props.userToOpen, config);
-        }
+        let request = (this.props.userRole === "contentWriter") ?
+            ContentService.updateContentWriters(user, config) : ContentService.updateReviewers(user, config);
         request.then((res) => {
-            console.log(res);
-            if (this.props.userRole === "contentWriter") {
-                this.props.updateContentWriter(this.props.courseToOpen, false);
-            } else {
-                this.props.updateReviewer(this.props.courseToOpen, false);
-            }
             this.setState({
                 requestInProgress: false
             });
-            this.cancelButton();
+            this.cancelButton(true);
         }).catch((err) => {
             console.log(err);
             this.setState({
@@ -267,16 +255,10 @@ export default class EditReviewerContentWriterComponent extends React.Component 
                 request = ContentService.updateReviewers(this.props.userToOpen, {method: "delete"});
             }
             request.then((res) => {
-                console.log(res);
-                if (this.props.userRole === "contentWriter") {
-                    this.props.updateContentWriter(this.props.courseToOpen, true);
-                } else {
-                    this.props.updateReviewer(this.props.courseToOpen, true);
-                }
                 this.setState({
                     requestInProgress: false
                 });
-                this.cancelButton();
+                this.cancelButton(true);
             }).catch((err) => {
                 console.log(err);
                 this.setState({

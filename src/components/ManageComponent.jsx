@@ -131,7 +131,7 @@ export default class ManageComponent extends React.Component {
                                     this.state.reviewers.map((reviewer, index) => (
                                         <TableRow key={index}>
                                             <TableRowColumn>{reviewer.id}</TableRowColumn>
-                                            <TableRowColumn>{reviewer.firstName}</TableRowColumn>
+                                            <TableRowColumn>{reviewer.displayName}</TableRowColumn>
                                         </TableRow>
                                     ))}
                             </TableBody>
@@ -159,7 +159,7 @@ export default class ManageComponent extends React.Component {
                                     this.state.contentWriters.map((contentWriter, index) => (
                                         <TableRow key={index}>
                                             <TableRowColumn>{contentWriter.id}</TableRowColumn>
-                                            <TableRowColumn>{contentWriter.firstName}</TableRowColumn>
+                                            <TableRowColumn>{contentWriter.displayName}</TableRowColumn>
                                         </TableRow>
                                     ))}
                             </TableBody>
@@ -247,7 +247,7 @@ export default class ManageComponent extends React.Component {
     }
 
     editReviewer(index) {
-        (typeof index === "number") ? this.userToOpen = this.state.contentWriters[index] : this.userToOpen = {};
+        (typeof index === "number") ? this.userToOpen = this.state.reviewers[index] : this.userToOpen = {};
         this.setState({
             openReviewerContentWriterDialog: true,
             userRole: "reviewer",
@@ -273,11 +273,12 @@ export default class ManageComponent extends React.Component {
         return displayText;
     }
 
-    handleDialogClose() {
+    handleDialogClose(update=false) {
         this.setState({
             openCourseDialog: false,
             openReviewerContentWriterDialog: false,
             openAdminDialog: false
         });
+        update ? this.fetchDataFromServer() : null;
     }
 }
