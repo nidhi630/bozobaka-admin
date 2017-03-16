@@ -13,6 +13,6 @@ module.exports = {
     courses: "/api/courses",
     coursesWithCount: "/api/courses/withCount",
     reviewers: "api/profiles/reviewers",
-    contentWriters: "api/profiles/reviewers",
+    contentWriters: "api/profiles/contentWriters",
     admins: "api/profiles/admins",
 };

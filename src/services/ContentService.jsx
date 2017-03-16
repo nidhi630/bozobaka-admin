@@ -15,9 +15,7 @@ const ContentService = {
                 url: courseID ? APIEndpoints.coursesWithCount + "/" + courseID : APIEndpoints.coursesWithCount,
             }).then((res) => {
                 resolve(Course.parseCourses(res.data));
-            }).catch((err) => {
-                reject(err.response);
-            });
+            }).catch((err) => APIService.errorHandler(reject, err));
         });
     },
 
@@ -29,9 +27,7 @@ const ContentService = {
                 data: course
             }).then((res) => {
                 (config.method !== "delete") ? resolve(new Course(res.data)) : resolve(res.data);
-            }).catch((err) => {
-                reject(err.response);
-            });
+            }).catch((err) => APIService.errorHandler(reject, err));
         });
     },
 
@@ -42,9 +38,7 @@ const ContentService = {
                 url: APIEndpoints.admins
             }).then((res) => {
                 resolve(Admin.parseAdmins(res.data));
-            }).catch((err) => {
-                reject(err.response);
-            })
+            }).catch((err) => APIService.errorHandler(reject, err));
         });
     },
 
@@ -56,10 +50,7 @@ const ContentService = {
             }).then((res) => {
                 console.log(res.data);
                 resolve(Reviewer.parseReviewers(res.data));
-            }).catch((err) => {
-                console.log(err);
-                reject(err.response);
-            });
+            }).catch((err) => APIService.errorHandler(reject, err));
         });
     },
 
@@ -70,9 +61,7 @@ const ContentService = {
                 url: APIEndpoints.contentWriters,
             }).then((res) => {
                 resolve(ContentWriter.parseContentWriters(res.data));
-            }).catch((err) => {
-                reject(err.response);
-            });
+            }).catch((err) => APIService.errorHandler(reject, err));
         });
     },
 
@@ -84,9 +73,7 @@ const ContentService = {
                 data: admin
             }).then((res) => {
                 config.method !== "delete" ? resolve(new Admin(res.data[0])) : resolve(res.data);
-            }).catch((err) => {
-                reject(err.response.data.error);
-            })
+            }).catch((err) => APIService.errorHandler(reject, err));
         });
     },
 
@@ -99,10 +86,7 @@ const ContentService = {
             }).then((res) => {
                 console.log(res);
                 config.method !== "delete" ? resolve(new ContentWriter(res.data[0])) : resolve(res.data);
-            }).catch((err) => {
-                console.log(err);
-                reject(err.response);
-            });
+            }).catch((err) => APIService.errorHandler(reject, err));
         });
     },
 
@@ -110,15 +94,12 @@ const ContentService = {
         return new Promise((resolve, reject) => {
             APIService.makeRequest({
                 method: config.method,
-                url: config.method === "post" ? APIEndpoints.addUser : APIEndpoints.contentWriters + "/" + reviewer.id,
+                url: config.method === "post" ? APIEndpoints.addUser : APIEndpoints.reviewers + "/" + reviewer.id,
                 data: reviewer
             }).then((res) => {
                 console.log(res);
                 config.method !== "delete" ? resolve(new Reviewer(res.data[0])) : resolve(res.data);
-            }).catch((err) => {
-                console.log(err);
-                reject(err.response);
-            });
+            }).catch((err) => APIService.errorHandler(reject, err));
         });
     }
 };

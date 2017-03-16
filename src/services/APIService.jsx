@@ -26,9 +26,19 @@ const APIService = {
             data: config.data,
             headers: config.headers ? config.headers : {},
             params: config.params,
-            timeout: config.timeout ? config.timeout : 10000,
+            timeout: config.timeout ? config.timeout : 100000,
             cancelToken: config.cancelToken
         });
+    },
+
+    errorHandler(reject, err) {
+        switch (err.code) {
+            case "ECONNABORTED":
+                reject(err)
+                break;
+            default:
+                reject(err.response.data.error);
+        }
     }
 };
 
