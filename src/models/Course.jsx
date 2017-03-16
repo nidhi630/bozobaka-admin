@@ -1,6 +1,6 @@
 "use strict";
 
-import User from "./User";
+import Admin from "./Admin";
 
 class Course {
     constructor(c) {
@@ -8,11 +8,9 @@ class Course {
         this.name = c.name;
         this.displayName = c.displayName ? c.displayName : c.name;
         this.language = c.language;
-
-        if (c.adminId) {
-            this.adminId = c.adminId;
-            this.admin = new User(c.admin ? c.admin : {});
-            this.adminName = this.admin.displayName;
+        
+        if (c.admins) {
+            this.admins = Admin.parseAdmins(c.admins);
         }
 
         if (typeof c.reviewerCount === "number") {

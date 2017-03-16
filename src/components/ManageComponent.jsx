@@ -71,7 +71,7 @@ export default class ManageComponent extends React.Component {
                                     <TableRow key={index}>
                                         <TableRowColumn>{course.id}</TableRowColumn>
                                         <TableRowColumn>{course.displayName}</TableRowColumn>
-                                        <TableRowColumn>{course.adminName}</TableRowColumn>
+                                        <TableRowColumn>{this.getDisplayText(course.admins)}</TableRowColumn>
                                         <TableRowColumn>{course.contentWriterCount ? course.contentWriterCount : 0}</TableRowColumn>
                                         <TableRowColumn>{course.reviewerCount ? course.reviewerCount : 0}</TableRowColumn>
                                     </TableRow>
@@ -103,7 +103,7 @@ export default class ManageComponent extends React.Component {
                                         <TableRowColumn>{admin.id}</TableRowColumn>
                                         <TableRowColumn>{admin.displayName}</TableRowColumn>
                                         <TableRowColumn
-                                            style={{whiteSpace: "normal"}}>{this.getCoursesDisplayText(admin.courses)}</TableRowColumn>
+                                            style={{whiteSpace: "normal"}}>{this.getDisplayText(admin.courses)}</TableRowColumn>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -262,10 +262,10 @@ export default class ManageComponent extends React.Component {
         });
     }
 
-    getCoursesDisplayText(courses = []) {
+    getDisplayText(items = []) {
         let displayText = "";
-        for (let i = 0; i < courses.length; i++) {
-            displayText += courses[i].displayName + ", ";
+        for (let i = 0; i < items.length; i++) {
+            displayText += items[i].displayName + ", ";
         }
         if (displayText.endsWith(", ")) {
             displayText = displayText.substr(0, displayText.length - 2);
@@ -279,6 +279,6 @@ export default class ManageComponent extends React.Component {
             openReviewerContentWriterDialog: false,
             openAdminDialog: false
         });
-        update ? this.fetchDataFromServer() : null;
+        update ? this.fetchDataFromServer() && this.forceUpdate() : null;
     }
 }

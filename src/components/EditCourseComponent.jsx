@@ -119,11 +119,11 @@ export default class EditCourseComponent extends React.Component {
         )
     }
 
-    cancelButton() {
+    cancelButton(update=false) {
         this.setState({
             openDialog: false
         });
-        this.props.onDialogClose();
+        this.props.onDialogClose(update);
     }
 
     setCourseAdmin(event, index, value) {
@@ -157,7 +157,7 @@ export default class EditCourseComponent extends React.Component {
             name: this.refs.courseName.input.value,
             language: this.refs.courseLanguage.input.value,
             displayName: this.refs.courseDisplayName.input.value,
-            adminId: this.refs.courseAdmin.props.value
+            admins: this.refs.courseAdmin.props.value ? [this.refs.courseAdmin.props.value] : []
         };
 
         if (!this.validCourse(course)) return;
@@ -179,7 +179,7 @@ export default class EditCourseComponent extends React.Component {
                 this.setState({
                     requestInProgress: false
                 });
-                this.cancelButton();
+                this.cancelButton(true);
             }).catch((err) => {
             this.setState({
                 openSnackbar: true,
@@ -203,7 +203,7 @@ export default class EditCourseComponent extends React.Component {
                 this.setState({
                     requestInProgress: false
                 });
-                this.cancelButton();
+                this.cancelButton(true);
             }).catch((err) => {
                 console.log(err);
                 this.setState({
