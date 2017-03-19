@@ -13,6 +13,7 @@ import AllQuestionsContainer from './containers/AllQuestionsContainer';
 import DashboardContainer from './containers/DashboardContainer';
 import Urls from "./models/Urls";
 import ManageContainer from "./containers/ManageContainer";
+import ManageCourseContainer from "./containers/ManageCourseContainer";
 
 require("style-loader!css-loader!./styles/styles.css");
 
@@ -30,6 +31,7 @@ render(
                 <Route path={Urls.ADD_QUESTION} component={AddQuestionContainer}/>
                 <Route path={Urls.LIST_QUESTIONS} component={AllQuestionsContainer}/>
                 <Route path={Urls.MANAGE} component={ManageContainer}/>
+                <Route path={Urls.MANAGE_COURSE} component={ManageCourseContainer}/>
             </Route>
         </Router>
     </Provider>
