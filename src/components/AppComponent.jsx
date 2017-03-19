@@ -19,7 +19,8 @@ class AppComponent extends React.Component {
         super(props);
         this.state = {
             showLoader: this.props.isLoggedIn,
-            error: false
+            error: false,
+            message: ""
         };
     }
 
@@ -41,7 +42,7 @@ class AppComponent extends React.Component {
                         <CircularProgress size={100} thickness={4}/>
                         <Snackbar
                             open={this.state.error}
-                            message="Something went wrong"
+                            message={this.state.message}
                             autoHideDuration={100000}
                             onRequestClose={this.handleRequestClose}
                         />
@@ -78,7 +79,8 @@ class AppComponent extends React.Component {
             .catch((err) => {
                 console.log(err);
                 this.setState({
-                    error: true
+                    error: true,
+                    message: err.statusCode + " - " + err.message
                 });
             });
     }
@@ -89,9 +91,7 @@ class AppComponent extends React.Component {
             props.setSelectedCourse(props.courses, courses[0].id);
         } else if(!props.selectedCourse) {
             props.setSelectedCourse(props.courses, selectedCourseInUrl);
-        } else if (selectedCourseInUrl === this.props.selectedCourse.id) {
-            return;
-        } else {
+        } else if (selectedCourseInUrl !== this.props.selectedCourse.id) {
             let found = false;
             for (let i = 0; i < courses.length; i++) {
                 if (courses[i].id === selectedCourseInUrl) {

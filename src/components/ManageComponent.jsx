@@ -103,7 +103,7 @@ export default class ManageComponent extends React.Component {
                                         <TableRowColumn>{admin.id}</TableRowColumn>
                                         <TableRowColumn>{admin.displayName}</TableRowColumn>
                                         <TableRowColumn
-                                            style={{whiteSpace: "normal"}}>{this.getDisplayText.bind(this, admin.courses)}</TableRowColumn>
+                                            style={{whiteSpace: "normal"}}>{admin.courseDisplayText}</TableRowColumn>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -192,20 +192,30 @@ export default class ManageComponent extends React.Component {
     fetchDataFromServer(admin = true, reviewer = true, contentWriter = true) {
         if (admin) {
             ContentService.fetchAdmins().then((admins) => {
+                for (let i = 0; i < admins.length; i++) {
+                    admins[i].courseDisplayText = this.getDisplayText(admins[i].courses);
+                }
                 this.setState({admins: admins});
-            }).catch((err) => {console.log(err);});
+            }).catch((err) => {
+                console.log(err);
+            });
         }
         if (reviewer) {
             ContentService.fetchReviewers()
                 .then((reviewers) => {
-                    this.setState({reviewers: reviewers});})
-                .catch((err) => {console.log(err);});
+                    this.setState({reviewers: reviewers});
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         }
         if (contentWriter) {
             ContentService.fetchContentWriters()
                 .then((contentWriters) => {
                     this.setState({contentWriters: contentWriters})
-                }).catch((err) => {console.log(err);});
+                }).catch((err) => {
+                console.log(err);
+            });
         }
     }
 
