@@ -15,4 +15,5 @@ module.exports = {
     reviewers: "api/profiles/reviewers",
     contentWriters: "api/profiles/contentWriters",
     admins: "api/profiles/admins",
+    allSections: "api/sections"
 };

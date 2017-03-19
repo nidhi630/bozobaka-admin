@@ -135,6 +135,18 @@ const ContentService = {
                 }
             }).catch((err) => APIService.errorHandler(reject, err));
         });
+    },
+
+    fetchSections() {
+        return new Promise((resolve, reject) => {
+           APIService.makeRequest({
+               method: "get",
+               url: APIEndpoints.allSections
+           }).then((res) => {
+                console.log(res.data);
+                resolve(res.data);
+           }).catch((err) => APIService.errorHandler(reject, err));
+        });
     }
 };
 
