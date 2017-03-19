@@ -44,8 +44,8 @@ class SidebarComponent extends React.Component {
                 docked={false}
                 onRequestChange={this.props.toggleDrawer}>
                 {this.componentOptions.map(
-                    (option) => (
-                        <Link key={this.urlConfig[option]} to={this.urlConfig[option]}>
+                    (option, index) => (
+                        <Link key={index} to={this.urlConfig[option]}>
                             <MenuItem>{option}</MenuItem>
                         </Link>
                     )
