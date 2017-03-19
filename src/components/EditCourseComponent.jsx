@@ -17,7 +17,7 @@ export default class EditCourseComponent extends React.Component {
         super(props);
         this.state = {
             openDialog: false,
-            dialogTitle: this.props.courseToOpen.id ? "Edit Course" : "Add New Course",
+            dialogTitle: props.courseToOpen.id ? "Edit Course" : "Add New Course",
             courseAdminId: this.props.courseToOpen.adminId,
             requestInProgress: false,
             openSnackbar: false,

@@ -6,6 +6,7 @@ import Course from "./../models/Course";
 import Reviewer from "./../models/Reviewer";
 import ContentWriter from "./../models/ContentWriter";
 import Admin from "./../models/Admin";
+import Section from "./../models/Section";
 
 const ContentService = {
     fetchCourses(courseID) {
@@ -128,7 +129,7 @@ const ContentService = {
                         resolve(new Reviewer(res.data));
                         break;
                     case "put":
-                        resolve(new Reviewer(res.data[0]))
+                        resolve(new Reviewer(res.data[0]));
                         break;
                     default:
                         reject("not handled");
@@ -137,14 +138,21 @@ const ContentService = {
         });
     },
 
-    fetchSections() {
+    fetchSections(params) {
         return new Promise((resolve, reject) => {
            APIService.makeRequest({
                method: "get",
-               url: APIEndpoints.allSections
+               url: APIEndpoints.allSections,
+               params: {
+                   filter: {
+                       where: {
+                           courseId: params.courseId
+                       }
+                   }
+               }
            }).then((res) => {
                 console.log(res.data);
-                resolve(res.data);
+                resolve(Section.parseSections(res.data));
            }).catch((err) => APIService.errorHandler(reject, err));
         });
     }
