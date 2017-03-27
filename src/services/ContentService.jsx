@@ -7,6 +7,7 @@ import Reviewer from "./../models/Reviewer";
 import ContentWriter from "./../models/ContentWriter";
 import Admin from "./../models/Admin";
 import Section from "./../models/Section";
+import L1 from "./../models/L1";
 
 const ContentService = {
     fetchCourses(courseID) {
@@ -166,6 +167,19 @@ const ContentService = {
             }).then((res) => {
                 console.log(res.data);
                 resolve(new Section(res.data));
+            }).catch((err) => APIService.errorHandler(reject, err));
+        });
+    },
+
+    updateL1(data, params) {
+        return new Promise((resolve, reject) => {
+            APIService.makeRequest({
+                method: params.method,
+                url: APIEndpoints.getL1Endpoint(params.sectionId, params.l1Id),
+                data: data
+            }).then((res) => {
+                console.log(res.data);
+                resolve(new L1(res.data));
             }).catch((err) => APIService.errorHandler(reject, err));
         });
     }

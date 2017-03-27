@@ -6,12 +6,9 @@ import TextField from "material-ui/TextField";
 import FlatButton from "material-ui/FlatButton";
 import RaisedButton from "material-ui/RaisedButton";
 import {Row, Col} from "react-flexbox-grid";
-import SelectField from "material-ui/SelectField";
-import MenuItem from "material-ui/MenuItem";
 import ContentService from "./../services/ContentService";
 import CircularProgress from "material-ui/CircularProgress";
 import Snackbar from "material-ui/Snackbar";
-import DropDownMenu from "material-ui/DropDownMenu";
 
 export default class EditSectionComponent extends React.Component {
     constructor(props) {

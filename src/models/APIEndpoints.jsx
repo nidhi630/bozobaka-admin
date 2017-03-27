@@ -20,6 +20,11 @@ const APIEndpoints = {
     getCourseSectionEndpoint(courseId, sectionId) {
         let endPoint = this.courses + "/" + courseId + "/sections";
         return sectionId ? endPoint + "/" + sectionId : endPoint;
+    },
+
+    getL1Endpoint(sectionId, l1Id) {
+        let endPoint = this.allSections + "/" + sectionId + "/l1s";
+        return l1Id ? endPoint + "/" + l1Id : endPoint;
     }
 };
 

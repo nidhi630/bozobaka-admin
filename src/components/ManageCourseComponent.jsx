@@ -9,13 +9,17 @@ import Collapse, {Panel} from "rc-collapse";
 import 'style-loader!css-loader!rc-collapse/assets/index.css';
 import PanelHeader from "./PanelHeader";
 import EditSectionComponent from "./EditSectionComponent";
+import EditL1Component from "./EditL1Component";
 
 export default class ManageCourseComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.hasAccess = false;
-        this.courseId = props.selectedCourse.id;
-        this.sectionToOpen = {};
+        this.scope = {
+            hasAccess: false,
+            courseId: props.selectedCourse.id,
+            sectionToOpen: {},
+            l1ToOpen: {}
+        };
         this.state = {
             sections: [],
             showLoader: false,
@@ -25,15 +29,15 @@ export default class ManageCourseComponent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.selectedCourse.id !== this.courseId) {
-            this.courseId = nextProps.selectedCourse.id;
+        if (nextProps.selectedCourse.id !== this.scope.courseId) {
+            this.scope.courseId = nextProps.selectedCourse.id;
             this.fetchDataFromServer();
         }
     }
 
     componentWillMount() {
-        this.hasAccess = this.props.loggedInUser.role === "admin";
-        this.courseId = this.props.selectedCourse.id;
+        this.scope.hasAccess = this.props.loggedInUser.role === "admin";
+        this.scope.courseId = this.props.selectedCourse.id;
     }
 
     componentDidMount() {
@@ -41,7 +45,7 @@ export default class ManageCourseComponent extends React.Component {
     }
 
     render() {
-        if (!this.hasAccess) {
+        if (!this.scope.hasAccess) {
             return <NoAccessErrorComponent/>
         }
 
@@ -80,7 +84,7 @@ export default class ManageCourseComponent extends React.Component {
                                             <Collapse accordion={true}>
                                                 {section.l1s.map((l1, l1Index) => (
                                                     <Panel header={<PanelHeader title={l1.name}
-                                                                                titleClick={this.editL1.bind(this)}
+                                                                                titleClick={this.editL1.bind(this, sectionIndex)}
                                                                                 index={l1Index}/>} key={l1Index}>
                                                         {l1.l2s.length === 0 ? <h3>No L2s</h3> :
                                                             <Collapse accordion={true}>
@@ -125,15 +129,20 @@ export default class ManageCourseComponent extends React.Component {
                 }
                 {this.state.openSectionDialog ? <EditSectionComponent showDialog={this.state.openSectionDialog}
                                                                       onDialogClose={this.handleDialogClose.bind(this)}
-                                                                      courseId={this.courseId}
-                                                                      sectionToOpen={this.sectionToOpen}/> : null}
+                                                                      courseId={this.scope.courseId}
+                                                                      sectionToOpen={this.scope.sectionToOpen}/> : null}
+                {this.state.openL1Dialog ? <EditL1Component showDialog={this.state.openL1Dialog}
+                                                            onDialogClose={this.handleDialogClose.bind(this)}
+                                                            sections={this.state.sections}
+                                                            courseId={this.scope.courseId}
+                                                            l1ToOpen={this.scope.l1ToOpen}/> : null}
             </div>
         )
     }
 
     fetchDataFromServer() {
         this.setState({showLoader: true});
-        ContentService.fetchSections({courseId: this.courseId}).then((sections) => {
+        ContentService.fetchSections({courseId: this.scope.courseId}).then((sections) => {
             console.log(sections);
             this.setState({
                 sections: sections,
@@ -146,12 +155,12 @@ export default class ManageCourseComponent extends React.Component {
     }
 
     editSection(rowIndex) {
-        this.sectionToOpen = (typeof rowIndex === "number") ? this.state.sections[rowIndex] : {};
+        this.scope.sectionToOpen = (typeof rowIndex === "number") ? this.state.sections[rowIndex] : {};
         this.setState({openSectionDialog: true});
     }
 
-    editL1(rowIndex) {
-        this.sectionToOpen = (typeof rowIndex === "number") ? this.state.sections[rowIndex] : {};
+    editL1(sectionIndex, l1Index) {
+        this.scope.l1ToOpen = (typeof sectionIndex === "number" && typeof l1Index === "number") ? this.state.sections[sectionIndex].l1s[l1Index] : {};
         this.setState({openL1Dialog: true});
     }
 
@@ -172,6 +181,9 @@ export default class ManageCourseComponent extends React.Component {
             if (prevState.openSectionDialog) {
                 update ? this.fetchDataFromServer() : null;
                 return {openSectionDialog: false};
+            } else if (prevState.openL1Dialog) {
+                update ? this.fetchDataFromServer() : null;
+                return {openL1Dialog: false};
             }
         });
     }
