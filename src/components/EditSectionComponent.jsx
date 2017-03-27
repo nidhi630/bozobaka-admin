@@ -17,12 +17,15 @@ export default class EditSectionComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showLoader: false,
+            requestInProgress: false,
             openDialog: false,
             dialogTitle: props.sectionToOpen.id ? "Edit Section" : "Add New Section",
             openSnackbar: false,
             snackbarMessage: ""
-        }
+        };
+        this.scope = {
+            sectionName: this.props.sectionToOpen.name
+        };
     }
 
     componentWillMount() {
@@ -33,14 +36,14 @@ export default class EditSectionComponent extends React.Component {
         const actions = (
             <Row>
                 <Col xs={3}>
-                    <FlatButton secondary={true} label="Delete" onTouchTap={this.deleteSection.bind(this)}
+                    <FlatButton secondary={true} label="Delete" onClick={this.deleteSection.bind(this)}
                                 disabled={!this.props.sectionToOpen.id}/>
                 </Col>
                 <Col xs={6}>
-                    <FlatButton label="Cancel" onTouchTap={this.cancelButton.bind(this)}/>
+                    <FlatButton label="Cancel" onClick={this.cancelButton.bind(this, false)}/>
                 </Col>
                 <Col xs={3}>
-                    <RaisedButton primary={true} label="Save" onTouchTap={this.saveSection.bind(this)}/>
+                    <RaisedButton primary={true} label="Save" onClick={this.saveSection.bind(this)}/>
                 </Col>
             </Row>
         );
@@ -56,15 +59,41 @@ export default class EditSectionComponent extends React.Component {
                         type="text"
                         hintText="Enter Section Name"
                         floatingLabelText="Section Name"
+                        onChange={this.handleSectionNameChange.bind(this)}
                         required/>
+                    {this.state.requestInProgress ?
+                        <Row center="xs">
+                            <Col xs={12}><CircularProgress/></Col>
+                        </Row> : <br/>}
                 </Dialog>
                 <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMessage} autoHideDuration={2000}/>
             </div>
         )
     }
 
-    deleteSection() {
+    handleSectionNameChange(event, newValue) {
+        this.scope.sectionName = newValue;
+    }
 
+    deleteSection() {
+        this.setState({requestInProgress: true});
+
+        ContentService.updateSections({
+            name: this.scope.sectionName
+        }, {
+            method: "delete",
+            courseId: this.props.courseId,
+            sectionId: this.props.sectionToOpen.id
+        }).then((res) => {
+            this.setState({requestInProgress: false});
+            this.cancelButton(true);
+        }).catch((err) => {
+            this.setState({
+                requestInProgress: false,
+                openSnackbar: true,
+                snackbarMessage: err.message
+            });
+        })
     }
 
     cancelButton(update = false) {
@@ -73,12 +102,31 @@ export default class EditSectionComponent extends React.Component {
     }
 
     saveSection() {
+        if (!this.scope.sectionName || this.state.requestInProgress) return;
+        this.setState({requestInProgress: true});
 
+        ContentService.updateSections({
+            name: this.scope.sectionName
+        }, {
+            method: this.props.sectionToOpen.id ? "put" : "post",
+            courseId: this.props.courseId,
+            sectionId: this.props.sectionToOpen.id
+        }).then((res) => {
+            this.setState({requestInProgress: false});
+            this.cancelButton(true);
+        }).catch((err) => {
+            this.setState({
+                requestInProgress: false,
+                openSnackbar: true,
+                snackbarMessage: err.message
+            });
+        });
     }
 }
 
 EditSectionComponent.propTypes = {
     sectionToOpen: PropTypes.object.isRequired,
     showDialog: PropTypes.bool.isRequired,
-    onDialogClose: PropTypes.func.isRequired
+    onDialogClose: PropTypes.func.isRequired,
+    courseId: PropTypes.string.isRequired
 };

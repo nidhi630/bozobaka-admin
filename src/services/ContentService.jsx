@@ -155,6 +155,19 @@ const ContentService = {
                 resolve(Section.parseSections(res.data));
            }).catch((err) => APIService.errorHandler(reject, err));
         });
+    },
+
+    updateSections(data, params) {
+        return new Promise((resolve, reject) => {
+            APIService.makeRequest({
+                method: params.method,
+                url: APIEndpoints.getCourseSectionEndpoint(params.courseId, params.sectionId),
+                data: data
+            }).then((res) => {
+                console.log(res.data);
+                resolve(new Section(res.data));
+            }).catch((err) => APIService.errorHandler(reject, err));
+        });
     }
 };
 

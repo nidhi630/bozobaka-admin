@@ -19,7 +19,8 @@ export default class ManageCourseComponent extends React.Component {
         this.state = {
             sections: [],
             showLoader: false,
-            openSectionDialog: false
+            openSectionDialog: false,
+            openL1Dialog: false
         };
     }
 
@@ -124,6 +125,7 @@ export default class ManageCourseComponent extends React.Component {
                 }
                 {this.state.openSectionDialog ? <EditSectionComponent showDialog={this.state.openSectionDialog}
                                                                       onDialogClose={this.handleDialogClose.bind(this)}
+                                                                      courseId={this.courseId}
                                                                       sectionToOpen={this.sectionToOpen}/> : null}
             </div>
         )
@@ -148,8 +150,9 @@ export default class ManageCourseComponent extends React.Component {
         this.setState({openSectionDialog: true});
     }
 
-    editL1() {
-        console.log("editL1");
+    editL1(rowIndex) {
+        this.sectionToOpen = (typeof rowIndex === "number") ? this.state.sections[rowIndex] : {};
+        this.setState({openL1Dialog: true});
     }
 
     editL2() {

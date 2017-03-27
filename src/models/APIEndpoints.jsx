@@ -5,7 +5,7 @@
 
 "use strict";
 
-module.exports = {
+const APIEndpoints = {
     apiBase: "http://52.3.133.9:3000",
     login: "/api/users/login",
     userProfile: "api/profiles",
@@ -15,5 +15,12 @@ module.exports = {
     reviewers: "api/profiles/reviewers",
     contentWriters: "api/profiles/contentWriters",
     admins: "api/profiles/admins",
-    allSections: "api/sections"
+    allSections: "api/sections",
+
+    getCourseSectionEndpoint(courseId, sectionId) {
+        let endPoint = this.courses + "/" + courseId + "/sections";
+        return sectionId ? endPoint + "/" + sectionId : endPoint;
+    }
 };
+
+export default APIEndpoints;

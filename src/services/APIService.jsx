@@ -32,6 +32,7 @@ const APIService = {
     },
 
     errorHandler(reject, err) {
+        console.log(err);
         switch (err.code) {
             case "ECONNABORTED":
                 reject(err)
