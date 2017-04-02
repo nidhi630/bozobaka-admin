@@ -35,7 +35,7 @@ const APIService = {
         console.log(err);
         switch (err.code) {
             case "ECONNABORTED":
-                reject(err)
+                reject(err);
                 break;
             default:
                 reject(err.response.data.error);
