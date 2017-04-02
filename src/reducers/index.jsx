@@ -9,9 +9,7 @@ import {combineReducers} from "redux"
 import GlobalReducer from  "./GlobalReducer";
 import ContentReducer from "./ContentReducer";
 
-const reducers = combineReducers({
+export default combineReducers({
     GlobalReducer,
     ContentReducer
 });
-
-export default reducers;

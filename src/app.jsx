@@ -5,8 +5,7 @@ import {render} from "react-dom";
 import {Router, Route, browserHistory, IndexRoute} from "react-router";
 import injectTapEventPlugin from "react-tap-event-plugin";
 import {createStore} from "redux";
-import {Provider} from 'react-redux'
-import reducers from "./reducers/reducers";
+import {Provider} from "react-redux";
 import AppContainer from './containers/AppContainer';
 import AddQuestionContainer from './containers/AddQuestionContainer';
 import AllQuestionsContainer from './containers/AllQuestionsContainer';
@@ -14,6 +13,7 @@ import DashboardContainer from './containers/DashboardContainer';
 import Urls from "./models/Urls";
 import ManageContainer from "./containers/ManageContainer";
 import ManageCourseContainer from "./containers/ManageCourseContainer";
+import configureStore from "./store";
 
 require("style-loader!css-loader!./styles/styles.css");
 
@@ -21,7 +21,7 @@ require("style-loader!css-loader!./styles/styles.css");
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-let store = createStore(reducers);
+let store = configureStore();
 
 render(
     <Provider store={store}>
