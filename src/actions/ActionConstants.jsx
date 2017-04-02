@@ -4,7 +4,7 @@
 
 "use strict";
 
-const ActionConstants = {
+export default {
     TOGGLE_LOGIN_STATUS: "TOGGLE_LOGIN_STATUS",
     GET_SELECTED_COURSE: "GET_SELECTED_COURSE",
     UPDATE_SELECTED_COURSE: "UPDATE_SELECTED_COURSE",
@@ -19,5 +19,3 @@ const ActionConstants = {
     UPDATE_CONTENT_WRITER_DATA: "UPDATE_CONTENT_WRITER_DATA",
     UPDATE_REVIEWER_DATA: "UPDATE_REVIEWER_DATA"
 };
-
-export default ActionConstants;
