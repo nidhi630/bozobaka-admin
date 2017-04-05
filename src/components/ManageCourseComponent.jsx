@@ -152,11 +152,14 @@ export default class ManageCourseComponent extends React.Component {
                                                             onDialogClose={this.handleDialogClose.bind(this)}
                                                             sections={this.state.sections}
                                                             courseId={this.scope.courseId}
-                                                            l2ToOpen={this.scope.l3ToOpen}/> : null}
+                                                            l1ToOpen={this.scope.l1ToOpen}
+                                                            l2ToOpen={this.scope.l2ToOpen}/> : null}
                 {this.state.openL3Dialog ? <EditL3Component showDialog={this.state.openL3Dialog}
                                                             onDialogClose={this.handleDialogClose.bind(this)}
                                                             sections={this.state.sections}
                                                             courseId={this.scope.courseId}
+                                                            l1ToOpen={this.scope.l1ToOpen}
+                                                            l2ToOpen={this.scope.l2ToOpen}
                                                             l3ToOpen={this.scope.l3ToOpen}/> : null}
                 {/*{this.state.openL4Dialog ? <EditL4Component showDialog={this.state.openL4Dialog}*/}
                                                             {/*onDialogClose={this.handleDialogClose.bind(this)}*/}
@@ -181,31 +184,61 @@ export default class ManageCourseComponent extends React.Component {
         });
     }
 
+    getSectionToOpen(rowIndex) {
+        return (typeof rowIndex === "number") ? this.state.sections[rowIndex] : {};
+    }
+
+    getL1ToOpen(sectionIndex, l1Index) {
+        return (typeof sectionIndex === "number" && typeof l1Index === "number") ? this.state.sections[sectionIndex].l1s[l1Index] : {};
+    }
+
+    getL2ToOpen(sectionIndex, l1Index, l2Index) {
+        return (typeof sectionIndex === "number" && typeof l1Index === "number" && typeof l2Index === "number") ?
+            this.state.sections[sectionIndex].l1s[l1Index].l2s[l2Index] : {};
+    }
+
+    getL3ToOpen(sectionIndex, l1Index, l2Index, l3Index) {
+        return (typeof sectionIndex === "number" && typeof l1Index === "number" && typeof l2Index === "number" && typeof l3Index === "number") ?
+            this.state.sections[sectionIndex].l1s[l1Index].l2s[l2Index].l3s[l3Index] : {};
+    }
+
+    getL4ToOpen(sectionIndex, l1Index, l2Index, l3Index, l4Index) {
+        return (typeof sectionIndex === "number" && typeof l1Index === "number" && typeof l2Index === "number" && typeof l3Index === "number" && typeof l4Index === "number") ?
+            this.state.sections[sectionIndex].l1s[l1Index].l2s[l2Index].l3s[l3Index].l4s[l4Index] : {};
+    }
+
     editSection(rowIndex) {
-        this.scope.sectionToOpen = (typeof rowIndex === "number") ? this.state.sections[rowIndex] : {};
+        this.scope.sectionToOpen = this.getSectionToOpen(rowIndex);
         this.setState({openSectionDialog: true});
     }
 
     editL1(sectionIndex, l1Index) {
-        this.scope.l1ToOpen = (typeof sectionIndex === "number" && typeof l1Index === "number") ? this.state.sections[sectionIndex].l1s[l1Index] : {};
+        this.scope.sectionToOpen = this.getSectionToOpen(sectionIndex);
+        this.scope.l1ToOpen = this.getL1ToOpen(sectionIndex, l1Index);
         this.setState({openL1Dialog: true});
     }
 
     editL2(sectionIndex, l1Index, l2Index) {
-        this.scope.l3ToOpen = (typeof sectionIndex === "number" && typeof l1Index === "number" && typeof l2Index === "number") ?
-            this.state.sections[sectionIndex].l1s[l1Index].l2s[l2Index] : {};
+        this.scope.sectionToOpen = this.getSectionToOpen(sectionIndex);
+        this.scope.l1ToOpen = this.getL1ToOpen(sectionIndex, l1Index);
+        this.scope.l2ToOpen = this.getL2ToOpen(sectionIndex, l1Index, l2Index);
         this.setState({openL2Dialog: true});
     }
 
     editL3(sectionIndex, l1Index, l2Index, l3Index) {
-        this.scope.l3ToOpen = (typeof sectionIndex === "number" && typeof l1Index === "number" && typeof l2Index === "number" && typeof l3Index === "number") ?
-            this.state.sections[sectionIndex].l1s[l1Index].l2s[l2Index].l3s[l3Index] : {};
+        this.scope.sectionToOpen = this.getSectionToOpen(sectionIndex);
+        this.scope.l1ToOpen = this.getL1ToOpen(sectionIndex, l1Index);
+        this.scope.l2ToOpen = this.getL2ToOpen(sectionIndex, l1Index, l2Index);
+        this.scope.l3ToOpen = this.getL3ToOpen(sectionIndex, l1Index, l2Index, l3Index);
         this.setState({openL3Dialog: true});
     }
 
     editL4(sectionIndex, l1Index, l2Index, l3Index, l4Index) {
-        this.scope.l3ToOpen = (typeof sectionIndex === "number" && typeof l1Index === "number" && typeof l2Index === "number" && typeof l3Index === "number" && typeof l4Index === "number") ?
-            this.state.sections[sectionIndex].l1s[l1Index].l2s[l2Index].l3s[l3Index].l4s[l4Index] : {};
+        this.scope.sectionToOpen = this.getSectionToOpen(sectionIndex);
+        this.scope.l1ToOpen = this.getL1ToOpen(sectionIndex, l1Index);
+        this.scope.l2ToOpen = this.getL2ToOpen(sectionIndex, l1Index, l2Index);
+        this.scope.l3ToOpen = this.getL3ToOpen(sectionIndex, l1Index, l2Index, l3Index);
+        this.scope.l4ToOpen = this.getL4ToOpen(sectionIndex, l1Index, l2Index, l3Index, l4Index);
         this.setState({openL4Dialog: true});
     }
 

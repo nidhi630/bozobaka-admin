@@ -24,7 +24,8 @@ export default class EditL2Component extends React.Component {
             dialogTitle: props.l2ToOpen.id ? "Edit L2" : "Add New L2",
             openSnackbar: false,
             snackbarMessage: "",
-            sectionValue: props.l2ToOpen.sectionId ? props.l2ToOpen.sectionId : props.sections[0].id
+            sectionValue: props.l1ToOpen.sectionId ? props.l1ToOpen.sectionId : props.sections[0].id,
+            l1Value: props.l1Id ? props.l1Id : ""
         };
     }
 
@@ -73,12 +74,26 @@ export default class EditL2Component extends React.Component {
                     <DropDownMenu
                         value={this.state.sectionValue}
                         onChange={this.handleL1Change.bind(this)}
-                        disabled={this.scope.l3.id ? true : false}
+                        disabled={this.scope.l2.id ? true : false}
                         style={styles.dropdown}
                         autoWidth={false}>
                         {this.props.sections.map((section, index) => (
                             <MenuItem value={section.id} primaryText={section.name} key={index}/>
                         ))}
+                    </DropDownMenu>
+                    <DropDownMenu
+                        value={this.state.l1Value}
+                        onChange={this.handleL1Change.bind(this)}
+                        disabled={this.scope.l2.id ? true : false}
+                        style={styles.dropdown}
+                        autoWidth={false}>
+                        {this.props.sections.map((section, index) => {
+                            if (section.id === this.state.sectionValue) {
+                                return section.l1s.map((l1, l1Index) => (
+                                    <MenuItem value={l1.id} primaryText={l1.name} key={l1Index}/>
+                                ));
+                            }
+                        })}
                     </DropDownMenu>
                     {this.state.requestInProgress ?
                         <Row center="xs">
@@ -95,7 +110,7 @@ export default class EditL2Component extends React.Component {
     }
 
     handleL1Change(event, index, value) {
-        this.setState({sectionValue: value});
+        this.setState({l1Value: value});
     }
 
     handleL2NameChange(event, newValue) {
