@@ -15,12 +15,12 @@ export default class ManageCourseComponent extends React.Component {
     constructor(props) {
         super(props);
         this.scope = {
-            hasAccess: false,
             courseId: props.selectedCourse.id,
             sectionToOpen: {},
             l1ToOpen: {}
         };
         this.state = {
+            hasAccess: props.loggedInUser.role === "admin",
             sections: [],
             showLoader: false,
             openSectionDialog: false,
@@ -33,10 +33,12 @@ export default class ManageCourseComponent extends React.Component {
             this.scope.courseId = nextProps.selectedCourse.id;
             this.fetchDataFromServer();
         }
+        this.setState({
+            hasAccess: nextProps.loggedInUser.role === "admin"
+        })
     }
 
     componentWillMount() {
-        this.scope.hasAccess = this.props.loggedInUser.role === "admin";
         this.scope.courseId = this.props.selectedCourse.id;
     }
 
@@ -45,7 +47,7 @@ export default class ManageCourseComponent extends React.Component {
     }
 
     render() {
-        if (!this.scope.hasAccess) {
+        if (!this.state.hasAccess) {
             return <NoAccessErrorComponent/>
         }
 
