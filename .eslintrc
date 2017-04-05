@@ -32,6 +32,10 @@
     "jsx": true
   },
   "rules": {
+    "jsx-quotes": [
+      2,
+      "prefer-double"
+    ],
     //
     //Possible Errors
     //
@@ -41,7 +45,7 @@
     // disallow or enforce trailing commas
     "no-cond-assign": 2,
     // disallow assignment in conditional expressions
-    "no-console": 1,
+    "no-console": 0,
     // disallow use of console (off by default in the node environment)
     "no-constant-condition": 2,
     // disallow use of constant expressions in conditions
@@ -57,7 +61,6 @@
     // disallow a duplicate case label.
     "no-empty": 2,
     // disallow empty statements
-    "no-empty-class": 2,
     // disallow the use of empty character classes in regular expressions
     "no-ex-assign": 2,
     // disallow assigning to the exception in a catch block
@@ -81,8 +84,6 @@
     // disallow the use of object properties of the global object (Math and JSON) as functions
     "no-regex-spaces": 2,
     // disallow multiple spaces in a regular expression literal
-    "no-reserved-keys": 2,
-    // disallow reserved words being used as object literal keys (off by default)
     "no-sparse-arrays": 2,
     // disallow sparse arrays
     "no-unreachable": 2,
@@ -124,8 +125,6 @@
     // disallow division operators explicitly at beginning of regular expression (off by default)
     "no-else-return": 2,
     // disallow else after a return in an if (off by default)
-    "no-empty-label": 2,
-    // disallow use of labels for anything other then loops and switches
     "no-eq-null": 2,
     // disallow comparisons to null without a type-checking operator (off by default)
     "no-eval": 2,
@@ -249,7 +248,7 @@
     //
     "indent": [
       1,
-      2
+      4
     ],
     // this option sets a specific tab width for your code (off by default)
     "brace-style": 1,
@@ -332,8 +331,6 @@
     // disallow trailing whitespace at the end of lines
     "no-underscore-dangle": 1,
     // disallow dangling underscores in identifiers
-    "no-wrap-func": 1,
-    // disallow wrapping of non-IIFE statements in parens
     "one-var": [
       1,
       "never"
@@ -374,10 +371,7 @@
     // enforce spacing before and after semicolons
     "sort-vars": 0,
     // sort variables within the same declaration block (off by default)
-    "space-after-keywords": [
-      1,
-      "always"
-    ],
+    "keyword-spacing": 1,
     // require a space after certain keywords (off by default)
     "space-before-blocks": [
       1,
@@ -392,10 +386,7 @@
       }
     ],
     // require or disallow space before function opening parenthesis (off by default)
-    "space-in-brackets": [
-      1,
-      "never"
-    ],
+    "object-curly-spacing": 1,
     // require or disallow spaces inside brackets (off by default)
     "space-in-parens": [
       1,
@@ -404,11 +395,6 @@
     // require or disallow spaces inside parentheses (off by default)
     "space-infix-ops": 2,
     // require spaces around operators
-    "space-return-throw-case": [
-      1,
-      "always"
-    ],
-    // require a space after return, throw, and case
     "space-unary-ops": [
       1,
       {
@@ -417,7 +403,7 @@
       }
     ],
     // Require or disallow spaces before/after unary operators (words on by default, nonwords off by default)
-    "spaced-line-comment": [
+    "spaced-comment": [
       1,
       "always"
     ],
@@ -475,11 +461,11 @@
     //
     "react/display-name": 0,
     // Prevent missing displayName in a React component definition
-    "react/jsx-quotes": [
-      2,
-      "double",
-      "avoid-escape"
-    ],
+    //    "react/jsx-quotes": [
+    //      2,
+    //      "double",
+    //      "avoid-escape"
+    //    ],
     // Enforce quote style for JSX attributes
     "react/jsx-no-undef": 2,
     // Disallow undeclared variables in JSX
