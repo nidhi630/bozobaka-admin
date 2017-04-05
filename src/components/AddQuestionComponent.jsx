@@ -23,7 +23,7 @@ export default class AddQuestionComponent extends React.Component {
                         <SelectField
                             ref="selectedSection"
                             value={this.props.selectedSection}
-                            onChange={this.props.handleSectionChange}>
+                            onChange={this.props.handleL1Change}>
                             {
                                 this.props.sections.map(
                                     (section) => <MenuItem key={section.id} value={section.id} primaryText={section.value} />

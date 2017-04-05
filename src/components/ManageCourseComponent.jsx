@@ -10,6 +10,8 @@ import 'style-loader!css-loader!rc-collapse/assets/index.css';
 import PanelHeader from "./PanelHeader";
 import EditSectionComponent from "./EditSectionComponent";
 import EditL1Component from "./EditL1Component";
+import EditL2Component from "./EditL2Component";
+import EditL3Component from "./EditL3Component";
 
 export default class ManageCourseComponent extends React.Component {
     constructor(props) {
@@ -17,14 +19,20 @@ export default class ManageCourseComponent extends React.Component {
         this.scope = {
             courseId: props.selectedCourse.id,
             sectionToOpen: {},
-            l1ToOpen: {}
+            l1ToOpen: {},
+            l2ToOpen: {},
+            l3ToOpen: {},
+            l4ToOpen: {}
         };
         this.state = {
             hasAccess: props.loggedInUser.role === "admin",
             sections: [],
             showLoader: false,
             openSectionDialog: false,
-            openL1Dialog: false
+            openL1Dialog: false,
+            openL2Dialog: false,
+            openL3Dialog: false,
+            openL4Dialog: false
         };
     }
 
@@ -92,7 +100,7 @@ export default class ManageCourseComponent extends React.Component {
                                                             <Collapse accordion={true}>
                                                                 {l1.l2s.map((l2, l2Index) => (
                                                                     <Panel header={<PanelHeader title={l2.name}
-                                                                                                titleClick={this.editL2.bind(this)}
+                                                                                                titleClick={this.editL2.bind(this, sectionIndex, l1Index)}
                                                                                                 index={l2Index}/>}
                                                                            key={l2Index}>
                                                                         {l2.l3s.length === 0 ? <h3>No L3s</h3> :
@@ -133,11 +141,28 @@ export default class ManageCourseComponent extends React.Component {
                                                                       onDialogClose={this.handleDialogClose.bind(this)}
                                                                       courseId={this.scope.courseId}
                                                                       sectionToOpen={this.scope.sectionToOpen}/> : null}
+
                 {this.state.openL1Dialog ? <EditL1Component showDialog={this.state.openL1Dialog}
                                                             onDialogClose={this.handleDialogClose.bind(this)}
                                                             sections={this.state.sections}
                                                             courseId={this.scope.courseId}
                                                             l1ToOpen={this.scope.l1ToOpen}/> : null}
+
+                {this.state.openL2Dialog ? <EditL2Component showDialog={this.state.openL2Dialog}
+                                                            onDialogClose={this.handleDialogClose.bind(this)}
+                                                            sections={this.state.sections}
+                                                            courseId={this.scope.courseId}
+                                                            l2ToOpen={this.scope.l3ToOpen}/> : null}
+                {this.state.openL3Dialog ? <EditL3Component showDialog={this.state.openL3Dialog}
+                                                            onDialogClose={this.handleDialogClose.bind(this)}
+                                                            sections={this.state.sections}
+                                                            courseId={this.scope.courseId}
+                                                            l3ToOpen={this.scope.l3ToOpen}/> : null}
+                {/*{this.state.openL4Dialog ? <EditL4Component showDialog={this.state.openL4Dialog}*/}
+                                                            {/*onDialogClose={this.handleDialogClose.bind(this)}*/}
+                                                            {/*sections={this.state.sections}*/}
+                                                            {/*courseId={this.scope.courseId}*/}
+                                                            {/*l4ToOpen={this.scope.l4ToOpen}/> : null}*/}
             </div>
         )
     }
@@ -166,16 +191,22 @@ export default class ManageCourseComponent extends React.Component {
         this.setState({openL1Dialog: true});
     }
 
-    editL2() {
-        console.log("editL2");
+    editL2(sectionIndex, l1Index, l2Index) {
+        this.scope.l3ToOpen = (typeof sectionIndex === "number" && typeof l1Index === "number" && typeof l2Index === "number") ?
+            this.state.sections[sectionIndex].l1s[l1Index].l2s[l2Index] : {};
+        this.setState({openL2Dialog: true});
     }
 
-    editL3() {
-        console.log("editL3");
+    editL3(sectionIndex, l1Index, l2Index, l3Index) {
+        this.scope.l3ToOpen = (typeof sectionIndex === "number" && typeof l1Index === "number" && typeof l2Index === "number" && typeof l3Index === "number") ?
+            this.state.sections[sectionIndex].l1s[l1Index].l2s[l2Index].l3s[l3Index] : {};
+        this.setState({openL3Dialog: true});
     }
 
-    editL4() {
-        console.log("editL4");
+    editL4(sectionIndex, l1Index, l2Index, l3Index, l4Index) {
+        this.scope.l3ToOpen = (typeof sectionIndex === "number" && typeof l1Index === "number" && typeof l2Index === "number" && typeof l3Index === "number" && typeof l4Index === "number") ?
+            this.state.sections[sectionIndex].l1s[l1Index].l2s[l2Index].l3s[l3Index].l4s[l4Index] : {};
+        this.setState({openL4Dialog: true});
     }
 
     handleDialogClose(update = false) {
@@ -186,6 +217,15 @@ export default class ManageCourseComponent extends React.Component {
             } else if (prevState.openL1Dialog) {
                 update ? this.fetchDataFromServer() : null;
                 return {openL1Dialog: false};
+            } else if (prevState.openL2Dialog) {
+                update ? this.fetchDataFromServer() : null;
+                return {openL2Dialog: false};
+            } else if (prevState.openL3Dialog) {
+                update ? this.fetchDataFromServer() : null;
+                return {openL3Dialog: false};
+            } else if (prevState.openL4Dialog) {
+                update ? this.fetchDataFromServer() : null;
+                return {openL4Dialog: false};
             }
         });
     }
