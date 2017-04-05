@@ -13,8 +13,8 @@ import EditAdminComponent from "./EditAdminComponent";
 export default class ManageComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.hasAccess = false;
         this.state = {
+            hasAccess: props.loggedInUser.role === "superAdmin",
             admins: [],
             reviewers: [],
             contentWriters: [],
@@ -25,10 +25,9 @@ export default class ManageComponent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-    }
-
-    componentWillMount() {
-        this.hasAccess = this.props.loggedInUser.role === "superAdmin";
+        this.setState({
+            hasAccess: nextProps.loggedInUser.role === "superAdmin"
+        });
     }
 
     componentDidMount() {
@@ -36,7 +35,7 @@ export default class ManageComponent extends React.Component {
     }
 
     render() {
-        if (!this.hasAccess) {
+        if (!this.state.hasAccess) {
             return <NoAccessErrorComponent/>;
         }
 
