@@ -108,7 +108,7 @@ export default class ManageCourseComponent extends React.Component {
                                                                                 {l2.l3s.map((l3, l3Index) => (
                                                                                     <Panel header={<PanelHeader
                                                                                         title={l3.name}
-                                                                                        titleClick={this.editL3.bind(this)}
+                                                                                        titleClick={this.editL3.bind(this, sectionIndex, l1Index, l2Index)}
                                                                                         index={l3Index}/>}
                                                                                            key={l3Index}>
                                                                                         {l3.l4s.length === 0 ?

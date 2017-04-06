@@ -202,11 +202,11 @@ const ContentService = {
         return new Promise((resolve, reject) => {
             APIService.makeRequest({
                 method: params.method,
-                url: APIEndpoints.getL3Endpoint(params.l2Id, params.l1Id),
+                url: APIEndpoints.getL3Endpoint(params.l2Id, params.l3Id),
                 data: data
             }).then((res) => {
                 console.log("update l3", res.data);
-                resolve(new L2(res.data));
+                resolve(new L3(res.data));
             }).catch((err) => APIService.errorHandler(reject, err));
         });
     }

@@ -18,13 +18,18 @@ export default class EditL3Component extends React.Component {
         this.scope = {
             l3: props.l3ToOpen
         };
+        let sectionValue = props.l1ToOpen.sectionId ? props.l1ToOpen.sectionId : props.sections[0].id;
+        let l1Value = props.l1ToOpen.id ? props.l1ToOpen.id : props.sections[0].l1s.length ? props.sections[0].l1s[0].id : null;
+        let l2Value = props.l2ToOpen.id ? props.l2ToOpen.id : l1Value && props.sections[0].l1s[0].l2s.length ? props.sections[0].l1s[0].l2s[0].id : null;
         this.state = {
             requestInProgress: false,
             openDialog: false,
-            dialogTitle: props.l3ToOpen.id ? "Edit L2" : "Add New L2",
+            dialogTitle: props.l3ToOpen.id ? "Edit L3" : "Add New L3",
             openSnackbar: false,
             snackbarMessage: "",
-            sectionValue: props.l3ToOpen.sectionId ? props.l3ToOpen.sectionId : props.sections[0].id
+            sectionValue: sectionValue,
+            l1Value: l1Value,
+            l2Value: l2Value
         };
     }
 
@@ -55,6 +60,19 @@ export default class EditL3Component extends React.Component {
             }
         };
 
+        let l2s;
+        this.props.sections.forEach((section) => {
+            if (section.id === this.state.sectionValue) {
+                section.l1s.forEach((l1) => {
+                    if (l1.id === this.state.l1Value) {
+                        l2s = l1.l2s.map((l2, l2Index) => (
+                            <MenuItem value={l2.id} primaryText={l2.name} key={l2Index}/>
+                        ))
+                    }
+                })
+            }
+        });
+
         return (
             <div>
                 <Dialog actions={actions} open={this.state.openDialog} modal={false} title={this.state.dialogTitle}>
@@ -66,13 +84,13 @@ export default class EditL3Component extends React.Component {
                         type="text"
                         hintText="Enter L3 Name"
                         floatingLabelText="L3 Name"
-                        onChange={this.handleL2NameChange.bind(this)}
+                        onChange={this.handleL3NameChange.bind(this)}
                         required/>
                     <br />
                     <br />
                     <DropDownMenu
                         value={this.state.sectionValue}
-                        onChange={this.handleL1Change.bind(this)}
+                        onChange={this.handleSectionChange.bind(this)}
                         disabled={this.scope.l3.id ? true : false}
                         style={styles.dropdown}
                         autoWidth={false}>
@@ -80,6 +98,32 @@ export default class EditL3Component extends React.Component {
                             <MenuItem value={section.id} primaryText={section.name} key={index}/>
                         ))}
                     </DropDownMenu>
+                    {!this.state.l1Value ? null :
+                        <DropDownMenu
+                            value={this.state.l1Value}
+                            onChange={this.handleL1Change.bind(this)}
+                            disabled={this.scope.l3.id ? true : false}
+                            style={styles.dropdown}
+                            autoWidth={false}>
+                            {this.props.sections.map((section, index) => {
+                                if (section.id === this.state.sectionValue) {
+                                    return section.l1s.map((l1, l1Index) => (
+                                        <MenuItem value={l1.id} primaryText={l1.name} key={l1Index}/>
+                                    ));
+                                }
+                            })}
+                        </DropDownMenu>
+                    }
+                    {!this.state.l2Value ? null :
+                        <DropDownMenu
+                            value={this.state.l2Value}
+                            onChange={this.handleL2Change.bind(this)}
+                            disabled={this.scope.l3.id ? true : false}
+                            style={styles.dropdown}
+                            autoWidth={false}>
+                            {l2s}
+                        </DropDownMenu>
+                    }
                     {this.state.requestInProgress ?
                         <Row center="xs">
                             <Col xs={12}><CircularProgress/></Col>
@@ -91,14 +135,46 @@ export default class EditL3Component extends React.Component {
     }
 
     handleSectionChange(event, index, value) {
-        this.setState({sectionValue: value});
+        let l1s = this.props.sections[index].l1s;
+        let l2s = l1s.length ? l1s[0].l2s : [];
+        this.setState({
+            sectionValue: value,
+            l1Value: l1s.length ? l1s[0].id : null,
+            l2Value: l2s.length ? l2s[0].id : null
+        });
     }
 
     handleL1Change(event, index, value) {
-        this.setState({sectionValue: value});
+        let l2s;
+        this.props.sections.forEach((section) => {
+            if (section.id === this.state.sectionValue) {
+                l2s = section.l1s[index].l2s;
+            }
+        });
+        this.setState({
+            l1Value: value,
+            l2Value: l2s.length ? l2s[0].id : null
+        });
     }
 
-    handleL2NameChange(event, newValue) {
+    handleL2Change(event, index, value) {
+        let l3s;
+        this.props.sections.forEach((section) => {
+            if (section.id === this.state.sectionValue) {
+                section.l1s.forEach((l1) => {
+                    if (l1.id === this.state.l1Value) {
+                        l3s = l1.l2s[index].l3s;
+                    }
+                })
+            }
+        });
+        this.setState({
+            l2Value: value,
+            l3Value: l3s.length ? l3s[0].id : null
+        });
+    }
+
+    handleL3NameChange(event, newValue) {
         this.scope.l3.name = newValue;
     }
 
@@ -108,18 +184,18 @@ export default class EditL3Component extends React.Component {
     }
 
     saveButton() {
-        if (!this.scope.l3.name) return;
+        if (!this.scope.l3.name || !this.state.sectionValue || !this.state.l1Value || !this.state.l2Value || this.state.requestInProgress) return;
         this.setState({requestInProgress: true});
-        ContentService.updateL1({name: this.scope.l3.name}, {
+        ContentService.updateL3({name: this.scope.l3.name}, {
             method: this.scope.l3.id ? "put" : "post",
-            l2Id: this.scope.l3.id,
-            l1Id: this.state.sectionValue
+            l3Id: this.scope.l3.id,
+            l2Id: this.state.l2Value
         }).then((res) => {
             this.setState({requestInProgress: false});
             this.cancelButton(true);
         }).catch((err) => {
             this.setState({
-                requestInProgress: true,
+                requestInProgress: false,
                 openSnackbar: true,
                 snackbarMessage: err.message
             });
@@ -128,10 +204,10 @@ export default class EditL3Component extends React.Component {
 
     deleteButton() {
         this.setState({requestInProgress: true});
-        ContentService.updateL1({name: this.scope.l1.name}, {
+        ContentService.updateL3({name: this.scope.l3.name}, {
             method: "delete",
-            l1Id: this.scope.l1.id,
-            sectionId: this.state.sectionValue
+            l3Id: this.scope.l3.id,
+            l2Id: this.state.l2Value
         }).then((res) => {
             this.setState({requestInProgress: false});
             this.cancelButton(true);
@@ -147,7 +223,9 @@ export default class EditL3Component extends React.Component {
 
 EditL3Component.propTypes = {
     courseId: PropTypes.string.isRequired,
+    l1ToOpen: PropTypes.object.isRequired,
     l3ToOpen: PropTypes.object.isRequired,
+    l2ToOpen: PropTypes.object.isRequired,
     showDialog: PropTypes.bool.isRequired,
     onDialogClose: PropTypes.func.isRequired,
     sections: PropTypes.array.isRequired

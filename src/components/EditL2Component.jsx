@@ -109,10 +109,6 @@ export default class EditL2Component extends React.Component {
         )
     }
 
-    getL1Value() {
-
-    }
-
     handleSectionChange(event, index, value) {
         let {l1s} = this.props.sections[index];
         this.setState({
