@@ -5,7 +5,7 @@ import L3 from "./L3";
 export default class L2 {
     constructor(l2) {
         this.id = l2.id;
-        this.l2Id = l2.l2Id;
+        this.l1Id = l2.l1Id;
         this.name = l2.name;
         this.displayName = l2.displayName;
         this.created = l2.created;

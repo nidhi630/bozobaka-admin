@@ -18,6 +18,7 @@ export default class EditL2Component extends React.Component {
         this.scope = {
             l2: props.l2ToOpen
         };
+
         this.state = {
             requestInProgress: false,
             openDialog: false,
@@ -25,7 +26,7 @@ export default class EditL2Component extends React.Component {
             openSnackbar: false,
             snackbarMessage: "",
             sectionValue: props.l1ToOpen.sectionId ? props.l1ToOpen.sectionId : props.sections[0].id,
-            l1Value: props.l1Id ? props.l1Id : ""
+            l1Value: props.l1ToOpen.id ? props.l1ToOpen.id : props.sections[0].l1s.length ? props.sections[0].l1s[0].id : null
         };
     }
 
@@ -73,7 +74,7 @@ export default class EditL2Component extends React.Component {
                     <br />
                     <DropDownMenu
                         value={this.state.sectionValue}
-                        onChange={this.handleL1Change.bind(this)}
+                        onChange={this.handleSectionChange.bind(this)}
                         disabled={this.scope.l2.id ? true : false}
                         style={styles.dropdown}
                         autoWidth={false}>
@@ -81,20 +82,23 @@ export default class EditL2Component extends React.Component {
                             <MenuItem value={section.id} primaryText={section.name} key={index}/>
                         ))}
                     </DropDownMenu>
-                    <DropDownMenu
-                        value={this.state.l1Value}
-                        onChange={this.handleL1Change.bind(this)}
-                        disabled={this.scope.l2.id ? true : false}
-                        style={styles.dropdown}
-                        autoWidth={false}>
-                        {this.props.sections.map((section, index) => {
-                            if (section.id === this.state.sectionValue) {
-                                return section.l1s.map((l1, l1Index) => (
-                                    <MenuItem value={l1.id} primaryText={l1.name} key={l1Index}/>
-                                ));
-                            }
-                        })}
-                    </DropDownMenu>
+                    {!this.state.l1Value ? null :
+                        <DropDownMenu
+                            value={this.state.l1Value}
+                            onChange={this.handleL1Change.bind(this)}
+                            disabled={this.scope.l2.id ? true : false}
+                            style={styles.dropdown}
+                            autoWidth={false}>
+                            {this.props.sections.map((section, index) => {
+                                if (section.id === this.state.sectionValue) {
+                                    return section.l1s.map((l1, l1Index) => (
+                                        <MenuItem value={l1.id} primaryText={l1.name} key={l1Index}/>
+                                    ));
+                                }
+                            })}
+                        </DropDownMenu>
+                    }
+
                     {this.state.requestInProgress ?
                         <Row center="xs">
                             <Col xs={12}><CircularProgress/></Col>
@@ -105,8 +109,16 @@ export default class EditL2Component extends React.Component {
         )
     }
 
+    getL1Value() {
+
+    }
+
     handleSectionChange(event, index, value) {
-        this.setState({sectionValue: value});
+        let {l1s} = this.props.sections[index];
+        this.setState({
+            sectionValue: value,
+            l1Value: l1s.length ? l1s[0].id : null
+        });
     }
 
     handleL1Change(event, index, value) {
@@ -123,18 +135,20 @@ export default class EditL2Component extends React.Component {
     }
 
     saveButton() {
-        if (!this.scope.l2.name) return;
+        if (!this.scope.l2.name || !this.state.l1Value || !this.state.sectionValue || this.state.requestInProgress) return;
         this.setState({requestInProgress: true});
-        ContentService.updateL1({name: this.scope.l3.name}, {
+        ContentService.updateL2({
+            name: this.scope.l2.name
+        }, {
             method: this.scope.l2.id ? "put" : "post",
             l2Id: this.scope.l2.id,
-            l1Id: this.state.sectionValue
+            l1Id: this.state.l1Value
         }).then((res) => {
             this.setState({requestInProgress: false});
             this.cancelButton(true);
         }).catch((err) => {
             this.setState({
-                requestInProgress: true,
+                requestInProgress: false,
                 openSnackbar: true,
                 snackbarMessage: err.message
             });
@@ -143,10 +157,12 @@ export default class EditL2Component extends React.Component {
 
     deleteButton() {
         this.setState({requestInProgress: true});
-        ContentService.updateL1({name: this.scope.l1.name}, {
+        ContentService.updateL2({
+            name: this.scope.l2.name
+        }, {
             method: "delete",
-            l1Id: this.scope.l1.id,
-            sectionId: this.state.sectionValue
+            l2Id: this.scope.l2.id,
+            l1Id: this.state.l1Value
         }).then((res) => {
             this.setState({requestInProgress: false});
             this.cancelButton(true);

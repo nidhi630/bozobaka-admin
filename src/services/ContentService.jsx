@@ -8,6 +8,8 @@ import ContentWriter from "./../models/ContentWriter";
 import Admin from "./../models/Admin";
 import Section from "./../models/Section";
 import L1 from "./../models/L1";
+import L2 from "./../models/L2";
+import L3 from "./../models/L3";
 
 const ContentService = {
     fetchCourses(courseID) {
@@ -180,6 +182,31 @@ const ContentService = {
             }).then((res) => {
                 console.log(res.data);
                 resolve(new L1(res.data));
+            }).catch((err) => APIService.errorHandler(reject, err));
+        });
+    },
+
+    updateL2(data, params) {
+        return new Promise((resolve, reject) => {
+            APIService.makeRequest({
+                method: params.method,
+                url: APIEndpoints.getL2Endpoint(params.l1Id, params.l2Id),
+                data: data
+            }).then((res) => {
+                resolve(new L2(res.data));
+            }).catch((err) => APIService.errorHandler(reject, err));
+        });
+    },
+
+    updateL3(data, params) {
+        return new Promise((resolve, reject) => {
+            APIService.makeRequest({
+                method: params.method,
+                url: APIEndpoints.getL3Endpoint(params.l2Id, params.l1Id),
+                data: data
+            }).then((res) => {
+                console.log("update l3", res.data);
+                resolve(new L2(res.data));
             }).catch((err) => APIService.errorHandler(reject, err));
         });
     }

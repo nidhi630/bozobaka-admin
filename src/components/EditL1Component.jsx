@@ -115,7 +115,7 @@ export default class EditL1Component extends React.Component {
             this.cancelButton(true);
         }).catch((err) => {
             this.setState({
-                requestInProgress: true,
+                requestInProgress: false,
                 openSnackbar: true,
                 snackbarMessage: err.message
             });
