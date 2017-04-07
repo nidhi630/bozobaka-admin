@@ -56,21 +56,23 @@ export default class EditL3Component extends React.Component {
 
         const styles = {
             dropdown: {
-                width: 300
+                width: "100%"
             }
         };
 
-        let l2s;
-        this.props.sections.forEach((section) => {
+        let sections, l1s, l2s;
+        sections = this.props.sections.map((section, sectionIndex) => {
             if (section.id === this.state.sectionValue) {
-                section.l1s.forEach((l1) => {
+                l1s = section.l1s.map((l1, l1Index) => {
                     if (l1.id === this.state.l1Value) {
                         l2s = l1.l2s.map((l2, l2Index) => (
                             <MenuItem value={l2.id} primaryText={l2.name} key={l2Index}/>
                         ))
                     }
+                    return <MenuItem value={l1.id} primaryText={l1.name} key={l1Index}/>
                 })
             }
+            return <MenuItem value={section.id} primaryText={section.name} key={sectionIndex}/>
         });
 
         return (
@@ -88,42 +90,51 @@ export default class EditL3Component extends React.Component {
                         required/>
                     <br />
                     <br />
-                    <DropDownMenu
-                        value={this.state.sectionValue}
-                        onChange={this.handleSectionChange.bind(this)}
-                        disabled={this.scope.l3.id ? true : false}
-                        style={styles.dropdown}
-                        autoWidth={false}>
-                        {this.props.sections.map((section, index) => (
-                            <MenuItem value={section.id} primaryText={section.name} key={index}/>
-                        ))}
-                    </DropDownMenu>
-                    {!this.state.l1Value ? null :
-                        <DropDownMenu
-                            value={this.state.l1Value}
-                            onChange={this.handleL1Change.bind(this)}
-                            disabled={this.scope.l3.id ? true : false}
-                            style={styles.dropdown}
-                            autoWidth={false}>
-                            {this.props.sections.map((section, index) => {
-                                if (section.id === this.state.sectionValue) {
-                                    return section.l1s.map((l1, l1Index) => (
-                                        <MenuItem value={l1.id} primaryText={l1.name} key={l1Index}/>
-                                    ));
-                                }
-                            })}
-                        </DropDownMenu>
-                    }
-                    {!this.state.l2Value ? null :
-                        <DropDownMenu
-                            value={this.state.l2Value}
-                            onChange={this.handleL2Change.bind(this)}
-                            disabled={this.scope.l3.id ? true : false}
-                            style={styles.dropdown}
-                            autoWidth={false}>
-                            {l2s}
-                        </DropDownMenu>
-                    }
+                    <Row>
+                        <Col xs={12} sm={6}>
+                            <p>Section</p>
+                            <DropDownMenu
+                                value={this.state.sectionValue}
+                                onChange={this.handleSectionChange.bind(this)}
+                                disabled={!!this.scope.l3.id}
+                                style={styles.dropdown}
+                                autoWidth={false}>
+                                {sections}
+                            </DropDownMenu>
+                        </Col>
+                        <Col xs={12} sm={6}>
+                            {!this.state.l1Value ? null :
+                                <div>
+                                    <p>L1</p>
+                                    <DropDownMenu
+                                        value={this.state.l1Value}
+                                        onChange={this.handleL1Change.bind(this)}
+                                        disabled={!!this.scope.l3.id}
+                                        style={styles.dropdown}
+                                        autoWidth={false}>
+                                        {l1s}
+                                    </DropDownMenu>
+                                </div>
+                            }
+                        </Col>
+                        <br/><br/>
+                        <Col xs={12} sm={6}>
+                            {!this.state.l2Value ? null :
+                                <div>
+                                    <p>L2</p>
+                                    <DropDownMenu
+                                        value={this.state.l2Value}
+                                        onChange={this.handleL2Change.bind(this)}
+                                        disabled={!!this.scope.l3.id}
+                                        style={styles.dropdown}
+                                        autoWidth={false}>
+                                        {l2s}
+                                    </DropDownMenu>
+                                </div>
+                            }
+                        </Col>
+                    </Row>
+
                     {this.state.requestInProgress ?
                         <Row center="xs">
                             <Col xs={12}><CircularProgress/></Col>
