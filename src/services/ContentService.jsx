@@ -10,6 +10,7 @@ import Section from "./../models/Section";
 import L1 from "./../models/L1";
 import L2 from "./../models/L2";
 import L3 from "./../models/L3";
+import L4 from "./../models/L4";
 
 const ContentService = {
     fetchCourses(courseID) {
@@ -207,6 +208,19 @@ const ContentService = {
             }).then((res) => {
                 console.log("update l3", res.data);
                 resolve(new L3(res.data));
+            }).catch((err) => APIService.errorHandler(reject, err));
+        });
+    },
+
+    updateL4(data, params) {
+        return new Promise((resolve, reject) => {
+            APIService.makeRequest({
+                method: params.method,
+                url: APIEndpoints.getL4Endpoint(params.l3Id, params.l4Id),
+                data: data
+            }).then((res) => {
+                console.log("update l4", res.data);
+                resolve(new L4(res.data));
             }).catch((err) => APIService.errorHandler(reject, err));
         });
     }

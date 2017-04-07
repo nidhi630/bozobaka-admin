@@ -12,6 +12,7 @@ import EditSectionComponent from "./EditSectionComponent";
 import EditL1Component from "./EditL1Component";
 import EditL2Component from "./EditL2Component";
 import EditL3Component from "./EditL3Component";
+import EditL4Component from "./EditL4Component";
 
 export default class ManageCourseComponent extends React.Component {
     constructor(props) {
@@ -161,11 +162,14 @@ export default class ManageCourseComponent extends React.Component {
                                                             l1ToOpen={this.scope.l1ToOpen}
                                                             l2ToOpen={this.scope.l2ToOpen}
                                                             l3ToOpen={this.scope.l3ToOpen}/> : null}
-                {/*{this.state.openL4Dialog ? <EditL4Component showDialog={this.state.openL4Dialog}*/}
-                                                            {/*onDialogClose={this.handleDialogClose.bind(this)}*/}
-                                                            {/*sections={this.state.sections}*/}
-                                                            {/*courseId={this.scope.courseId}*/}
-                                                            {/*l4ToOpen={this.scope.l4ToOpen}/> : null}*/}
+                {this.state.openL4Dialog ? <EditL4Component showDialog={this.state.openL4Dialog}
+                                                            onDialogClose={this.handleDialogClose.bind(this)}
+                                                            sections={this.state.sections}
+                                                            courseId={this.scope.courseId}
+                                                            l1ToOpen={this.scope.l1ToOpen}
+                                                            l2ToOpen={this.scope.l2ToOpen}
+                                                            l3ToOpen={this.scope.l3ToOpen}
+                                                            l4ToOpen={this.scope.l4ToOpen}/> : null}
             </div>
         )
     }

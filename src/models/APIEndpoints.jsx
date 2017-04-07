@@ -34,6 +34,11 @@ const APIEndpoints = {
     getL3Endpoint(l2Id, l3Id) {
         let endPoint = "api/l2s/" + l2Id + "/l3s";
         return l3Id ? endPoint + "/" + l3Id : endPoint;
+    },
+
+    getL4Endpoint(l3Id, l4Id) {
+        let endPoint = "api/l3s/" + l3Id + "/l4s";
+        return l4Id ? endPoint + "/" + l4Id : endPoint;
     }
 };
 
