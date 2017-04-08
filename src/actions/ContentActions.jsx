@@ -1,54 +1,63 @@
 "use strict";
 
-import ActionConstants from './ActionConstants';
+import {
+    UPDATE_COURSES,
+    UPDATE_SELECTED_COURSE,
+    UPDATE_COURSE_DATA,
+    UPDATE_CONTENT_WRITER_DATA,
+    UPDATE_REVIEWER_DATA,
+    DELETE_COURSE_DATA,
+    DELETE_CONTENT_WRITER_DATA,
+    DELETE_REVIEWER_DATA
+} from './ActionConstants';
 
 
 const ContentActions = {
     updateCourses(courses) {
         return {
-            type: ActionConstants.UPDATE_COURSES,
+            type: UPDATE_COURSES,
             courses: courses
         }
     },
 
     updateSelectedCourse(newCourse) {
         return {
-            type: ActionConstants.UPDATE_SELECTED_COURSE,
+            type: UPDATE_SELECTED_COURSE,
             selectedCourse: newCourse
         }
     },
 
     updateCourseData(newCourse) {
         return {
-            type: ActionConstants.UPDATE_COURSE_DATA,
+            type: UPDATE_COURSE_DATA,
             course: newCourse
         }
     },
 
     updateContentWriterData(contentWriter) {
         return {
-            type: ActionConstants.UPDATE_CONTENT_WRITER_DATA,
+            type: UPDATE_CONTENT_WRITER_DATA,
             contentWriter: contentWriter
         }
     },
 
     updateReviewerData(reviewer) {
         return {
-            type: ActionConstants.UPDATE_REVIEWER_DATA,
+            type: UPDATE_REVIEWER_DATA,
             reviewer: reviewer
         }
     },
 
     deleteCourseData(courseId) {
         return {
-            type: ActionConstants.DELETE_COURSE_DATA,
+            type: DELETE_COURSE_DATA,
             courseId: courseId
         }
     },
 
     deleteContentWriterData(contentWriterId) {
         return {
-            type: ActionConstants.DELETE_CONTENT_WRITER_DATA,
+            type: DELETE_CONTENT_WRITER_DATA,
             contentWriterId: contentWriterId,
         }
     },

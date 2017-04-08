@@ -4,24 +4,24 @@
 
 "use strict";
 
-import ActionConstants from './ActionConstants';
+import {TOGGLE_LOGIN_STATUS, TOGGLE_NAVIGATION_DRAWER, SET_LOGGED_IN_USER} from './ActionConstants';
 
 const GlobalActions = {
     toggleLoginStatus(newStatus) {
         return {
-            type: ActionConstants.TOGGLE_LOGIN_STATUS,
+            type: TOGGLE_LOGIN_STATUS,
             status: newStatus
         };
     },
     toggleNavigationDrawer(newStatus) {
         return {
-            type: ActionConstants.TOGGLE_NAVIGATION_DRAWER,
+            type: TOGGLE_NAVIGATION_DRAWER,
             status: newStatus
         }
     },
     setLoggedInUser(user) {
         return {
-            type: ActionConstants.SET_LOGGED_IN_USER,
+            type: SET_LOGGED_IN_USER,
             loggedInUser: user
         }
     }

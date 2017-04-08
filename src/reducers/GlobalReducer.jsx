@@ -3,7 +3,7 @@
  */
 "use strict";
 
-import ActionConstants from "./../actions/ActionConstants";
+import {TOGGLE_LOGIN_STATUS, TOGGLE_NAVIGATION_DRAWER, SET_LOGGED_IN_USER} from "./../actions/ActionConstants";
 import LoginService from "./../services/LoginService";
 
 let defaultState = {
@@ -14,17 +14,17 @@ let defaultState = {
 
 const GlobalReducer = (state = defaultState, action) => {
     switch (action.type) {
-        case ActionConstants.TOGGLE_LOGIN_STATUS:
+        case TOGGLE_LOGIN_STATUS:
             return {
                 ...state,
                 isLoggedIn: action.status
             };
-        case ActionConstants.TOGGLE_NAVIGATION_DRAWER:
+        case TOGGLE_NAVIGATION_DRAWER:
             return {
                 ...state,
                 openNavigationDrawer: action.status
             };
-        case ActionConstants.SET_LOGGED_IN_USER:
+        case SET_LOGGED_IN_USER:
             return {
                 ...state,
                 loggedInUser: action.loggedInUser

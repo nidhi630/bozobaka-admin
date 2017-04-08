@@ -15,6 +15,7 @@ const APIEndpoints = {
     contentWriters: "api/profiles/contentWriters",
     admins: "api/profiles/admins",
     allSections: "api/sections",
+    theory: "api/theories",
 
     getCourseSectionEndpoint(courseId, sectionId) {
         let endPoint = this.courses + "/" + courseId + "/sections";
