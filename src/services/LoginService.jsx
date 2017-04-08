@@ -4,7 +4,7 @@
 
 "use strict";
 
-import APIService from "./APIService";
+import {makeRequest} from "./APIService";
 import Constants from "./../models/Constants";
 import APIEndpoints from "./../models/APIEndpoints";
 
@@ -27,14 +27,13 @@ const LoginService = {
     },
 
     checkIfLoggedIn() {
-        //return this.getAccessToken() && this.getUserID() ? true : false;
         return !!(this.getAccessToken() && this.getUserID());
     },
 
     login(credentials) {
         return new Promise((resolve, reject) => {
             if (credentials.email && credentials.password) {
-                let request = APIService.makeRequest({
+                let request = makeRequest({
                     url: APIEndpoints.login,
                     method: "post",
                     data: credentials,

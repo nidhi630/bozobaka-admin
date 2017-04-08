@@ -1,6 +1,6 @@
 "use strict";
 
-import APIService from "./APIService";
+import {makeRequest, errorHandler} from "./APIService";
 import APIEndpoints from "./../models/APIEndpoints";
 import Course from "./../models/Course";
 import Reviewer from "./../models/Reviewer";
@@ -15,18 +15,18 @@ import L4 from "./../models/L4";
 const ContentService = {
     fetchCourses(courseID) {
         return new Promise((resolve, reject) => {
-            APIService.makeRequest({
+            makeRequest({
                 method: "get",
                 url: courseID ? APIEndpoints.coursesWithCount + "/" + courseID : APIEndpoints.coursesWithCount,
             }).then((res) => {
                 resolve(Course.parseCourses(res.data));
-            }).catch((err) => APIService.errorHandler(reject, err));
+            }).catch((err) => errorHandler(reject, err));
         });
     },
 
     updateCourse(course, config) {
         return new Promise((resolve, reject) => {
-            APIService.makeRequest({
+            makeRequest({
                 method: config.method,
                 url: config.method === "post" ? APIEndpoints.courses : APIEndpoints.courses + "/" + course.id,
                 data: course
@@ -38,41 +38,41 @@ const ContentService = {
 
     fetchAdmins() {
         return new Promise((resolve, reject) => {
-            APIService.makeRequest({
+            makeRequest({
                 method: "get",
                 url: APIEndpoints.admins
             }).then((res) => {
                 resolve(Admin.parseAdmins(res.data));
-            }).catch((err) => APIService.errorHandler(reject, err));
+            }).catch((err) => errorHandler(reject, err));
         });
     },
 
     fetchReviewers() {
         return new Promise((resolve, reject) => {
-            APIService.makeRequest({
+            makeRequest({
                 method: "get",
                 url: APIEndpoints.reviewers,
             }).then((res) => {
                 console.log(res.data);
                 resolve(Reviewer.parseReviewers(res.data));
-            }).catch((err) => APIService.errorHandler(reject, err));
+            }).catch((err) => errorHandler(reject, err));
         });
     },
 
     fetchContentWriters() {
         return new Promise((resolve, reject) => {
-            APIService.makeRequest({
+            makeRequest({
                 method: "get",
                 url: APIEndpoints.contentWriters,
             }).then((res) => {
                 resolve(ContentWriter.parseContentWriters(res.data));
-            }).catch((err) => APIService.errorHandler(reject, err));
+            }).catch((err) => errorHandler(reject, err));
         });
     },
 
     updateAdmin(admin, config) {
         return new Promise((resolve, reject) => {
-            APIService.makeRequest({
+            makeRequest({
                 method: config.method,
                 url: config.method === "post" ? APIEndpoints.addUser : APIEndpoints.admins + "/" + admin.id,
                 data: admin
@@ -90,13 +90,13 @@ const ContentService = {
                     default:
                         reject("not handled");
                 }
-            }).catch((err) => APIService.errorHandler(reject, err));
+            }).catch((err) => errorHandler(reject, err));
         });
     },
 
     updateContentWriters(contentWriter, config) {
         return new Promise((resolve, reject) => {
-            APIService.makeRequest({
+            makeRequest({
                 method: config.method,
                 url: config.method === "post" ? APIEndpoints.addUser : APIEndpoints.contentWriters + "/" + contentWriter.id,
                 data: contentWriter
@@ -114,13 +114,13 @@ const ContentService = {
                     default:
                         reject("not handled");
                 }
-            }).catch((err) => APIService.errorHandler(reject, err));
+            }).catch((err) => errorHandler(reject, err));
         });
     },
 
     updateReviewers(reviewer, config) {
         return new Promise((resolve, reject) => {
-            APIService.makeRequest({
+            makeRequest({
                 method: config.method,
                 url: config.method === "post" ? APIEndpoints.addUser : APIEndpoints.reviewers + "/" + reviewer.id,
                 data: reviewer
@@ -138,13 +138,13 @@ const ContentService = {
                     default:
                         reject("not handled");
                 }
-            }).catch((err) => APIService.errorHandler(reject, err));
+            }).catch((err) => errorHandler(reject, err));
         });
     },
 
     fetchSections(params) {
         return new Promise((resolve, reject) => {
-           APIService.makeRequest({
+           makeRequest({
                method: "get",
                url: APIEndpoints.allSections,
                params: {
@@ -157,71 +157,71 @@ const ContentService = {
            }).then((res) => {
                 console.log(res.data);
                 resolve(Section.parseSections(res.data));
-           }).catch((err) => APIService.errorHandler(reject, err));
+           }).catch((err) => errorHandler(reject, err));
         });
     },
 
     updateSections(data, params) {
         return new Promise((resolve, reject) => {
-            APIService.makeRequest({
+            makeRequest({
                 method: params.method,
                 url: APIEndpoints.getCourseSectionEndpoint(params.courseId, params.sectionId),
                 data: data
             }).then((res) => {
                 console.log(res.data);
                 resolve(new Section(res.data));
-            }).catch((err) => APIService.errorHandler(reject, err));
+            }).catch((err) => errorHandler(reject, err));
         });
     },
 
     updateL1(data, params) {
         return new Promise((resolve, reject) => {
-            APIService.makeRequest({
+            makeRequest({
                 method: params.method,
                 url: APIEndpoints.getL1Endpoint(params.sectionId, params.l1Id),
                 data: data
             }).then((res) => {
                 console.log(res.data);
                 resolve(new L1(res.data));
-            }).catch((err) => APIService.errorHandler(reject, err));
+            }).catch((err) => errorHandler(reject, err));
         });
     },
 
     updateL2(data, params) {
         return new Promise((resolve, reject) => {
-            APIService.makeRequest({
+            makeRequest({
                 method: params.method,
                 url: APIEndpoints.getL2Endpoint(params.l1Id, params.l2Id),
                 data: data
             }).then((res) => {
                 resolve(new L2(res.data));
-            }).catch((err) => APIService.errorHandler(reject, err));
+            }).catch((err) => errorHandler(reject, err));
         });
     },
 
     updateL3(data, params) {
         return new Promise((resolve, reject) => {
-            APIService.makeRequest({
+            makeRequest({
                 method: params.method,
                 url: APIEndpoints.getL3Endpoint(params.l2Id, params.l3Id),
                 data: data
             }).then((res) => {
                 console.log("update l3", res.data);
                 resolve(new L3(res.data));
-            }).catch((err) => APIService.errorHandler(reject, err));
+            }).catch((err) => errorHandler(reject, err));
         });
     },
 
     updateL4(data, params) {
         return new Promise((resolve, reject) => {
-            APIService.makeRequest({
+            makeRequest({
                 method: params.method,
                 url: APIEndpoints.getL4Endpoint(params.l3Id, params.l4Id),
                 data: data
             }).then((res) => {
                 console.log("update l4", res.data);
                 resolve(new L4(res.data));
-            }).catch((err) => APIService.errorHandler(reject, err));
+            }).catch((err) => errorHandler(reject, err));
         });
     }
 };

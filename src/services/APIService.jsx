@@ -17,30 +17,26 @@ axios.interceptors.request.use((config) => {
     return config;
 });
 
-const APIService = {
-    makeRequest(config) {
-        return axios.request({
-            method: config.method,
-            baseURL: config.baseURL ? config.baseUrl : APIEndpoints.apiBase,
-            url: config.url,
-            data: config.data,
-            headers: config.headers ? config.headers : {},
-            params: config.params,
-            timeout: config.timeout ? config.timeout : 100000,
-            cancelToken: config.cancelToken
-        });
-    },
+export function makeRequest(config) {
+    return axios.request({
+        method: config.method,
+        baseURL: config.baseURL ? config.baseUrl : APIEndpoints.apiBase,
+        url: config.url,
+        data: config.data,
+        headers: config.headers ? config.headers : {},
+        params: config.params,
+        timeout: config.timeout ? config.timeout : 100000,
+        cancelToken: config.cancelToken
+    });
+}
 
-    errorHandler(reject, err) {
-        console.log(err);
-        switch (err.code) {
-            case "ECONNABORTED":
-                reject(err);
-                break;
-            default:
-                reject(err.response.data.error);
-        }
+export function errorHandler(reject, err) {
+    console.log(err);
+    switch (err.code) {
+        case "ECONNABORTED":
+            reject(err);
+            break;
+        default:
+            reject(err.response.data.error);
     }
-};
-
-export default APIService;
+}
