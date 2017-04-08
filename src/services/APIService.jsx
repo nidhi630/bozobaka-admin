@@ -5,7 +5,7 @@
 "use strict";
 
 import axios from "axios";
-import APIEndpoints from "./../models/APIEndpoints";
+import {API_BASE} from "./../models/APIEndpoints";
 import LoginService from "./LoginService";
 
 axios.interceptors.request.use((config) => {
@@ -20,7 +20,7 @@ axios.interceptors.request.use((config) => {
 export function makeRequest(config) {
     return axios.request({
         method: config.method,
-        baseURL: config.baseURL ? config.baseUrl : APIEndpoints.apiBase,
+        baseURL: config.baseURL ? config.baseUrl : API_BASE,
         url: config.url,
         data: config.data,
         headers: config.headers ? config.headers : {},

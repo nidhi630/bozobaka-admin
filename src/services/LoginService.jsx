@@ -6,7 +6,7 @@
 
 import {makeRequest} from "./APIService";
 import Constants from "./../models/Constants";
-import APIEndpoints from "./../models/APIEndpoints";
+import {LOGIN} from "./../models/APIEndpoints";
 
 const LoginService = {
     ACCESS_TOKEN: undefined,
@@ -34,7 +34,7 @@ const LoginService = {
         return new Promise((resolve, reject) => {
             if (credentials.email && credentials.password) {
                 let request = makeRequest({
-                    url: APIEndpoints.login,
+                    url: LOGIN,
                     method: "post",
                     data: credentials,
                 });

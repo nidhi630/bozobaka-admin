@@ -7,7 +7,7 @@ import DashboardContainer from "./../containers/DashboardContainer";
 import SidebarContainer from "./../containers/SidebarContainer";
 import HeaderContainer from "./../containers/HeaderContainer";
 import CircularProgress from 'material-ui/CircularProgress';
-import UserService from "./../services/UserService";
+import {getUserProfile} from "./../services/UserService";
 import ContentService from "./../services/ContentService";
 import axios from "axios";
 import Snackbar from 'material-ui/Snackbar';
@@ -66,7 +66,7 @@ class AppComponent extends React.Component {
     }
 
     fetchDataFromServer() {
-        axios.all([UserService.getUserProfile(), ContentService.fetchCourses()])
+        axios.all([getUserProfile(), ContentService.fetchCourses()])
             .then(axios.spread((user, courses) => {
                 this.props.updateCourses(courses);
                 this.props.setLoggedInUser(user);
