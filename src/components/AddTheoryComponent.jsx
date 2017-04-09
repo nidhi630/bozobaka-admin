@@ -35,7 +35,7 @@ export default class AddTheoryComponent extends React.Component {
             return (<NoAccessErrorComponent/>);
         }
 
-        const {sources, selectedSource, updateSelectedSource, updateHeading} = this.props;
+        const {sources, selectedSource, updateSelectedSource, updateHeading, theoryContent} = this.props;
         return (
             <div>
                 <Row>
@@ -74,6 +74,18 @@ export default class AddTheoryComponent extends React.Component {
                             hintText="Enter Heading"
                             onChange={updateHeading.bind(this)}
                         />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={12} sm={6}>
+                        <TextField
+                            title="Theory"
+                            hineText="Enter Theory"
+                            onChange={updateTheory.bind(this)}
+                        />
+                    </Col>
+                    <Col xs={12} sm={6}>
+                        <p>{}</p>
                     </Col>
                 </Row>
             </div>

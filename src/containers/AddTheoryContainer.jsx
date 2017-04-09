@@ -18,7 +18,7 @@ const mapStateToProps = (state) => {
         hasAccess: userHasAccess(role),
         sources: state.sources.sources,
         selectedSource,
-        types: [{id: "random", name: "text"}]
+        theoryContent: state.newTheory.theory
     }
 };
 
@@ -38,6 +38,11 @@ const mapDispatchToProps = (dispatch) => {
 
         updateHeading: (event, newValue) => {
             dispatch(updateHeading(newValue))
+        },
+
+        updateTheory: (event, newValue) => {
+            /* TODO: parse katex */
+            dispatch(updateTheory(newValue));
         }
     }
 };
