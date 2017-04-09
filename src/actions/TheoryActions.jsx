@@ -5,9 +5,11 @@ import {
     THEORY_IS_LOADING,
     THEORY_HAS_ERRORED,
     THEORY_REQUEST_SUCCESS,
-    THEORY_UPDATE_SOURCE
+    THEORY_UPDATE_SOURCE,
+    THEORY_UPDATE_HEADING,
+    THEORY_UPDATE_THEORY
 } from "./ActionConstants";
-import {updateTheory} from "./../services/TheoryService";
+import {updateTheory as updateTheoryRequest} from "./../services/TheoryService";
 
 export function fetchTheory() {
 
@@ -20,7 +22,7 @@ export function postTheory() {
         /* TODO: validate data before post */
         const data = getState.theory.newTheory;
         console.log(data);
-        updateTheory({
+        updateTheoryRequest({
             method: "post",
             data
         }).then((res) => {
@@ -67,5 +69,19 @@ export function updateSource(sourceId) {
     return {
         type: THEORY_UPDATE_SOURCE,
         sourceId
+    }
+}
+
+export function updateHeading(heading) {
+    return {
+        type: THEORY_UPDATE_HEADING,
+        heading
+    }
+}
+
+export function updateTheory(theory) {
+    return {
+        type: THEORY_UPDATE_THEORY,
+        theory
     }
 }

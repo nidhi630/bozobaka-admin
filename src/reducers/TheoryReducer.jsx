@@ -9,7 +9,9 @@ import {
     THEORY_UPDATE_L3,
     THEORY_UPDATE_L4,
     THEORY_REQUEST_SUCCESS,
-    THEORY_HAS_ERRORED
+    THEORY_HAS_ERRORED,
+    THEORY_UPDATE_HEADING,
+    THEORY_UPDATE_THEORY
 } from "./../actions/ActionConstants";
 
 let defaultNewTheory = {
@@ -19,7 +21,9 @@ let defaultNewTheory = {
     requestSuccess: false,
     sectionId: "",
     sources: [],
-    type: "text"
+    type: "text",
+    heading: "",
+    theory: ""
 };
 
 export function newTheoryReducer(state = defaultNewTheory, action) {
@@ -44,36 +48,41 @@ export function newTheoryReducer(state = defaultNewTheory, action) {
                 ...state,
                 sectionId: action.sectionId
             };
-        case THEORY_UPDATE_L1: {
+        case THEORY_UPDATE_L1:
             return {
                 ...state,
                 l1Id: action.l1Id
-            }
-        }
-        case THEORY_UPDATE_L2: {
+            };
+        case THEORY_UPDATE_L2:
             return {
                 ...state,
                 l2Id: action.l2Id
-            }
-        }
-        case THEORY_UPDATE_L3: {
+            };
+        case THEORY_UPDATE_L3:
             return {
                 ...state,
                 l3Id: action.l3Id
-            }
-        }
-        case THEORY_UPDATE_L4: {
+            };
+        case THEORY_UPDATE_L4:
             return {
                 ...state,
                 l4Id: action.l4Id
-            }
-        }
-        case THEORY_UPDATE_SOURCE: {
+            };
+        case THEORY_UPDATE_SOURCE:
             return {
                 ...state,
                 sources: [action.sourceId]
-            }
-        }
+            };
+        case THEORY_UPDATE_HEADING:
+            return {
+                ...state,
+                heading: action.heading
+            };
+        case THEORY_UPDATE_THEORY:
+            return {
+                ...state,
+                theory: action.theory
+            };
         default:
             return state;
     }

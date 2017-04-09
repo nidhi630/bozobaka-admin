@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import AddTheoryComponent from "./../components/AddTheoryComponent";
 import {initSources, deleteSources, fetchSources} from "./../actions/SourceActions";
 
-import {updateSource} from "./../actions/TheoryActions";
+import {updateSource, updateHeading, updateTheory} from "./../actions/TheoryActions";
 
 function userHasAccess(role) {
     let rolesWithAccess = ["admin"];
@@ -34,6 +34,10 @@ const mapDispatchToProps = (dispatch) => {
 
         updateSelectedSource: (event, index, value) => {
             dispatch(updateSource(value));
+        },
+
+        updateHeading: (event, newValue) => {
+            dispatch(updateHeading(newValue))
         }
     }
 };

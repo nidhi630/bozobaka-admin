@@ -6,6 +6,7 @@ import SectionsDropDownComponent from "./SectionsDropDownComponent";
 import {Row, Col} from "react-flexbox-grid";
 import DropdownDisplay from "./DropdownDisplayComponent";
 import RaisedButton from "material-ui/RaisedButton";
+import TextField from "material-ui/TextField";
 
 export default class AddTheoryComponent extends React.Component {
 
@@ -34,7 +35,7 @@ export default class AddTheoryComponent extends React.Component {
             return (<NoAccessErrorComponent/>);
         }
 
-        const {sources, selectedSource, updateSelectedSource, types} = this.props;
+        const {sources, selectedSource, updateSelectedSource, updateHeading} = this.props;
         return (
             <div>
                 <Row>
@@ -63,6 +64,16 @@ export default class AddTheoryComponent extends React.Component {
                 <Row>
                     <Col xs={12}>
                         <h3>Text</h3>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={12}>
+                        <TextField
+                            title="Heading"
+                            type="text"
+                            hintText="Enter Heading"
+                            onChange={updateHeading.bind(this)}
+                        />
                     </Col>
                 </Row>
             </div>
