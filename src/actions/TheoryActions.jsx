@@ -1,10 +1,16 @@
 "use strict";
 
-import {THEORY_UPDATE_SECTION, THEORY_IS_LOADING, THEORY_HAS_ERRORED, THEORY_REQUEST_SUCCESS} from "./ActionConstants";
+import {
+    THEORY_UPDATE_SECTION,
+    THEORY_IS_LOADING,
+    THEORY_HAS_ERRORED,
+    THEORY_REQUEST_SUCCESS,
+    THEORY_UPDATE_SOURCE
+} from "./ActionConstants";
 import {updateTheory} from "./../services/TheoryService";
 
 export function fetchTheory() {
-    
+
 }
 
 export function postTheory() {
@@ -49,9 +55,17 @@ export function theoryRequestSuccess(requestSuccess) {
         requestSuccess
     }
 }
+
 export function updateSection(sectionId) {
     return {
         type: THEORY_UPDATE_SECTION,
         sectionId
+    }
+}
+
+export function updateSource(sourceId) {
+    return {
+        type: THEORY_UPDATE_SOURCE,
+        sourceId
     }
 }

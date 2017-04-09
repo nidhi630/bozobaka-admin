@@ -2,8 +2,9 @@
 
 import {connect} from "react-redux";
 import AddTheoryComponent from "./../components/AddTheoryComponent";
+import {initSources, deleteSources, fetchSources} from "./../actions/SourceActions";
 
-import {} from "./../actions/TheoryActions";
+import {updateSource} from "./../actions/TheoryActions";
 
 function userHasAccess(role) {
     let rolesWithAccess = ["admin"];
@@ -12,14 +13,27 @@ function userHasAccess(role) {
 
 const mapStateToProps = (state) => {
     const role = state.GlobalReducer.loggedInUser.role;
+    const selectedSource = state.newTheory.sources.length ? state.newTheory.sources[0] : "";
     return {
-        hasAccess: userHasAccess(role)
+        hasAccess: userHasAccess(role),
+        sources: state.sources.sources,
+        selectedSource
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        fetchSources: () => {
+            dispatch(fetchSources());
+        },
 
+        deleteSources: () => {
+            dispatch(deleteSources());
+        },
+
+        updateSelectedSource: (event, index, value) => {
+            dispatch(updateSource(value));
+        }
     }
 };
 
