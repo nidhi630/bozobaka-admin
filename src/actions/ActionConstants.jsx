@@ -20,3 +20,22 @@ export const UPDATE_REVIEWER_DATA = "UPDATE_REVIEWER_DATA";
 
 // source
 export const INIT_SOURCES = "INIT_SOURCES";
+
+// section
+export const INIT_SECTIONS = "INIT_SECTIONS";
+export const DELETE_SECTIONS = "DELETE_SECTIONS";
+export const INIT_L1S = "INIT_L1S";
+export const INIT_L2S = "INIT_L2S";
+export const INIT_L3S = "INIT_L3S";
+export const INIT_L4S = "INIT_L4S";
+
+// theory
+export const THEORY_IS_LOADING = "THEORY_IS_LOADING";
+export const THEORY_UPDATE_SECTION = "THEORY_UPDATE_SECTION";
+export const THEORY_UPDATE_L1 = "THEORY_UPDATE_L1";
+export const THEORY_UPDATE_L2 = "THEORY_UPDATE_L2";
+export const THEORY_UPDATE_L3 = "THEORY_UPDATE_L3";
+export const THEORY_UPDATE_L4 = "THEORY_UPDATE_L4";
+export const THEORY_UPDATE_SOURCE = "THEORY_UPDATE_SOURCE";
+export const THEORY_REQUEST_SUCCESS = "THEORY_REQUEST_SUCCESS";
+export const THEORY_HAS_ERRORED = "THEORY_HAS_ERRORED";

@@ -8,10 +8,16 @@ import {combineReducers} from "redux"
 
 import GlobalReducer from  "./GlobalReducer";
 import ContentReducer from "./ContentReducer";
-import theory from "./TheoryReducer";
+import {newTheoryReducer} from "./TheoryReducer";
+import {SectionsReducer, L1sReducer, L2sReducer, L3sReducer, L4sReducer} from "./SectionsReducer";
 
 export default combineReducers({
     GlobalReducer,
     ContentReducer,
-    theory
+    sections: SectionsReducer,
+    l1s: L1sReducer,
+    l2s: L2sReducer,
+    l3s: L3sReducer,
+    l4s: L4sReducer,
+    newTheory: newTheoryReducer
 });
