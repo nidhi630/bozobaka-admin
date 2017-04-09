@@ -3,7 +3,7 @@
 import {connect} from "react-redux";
 import React, {PropTypes} from "react";
 import DropdownDisplay from "./DropdownDisplayComponent";
-import {getSections} from "./../actions/SectionActions";
+import {getSections, deleteSections} from "./../actions/SectionActions";
 import {updateSection} from "./../actions/TheoryActions";
 
 class SectionsDropDownComponent extends React.Component {
@@ -33,6 +33,8 @@ class SectionsDropDownComponent extends React.Component {
 
     componentWillUnmount() {
         console.log("sections drop down component will unmount");
+        this.props.updateSelectedSection("");
+        this.props.deleteSections();
     }
 
     render() {
@@ -43,7 +45,9 @@ class SectionsDropDownComponent extends React.Component {
                     <DropdownDisplay
                         menuItems={sections}
                         value={selectedSection}
-                        onChange={onChange.bind(this)}/> : null}
+                        onChange={onChange.bind(this)}/>
+                :
+                <h3>No sections</h3>}
             </div>
         )
     }
@@ -73,6 +77,10 @@ const mapDispatchToProps = (dispatch) => {
 
         updateSelectedSection: (newValue) => {
             dispatch(updateSection(newValue));
+        },
+
+        deleteSections: () => {
+            dispatch(deleteSections());
         }
     };
 };
