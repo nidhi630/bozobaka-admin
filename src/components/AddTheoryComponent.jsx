@@ -34,7 +34,7 @@ export default class AddTheoryComponent extends React.Component {
             return (<NoAccessErrorComponent/>);
         }
 
-        const {sources, selectedSource, updateSelectedSource} = this.props;
+        const {sources, selectedSource, updateSelectedSource, types} = this.props;
         return (
             <div>
                 <Row>
@@ -58,6 +58,11 @@ export default class AddTheoryComponent extends React.Component {
                     }
                     <Col xs={4} sm={6}>
                         <RaisedButton label="Add Source" primary={true}/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={12}>
+                        <h3>Text</h3>
                     </Col>
                 </Row>
             </div>

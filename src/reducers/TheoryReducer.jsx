@@ -18,7 +18,8 @@ let defaultNewTheory = {
     errorMessage: "",
     requestSuccess: false,
     sectionId: "",
-    sources: []
+    sources: [],
+    type: "text"
 };
 
 export function newTheoryReducer(state = defaultNewTheory, action) {

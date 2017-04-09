@@ -17,7 +17,8 @@ const mapStateToProps = (state) => {
     return {
         hasAccess: userHasAccess(role),
         sources: state.sources.sources,
-        selectedSource
+        selectedSource,
+        types: [{id: "random", name: "text"}]
     }
 };
 
