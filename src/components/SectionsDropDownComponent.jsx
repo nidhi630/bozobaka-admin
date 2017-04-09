@@ -24,7 +24,6 @@ class SectionsDropDownComponent extends React.Component {
     }
 
     componentWillMount() {
-        console.log("Sections drop down component will mount");
         const {sections, courseId, getSections} = this.props;
         if (!sections.length) {
             getSections({courseId: courseId});
@@ -32,7 +31,6 @@ class SectionsDropDownComponent extends React.Component {
     }
 
     componentWillUnmount() {
-        console.log("sections drop down component will unmount");
         this.props.updateSelectedSection("");
         this.props.deleteSections();
     }
@@ -46,16 +44,14 @@ class SectionsDropDownComponent extends React.Component {
                         menuItems={sections}
                         value={selectedSection}
                         onChange={onChange.bind(this)}/>
-                :
-                <h3>No sections</h3>}
+                    :
+                    <h3>No sections</h3>}
             </div>
         )
     }
 }
 
-SectionsDropDownComponent.propTypes = {
-    courseId: PropTypes.string.isRequired
-};
+SectionsDropDownComponent.propTypes = {};
 
 const mapStateToProps = (state) => {
     return {

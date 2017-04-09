@@ -3,6 +3,7 @@
 import React, {PropTypes} from "react";
 import NoAccessErrorComponent from "./NoAccessErrorComponent";
 import SectionsDropDownComponent from "./SectionsDropDownComponent";
+import {Row, Col} from "react-flexbox-grid";
 
 export default class AddTheoryComponent extends React.Component {
 
@@ -30,7 +31,12 @@ export default class AddTheoryComponent extends React.Component {
         return (
             <div>
                 <h2>Add Theory</h2>
-                <SectionsDropDownComponent/>
+                <Row>
+                    <Col xs={12}>
+                        <SectionsDropDownComponent/>
+                    </Col>
+                </Row>
+                
             </div>
         );
     }
