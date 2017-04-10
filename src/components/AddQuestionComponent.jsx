@@ -2,7 +2,7 @@
 
 import React from "react";
 import {Row, Col} from "react-flexbox-grid";
-import SectionsDropDownComponent from "./SectionsDropDownComponent";
+import SectionSelectionComponent from "./SectionSelectionComponent";
 import {questionUpdateSource} from "./../actions/QuestionActions";
 
 export default class AddQuestionComponent extends React.Component {
@@ -18,7 +18,7 @@ export default class AddQuestionComponent extends React.Component {
                 <h2>Add Question</h2>
                 <Row>
                     <Col xs={12}>
-                        <SectionsDropDownComponent updateSource={questionUpdateSource.bind(this)}/>
+                        <SectionSelectionComponent updateSource={questionUpdateSource.bind(this)}/>
                     </Col>
                 </Row>
                 <Row>

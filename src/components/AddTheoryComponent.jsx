@@ -2,7 +2,7 @@
 
 import React, {PropTypes} from "react";
 import NoAccessErrorComponent from "./NoAccessErrorComponent";
-import SectionsDropDownComponent from "./SectionsDropDownComponent";
+import SectionSelectionComponent from "./SectionSelectionComponent";
 import {Row, Col} from "react-flexbox-grid";
 import TextField from "material-ui/TextField";
 import HtmlToReactParser from "html-to-react";
@@ -50,7 +50,7 @@ export default class AddTheoryComponent extends React.Component {
                 </Row>
                 <Row>
                     <Col xs={12}>
-                        <SectionsDropDownComponent updateSection={theoryUpdateSection.bind(this)}/>
+                        <SectionSelectionComponent updateSection={theoryUpdateSection.bind(this)}/>
                     </Col>
                 </Row>
                 <Row>

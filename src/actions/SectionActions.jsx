@@ -45,7 +45,7 @@ export function initL4s(l4s) {
 }
 
 export function getSections(params) {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         dispatch(deleteSections());
         ContentService.fetchSections(params)
             .then((res) => {

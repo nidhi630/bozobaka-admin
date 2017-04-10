@@ -5,7 +5,7 @@ import React, {PropTypes} from "react";
 import DropdownDisplay from "./DropdownDisplayComponent";
 import {getSections, deleteSections} from "./../actions/SectionActions";
 
-class SectionsDropDownComponent extends React.Component {
+class SectionSelectionComponent extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -50,7 +50,7 @@ class SectionsDropDownComponent extends React.Component {
     }
 }
 
-SectionsDropDownComponent.propTypes = {};
+SectionSelectionComponent.propTypes = {};
 
 const mapStateToProps = (state) => {
     return {
@@ -80,4 +80,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SectionsDropDownComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(SectionSelectionComponent);
