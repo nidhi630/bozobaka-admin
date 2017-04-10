@@ -16,6 +16,7 @@ import L2SelectionComponent from "./L2SelectionComponent";
 import L3SelectionComponent from "./L3SelectionComponent";
 import L4SelectionComponent from "./L4SelectionComponent";
 import StatusSelectionComponent from "./StatusSelectionComponent";
+import SourceSelectionComponent from "./SourceSelectionComponent";
 
 export default class AddQuestionComponent extends React.Component {
     constructor(props) {
@@ -23,7 +24,8 @@ export default class AddQuestionComponent extends React.Component {
     }
 
     render() {
-        const {difficulty, onDifficultyChange, l1Id, l2Id, l3Id, l4Id, sectionId, status} = this.props;
+        const {difficulty, onDifficultyChange, l1Id, l2Id, l3Id, l4Id, sectionId, status,
+            updateSelectedSource} = this.props;
 
         return (
             <div>
@@ -31,6 +33,11 @@ export default class AddQuestionComponent extends React.Component {
                 <Row>
                     <Col xs={12}>
                         <SectionSelectionComponent updateSource={questionUpdateSource.bind(this)}/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={12}>
+                        <SourceSelectionComponent updateSource={updateSelectedSource.bind(this)}/>
                     </Col>
                 </Row>
                 <Row>
