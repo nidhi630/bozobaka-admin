@@ -3,7 +3,17 @@
 import React from "react";
 import {Row, Col} from "react-flexbox-grid";
 import SectionSelectionComponent from "./SectionSelectionComponent";
-import {questionUpdateSource, questionUpdateL1} from "./../actions/QuestionActions";
+import {
+    questionUpdateSource,
+    questionUpdateL1,
+    questionUpdateL2,
+    questionUpdateL3,
+    questionUpdateL4
+} from "./../actions/QuestionActions";
+import L1SelectionComponent from "./L1SelectionComponent";
+import L2SelectionComponent from "./L2SelectionComponent";
+import L3SelectionComponent from "./L3SelectionComponent";
+import L4SelectionComponent from "./L4SelectionComponent";
 
 export default class AddQuestionComponent extends React.Component {
     constructor(props) {
@@ -24,6 +34,15 @@ export default class AddQuestionComponent extends React.Component {
                 <Row>
                     <Col xs={12} sm={6} md={4}>
                         <L1SelectionComponent sectionId={sectionId} l1Id={l1Id} updateL1={questionUpdateL1.bind(this)}/>
+                    </Col>
+                    <Col xs={12} sm={6} md={4}>
+                        <L2SelectionComponent l1Id={l1Id} l2Id={l2Id} updateL1={questionUpdateL2.bind(this)}/>
+                    </Col>
+                    <Col xs={12} sm={6} md={4}>
+                        <L3SelectionComponent l2Id={l2Id} l3Id={l3Id} updateL1={questionUpdateL3.bind(this)}/>
+                    </Col>
+                    <Col xs={12} sm={6} md={4}>
+                        <L4SelectionComponent l4Id={l4Id} l3Id={l3Id} updateL1={questionUpdateL4.bind(this)}/>
                     </Col>
                 </Row>
                 <Row>
