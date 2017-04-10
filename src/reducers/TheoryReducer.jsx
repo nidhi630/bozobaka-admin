@@ -11,7 +11,8 @@ import {
     THEORY_REQUEST_SUCCESS,
     THEORY_HAS_ERRORED,
     THEORY_UPDATE_HEADING,
-    THEORY_UPDATE_THEORY
+    THEORY_UPDATE_THEORY,
+    THEORY_UPDATE_STATUS
 } from "./../actions/ActionConstants";
 
 let defaultNewTheory = {
@@ -23,7 +24,8 @@ let defaultNewTheory = {
     sources: [],
     type: "text",
     heading: "",
-    theory: ""
+    theory: "",
+    status: "Draft"
 };
 
 export function newTheoryReducer(state = defaultNewTheory, action) {
@@ -82,6 +84,11 @@ export function newTheoryReducer(state = defaultNewTheory, action) {
             return {
                 ...state,
                 theory: action.theory
+            };
+        case THEORY_UPDATE_STATUS:
+            return {
+                ...state,
+                status: action.status
             };
         default:
             return state;

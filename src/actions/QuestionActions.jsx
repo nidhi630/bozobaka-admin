@@ -11,7 +11,8 @@ import {
     QUESTION_UPDATE_L4,
     QUESTION_UPDATE_SOURCE,
     QUESTION_UPDATE_QUESTION_TYPE,
-    QUESTION_UPDATE_DIFFICULTY
+    QUESTION_UPDATE_DIFFICULTY,
+    QUESTION_UPDATE_STATUS
 } from "./../actions/ActionConstants";
 
 export function questionUpdateSource(sourceId) {
@@ -88,5 +89,12 @@ export function questionUpdateDifficulty(difficulty) {
     return {
         type: QUESTION_UPDATE_DIFFICULTY,
         difficulty
+    }
+}
+
+export function questionUpdateStatus(status) {
+    return {
+        type: QUESTION_UPDATE_STATUS,
+        status
     }
 }

@@ -11,7 +11,8 @@ import {
     THEORY_UPDATE_L1,
     THEORY_UPDATE_L2,
     THEORY_UPDATE_L3,
-    THEORY_UPDATE_L4
+    THEORY_UPDATE_L4,
+    THEORY_UPDATE_STATUS
 } from "./ActionConstants";
 import {updateTheory as updateTheoryRequest} from "./../services/TheoryService";
 
@@ -114,5 +115,12 @@ export function theoryUpdateL4(l4) {
     return {
         type: THEORY_UPDATE_L4,
         l4
+    }
+}
+
+export function theoryUpdateStatus(status) {
+    return {
+        type: THEORY_UPDATE_STATUS,
+        status
     }
 }

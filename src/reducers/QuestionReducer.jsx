@@ -11,7 +11,8 @@ import {
     QUESTION_UPDATE_L4,
     QUESTION_UPDATE_SOURCE,
     QUESTION_UPDATE_QUESTION_TYPE,
-    QUESTION_UPDATE_DIFFICULTY
+    QUESTION_UPDATE_DIFFICULTY,
+    QUESTION_UPDATE_STATUS
 } from "./../actions/ActionConstants";
 
 let defaultState = {
@@ -26,7 +27,8 @@ let defaultState = {
     l4Id: "",
     sources: [],
     questionType: "Single Correct",
-    difficulty: 50
+    difficulty: 50,
+    status: "Draft"
 };
 
 export function questionReducer(state = defaultState, action) {
@@ -85,6 +87,11 @@ export function questionReducer(state = defaultState, action) {
             return {
                 ...state,
                 difficulty: action.difficulty
+            };
+        case QUESTION_UPDATE_STATUS:
+            return {
+                ...state,
+                staus: action.status
             };
         default:
             return state;
