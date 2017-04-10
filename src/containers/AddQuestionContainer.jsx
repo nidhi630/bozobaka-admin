@@ -3,11 +3,15 @@
 import {connect} from 'react-redux';
 import React from 'react';
 import AddQuestionComponent from './../components/AddQuestionComponent';
+import {getAllQuestionTypes} from "./../models/allQuestionTypes";
 
 const mapStateToProps = (state) => {
     return {
         ...state.GlobalReducer,
-        ...state.ContentReducer
+        ...state.ContentReducer,
+        questionTypes: getAllQuestionTypes(),
+        sectionId: state.question.sectionId,
+
     }
 };
 

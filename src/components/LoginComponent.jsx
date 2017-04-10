@@ -8,7 +8,6 @@ import CircularProgress from "material-ui/CircularProgress";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
 import Checkbox from "material-ui/Checkbox";
-import Constants from "../models/Constants.jsx";
 import LoginService from "./../services/LoginService";
 import Paper from "material-ui/Paper";
 
@@ -66,7 +65,7 @@ export default class LoginComponent extends React.Component {
         return (
             <div className="login-container">
                 <Paper zDepth={1} rounded={false} style={paperStyle}>
-                    <h1>{Constants.TITLE}</h1>
+                    <h1>{BrownBoard}</h1>
                     <br />
                     <h2>Login</h2>
                     <form onSubmit={this.onFormSubmit.bind(this)}>

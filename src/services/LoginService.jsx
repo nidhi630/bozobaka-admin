@@ -5,8 +5,10 @@
 "use strict";
 
 import {makeRequest} from "./APIService";
-import Constants from "./../models/Constants";
 import {LOGIN} from "./../models/APIEndpoints";
+
+const USER_ID_KEY = "userId";
+const ACCESS_TOKEN_KEY = "ACCESS_TOKEN_KEY";
 
 const LoginService = {
     ACCESS_TOKEN: undefined,
@@ -14,14 +16,14 @@ const LoginService = {
 
     getAccessToken() {
         if (!this.ACCESS_TOKEN) {
-            this.ACCESS_TOKEN = window.localStorage.getItem(Constants.ACCESS_TOKEN_KEY);
+            this.ACCESS_TOKEN = window.localStorage.getItem(ACCESS_TOKEN_KEY);
         }
         return this.ACCESS_TOKEN;
     },
 
     getUserID() {
         if (!this.USER_ID) {
-            this.USER_ID = window.localStorage.getItem(Constants.USER_ID_KEY);
+            this.USER_ID = window.localStorage.getItem(USER_ID_KEY);
         }
         return this.USER_ID;
     },
@@ -53,13 +55,13 @@ const LoginService = {
 
     _loginHelper(data) {
         this.logout();
-        window.localStorage.setItem(Constants.ACCESS_TOKEN_KEY, data.id);
-        window.localStorage.setItem(Constants.USER_ID_KEY, data.userId);
+        window.localStorage.setItem(ACCESS_TOKEN_KEY, data.id);
+        window.localStorage.setItem(USER_ID_KEY, data.userId);
     },
 
     logout() {
-        window.localStorage.removeItem(Constants.ACCESS_TOKEN_KEY);
-        window.localStorage.removeItem(Constants.USER_ID_KEY);
+        window.localStorage.removeItem(ACCESS_TOKEN_KEY);
+        window.localStorage.removeItem(USER_ID_KEY);
         this.ACCESS_TOKEN = undefined;
         this.USER_ID = undefined;
     }

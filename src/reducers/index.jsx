@@ -21,5 +21,6 @@ export default combineReducers({
     l3s: L3sReducer,
     l4s: L4sReducer,
     newTheory: newTheoryReducer,
-    sources: sourceReducer
+    sources: sourceReducer,
+    question: questionReducer
 });
