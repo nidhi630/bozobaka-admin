@@ -6,15 +6,17 @@ import DropdownDisplay from "./DropdownDisplayComponent";
 import RaisedButton from "material-ui/RaisedButton";
 import {Row, Col} from "react-flexbox-grid";
 import {deleteSources, fetchSources} from "./../actions/SourceActions";
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import TextField from "material-ui/TextField";
 
 class SourceSelectionComponent extends React.Component {
-
-    static propTypes() {
-
-    }
-
     constructor(props) {
         super(props);
+        this.state = {
+            openDialog: false,
+            name: ""
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -39,7 +41,7 @@ class SourceSelectionComponent extends React.Component {
     render() {
         const {sources, updateSelectedSource, selectedSource} = this.props;
         return (
-            <Row>
+            <div>
                 {sources.length ?
                     <Col xs={8} sm={6}>
                         <DropdownDisplay menuItems={sources} value={selectedSource}
@@ -48,12 +50,11 @@ class SourceSelectionComponent extends React.Component {
                     :
                     null
                 }
-                <Col xs={4} sm={6}>
-                    <RaisedButton label="Add Source" primary={true}/>
-                </Col>
-            </Row>
+            </div>
         );
     }
+
+
 }
 
 const mapStateToProps = (state) => {
@@ -79,8 +80,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
         updateSelectedSource: (event, index, value) => {
             dispatch(ownProps.updateSource(value));
-        },
+        }
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps) (SourceSelectionComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(SourceSelectionComponent);

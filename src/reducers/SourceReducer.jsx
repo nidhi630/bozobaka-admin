@@ -6,7 +6,8 @@ import {
     SOURCE_REQUEST_SUCCESS,
     SOURCE_HAS_ERRORED,
     SOURCE_IS_LOADING,
-    SOURCE_NAME
+    SOURCE_NAME,
+    SOURCE_DIALOG_STATE
 } from "./../actions/ActionConstants";
 
 let defaultState = {
@@ -15,7 +16,8 @@ let defaultState = {
     errorMessage: "",
     requestSuccess: false,
     sources: [],
-    name: ""
+    name: "",
+    openDialog: false
 };
 
 export function sourceReducer(state = defaultState, action) {
@@ -51,7 +53,11 @@ export function sourceReducer(state = defaultState, action) {
                 ...state,
                 name: action.name
             };
-
+        case SOURCE_DIALOG_STATE:
+            return {
+                ...state,
+                dialogState: action.dialogState
+            };
         default:
             return state;
     }

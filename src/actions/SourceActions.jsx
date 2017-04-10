@@ -6,9 +6,11 @@ import {
     SOURCE_HAS_ERRORED,
     SOURCE_IS_LOADING,
     SOURCE_REQUEST_SUCCESS,
-    SOURCE_NAME
+    SOURCE_NAME,
+    SOURCE_ADD_SOURCE,
+    SOURCE_DIALOG_STATE
 } from "./ActionConstants";
-import {getSources} from "./../services/SourceService";
+import {getSources, postSource as creatNewSource} from "./../services/SourceService";
 
 export function initSources(sources) {
     return {
@@ -17,7 +19,7 @@ export function initSources(sources) {
     }
 }
 
-export function setName(name) {
+export function sourceUpdateName(name) {
     return {
         type: SOURCE_NAME,
         name
@@ -52,12 +54,43 @@ export function sourceRequestSuccess(requestSuccess) {
     }
 }
 
+export function sourceAddSource(source) {
+    return {
+        type: SOURCE_ADD_SOURCE,
+        source
+    }
+}
+
+export function sourceDialogState(openDialog) {
+    return {
+        type: SOURCE_DIALOG_STATE,
+        openDialog
+    }
+}
+
 export function fetchSources() {
     return (dispatch) => {
         dispatch(sourceIsLoading(true));
 
         getSources().then((sources) => {
             dispatch(initSources(sources));
+            dispatch(sourceHasErrored(false, ""));
+            dispatch(sourceIsLoading(false));
+            dispatch(sourceRequestSuccess(true));
+        }).catch((err) => {
+            dispatch(sourceHasErrored(true, err.message));
+            dispatch(sourceIsLoading(false));
+            dispatch(sourceRequestSuccess(false));
+        })
+    }
+}
+
+export function postSource(name) {
+    return (dispatch) => {
+        dispatch(sourceIsLoading(true));
+
+        creatNewSource(name).then((source) => {
+            dispatch(sourceAddSource(source));
             dispatch(sourceHasErrored(false, ""));
             dispatch(sourceIsLoading(false));
             dispatch(sourceRequestSuccess(true));

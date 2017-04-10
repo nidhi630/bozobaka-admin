@@ -14,3 +14,14 @@ export function getSources() {
         }).catch((err) => errorHandler(reject, err));
     })
 }
+
+export function postSource(name) {
+    return new Promise((resolve, reject) => {
+        makeRequest({
+            method: "post",
+            url: SOURCES
+        }).then((response) => {
+            resolve(new Source(response.data));
+        }).catch((err) => errorHandler(reject, err));
+    })
+}
