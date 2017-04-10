@@ -29,7 +29,7 @@ class L2SelectionComponent extends React.Component {
 
     render() {
         const {l2Id, l2s, onChange, l1Id} = this.props;
-        let menuItems = l2s.filter((l2) => (l2.sectionId === l1Id));
+        let menuItems = l2s.filter((l2) => (l2.l1Id === l1Id));
         return (
             <DropdownDisplay onChange={onChange.bind(this)} menuItems={menuItems} value={l2Id} width="100%"/>
         )
