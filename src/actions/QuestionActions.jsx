@@ -10,10 +10,11 @@ import {
     QUESTION_UPDATE_L3,
     QUESTION_UPDATE_L4,
     QUESTION_UPDATE_SOURCE,
-    QUESTION_UPDATE_QUESTION_TYPE
+    QUESTION_UPDATE_QUESTION_TYPE,
+    QUESTION_UPDATE_DIFFICULTY
 } from "./../actions/ActionConstants";
 
-export function updateSource(sourceId) {
+export function questionUpdateSource(sourceId) {
     return {
         type: QUESTION_UPDATE_SOURCE,
         sourceId
@@ -80,5 +81,12 @@ export function questionUpdateQuestionType(questionType) {
     return {
         type: QUESTION_UPDATE_QUESTION_TYPE,
         questionType
+    }
+}
+
+export function questionUpdateDifficulty(difficulty) {
+    return {
+        type: QUESTION_UPDATE_DIFFICULTY,
+        difficulty
     }
 }

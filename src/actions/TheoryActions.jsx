@@ -34,7 +34,6 @@ export function postTheory() {
             dispatch(theoryHasErrored(true, err.message));
         })
     }
-
 }
 
 export function theoryHasErrored(hasErrored, errorMessage) {

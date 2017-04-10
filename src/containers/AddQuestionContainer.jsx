@@ -4,21 +4,22 @@ import {connect} from 'react-redux';
 import React from 'react';
 import AddQuestionComponent from './../components/AddQuestionComponent';
 import {getAllQuestionTypes} from "./../models/allQuestionTypes";
-import {updateSource} from "./../actions/QuestionActions";
+import {questionUpdateDifficulty} from "./../actions/QuestionActions";
 
 const mapStateToProps = (state) => {
     return {
         ...state.GlobalReducer,
         ...state.ContentReducer,
         questionTypes: getAllQuestionTypes(),
-        sectionId: state.question.sectionId
+        sectionId: state.question.sectionId,
+        difficulty: state.question.difficulty
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateSelectedSource: (value) => {
-            dispatch(updateSource(value));
+        onDifficultyChange: (event, value) => {
+            dispatch(questionUpdateDifficulty(value));
         }
     }
 };
