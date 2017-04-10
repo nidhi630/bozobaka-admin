@@ -4,10 +4,10 @@ import React, {PropTypes} from "react";
 import NoAccessErrorComponent from "./NoAccessErrorComponent";
 import SectionsDropDownComponent from "./SectionsDropDownComponent";
 import {Row, Col} from "react-flexbox-grid";
-import DropdownDisplay from "./DropdownDisplayComponent";
-import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 import HtmlToReactParser from "html-to-react";
+import SourceSelectionComponent from "./SourceSelectionComponent";
+import {updateSection} from "./../actions/TheoryActions";
 
 export default class AddTheoryComponent extends React.Component {
 
@@ -27,11 +27,11 @@ export default class AddTheoryComponent extends React.Component {
     }
 
     componentWillMount() {
-        this.props.fetchSources();
+
     }
 
     componentWillUnmount() {
-        this.props.deleteSources();
+
     }
 
     render() {
@@ -39,7 +39,8 @@ export default class AddTheoryComponent extends React.Component {
             return (<NoAccessErrorComponent/>);
         }
 
-        const {sources, selectedSource, updateSelectedSource, updateHeading, theoryContent, updateTheory} = this.props;
+        const {updateHeading, theoryContent, updateTheory, updateSelectedSource} = this.props;
+
         return (
             <div>
                 <Row>
@@ -49,20 +50,12 @@ export default class AddTheoryComponent extends React.Component {
                 </Row>
                 <Row>
                     <Col xs={12}>
-                        <SectionsDropDownComponent/>
+                        <SectionsDropDownComponent updateSection={updateSection.bind(this)}/>
                     </Col>
                 </Row>
                 <Row>
-                    {sources.length ?
-                        <Col xs={8} sm={6}>
-                            <DropdownDisplay menuItems={sources} value={selectedSource}
-                                             onChange={updateSelectedSource.bind(this)}/>
-                        </Col>
-                        :
-                        null
-                    }
-                    <Col xs={4} sm={6}>
-                        <RaisedButton label="Add Source" primary={true}/>
+                    <Col xs={12}>
+                        <SourceSelectionComponent updateSource={updateSelectedSource.bind(this)}/>
                     </Col>
                 </Row>
                 <Row>

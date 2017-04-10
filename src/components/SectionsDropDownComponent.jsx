@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import React, {PropTypes} from "react";
 import DropdownDisplay from "./DropdownDisplayComponent";
 import {getSections, deleteSections} from "./../actions/SectionActions";
-import {updateSection} from "./../actions/TheoryActions";
 
 class SectionsDropDownComponent extends React.Component {
     constructor(props) {
@@ -61,7 +60,7 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onChange: (event, index, value) => {
             dispatch(updateSection(value));
@@ -72,7 +71,7 @@ const mapDispatchToProps = (dispatch) => {
         },
 
         updateSelectedSection: (newValue) => {
-            dispatch(updateSection(newValue));
+            dispatch(ownProps.updateSection(newValue));
         },
 
         deleteSections: () => {
