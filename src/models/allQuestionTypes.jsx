@@ -1,5 +1,5 @@
 "use strict";
 
 export function getAllQuestionTypes() {
-    return ["Single Correct", "Multiple Correct", "Match the following", "Numeric/Text", "Long Answer"];
+    return ["Single Correct", "Multiple Correct", "Match The Following", "Text", "Numeric", "Long Answer"];
 }
