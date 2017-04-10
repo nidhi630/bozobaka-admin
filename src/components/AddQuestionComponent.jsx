@@ -17,6 +17,7 @@ import L3SelectionComponent from "./L3SelectionComponent";
 import L4SelectionComponent from "./L4SelectionComponent";
 import StatusSelectionComponent from "./StatusSelectionComponent";
 import SourceSelectionComponent from "./SourceSelectionComponent";
+import AddSourceComponent from "./AddSourceComponent";
 
 export default class AddQuestionComponent extends React.Component {
     constructor(props) {
@@ -36,8 +37,11 @@ export default class AddQuestionComponent extends React.Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={12}>
+                    <Col xs={12} sm={6}>
                         <SourceSelectionComponent updateSource={updateSelectedSource.bind(this)}/>
+                    </Col>
+                    <Col xs={12} sm={6}>
+                        <AddSourceComponent/>
                     </Col>
                 </Row>
                 <Row>

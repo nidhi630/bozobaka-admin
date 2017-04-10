@@ -69,8 +69,11 @@ export default class AddTheoryComponent extends React.Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={12}>
+                    <Col xs={12} sm={6}>
                         <SourceSelectionComponent updateSource={updateSelectedSource.bind(this)}/>
+                    </Col>
+                    <Col xs={12} sm={6}>
+                        <AddSourceComponent/>
                     </Col>
                 </Row>
                 <Row>
