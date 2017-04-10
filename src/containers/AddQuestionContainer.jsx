@@ -7,16 +7,18 @@ import {getAllQuestionTypes} from "./../models/allQuestionTypes";
 import {questionUpdateDifficulty} from "./../actions/QuestionActions";
 
 const mapStateToProps = (state) => {
+    const {l1Id, l2Id, l3Id, sectionId, difficulty, l4Id, status} = state.question;
     return {
         ...state.GlobalReducer,
         ...state.ContentReducer,
         questionTypes: getAllQuestionTypes(),
-        sectionId: state.question.sectionId,
-        l1Id: state.question.l1Id,
-        l2Id: state.question.l2Id,
-        l3Id: state.question.l3Id,
-        l4Id: state.question.l4Id,
-        difficulty: state.question.difficulty
+        sectionId,
+        l1Id,
+        l2Id,
+        l3Id,
+        l4Id,
+        difficulty,
+        status
     }
 };
 

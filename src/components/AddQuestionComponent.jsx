@@ -8,12 +8,14 @@ import {
     questionUpdateL1,
     questionUpdateL2,
     questionUpdateL3,
-    questionUpdateL4
+    questionUpdateL4,
+    questionUpdateStatus
 } from "./../actions/QuestionActions";
 import L1SelectionComponent from "./L1SelectionComponent";
 import L2SelectionComponent from "./L2SelectionComponent";
 import L3SelectionComponent from "./L3SelectionComponent";
 import L4SelectionComponent from "./L4SelectionComponent";
+import StatusSelectionComponent from "./StatusSelectionComponent";
 
 export default class AddQuestionComponent extends React.Component {
     constructor(props) {
@@ -21,7 +23,7 @@ export default class AddQuestionComponent extends React.Component {
     }
 
     render() {
-        const {difficulty, onDifficultyChange, l1Id, l2Id, l3Id, l4Id, sectionId} = this.props;
+        const {difficulty, onDifficultyChange, l1Id, l2Id, l3Id, l4Id, sectionId, status} = this.props;
 
         return (
             <div>
@@ -49,6 +51,11 @@ export default class AddQuestionComponent extends React.Component {
                     <Col xs={12}>
                         <TextField title="Difficulty" hintText="Set Difficulty" type="number"
                                    value={difficulty} onChange={onDifficultyChange.bind(this)}/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={12}>
+                        <StatusSelectionComponent updateStatus={questionUpdateStatus.bind(this)} status={status}/>
                     </Col>
                 </Row>
             </div>
