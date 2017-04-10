@@ -7,7 +7,11 @@ import {
     THEORY_REQUEST_SUCCESS,
     THEORY_UPDATE_SOURCE,
     THEORY_UPDATE_HEADING,
-    THEORY_UPDATE_THEORY
+    THEORY_UPDATE_THEORY,
+    THEORY_UPDATE_L1,
+    THEORY_UPDATE_L2,
+    THEORY_UPDATE_L3,
+    THEORY_UPDATE_L4
 } from "./ActionConstants";
 import {updateTheory as updateTheoryRequest} from "./../services/TheoryService";
 
@@ -82,5 +86,33 @@ export function theoryUpdateTheory(theory) {
     return {
         type: THEORY_UPDATE_THEORY,
         theory
+    }
+}
+
+export function theoryUpdateL1(l1) {
+    return {
+        type: THEORY_UPDATE_L1,
+        l1
+    }
+}
+
+export function theoryUpdateL2(l2) {
+    return {
+        type: THEORY_UPDATE_L2,
+        l2
+    }
+}
+
+export function theoryUpdateL3(l3) {
+    return {
+        type: THEORY_UPDATE_L3,
+        l3
+    }
+}
+
+export function theoryUpdateL4(l4) {
+    return {
+        type: THEORY_UPDATE_L4,
+        l4
     }
 }

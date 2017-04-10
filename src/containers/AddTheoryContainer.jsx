@@ -11,11 +11,16 @@ function userHasAccess(role) {
 
 const mapStateToProps = (state) => {
     const role = state.GlobalReducer.loggedInUser.role;
+    const {l1Id, l2Id, l3Id, sectionId, theory, l4Id} = state.newTheory;
     return {
         hasAccess: userHasAccess(role),
         sources: state.sources.sources,
-        selectedSource,
-        theoryContent: state.newTheory.theory
+        theory,
+        sectionId,
+        l1Id,
+        l2Id,
+        l3Id,
+        l4Id
     }
 };
 
