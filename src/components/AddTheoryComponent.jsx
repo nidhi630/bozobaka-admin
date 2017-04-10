@@ -7,6 +7,7 @@ import {Row, Col} from "react-flexbox-grid";
 import DropdownDisplay from "./DropdownDisplayComponent";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
+import HtmlToReactParser from "html-to-react";
 
 export default class AddTheoryComponent extends React.Component {
 
@@ -16,6 +17,9 @@ export default class AddTheoryComponent extends React.Component {
 
     constructor(props) {
         super(props);
+        let html = "<NoAccessErrorComponent/>";
+        let htmlToRect = new HtmlToReactParser();
+        this.parsedHtml = htmlToRect.parse(html);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -35,7 +39,7 @@ export default class AddTheoryComponent extends React.Component {
             return (<NoAccessErrorComponent/>);
         }
 
-        const {sources, selectedSource, updateSelectedSource, updateHeading, theoryContent} = this.props;
+        const {sources, selectedSource, updateSelectedSource, updateHeading, theoryContent, updateTheory} = this.props;
         return (
             <div>
                 <Row>
@@ -80,12 +84,14 @@ export default class AddTheoryComponent extends React.Component {
                     <Col xs={12} sm={6}>
                         <TextField
                             title="Theory"
-                            hineText="Enter Theory"
+                            hintText="Enter Theory"
+                            multiLine={true}
+                            maxLines={20}
                             onChange={updateTheory.bind(this)}
                         />
                     </Col>
                     <Col xs={12} sm={6}>
-                        <p>{}</p>
+                        <p>{this.parsedHtml}</p>
                     </Col>
                 </Row>
             </div>
