@@ -2,7 +2,7 @@
 
 import {connect} from "react-redux";
 import AddTheoryComponent from "./../components/AddTheoryComponent";
-import {updateSource, updateHeading, updateTheory} from "./../actions/TheoryActions";
+import {theoryUpdateSource, theoryUpdateHeading, theoryUpdateTheory} from "./../actions/TheoryActions";
 
 function userHasAccess(role) {
     let rolesWithAccess = ["admin"];
@@ -22,16 +22,16 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         updateHeading: (event, newValue) => {
-            dispatch(updateHeading(newValue))
+            dispatch(theoryUpdateHeading(newValue))
         },
 
         updateTheory: (event, newValue) => {
             /* TODO: parse katex */
-            dispatch(updateTheory(newValue));
+            dispatch(theoryUpdateTheory(newValue));
         },
 
         updateSelectedSource: (value) => {
-            dispatch(updateSource(value));
+            dispatch(theoryUpdateSource(value));
         }
     }
 };

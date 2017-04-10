@@ -63,7 +63,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onChange: (event, index, value) => {
-            dispatch(updateSection(value));
+            dispatch(questionUpdateSection(value));
         },
 
         getSections: (params) => {

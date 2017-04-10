@@ -58,28 +58,28 @@ export function theoryRequestSuccess(requestSuccess) {
     }
 }
 
-export function updateSection(sectionId) {
+export function theoryUpdateSection(sectionId) {
     return {
         type: THEORY_UPDATE_SECTION,
         sectionId
     }
 }
 
-export function updateSource(sourceId) {
+export function theoryUpdateSource(sourceId) {
     return {
         type: THEORY_UPDATE_SOURCE,
         sourceId
     }
 }
 
-export function updateHeading(heading) {
+export function theoryUpdateHeading(heading) {
     return {
         type: THEORY_UPDATE_HEADING,
         heading
     }
 }
 
-export function updateTheory(theory) {
+export function theoryUpdateTheory(theory) {
     return {
         type: THEORY_UPDATE_THEORY,
         theory
