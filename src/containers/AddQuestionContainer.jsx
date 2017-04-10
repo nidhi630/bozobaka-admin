@@ -12,6 +12,10 @@ const mapStateToProps = (state) => {
         ...state.ContentReducer,
         questionTypes: getAllQuestionTypes(),
         sectionId: state.question.sectionId,
+        l1Id: state.question.l1Id,
+        l2Id: state.question.l2Id,
+        l3Id: state.question.l3Id,
+        l4Id: state.question.l4Id,
         difficulty: state.question.difficulty
     }
 };
