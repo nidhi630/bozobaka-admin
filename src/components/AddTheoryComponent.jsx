@@ -16,8 +16,10 @@ import {
     theoryUpdateL1,
     theoryUpdateL2,
     theoryUpdateL3,
-    theoryUpdateL4
+    theoryUpdateL4,
+    theoryUpdateStatus
 } from "./../actions/TheoryActions";
+import StatusSelectionComponent from "./StatusSelectionComponent";
 
 export default class AddTheoryComponent extends React.Component {
 
@@ -51,7 +53,7 @@ export default class AddTheoryComponent extends React.Component {
 
         const {
             updateHeading, theory, updateTheory, updateSelectedSource,
-            l1Id, l2Id, l3Id, l4Id, sectionId
+            l1Id, l2Id, l3Id, l4Id, sectionId, status
         } = this.props;
 
         return (
@@ -103,6 +105,11 @@ export default class AddTheoryComponent extends React.Component {
                     </Col>
                     <Col xs={12} sm={6} md={4}>
                         <L4SelectionComponent l4Id={l4Id} l3Id={l3Id} updateL1={theoryUpdateL4.bind(this)}/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={12}>
+                        <StatusSelectionComponent updateStatus={theoryUpdateStatus.bind(this)} status={status}/>
                     </Col>
                 </Row>
             </div>
