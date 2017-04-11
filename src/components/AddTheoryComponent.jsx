@@ -21,6 +21,7 @@ import {
 } from "./../actions/TheoryActions";
 import StatusSelectionComponent from "./StatusSelectionComponent";
 import AddSourceComponent from "./AddSourceComponent";
+import LivePreviewComponent from "./LivePreviewComponent";
 
 export default class AddTheoryComponent extends React.Component {
 
@@ -94,7 +95,7 @@ export default class AddTheoryComponent extends React.Component {
                                    onChange={updateTheory.bind(this)}/>
                     </Col>
                     <Col xs={12} sm={6}>
-                        <p className="tttttttttt" dangerouslySetInnerHTML={{__html: this.parsedHtml}}></p>
+                        <LivePreviewComponent content={<h1>something</h1>}/>
                     </Col>
                 </Row>
                 <Row>
