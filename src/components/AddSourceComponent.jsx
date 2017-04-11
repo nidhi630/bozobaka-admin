@@ -3,6 +3,7 @@
 import React, {PropTypes} from "react";
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 import {connect} from "react-redux";
 import {

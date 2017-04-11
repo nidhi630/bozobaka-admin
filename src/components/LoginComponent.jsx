@@ -65,7 +65,7 @@ export default class LoginComponent extends React.Component {
         return (
             <div className="login-container">
                 <Paper zDepth={1} rounded={false} style={paperStyle}>
-                    <h1>{BrownBoard}</h1>
+                    <h1>BrownBoard</h1>
                     <br />
                     <h2>Login</h2>
                     <form onSubmit={this.onFormSubmit.bind(this)}>

@@ -20,6 +20,7 @@ import {
     theoryUpdateStatus
 } from "./../actions/TheoryActions";
 import StatusSelectionComponent from "./StatusSelectionComponent";
+import AddSourceComponent from "./AddSourceComponent";
 
 export default class AddTheoryComponent extends React.Component {
 
@@ -30,7 +31,7 @@ export default class AddTheoryComponent extends React.Component {
     constructor(props) {
         super(props);
         let html = "<NoAccessErrorComponent/>";
-        let htmlToRect = new HtmlToReactParser();
+        let htmlToRect = new HtmlToReactParser.Parser();
         this.parsedHtml = htmlToRect.parse(html);
     }
 
@@ -89,11 +90,11 @@ export default class AddTheoryComponent extends React.Component {
                 </Row>
                 <Row>
                     <Col xs={12} sm={6}>
-                        <TextField title="Theory" hintText="Enter Theory" multiLine={true} maxLines={20}
+                        <TextField title="Theory" hintText="Enter Theory" multiLine={true} rowsMax={20}
                                    onChange={updateTheory.bind(this)}/>
                     </Col>
                     <Col xs={12} sm={6}>
-                        <p>{this.parsedHtml}</p>
+                        <p className="tttttttttt" dangerouslySetInnerHTML={{__html: this.parsedHtml}}></p>
                     </Col>
                 </Row>
                 <Row>
@@ -101,13 +102,13 @@ export default class AddTheoryComponent extends React.Component {
                         <L1SelectionComponent sectionId={sectionId} l1Id={l1Id} updateL1={theoryUpdateL1.bind(this)}/>
                     </Col>
                     <Col xs={12} sm={6} md={4}>
-                        <L2SelectionComponent l1Id={l1Id} l2Id={l2Id} updateL1={theoryUpdateL2.bind(this)}/>
+                        <L2SelectionComponent l1Id={l1Id} l2Id={l2Id} updateL2={theoryUpdateL2.bind(this)}/>
                     </Col>
                     <Col xs={12} sm={6} md={4}>
-                        <L3SelectionComponent l2Id={l2Id} l3Id={l3Id} updateL1={theoryUpdateL3.bind(this)}/>
+                        <L3SelectionComponent l2Id={l2Id} l3Id={l3Id} updateL3={theoryUpdateL3.bind(this)}/>
                     </Col>
                     <Col xs={12} sm={6} md={4}>
-                        <L4SelectionComponent l4Id={l4Id} l3Id={l3Id} updateL1={theoryUpdateL4.bind(this)}/>
+                        <L4SelectionComponent l4Id={l4Id} l3Id={l3Id} updateL4={theoryUpdateL4.bind(this)}/>
                     </Col>
                 </Row>
                 <Row>

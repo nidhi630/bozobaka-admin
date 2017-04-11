@@ -49,13 +49,13 @@ export default class AddQuestionComponent extends React.Component {
                         <L1SelectionComponent sectionId={sectionId} l1Id={l1Id} updateL1={questionUpdateL1.bind(this)}/>
                     </Col>
                     <Col xs={12} sm={6} md={4}>
-                        <L2SelectionComponent l1Id={l1Id} l2Id={l2Id} updateL1={questionUpdateL2.bind(this)}/>
+                        <L2SelectionComponent l1Id={l1Id} l2Id={l2Id} updateL2={questionUpdateL2.bind(this)}/>
                     </Col>
                     <Col xs={12} sm={6} md={4}>
-                        <L3SelectionComponent l2Id={l2Id} l3Id={l3Id} updateL1={questionUpdateL3.bind(this)}/>
+                        <L3SelectionComponent l2Id={l2Id} l3Id={l3Id} updateL3={questionUpdateL3.bind(this)}/>
                     </Col>
                     <Col xs={12} sm={6} md={4}>
-                        <L4SelectionComponent l4Id={l4Id} l3Id={l3Id} updateL1={questionUpdateL4.bind(this)}/>
+                        <L4SelectionComponent l4Id={l4Id} l3Id={l3Id} updateL4={questionUpdateL4.bind(this)}/>
                     </Col>
                 </Row>
                 <Row>

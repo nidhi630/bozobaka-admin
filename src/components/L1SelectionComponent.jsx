@@ -18,7 +18,7 @@ class L1SelectionComponent extends React.Component {
         const {l1Id, onChange} = this.props;
         if (nextProps.l1s.length) {
             if (!nextProps.l1Id || l1Id !== nextProps.l1Id) {
-                setTimeout(() => onChange(null, null, nextProps.l1s[0].id), 0);
+                onChange(null, null, nextProps.l1s[0].id)
             }
         }
     }
@@ -29,7 +29,10 @@ class L1SelectionComponent extends React.Component {
 
     render() {
         const {l1Id, l1s, onChange, sectionId} = this.props;
-        let menuItems = l1s.filter((l1) => (l1.sectionId === sectionId));
+        let menuItems = [];
+        menuItems = l1s.filter((l1) => (l1.sectionId === sectionId));
+
+        if(!menuItems.length) return null;
         return (
             <DropdownDisplay onChange={onChange.bind(this)} menuItems={menuItems} value={l1Id} width="100%"/>
         )

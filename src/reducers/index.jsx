@@ -11,6 +11,7 @@ import ContentReducer from "./ContentReducer";
 import {newTheoryReducer} from "./TheoryReducer";
 import {SectionsReducer, L1sReducer, L2sReducer, L3sReducer, L4sReducer} from "./SectionsReducer";
 import {sourceReducer} from "./SourceReducer";
+import {questionReducer} from "./QuestionReducer";
 
 export default combineReducers({
     GlobalReducer,
