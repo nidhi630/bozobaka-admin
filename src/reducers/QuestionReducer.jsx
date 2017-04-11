@@ -12,7 +12,8 @@ import {
     QUESTION_UPDATE_SOURCE,
     QUESTION_UPDATE_QUESTION_TYPE,
     QUESTION_UPDATE_DIFFICULTY,
-    QUESTION_UPDATE_STATUS
+    QUESTION_UPDATE_STATUS,
+    QUESTION_UPDATE_PARSED_QUESTION
 } from "./../actions/ActionConstants";
 
 let defaultState = {
@@ -28,7 +29,9 @@ let defaultState = {
     sources: [],
     questionType: "Single Correct",
     difficulty: 50,
-    status: "Draft"
+    status: "Draft",
+    question: "",
+    parsedQuestion: ""
 };
 
 export function questionReducer(state = defaultState, action) {
@@ -93,6 +96,11 @@ export function questionReducer(state = defaultState, action) {
                 ...state,
                 staus: action.status
             };
+        case QUESTION_UPDATE_PARSED_QUESTION:
+            return {
+                ...state,
+                parsedQuestion: action.parsedQuestion
+            }
         default:
             return state;
     }

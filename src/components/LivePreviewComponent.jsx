@@ -4,13 +4,14 @@ import React, {PropTypes} from "react";
 
 const LivePreviewComponent = ({content}) => {
     return (
-        <div dangerouslySetInnerHTML={{__html: content}}>
+        <div>
+            {content}
         </div>
     )
 };
 
 LivePreviewComponent.propTypes = {
-    content: PropTypes.string.isRequired
+    content: PropTypes.node.isRequired
 };
 
 export default LivePreviewComponent;

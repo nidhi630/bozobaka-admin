@@ -12,7 +12,8 @@ import {
     THEORY_UPDATE_L2,
     THEORY_UPDATE_L3,
     THEORY_UPDATE_L4,
-    THEORY_UPDATE_STATUS
+    THEORY_UPDATE_STATUS,
+    THEORY_UPDATE_PARSED_THEORY
 } from "./ActionConstants";
 import {updateTheory as updateTheoryRequest} from "./../services/TheoryService";
 
@@ -122,5 +123,12 @@ export function theoryUpdateStatus(status) {
     return {
         type: THEORY_UPDATE_STATUS,
         status
+    }
+}
+
+export function theoryUpdateParsedTheory(parsedTheory) {
+    return {
+        type: THEORY_UPDATE_PARSED_THEORY,
+        parsedTheory
     }
 }

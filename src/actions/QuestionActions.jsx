@@ -12,7 +12,8 @@ import {
     QUESTION_UPDATE_SOURCE,
     QUESTION_UPDATE_QUESTION_TYPE,
     QUESTION_UPDATE_DIFFICULTY,
-    QUESTION_UPDATE_STATUS
+    QUESTION_UPDATE_STATUS,
+    QUESTION_UPDATE_PARSED_QUESTION
 } from "./../actions/ActionConstants";
 
 export function questionUpdateSource(sourceId) {
@@ -96,5 +97,12 @@ export function questionUpdateStatus(status) {
     return {
         type: QUESTION_UPDATE_STATUS,
         status
+    }
+}
+
+export function questionUpdateParsedQuestion(parsedQuestion) {
+    return {
+        type: QUESTION_UPDATE_PARSED_QUESTION,
+        parsedQuestion
     }
 }

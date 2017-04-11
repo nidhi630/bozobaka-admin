@@ -32,9 +32,9 @@ let config = {
             {
                 test: /\.css$/,
                 loader: "style-loader!css-loader?modules",
-                include: /flexboxgrid/,
+                include: /flexboxgrid/
             }
-        ],
+        ]
     },
     plugins: [
     ]

@@ -12,7 +12,8 @@ import {
     THEORY_HAS_ERRORED,
     THEORY_UPDATE_HEADING,
     THEORY_UPDATE_THEORY,
-    THEORY_UPDATE_STATUS
+    THEORY_UPDATE_STATUS,
+    THEORY_UPDATE_PARSED_THEORY
 } from "./../actions/ActionConstants";
 
 let defaultNewTheory = {
@@ -25,6 +26,7 @@ let defaultNewTheory = {
     type: "text",
     heading: "",
     theory: "",
+    parsedTheory: "",
     status: "Draft"
 };
 
@@ -89,6 +91,11 @@ export function newTheoryReducer(state = defaultNewTheory, action) {
             return {
                 ...state,
                 status: action.status
+            };
+        case THEORY_UPDATE_PARSED_THEORY:
+            return {
+                ...state,
+                parsedTheory: action.parsedTheory
             };
         default:
             return state;
