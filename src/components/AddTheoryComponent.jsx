@@ -49,7 +49,7 @@ export default class AddTheoryComponent extends React.Component {
 
         const {
             updateHeading, theory, updateTheory, updateSelectedSource,
-            l1Id, l2Id, l3Id, l4Id, sectionId, status, parsedTheory
+            l1Id, l2Id, l3Id, l4Id, sectionId, status, parsedTheory, heading
         } = this.props;
 
         return (
@@ -80,13 +80,13 @@ export default class AddTheoryComponent extends React.Component {
                 <Row>
                     <Col xs={12}>
                         <TextField title="Heading" type="text" hintText="Enter Heading"
-                                   onChange={updateHeading.bind(this)}/>
+                                   onChange={updateHeading.bind(this)} defaultValue={heading}/>
                     </Col>
                 </Row>
                 <Row>
                     <Col xs={12} sm={6}>
                         <TextField title="Theory" hintText="Enter Theory" multiLine={true} rowsMax={20}
-                                   onChange={updateTheory.bind(this)}/>
+                                   onChange={updateTheory.bind(this)} defaultValue={theory}/>
                     </Col>
                     <Col xs={12} sm={6}>
                         <LivePreviewComponent content={parsedTheory} dataId="theory"/>

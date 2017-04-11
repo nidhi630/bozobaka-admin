@@ -28,7 +28,8 @@ const mapStateToProps = (state) => {
         l3Id,
         l4Id,
         status,
-        parsedTheory
+        parsedTheory,
+        heading
     }
 };
 
