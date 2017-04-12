@@ -59,7 +59,8 @@ export default class EditL2Component extends React.Component {
 
         return (
             <div>
-                <Dialog actions={actions} open={this.state.openDialog} modal={false} title={this.state.dialogTitle}>
+                <Dialog actions={actions} open={this.state.openDialog} modal={false}
+                        title={this.state.dialogTitle} autoScrollBodyContent={true}>
                     <TextField
                         defaultValue={this.props.l2ToOpen.name}
                         ref="sectionName"

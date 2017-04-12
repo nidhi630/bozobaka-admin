@@ -23,11 +23,11 @@ export default class EditL3Component extends React.Component {
         let l1Value = props.l1ToOpen.id ? props.l1ToOpen.id : props.sections[0].l1s.length ? props.sections[0].l1s[0].id : null;
         let l2Value = props.l2ToOpen.id ? props.l2ToOpen.id : l1Value && props.sections[0].l1s[0].l2s.length ? props.sections[0].l1s[0].l2s[0].id : null;
         let l3Value = props.l3ToOpen.id ? props.l3ToOpen.id : l2Value && props.sections[0].l1s[0].l2s[0].l3s.length ? props.sections[0].l1s[0].l2s[0].l3s[0].id : null;
-
+        console.log(l3Value);
         this.state = {
             requestInProgress: false,
             openDialog: false,
-            dialogTitle: props.l3ToOpen.id ? "Edit L4" : "Add New L4",
+            dialogTitle: props.l4ToOpen.id ? "Edit L4" : "Add New L4",
             openSnackbar: false,
             snackbarMessage: "",
             sectionValue: sectionValue,
@@ -86,7 +86,8 @@ export default class EditL3Component extends React.Component {
 
         return (
             <div>
-                <Dialog actions={actions} open={this.state.openDialog} modal={false} title={this.state.dialogTitle}>
+                <Dialog actions={actions} open={this.state.openDialog} modal={false}
+                        title={this.state.dialogTitle} autoScrollBodyContent={true}>
                     <TextField
                         defaultValue={this.props.l4ToOpen.name}
                         ref="sectionName"
@@ -229,12 +230,12 @@ export default class EditL3Component extends React.Component {
     }
 
     saveButton() {
-        if (!this.scope.l3.name || !this.state.sectionValue || !this.state.l1Value || !this.state.l2Value || this.state.requestInProgress) return;
+        if (!this.scope.l4.name || !this.state.sectionValue || !this.state.l1Value || !this.state.l2Value || this.state.requestInProgress) return;
         this.setState({requestInProgress: true});
-        ContentService.updateL3({name: this.scope.l3.name}, {
-            method: this.scope.l3.id ? "put" : "post",
-            l3Id: this.scope.l3.id,
-            l2Id: this.state.l2Value
+        ContentService.updateL4({name: this.scope.l4.name}, {
+            method: this.scope.l4.id ? "put" : "post",
+            l4Id: this.scope.l4.id,
+            l3Id: this.state.l3Value
         }).then((res) => {
             this.setState({requestInProgress: false});
             this.cancelButton(true);
