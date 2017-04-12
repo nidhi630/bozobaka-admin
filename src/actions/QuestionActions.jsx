@@ -51,31 +51,31 @@ export function questionUpdateSection(sectionId) {
     }
 }
 
-export function questionUpdateL1(l1) {
+export function questionUpdateL1(l1Id) {
     return {
         type: QUESTION_UPDATE_L1,
-        l1
+        l1Id
     }
 }
 
-export function questionUpdateL2(l2) {
+export function questionUpdateL2(l2Id) {
     return {
         type: QUESTION_UPDATE_L2,
-        l2
+        l2Id
     }
 }
 
-export function questionUpdateL3(l3) {
+export function questionUpdateL3(l3Id) {
     return {
         type: QUESTION_UPDATE_L3,
-        l3
+        l3Id
     }
 }
 
-export function questionUpdateL4(l4) {
+export function questionUpdateL4(l4Id) {
     return {
         type: QUESTION_UPDATE_L4,
-        l4
+        l4Id
     }
 }
 

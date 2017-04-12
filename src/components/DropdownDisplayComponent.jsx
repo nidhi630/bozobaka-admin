@@ -15,9 +15,13 @@ const DropDownDisplayComponent = ({menuItems, value, onChange, disabled, width})
             disabled={disabled}
             style={style}
             autoWidth={true}>
-            {menuItems.map((item, index) => (
-                <MenuItem value={item.id} primaryText={item.name} key={index}/>
-            ))}
+            {menuItems.map((item, index) => {
+                if (typeof item === "object") {
+                    return <MenuItem value={item.id} primaryText={item.name} key={index}/>
+                } else {
+                    return <MenuItem value={item} primaryText={item} key={index}/>
+                }
+            })}
         </DropDownMenu>
     )
 };

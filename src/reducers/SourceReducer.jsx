@@ -3,11 +3,12 @@
 import {
     INIT_SOURCES,
     DELETE_SOURCES,
-    SOURCE_REQUEST_SUCCESS,
+    SOURCE_REQUEST_STATE,
     SOURCE_HAS_ERRORED,
     SOURCE_IS_LOADING,
     SOURCE_NAME,
-    SOURCE_DIALOG_STATE
+    SOURCE_DIALOG_STATE,
+    SOURCE_ADD_SOURCE
 } from "./../actions/ActionConstants";
 
 let defaultState = {
@@ -37,7 +38,7 @@ export function sourceReducer(state = defaultState, action) {
                 ...state,
                 isLoading: action.isLoading
             };
-        case SOURCE_REQUEST_SUCCESS:
+        case SOURCE_REQUEST_STATE:
             return {
                 ...state,
                 requestSuccess: action.requestSuccess
@@ -56,7 +57,15 @@ export function sourceReducer(state = defaultState, action) {
         case SOURCE_DIALOG_STATE:
             return {
                 ...state,
-                dialogState: action.dialogState
+                openDialog: action.openDialog
+            };
+        case SOURCE_ADD_SOURCE:
+            return {
+                ...state,
+                sources: [
+                    ...state.sources,
+                    action.source
+                ]
             };
         default:
             return state;

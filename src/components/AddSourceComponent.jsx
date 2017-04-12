@@ -9,32 +9,44 @@ import {connect} from "react-redux";
 import {
     sourceUpdateName,
     postSource,
-    sourceDialogState
+    sourceDialogState,
+    sourceRequestState
 } from "./../actions/SourceActions";
+import CircularProgress from "material-ui/CircularProgress";
 
 class AddSourceComponent extends React.Component {
     constructor(props) {
         super(props);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.requestSuccess) {
+            nextProps.setDialogState(false);
+            nextProps.setRequestState(false);
+        }
+    }
+
     render() {
-        const {createSource, sourceTextChange, openDialog, dialogState} = this.props;
+        const {createSource, sourceTextChange, setDialogState, openDialog, isLoading} = this.props;
         const actions = [
-            <FlatButton label="Cancel" onTouchTap={dialogState.bind(this)}/>,
-            <FlatButton label="Save" primary={true} onTouchTap={createSource.bind(this)}/>
+            <FlatButton label="Cancel" onTouchTap={setDialogState.bind(this)} disabled={isLoading}/>,
+            <FlatButton label="Save" primary={true} onTouchTap={createSource.bind(this)} disabled={isLoading}/>
         ];
 
         return (
             <div>
-                <RaisedButton label="Add Source" primary={true} onClick={dialogState.bind(this, true)}/>
+                <RaisedButton label="Add Source" primary={true} onClick={setDialogState.bind(this, true)}/>
                 <Dialog
                     title="Add Source"
                     actions={actions}
                     modal={false}
                     open={openDialog}
-                    onRequestClose={dialogState.bind(this)}>
-                    <TextField title="Source" hintText="Add Source Name" onChange={sourceTextChange.bind(this)} />
+                    onRequestClose={setDialogState.bind(this)}>
+                    <TextField title="Source" hintText="Add Source Name"
+                               onChange={sourceTextChange.bind(this)} fullWidth={true} />
+                    {isLoading ? <CircularProgress/> : null}
                 </Dialog>
+
             </div>
         )
     }
@@ -42,23 +54,26 @@ class AddSourceComponent extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        name: state.sources.name,
-        openDialog: state.sources.openDialog
+        ...state.sources
     }
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        createSource: (name) => {
-            dispatch(postSource(name));
+        createSource: () => {
+            dispatch(postSource());
         },
 
         sourceTextChange: (event, value) => {
             dispatch(sourceUpdateName(value));
         },
 
-        dialogState: (state = false) => {
+        setDialogState: (state = false) => {
             dispatch(sourceDialogState(state));
+        },
+
+        setRequestState: (state) => {
+            dispatch(sourceRequestState(state));
         }
     }
 };

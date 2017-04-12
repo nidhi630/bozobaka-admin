@@ -91,31 +91,31 @@ export function theoryUpdateTheory(theory) {
     }
 }
 
-export function theoryUpdateL1(l1) {
+export function theoryUpdateL1(l1Id) {
     return {
         type: THEORY_UPDATE_L1,
-        l1
+        l1Id
     }
 }
 
-export function theoryUpdateL2(l2) {
+export function theoryUpdateL2(l2Id) {
     return {
         type: THEORY_UPDATE_L2,
-        l2
+        l2Id
     }
 }
 
-export function theoryUpdateL3(l3) {
+export function theoryUpdateL3(l3Id) {
     return {
         type: THEORY_UPDATE_L3,
-        l3
+        l3Id
     }
 }
 
-export function theoryUpdateL4(l4) {
+export function theoryUpdateL4(l4Id) {
     return {
         type: THEORY_UPDATE_L4,
-        l4
+        l4Id
     }
 }
 

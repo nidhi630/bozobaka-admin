@@ -5,7 +5,7 @@ import {
     DELETE_SOURCES,
     SOURCE_HAS_ERRORED,
     SOURCE_IS_LOADING,
-    SOURCE_REQUEST_SUCCESS,
+    SOURCE_REQUEST_STATE,
     SOURCE_NAME,
     SOURCE_ADD_SOURCE,
     SOURCE_DIALOG_STATE
@@ -47,9 +47,9 @@ export function sourceHasErrored(hasErrored, errorMessage) {
     }
 }
 
-export function sourceRequestSuccess(requestSuccess) {
+export function sourceRequestState(requestSuccess) {
     return {
-        type: SOURCE_REQUEST_SUCCESS,
+        type: SOURCE_REQUEST_STATE,
         requestSuccess
     }
 }
@@ -76,28 +76,29 @@ export function fetchSources() {
             dispatch(initSources(sources));
             dispatch(sourceHasErrored(false, ""));
             dispatch(sourceIsLoading(false));
-            dispatch(sourceRequestSuccess(true));
+            dispatch(sourceRequestState(true));
         }).catch((err) => {
             dispatch(sourceHasErrored(true, err.message));
             dispatch(sourceIsLoading(false));
-            dispatch(sourceRequestSuccess(false));
+            dispatch(sourceRequestState(false));
         })
     }
 }
 
-export function postSource(name) {
-    return (dispatch) => {
+export function postSource() {
+    return (dispatch, getState) => {
+        let name = getState().sources.name;
         dispatch(sourceIsLoading(true));
 
         creatNewSource(name).then((source) => {
             dispatch(sourceAddSource(source));
             dispatch(sourceHasErrored(false, ""));
             dispatch(sourceIsLoading(false));
-            dispatch(sourceRequestSuccess(true));
+            dispatch(sourceRequestState(true));
         }).catch((err) => {
             dispatch(sourceHasErrored(true, err.message));
             dispatch(sourceIsLoading(false));
-            dispatch(sourceRequestSuccess(false));
+            dispatch(sourceRequestState(false));
         })
     }
 }

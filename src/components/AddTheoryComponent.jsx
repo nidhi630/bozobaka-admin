@@ -23,6 +23,7 @@ import AddSourceComponent from "./AddSourceComponent";
 import LivePreviewComponent from "./LivePreviewComponent";
 import {resetVariables} from "./../services/KatexParser";
 import EditorComponent from "./EditorComponent";
+import DropdownDisplay from "./DropdownDisplayComponent";
 
 export default class AddTheoryComponent extends React.Component {
     constructor(props) {
@@ -70,24 +71,26 @@ export default class AddTheoryComponent extends React.Component {
                 </Row>
                 <br/>
                 <Row>
-                    <Col xs={12} sm={6}>
+                    <Col xs={12} sm={5}>
                         <h3>Source</h3>
                         <SourceSelectionComponent updateSource={updateSelectedSource.bind(this)}/>
                     </Col>
-                    <Col xs={12} sm={6}>
+                    <Col xs={12} sm={5}>
                         <AddSourceComponent/>
                     </Col>
                 </Row>
                 <br/>
                 <Row>
                     <Col xs={12}>
-                        <h3>Text</h3>
+                        <h3>Question Type</h3>
+                        <DropdownDisplay menuItems={["Text"]} onChange={() => (true)} value={"Text"}/>
                     </Col>
                 </Row>
                 <br/>
                 <Row>
                     <Col xs={12}>
-                        <TextField title="Heading" type="text" hintText="Enter Heading"
+                        <h3>Heading</h3>
+                        <TextField title="Heading" type="text" hintText="Enter Heading" fullWidth={true}
                                    onChange={updateHeading.bind(this)} defaultValue={heading}/>
                     </Col>
                 </Row>
@@ -131,6 +134,7 @@ export default class AddTheoryComponent extends React.Component {
                         <StatusSelectionComponent updateStatus={theoryUpdateStatus.bind(this)} status={status}/>
                     </Col>
                 </Row>
+                <br/><br/>
             </div>
         );
     }

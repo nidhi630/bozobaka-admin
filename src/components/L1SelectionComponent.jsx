@@ -15,22 +15,24 @@ class L1SelectionComponent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {l1Id, onChange} = this.props;
+        const {sectionId, onChange} = this.props;
         if (nextProps.l1s.length) {
-            if (!nextProps.l1Id || l1Id !== nextProps.l1Id) {
-                onChange(null, null, nextProps.l1s[0].id)
+            if (!nextProps.l1Id || sectionId !== nextProps.sectionId) {
+                onChange(null, null, nextProps.l1s[0].id);
             }
         }
     }
 
     componentWillMount() {
-
+        const {l1Id, sectionId, onChange, l1s} = this.props;
+        if (!l1Id && sectionId && l1s.length) {
+            onChange(null, null, nextProps.l1s[0].id);
+        }
     }
 
     render() {
         const {l1Id, l1s, onChange, sectionId} = this.props;
-        let menuItems = [];
-        menuItems = l1s.filter((l1) => (l1.sectionId === sectionId));
+        let menuItems = l1s.filter((l1) => (l1.sectionId === sectionId));
 
         if(!menuItems.length) return null;
         return (
