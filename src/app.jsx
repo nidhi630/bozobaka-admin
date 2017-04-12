@@ -16,6 +16,7 @@ import configureStore from "./store";
 import AddTheoryContainer from "./containers/AddTheoryContainer";
 
 require("style-loader!css-loader!./styles/styles.css");
+require("style-loader!css-loader!./../node_modules/react-quill/dist/quill.snow.css");
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941

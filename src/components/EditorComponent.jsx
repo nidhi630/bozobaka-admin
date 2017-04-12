@@ -3,14 +3,15 @@
 import React, {PropTypes} from "react";
 import ReactQuill from "react-quill";
 
-const EditorComponent = ({content, placeHolder, onChange}) => {
+const EditorComponent = ({content, placeHolder, onChange, theme}) => {
+    theme = theme || "snow";
     return (
         <ReactQuill
-            theme={'snow'}
+            defaultValue={content}
+            theme={theme}
             onChange={onChange.bind(this)}
-            value={content}
-            modules={Editor.modules}
-            formats={Editor.formats}
+            modules={EditorComponent.modules}
+            formats={EditorComponent.formats}
             placeholder={placeHolder}
         />
     )
@@ -29,7 +30,8 @@ EditorComponent.modules = {
         ['link', 'image', 'video'],
         ['clean']
     ]
-}
+};
+
 /*
  * Quill editor formats
  * See http://quilljs.com/docs/formats/
@@ -39,7 +41,7 @@ EditorComponent.formats = [
     'bold', 'italic', 'underline', 'strike', 'blockquote',
     'list', 'bullet', 'indent',
     'link', 'image', 'video'
-]
+];
 
 /*
  * PropType validation
@@ -49,3 +51,5 @@ EditorComponent.prototype = {
     placeHolder: PropTypes.string,
     onChange: PropTypes.func.isRequired
 };
+
+export default EditorComponent;

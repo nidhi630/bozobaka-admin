@@ -22,6 +22,7 @@ import StatusSelectionComponent from "./StatusSelectionComponent";
 import AddSourceComponent from "./AddSourceComponent";
 import LivePreviewComponent from "./LivePreviewComponent";
 import {resetVariables} from "./../services/KatexParser";
+import EditorComponent from "./EditorComponent";
 
 export default class AddTheoryComponent extends React.Component {
     constructor(props) {
@@ -54,16 +55,19 @@ export default class AddTheoryComponent extends React.Component {
 
         return (
             <div>
+                <br/>
                 <Row>
                     <Col xs={12}>
                         <h2>Add Theory</h2>
                     </Col>
                 </Row>
+                <br/>
                 <Row>
                     <Col xs={12}>
                         <SectionSelectionComponent updateSection={theoryUpdateSection.bind(this)}/>
                     </Col>
                 </Row>
+                <br/>
                 <Row>
                     <Col xs={12} sm={6}>
                         <SourceSelectionComponent updateSource={updateSelectedSource.bind(this)}/>
@@ -72,24 +76,31 @@ export default class AddTheoryComponent extends React.Component {
                         <AddSourceComponent/>
                     </Col>
                 </Row>
+                <br/>
                 <Row>
                     <Col xs={12}>
                         <h3>Text</h3>
                     </Col>
                 </Row>
+                <br/>
                 <Row>
                     <Col xs={12}>
                         <TextField title="Heading" type="text" hintText="Enter Heading"
                                    onChange={updateHeading.bind(this)} defaultValue={heading}/>
                     </Col>
                 </Row>
+                <br/>
                 <Row>
-                    <Col xs={12} sm={6}>
-                        <TextField title="Theory" hintText="Enter Theory" multiLine={true} rowsMax={20}
-                                   onChange={updateTheory.bind(this)} defaultValue={theory}/>
+                    <Col xs={12} sm={6} md={7}>
+                        <h3>Theory</h3>
+                        <EditorComponent
+                            content={theory}
+                            onChange={updateTheory.bind(this)}
+                            placeHolder="Enter Theory"
+                        />
                     </Col>
-                    <Col xs={12} sm={6}>
-                        <LivePreviewComponent content={parsedTheory} dataId="theory"/>
+                    <Col xs={12} sm={6} md={5}>
+                        <LivePreviewComponent content={parsedTheory}/>
                     </Col>
                 </Row>
                 <Row>

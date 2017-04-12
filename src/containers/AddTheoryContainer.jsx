@@ -17,7 +17,8 @@ function userHasAccess(role) {
 
 const mapStateToProps = (state) => {
     const role = state.GlobalReducer.loggedInUser.role;
-    const {l1Id, l2Id, l3Id, sectionId, theory, l4Id, status, parsedTheory} = state.newTheory;
+    const {l1Id, l2Id, l3Id, sectionId, theory, l4Id,
+        status, parsedTheory, heading} = state.newTheory;
     return {
         hasAccess: userHasAccess(role),
         sources: state.sources.sources,
@@ -39,7 +40,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(theoryUpdateHeading(newValue))
         },
 
-        updateTheory: (event, newValue) => {
+        updateTheory: (newValue) => {
             setTimeout(() => {
                 let parsedHtml = parseKatex(newValue);
                 dispatch(theoryUpdateParsedTheory(parsedHtml));

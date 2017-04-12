@@ -2,9 +2,10 @@
 
 import React from "react";
 import HtmlToReact, {Parser} from "html-to-react";
-import {InlineMath} from "react-katex";
+import {InlineMath, BlockMath} from "react-katex";
+import he from "he";
 
-let processNodeDefinitions, processingInstructions, htmlToReactParser, domParser;
+let processNodeDefinitions, processingInstructions, htmlToReactParser;
 let init = false;
 
 function initVariables() {
@@ -12,10 +13,16 @@ function initVariables() {
     processingInstructions = [
         {
             replaceChildren: true,
-            shouldProcessNode: (node) => (node.attribs && node.attribs['data-katex'] === 'inline-math'),
+            shouldProcessNode: (node) => (node.attribs && (node.attribs['data-katex'] === 'inline' || node.attribs['data-katex'] === 'block')),
             processNode: (node, children) => {
                 if (children && children.length > 0) {
-                    return <InlineMath math={children[0]}/>;
+                    let type = node.attribs["data-katex"];
+                    switch (type) {
+                        case 'inline':
+                            return <InlineMath>{children[0]}</InlineMath>;
+                        case 'block':
+                            return <BlockMath>{children[0]}</BlockMath>;
+                    }
                 }
             }
         },
@@ -25,17 +32,15 @@ function initVariables() {
         }
     ];
     htmlToReactParser = new Parser();
-    domParser = new DOMParser;
 }
 
 export function parseKatex(html) {
     if (!init) initVariables();
-    let dom = domParser.parseFromString(html, 'text/html');
-    console.log("dom created", dom.body.textContent);
-    return htmlToReactParser.parseWithInstructions(dom.body.textContent, () => true, processingInstructions);
+    let dom = he.decode(html);
+    return htmlToReactParser.parseWithInstructions(dom, () => true, processingInstructions);
 }
 
 export function resetVariables() {
-    processNodeDefinitions = processingInstructions = htmlToReactParser = domParser = null;
+    processNodeDefinitions = processingInstructions = htmlToReactParser = null;
     init = false;
 }
