@@ -4,8 +4,7 @@ import {
     UPDATE_COURSES,
     UPDATE_SELECTED_COURSE,
     UPDATE_COURSE_DATA,
-    DELETE_COURSE_DATA,
-
+    DELETE_COURSE_DATA
 } from "./../actions/ActionConstants";
 
 const defaultState = {
