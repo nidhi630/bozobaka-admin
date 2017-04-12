@@ -58,18 +58,20 @@ export default class AddTheoryComponent extends React.Component {
                 <br/>
                 <Row>
                     <Col xs={12}>
-                        <h2>Add Theory</h2>
+                        <h1>Add Theory</h1>
                     </Col>
                 </Row>
                 <br/>
                 <Row>
                     <Col xs={12}>
+                        <h3>Section</h3>
                         <SectionSelectionComponent updateSection={theoryUpdateSection.bind(this)}/>
                     </Col>
                 </Row>
                 <br/>
                 <Row>
                     <Col xs={12} sm={6}>
+                        <h3>Source</h3>
                         <SourceSelectionComponent updateSource={updateSelectedSource.bind(this)}/>
                     </Col>
                     <Col xs={12} sm={6}>
@@ -103,22 +105,29 @@ export default class AddTheoryComponent extends React.Component {
                         <LivePreviewComponent content={parsedTheory}/>
                     </Col>
                 </Row>
+                <br/><br/>
                 <Row>
-                    <Col xs={12} sm={6} md={4}>
+                    <Col xs={12} sm={6} md={3}>
+                        <h3>L1</h3>
                         <L1SelectionComponent sectionId={sectionId} l1Id={l1Id} updateL1={theoryUpdateL1.bind(this)}/>
                     </Col>
-                    <Col xs={12} sm={6} md={4}>
+                    <Col xs={12} sm={6} md={3}>
+                        <h3>L2</h3>
                         <L2SelectionComponent l1Id={l1Id} l2Id={l2Id} updateL2={theoryUpdateL2.bind(this)}/>
                     </Col>
-                    <Col xs={12} sm={6} md={4}>
+                    <Col xs={12} sm={6} md={3}>
+                        <h3>L3</h3>
                         <L3SelectionComponent l2Id={l2Id} l3Id={l3Id} updateL3={theoryUpdateL3.bind(this)}/>
                     </Col>
-                    <Col xs={12} sm={6} md={4}>
+                    <Col xs={12} sm={6} md={3}>
+                        <h3>L4</h3>
                         <L4SelectionComponent l4Id={l4Id} l3Id={l3Id} updateL4={theoryUpdateL4.bind(this)}/>
                     </Col>
                 </Row>
+                <br/>
                 <Row>
                     <Col xs={12}>
+                        <h3>Status</h3>
                         <StatusSelectionComponent updateStatus={theoryUpdateStatus.bind(this)} status={status}/>
                     </Col>
                 </Row>
