@@ -26,7 +26,7 @@ import L3 from "./../models/L3";
 import L4 from "./../models/L4";
 
 function getCourseCountWithContentUrl(courseId) {
-    return courseId ? COURSES_WITH_COUNT + "/" + courseID : COURSES_WITH_COUNT;
+    return courseId ? COURSES_WITH_COUNT + "/" + courseId : COURSES_WITH_COUNT;
 }
 
 const ContentService = {
@@ -34,7 +34,7 @@ const ContentService = {
         return new Promise((resolve, reject) => {
             makeRequest({
                 method: "get",
-                url: getCourseCountWithContentUrl(courseId),
+                url: getCourseCountWithContentUrl(courseId)
             }).then((res) => {
                 resolve(Course.parseCourses(res.data));
             }).catch((err) => errorHandler(reject, err));
@@ -49,7 +49,7 @@ const ContentService = {
                 data: course
             }).then((res) => {
                 (config.method !== "delete") ? resolve(new Course(res.data)) : resolve(res.data);
-            }).catch((err) => APIService.errorHandler(reject, err));
+            }).catch((err) => errorHandler(reject, err));
         });
     },
 
@@ -68,7 +68,7 @@ const ContentService = {
         return new Promise((resolve, reject) => {
             makeRequest({
                 method: "get",
-                url: REVIEWERS,
+                url: REVIEWERS
             }).then((res) => {
                 resolve(Reviewer.parseReviewers(res.data));
             }).catch((err) => errorHandler(reject, err));
@@ -79,7 +79,7 @@ const ContentService = {
         return new Promise((resolve, reject) => {
             makeRequest({
                 method: "get",
-                url: CONTENT_WRITERS,
+                url: CONTENT_WRITERS
             }).then((res) => {
                 resolve(ContentWriter.parseContentWriters(res.data));
             }).catch((err) => errorHandler(reject, err));

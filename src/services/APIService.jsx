@@ -19,7 +19,7 @@ axios.interceptors.request.use((config) => {
 
 export function makeRequest(config) {
     return axios.request({
-        method: config.method,
+        method: config.method || "get",
         baseURL: config.baseURL ? config.baseUrl : API_BASE,
         url: config.url,
         data: config.data,

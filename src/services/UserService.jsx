@@ -10,7 +10,6 @@ import LoginService from "./LoginService";
 import User from "./../models/User";
 
 export function getUserProfile() {
-    let that = this;
     return new Promise((resolve, reject) => {
         makeRequest({
             url: USER_PROFILE,

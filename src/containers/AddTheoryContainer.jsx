@@ -31,13 +31,13 @@ const mapStateToProps = (state) => {
         status,
         parsedTheory,
         heading
-    }
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         updateHeading: (event, newValue) => {
-            dispatch(theoryUpdateHeading(newValue))
+            dispatch(theoryUpdateHeading(newValue));
         },
 
         updateTheory: (newValue) => {
@@ -51,7 +51,7 @@ const mapDispatchToProps = (dispatch) => {
         updateSelectedSource: (value) => {
             dispatch(theoryUpdateSource(value));
         }
-    }
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddTheoryComponent);

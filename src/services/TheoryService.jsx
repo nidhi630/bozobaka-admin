@@ -11,10 +11,19 @@ export function updateTheory(params) {
             method: params.method,
             url: url,
             data: params.data
-        }).then((res) => {
+        }).then(res => {
             console.log("theory post data", res);
             resolve(new Theory(res.data));
-        }).catch((err) => errorHandler(reject, err));
+        }).catch(err => errorHandler(reject, err));
     });
 }
 
+export function fetchTheory(params) {
+    return new Promise((resolve, reject) => {
+        const url = params.id ? THEORY + "/" + params.id : THEORY;
+        makeRequest({url}).then(res => {
+            console.log("theory get", res);
+            resolve(Theory.parseTheories(res));
+        }).catch(err => errorHandler(reject, err));
+    });
+}

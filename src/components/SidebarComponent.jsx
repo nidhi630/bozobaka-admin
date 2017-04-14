@@ -27,7 +27,7 @@ class SidebarComponent extends React.Component {
 
         this.roleOptionsMap = {
             superAdmin: ["Dashboard", "Manage", "List Of Questions", "List Of Theory"],
-            admin: ["Dashboard", "Add Theory", "List Of Questions", "Publish", "Manage Course", "List Of Questions", "Trash"],
+            admin: ["Dashboard", "Add Theory", "List Of Theory", "Publish", "Manage Course", "List Of Questions", "Trash"],
             reviewer: ["Dashboard", "Review Of Questions", "Marked For Later", "Trash"],
             contentWriter: ["Dashboard", "Add Question", "List Of Questions", "Drafts", "Trash"]
         }

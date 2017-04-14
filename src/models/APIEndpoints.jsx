@@ -19,7 +19,7 @@ export const L1S = "/l1s";
 export const L2S = "/l2s";
 export const L3S = "/l3s";
 export const L4s = "/l4s";
-export const SOURCES= "/sources";
+export const SOURCES = "/sources";
 
 export function getCourseSectionEndpoint(courseId, sectionId) {
     let endPoint = COURSES + "/" + courseId + SECTIONS;
@@ -32,7 +32,7 @@ export function getL1Endpoint(sectionId, l1Id) {
 }
 
 export function getL2Endpoint(l1Id, l2Id) {
-    let endPoint = L1S  + "/" + l1Id + L2S;
+    let endPoint = L1S + "/" + l1Id + L2S;
     return l2Id ? endPoint + "/" + l2Id : endPoint;
 }
 
@@ -42,7 +42,7 @@ export function getL3Endpoint(l2Id, l3Id) {
 }
 
 export function getL4Endpoint(l3Id, l4Id) {
-    let endPoint = L3S  + "/" + l3Id + L4s;
+    let endPoint = L3S + "/" + l3Id + L4s;
     return l4Id ? endPoint + "/" + l4Id : endPoint;
 }
 

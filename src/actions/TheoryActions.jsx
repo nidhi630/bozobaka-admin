@@ -15,7 +15,10 @@ import {
     THEORY_UPDATE_STATUS,
     THEORY_UPDATE_PARSED_THEORY
 } from "./ActionConstants";
-import {updateTheory as updateTheoryRequest} from "./../services/TheoryService";
+import {
+    updateTheory as updateTheoryRequest,
+    fetchTheory as fetchTheoryRequest
+} from "./../services/TheoryService";
 
 export function theoryHasErrored(hasErrored, errorMessage) {
     return {
@@ -24,6 +27,7 @@ export function theoryHasErrored(hasErrored, errorMessage) {
         errorMessage
     };
 }
+
 export function theoryIsLoading(isLoading) {
     return {
         isLoading,
@@ -108,8 +112,21 @@ export function theoryUpdateParsedTheory(parsedTheory) {
     };
 }
 
-export function fetchTheory() {
+export function fetchTheory(theoryId) {
+    return (dispatch) => {
+        dispatch(theoryIsLoading(true));
 
+        fetchTheoryRequest({
+            id: theoryId
+        }).then(() => {
+            dispatch(theoryIsLoading(false));
+            dispatch(theoryRequestSuccess(true));
+        }).catch((err) => {
+            dispatch(theoryIsLoading(false));
+            dispatch(theoryRequestSuccess(false));
+            dispatch(theoryHasErrored(true, err.message));
+        });
+    };
 }
 
 export function postTheory() {
