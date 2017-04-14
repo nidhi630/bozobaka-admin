@@ -7,7 +7,6 @@ import injectTapEventPlugin from "react-tap-event-plugin";
 import {Provider} from "react-redux";
 import App from "./containers/AppContainer";
 import AddQuestion from "./containers/AddQuestionContainer";
-import AllQuestions from "./containers/AllQuestionsContainer";
 import Dashboard from "./containers/DashboardContainer";
 import Urls from "./models/Urls";
 import Manage from "./containers/ManageContainer";
@@ -15,6 +14,7 @@ import ManageCourse from "./containers/ManageCourseContainer";
 import configureStore from "./store";
 import AddTheory from "./containers/AddTheoryContainer";
 import ListTheories from "./containers/ListTheoriesContainer";
+import ListQuestions from "./containers/ListQuestionsContainer";
 
 require("style-loader!css-loader!./styles/styles.css");
 require("style-loader!css-loader!./../node_modules/react-quill/dist/quill.snow.css");
@@ -31,7 +31,7 @@ render(
             <Route path={Urls.DASHBOARD} component={App}>
                 <IndexRoute component={Dashboard}/>
                 <Route path={Urls.ADD_QUESTION} component={AddQuestion}/>
-                <Route path={Urls.LIST_QUESTIONS} component={AllQuestions}/>
+                <Route path={Urls.LIST_QUESTIONS} component={ListQuestions}/>
                 <Route path={Urls.MANAGE} component={Manage}/>
                 <Route path={Urls.MANAGE_COURSE} component={ManageCourse}/>
                 <Route path={Urls.ADD_THEORY} component={AddTheory}/>
