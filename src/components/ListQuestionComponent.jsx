@@ -55,7 +55,7 @@ export default class ListQuestionComponent extends React.Component {
                 <br/>
                 <Row>
                     <Col xs={12}>
-                        <h1>List Of Theory</h1>
+                        <h1>List Of Questions</h1>
                     </Col>
                 </Row>
                 <Row>
