@@ -1,8 +1,8 @@
 "use strict";
 
 import React, {PropTypes} from "react";
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import Dialog from "material-ui/Dialog";
+import FlatButton from "material-ui/FlatButton";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 import {connect} from "react-redux";
@@ -48,14 +48,14 @@ class AddSourceComponent extends React.Component {
                 </Dialog>
 
             </div>
-        )
+        );
     }
 }
 
 const mapStateToProps = (state) => {
     return {
         ...state.sources
-    }
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -75,7 +75,7 @@ const mapDispatchToProps = (dispatch) => {
         setRequestState: (state) => {
             dispatch(sourceRequestState(state));
         }
-    }
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddSourceComponent);

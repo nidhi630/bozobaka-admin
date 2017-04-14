@@ -121,11 +121,12 @@ export function initTheories(theories) {
 }
 
 export function fetchTheory(theoryId) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         dispatch(theoryIsLoading(true));
 
         fetchTheoryRequest({
-            id: theoryId
+            id: theoryId,
+            courseId: getState().ContentReducer.selectedCourse.id
         }).then((res) => {
             dispatch(initTheories(res));
             dispatch(theoryIsLoading(false));
@@ -143,8 +144,10 @@ export function postTheory() {
         dispatch(theoryIsLoading(true));
 
         /* TODO: validate data before post */
-        const data = getState.theory;
-        console.log(data);
+        const state = getState();
+        const data = state.theory;
+        data.courseId = state.ContentReducer.selectedCourse.id;
+
         updateTheoryRequest({
             method: data.id ? "put" : "post",
             data

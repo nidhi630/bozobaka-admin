@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
         l4Id,
         difficulty,
         status
-    }
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -34,7 +34,7 @@ const mapDispatchToProps = (dispatch) => {
         updateSelectedSource: (value) => {
             dispatch(questionUpdateSource(value));
         }
-    }
+    };
 };
 
 

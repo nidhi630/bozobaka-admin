@@ -21,9 +21,18 @@ export function updateTheory(params) {
 export function fetchTheory(params) {
     return new Promise((resolve, reject) => {
         const url = params.id ? THEORY + "/" + params.id : THEORY;
-        makeRequest({url}).then(res => {
+        makeRequest({
+            url,
+            params: {
+                filter: JSON.stringify({
+                    where: {
+                        courseId: params.courseId
+                    }
+                })
+            }
+        }).then(res => {
             console.log("theory get", res);
-            resolve(Theory.parseTheories(res));
+            resolve(Theory.parseTheories(res.data));
         }).catch(err => errorHandler(reject, err));
     });
 }
