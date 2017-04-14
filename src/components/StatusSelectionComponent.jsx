@@ -12,17 +12,21 @@ class StatusSelectionComponent extends React.Component {
 
     render() {
         const {onChange, status} = this.props;
-        
         return (
             <DropdownDisplay menuItems={this.allStatus} onChange={onChange.bind(this)} value={status}/>
-        )
+        );
     }
 }
+
+StatusSelectionComponent.propTypes = {
+    onChange: PropTypes.func,
+    status: PropTypes.string
+};
 
 const mapStateToProps = (state, ownProps) => {
     return {
         status: ownProps.status
-    }
+    };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -30,7 +34,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         onChange: (event, index, value) => {
             dispatch(ownProps.updateStatus(value));
         }
-    }
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StatusSelectionComponent);
