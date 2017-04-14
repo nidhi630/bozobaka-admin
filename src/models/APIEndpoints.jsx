@@ -20,6 +20,7 @@ export const L2S = "/l2s";
 export const L3S = "/l3s";
 export const L4s = "/l4s";
 export const SOURCES = "/sources";
+export const QUESTIONS = "/questions";
 
 export function getCourseSectionEndpoint(courseId, sectionId) {
     let endPoint = COURSES + "/" + courseId + SECTIONS;
