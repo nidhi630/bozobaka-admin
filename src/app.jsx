@@ -5,15 +5,16 @@ import {render} from "react-dom";
 import {Router, Route, browserHistory, IndexRoute} from "react-router";
 import injectTapEventPlugin from "react-tap-event-plugin";
 import {Provider} from "react-redux";
-import AppContainer from './containers/AppContainer';
-import AddQuestionContainer from './containers/AddQuestionContainer';
-import AllQuestionsContainer from './containers/AllQuestionsContainer';
-import DashboardContainer from './containers/DashboardContainer';
+import App from "./containers/AppContainer";
+import AddQuestion from "./containers/AddQuestionContainer";
+import AllQuestions from "./containers/AllQuestionsContainer";
+import Dashboard from "./containers/DashboardContainer";
 import Urls from "./models/Urls";
-import ManageContainer from "./containers/ManageContainer";
-import ManageCourseContainer from "./containers/ManageCourseContainer";
+import Manage from "./containers/ManageContainer";
+import ManageCourse from "./containers/ManageCourseContainer";
 import configureStore from "./store";
-import AddTheoryContainer from "./containers/AddTheoryContainer";
+import AddTheory from "./containers/AddTheoryContainer";
+import ListTheories from "./containers/ListTheoriesContainer";
 
 require("style-loader!css-loader!./styles/styles.css");
 require("style-loader!css-loader!./../node_modules/react-quill/dist/quill.snow.css");
@@ -27,14 +28,14 @@ let store = configureStore();
 render(
     <Provider store={store}>
         <Router history={browserHistory}>
-            <Route path={Urls.DASHBOARD} component={AppContainer}>
-                <IndexRoute component={DashboardContainer}/>
-                <Route path={Urls.ADD_QUESTION} component={AddQuestionContainer}/>
-                <Route path={Urls.LIST_QUESTIONS} component={AllQuestionsContainer}/>
-                <Route path={Urls.MANAGE} component={ManageContainer}/>
-                <Route path={Urls.MANAGE_COURSE} component={ManageCourseContainer}/>
-                <Route path={Urls.ADD_THEORY} component={AddTheoryContainer}/>
-                <Route path={Urls.LIST_THEORY} components={}/>
+            <Route path={Urls.DASHBOARD} component={App}>
+                <IndexRoute component={Dashboard}/>
+                <Route path={Urls.ADD_QUESTION} component={AddQuestion}/>
+                <Route path={Urls.LIST_QUESTIONS} component={AllQuestions}/>
+                <Route path={Urls.MANAGE} component={Manage}/>
+                <Route path={Urls.MANAGE_COURSE} component={ManageCourse}/>
+                <Route path={Urls.ADD_THEORY} component={AddTheory}/>
+                <Route path={Urls.LIST_THEORY} component={ListTheories}/>
             </Route>
         </Router>
     </Provider>
