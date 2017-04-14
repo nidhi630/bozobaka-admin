@@ -34,6 +34,7 @@ render(
                 <Route path={Urls.MANAGE} component={ManageContainer}/>
                 <Route path={Urls.MANAGE_COURSE} component={ManageCourseContainer}/>
                 <Route path={Urls.ADD_THEORY} component={AddTheoryContainer}/>
+                <Route path={Urls.LIST_THEORY} components={}/>
             </Route>
         </Router>
     </Provider>

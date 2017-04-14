@@ -13,7 +13,8 @@ import {
     THEORY_UPDATE_L3,
     THEORY_UPDATE_L4,
     THEORY_UPDATE_STATUS,
-    THEORY_UPDATE_PARSED_THEORY
+    THEORY_UPDATE_PARSED_THEORY,
+    INIT_THEORIES
 } from "./ActionConstants";
 import {
     updateTheory as updateTheoryRequest,
@@ -112,13 +113,21 @@ export function theoryUpdateParsedTheory(parsedTheory) {
     };
 }
 
+export function initTheories(theories) {
+    return {
+        type: INIT_THEORIES,
+        theories
+    };
+}
+
 export function fetchTheory(theoryId) {
     return (dispatch) => {
         dispatch(theoryIsLoading(true));
 
         fetchTheoryRequest({
             id: theoryId
-        }).then(() => {
+        }).then((res) => {
+            dispatch(initTheories(res));
             dispatch(theoryIsLoading(false));
             dispatch(theoryRequestSuccess(true));
         }).catch((err) => {
@@ -134,7 +143,7 @@ export function postTheory() {
         dispatch(theoryIsLoading(true));
 
         /* TODO: validate data before post */
-        const data = getState.newTheory;
+        const data = getState.theory;
         console.log(data);
         updateTheoryRequest({
             method: data.id ? "put" : "post",

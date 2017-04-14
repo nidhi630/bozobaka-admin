@@ -56,7 +56,7 @@ const mapStateToProps = (state) => {
     return {
         courseId: state.ContentReducer.selectedCourse.id,
         sections: state.sections,
-        selectedSection: state.newTheory.sectionId
+        selectedSection: state.theory.sectionId
     };
 };
 

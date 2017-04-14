@@ -13,7 +13,8 @@ import {
     THEORY_UPDATE_HEADING,
     THEORY_UPDATE_THEORY,
     THEORY_UPDATE_STATUS,
-    THEORY_UPDATE_PARSED_THEORY
+    THEORY_UPDATE_PARSED_THEORY,
+    INIT_THEORIES
 } from "./../actions/ActionConstants";
 
 let defaultNewTheory = {
@@ -27,10 +28,11 @@ let defaultNewTheory = {
     heading: "",
     theory: "",
     parsedTheory: "",
-    status: "Draft"
+    status: "Draft",
+    theories: []
 };
 
-export function newTheoryReducer(state = defaultNewTheory, action) {
+export function TheoryReducer(state = defaultNewTheory, action) {
     switch (action.type) {
         case THEORY_IS_LOADING:
             return {
@@ -96,6 +98,11 @@ export function newTheoryReducer(state = defaultNewTheory, action) {
             return {
                 ...state,
                 parsedTheory: action.parsedTheory
+            };
+        case INIT_THEORIES:
+            return {
+                ...state,
+                theories: action.theories
             };
         default:
             return state;

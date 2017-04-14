@@ -58,7 +58,7 @@ class SourceSelectionComponent extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    const selectedSource = state.newTheory.sources.length ? state.newTheory.sources[0] : "";
+    const selectedSource = state.theory.sources.length ? state.theory.sources[0] : "";
     return {
         sources: state.sources.sources,
         selectedSource
