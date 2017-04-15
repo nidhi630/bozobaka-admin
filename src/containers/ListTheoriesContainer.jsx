@@ -16,6 +16,10 @@ const mapDispatchToProps = (dispatch) => {
     return {
         fetchTheories: () => {
             dispatch(fetchTheory());
+        },
+
+        onFilterChange: () => {
+            dispatch(fetchTheory());
         }
     };
 };

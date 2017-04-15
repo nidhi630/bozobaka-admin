@@ -5,7 +5,7 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import Loader from "./LoaderComponent";
 import FilterComponent from "./FilterComponent";
 
-const ListTableComponent = ({headerColumns, tableRows, isLoading, onFilterChange}) => {
+const ListTableComponent = ({headerColumns, tableRows, isLoading, onFilterChange, usage}) => {
     if (isLoading) {
         return <Loader isLoading={isLoading}/>;
     }
@@ -19,7 +19,7 @@ const ListTableComponent = ({headerColumns, tableRows, isLoading, onFilterChange
                 </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
-                <FilterComponent onChangeAction={onFilterChange.bind(this)} />
+                <FilterComponent onChangeAction={onFilterChange.bind(this)} usage={usage} />
                 {tableRows.map((row, index) => (
                     <TableRow key={index}>
                         {headerColumns.map((col, colIndex) => (
@@ -40,7 +40,8 @@ ListTableComponent.propTypes = {
     headerColumns: PropTypes.array.isRequired,
     tableRows: PropTypes.array.isRequired,
     isLoading: PropTypes.bool.isRequired,
-    onFilterChange: PropTypes.func
+    onFilterChange: PropTypes.func,
+    usage: PropTypes.string
 };
 
 export default ListTableComponent;

@@ -10,6 +10,12 @@ export function initSections(content) {
     };
 }
 
+export function deleteSections() {
+    return {
+        type: DELETE_SECTIONS
+    };
+}
+
 function extractContentHierarchy(res) {
     let sections = [], l1s = [], l2s = [], l3s = [], l4s = [];
 

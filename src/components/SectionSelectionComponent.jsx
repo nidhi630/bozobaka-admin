@@ -30,12 +30,13 @@ class SectionSelectionComponent extends React.Component {
     }
 
     componentWillUnmount() {
-        this.props.updateSelectedSection("");
+        //this.props.updateSelectedSection("");
         this.props.deleteSections();
     }
 
     render() {
         const {sections, sectionId, onChange} = this.props;
+        console.log("section id in comp", sectionId);
         return (
             <div>
                 {sections.length ?
@@ -51,7 +52,7 @@ class SectionSelectionComponent extends React.Component {
 }
 
 SectionSelectionComponent.defaultProps = {
-    sectionId: ""
+
 };
 
 SectionSelectionComponent.propTypes = {
