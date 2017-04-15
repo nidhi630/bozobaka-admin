@@ -31,7 +31,6 @@ export function fetchTheory(params) {
                 })
             }
         }).then(res => {
-            console.log("theory get", res);
             resolve(Theory.parseTheories(res.data));
         }).catch(err => errorHandler(reject, err));
     });
