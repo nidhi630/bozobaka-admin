@@ -36,6 +36,7 @@ render(
                 <Route path={Urls.MANAGE_COURSE} component={ManageCourse}/>
                 <Route path={Urls.ADD_THEORY} component={AddTheory}/>
                 <Route path={Urls.LIST_THEORY} component={ListTheories}/>
+                <Route path={Urls.TRASH} components={ListQuestions}/>
             </Route>
         </Router>
     </Provider>

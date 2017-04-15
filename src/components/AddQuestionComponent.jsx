@@ -4,12 +4,12 @@ import React from "react";
 import {Row, Col} from "react-flexbox-grid";
 import SectionSelectionComponent from "./SectionSelectionComponent";
 import {
-    questionUpdateSource,
     questionUpdateL1,
     questionUpdateL2,
     questionUpdateL3,
     questionUpdateL4,
-    questionUpdateStatus
+    questionUpdateStatus,
+    questionUpdateSection
 } from "./../actions/QuestionActions";
 import L1SelectionComponent from "./L1SelectionComponent";
 import L2SelectionComponent from "./L2SelectionComponent";
@@ -18,6 +18,7 @@ import L4SelectionComponent from "./L4SelectionComponent";
 import StatusSelectionComponent from "./StatusSelectionComponent";
 import SourceSelectionComponent from "./SourceSelectionComponent";
 import AddSourceComponent from "./AddSourceComponent";
+import TextField from "material-ui/TextField";
 
 export default class AddQuestionComponent extends React.Component {
     constructor(props) {
@@ -33,7 +34,7 @@ export default class AddQuestionComponent extends React.Component {
                 <h2>Add Question</h2>
                 <Row>
                     <Col xs={12}>
-                        <SectionSelectionComponent updateSource={questionUpdateSource.bind(this)}/>
+                        <SectionSelectionComponent updateSection={questionUpdateSection.bind(this)}/>
                     </Col>
                 </Row>
                 <Row>
@@ -70,6 +71,6 @@ export default class AddQuestionComponent extends React.Component {
                     </Col>
                 </Row>
             </div>
-        )
+        );
     }
 }
