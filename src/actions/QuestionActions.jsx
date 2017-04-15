@@ -20,6 +20,7 @@ import {
     fetchQuestion as fetchQuestionRequest,
     updateQuestion as updateQuestionRequest
 } from "./../services/QuestionService";
+import {getQuestionFilter} from "./../actions/FilterActions";
 
 export function questionUpdateSource(sourceId) {
     return {
@@ -123,9 +124,10 @@ export function fetchQuestions(questionId) {
     return (dispatch, getState) => {
         dispatch(questionIsLoading(true));
 
+        const filters = getQuestionFilter(getState());
         fetchQuestionRequest({
             id: questionId,
-            courseId: getState().ContentReducer.selectedCourse.id
+            filter: filters
         }).then((res) => {
             dispatch(initQuestions(res));
             dispatch(questionIsLoading(false));

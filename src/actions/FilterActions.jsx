@@ -86,20 +86,22 @@ export function setSource(source) {
 function getCommonFilters(state) {
     /* TODO: add source support */
     const {id, status, sectionId, l1Id, l2Id} = state.filters;
-    const filter = {};
-    if (!id) {
+    const filter = {
+        courseId: state.ContentReducer.selectedCourse.id
+    };
+    if (id) {
         filter.id = {ilike: id};
     }
-    if (!status) {
+    if (status) {
         filter.status = status;
     }
-    if (!sectionId) {
+    if (sectionId) {
         filter.sectionId = sectionId;
     }
-    if (!l1Id) {
+    if (l1Id) {
         filter.l1Id = l1Id;
     }
-    if (!l2Id) {
+    if (l2Id) {
         filter.l1Id = l2Id;
     }
     return filter;
@@ -110,10 +112,11 @@ export function getQuestionFilter(state) {
     const filter = getCommonFilters(state);
 
     filter.difficulty = {
-        and: [{gte: minDifficulty}, {lte: maxDifficulty}]
+        gte: minDifficulty,
+        lte: maxDifficulty
     };
 
-    if (!question) {
+    if (question) {
         filter.question = {ilike: question};
     }
 
@@ -124,7 +127,7 @@ export function getTheoryFilter(state) {
     const {theory} = state.filters;
     const filter = getCommonFilters(state);
 
-    if (!theory) {
+    if (theory) {
         filter.theory = {ilike: theory};
     }
 
