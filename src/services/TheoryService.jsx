@@ -25,9 +25,7 @@ export function fetchTheory(params) {
             url,
             params: {
                 filter: JSON.stringify({
-                    where: {
-                        courseId: params.courseId
-                    }
+                    where: params.filter
                 })
             }
         }).then(res => {

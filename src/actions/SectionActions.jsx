@@ -7,41 +7,41 @@ export function initSections(sections) {
     return {
         type: INIT_SECTIONS,
         sections
-    }
+    };
 }
 
 export function deleteSections() {
     return {
         type: DELETE_SECTIONS
-    }
+    };
 }
 
 export function initL1s(l1s) {
     return {
         type: INIT_L1S,
         l1s
-    }
+    };
 }
 
 export function initL2s(l2s) {
     return {
         type: INIT_L2S,
         l2s
-    }
+    };
 }
 
 export function initL3s(l3s) {
     return {
         type: INIT_L3S,
         l3s
-    }
+    };
 }
 
 export function initL4s(l4s) {
     return {
         type: INIT_L4S,
         l4s
-    }
+    };
 }
 
 export function getSections(params) {
@@ -59,8 +59,8 @@ export function getSections(params) {
             .catch((err) => {
                 console.log(err);
                 /* TODO: add error to sections state */
-            })
-    }
+            });
+    };
 }
 
 function extractContentHierarchy(res) {
@@ -95,11 +95,11 @@ function extractContentHierarchy(res) {
                             id: l4.id,
                             name: l4.name,
                             l3Id: l4.l3Id
-                        })
-                    })
-                })
-            })
-        })
+                        });
+                    });
+                });
+            });
+        });
     });
 
     return {
@@ -108,5 +108,5 @@ function extractContentHierarchy(res) {
         l2s,
         l3s,
         l4s
-    }
+    };
 }

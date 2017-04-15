@@ -20,6 +20,7 @@ import {
     updateTheory as updateTheoryRequest,
     fetchTheory as fetchTheoryRequest
 } from "./../services/TheoryService";
+import {getTheoryFilter} from "./../actions/FilterActions";
 
 export function theoryHasErrored(hasErrored, errorMessage) {
     return {
@@ -124,9 +125,10 @@ export function fetchTheory(theoryId) {
     return (dispatch, getState) => {
         dispatch(theoryIsLoading(true));
 
+        const filter = getTheoryFilter(getState());
         fetchTheoryRequest({
             id: theoryId,
-            courseId: getState().ContentReducer.selectedCourse.id
+            filter: filter
         }).then((res) => {
             dispatch(initTheories(res));
             dispatch(theoryIsLoading(false));
