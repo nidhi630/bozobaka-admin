@@ -32,16 +32,29 @@ class L2SelectionComponent extends React.Component {
         let menuItems = l2s.filter((l2) => (l2.l1Id === l1Id));
         return (
             <DropdownDisplay onChange={onChange.bind(this)} menuItems={menuItems} value={l2Id} width="100%"/>
-        )
+        );
     }
 }
 
+L2SelectionComponent.defaultProps = {
+    l2Id: "",
+    l1Id: ""
+};
+
+L2SelectionComponent.propTypes = {
+    l2Id: PropTypes.string.isRequired,
+    l1Id: PropTypes.string.isRequired,
+    updateL2: PropTypes.func.isRequired,
+    l2s: PropTypes.array,
+    onChange: PropTypes.func
+};
+
 const mapStateToProps = (state, ownProps) => {
     return {
-        l2s: state.l2s,
+        l2s: state.sections.l2s,
         l1Id: ownProps.l1Id,
         l2Id: ownProps.l2Id
-    }
+    };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -49,7 +62,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         onChange: (event, index, value) => {
             dispatch(ownProps.updateL2(value));
         }
-    }
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(L2SelectionComponent);

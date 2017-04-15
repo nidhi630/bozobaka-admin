@@ -66,7 +66,7 @@ export default class AddTheoryComponent extends React.Component {
                 <Row>
                     <Col xs={12}>
                         <h3>Section</h3>
-                        <SectionSelectionComponent updateSection={theoryUpdateSection.bind(this)}/>
+                        <SectionSelectionComponent sectionId={sectionId} updateSection={theoryUpdateSection.bind(this)}/>
                     </Col>
                 </Row>
                 <br/>

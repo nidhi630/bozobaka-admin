@@ -46,7 +46,7 @@ export default class ListTheoryComponent extends React.Component {
     }
 
     render() {
-        const {theories, isLoading} = this.props;
+        const {theories, isLoading, fetchTheories} = this.props;
         return (
             <div>
                 <br/>
@@ -57,7 +57,8 @@ export default class ListTheoryComponent extends React.Component {
                 </Row>
                 <Row>
                     <Col xs={12}>
-                        <ListTableComponent headerColumns={this.headerColumns} tableRows={theories} isLoading={isLoading}/>
+                        <ListTableComponent headerColumns={this.headerColumns} tableRows={theories}
+                                            isLoading={isLoading} onFilterChange={() => fetchTheories()}/>
                     </Col>
                 </Row>
             </div>

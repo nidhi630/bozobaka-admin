@@ -3,63 +3,10 @@
 import ContentService from "./../services/ContentService";
 import {INIT_SECTIONS, DELETE_SECTIONS, INIT_L1S, INIT_L2S, INIT_L3S, INIT_L4S} from "./ActionConstants";
 
-export function initSections(sections) {
+export function initSections(content) {
     return {
         type: INIT_SECTIONS,
-        sections
-    };
-}
-
-export function deleteSections() {
-    return {
-        type: DELETE_SECTIONS
-    };
-}
-
-export function initL1s(l1s) {
-    return {
-        type: INIT_L1S,
-        l1s
-    };
-}
-
-export function initL2s(l2s) {
-    return {
-        type: INIT_L2S,
-        l2s
-    };
-}
-
-export function initL3s(l3s) {
-    return {
-        type: INIT_L3S,
-        l3s
-    };
-}
-
-export function initL4s(l4s) {
-    return {
-        type: INIT_L4S,
-        l4s
-    };
-}
-
-export function getSections(params) {
-    return (dispatch) => {
-        dispatch(deleteSections());
-        ContentService.fetchSections(params)
-            .then((res) => {
-                let content = extractContentHierarchy(res);
-                dispatch(initSections(content.sections));
-                dispatch(initL1s(content.l1s));
-                dispatch(initL2s(content.l2s));
-                dispatch(initL3s(content.l3s));
-                dispatch(initL4s(content.l4s));
-            })
-            .catch((err) => {
-                console.log(err);
-                /* TODO: add error to sections state */
-            });
+        ...content
     };
 }
 
@@ -110,3 +57,18 @@ function extractContentHierarchy(res) {
         l4s
     };
 }
+
+export function getSections(params) {
+    return (dispatch) => {
+        ContentService.fetchSections(params)
+            .then((res) => {
+                let content = extractContentHierarchy(res);
+                dispatch(initSections(content));
+            })
+            .catch((err) => {
+                console.log(err);
+                /* TODO: add error to sections state */
+            });
+    };
+}
+

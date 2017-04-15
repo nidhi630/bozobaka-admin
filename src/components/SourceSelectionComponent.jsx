@@ -16,7 +16,7 @@ class SourceSelectionComponent extends React.Component {
         this.state = {
             openDialog: false,
             name: ""
-        }
+        };
     }
 
     componentWillReceiveProps(nextProps) {
@@ -53,22 +53,27 @@ class SourceSelectionComponent extends React.Component {
             </div>
         );
     }
-
-
 }
 
-const mapStateToProps = (state) => {
-    const selectedSource = state.theory.sources.length ? state.theory.sources[0] : "";
+SourceSelectionComponent.propTypes = {
+    sources: PropTypes.array,
+    updateSource: PropTypes.func.isRequired,
+    source: PropTypes.string,
+    fetchSources: PropTypes.func,
+    deleteSources: PropTypes.func,
+    updateSelectedSource: PropTypes.func,
+    selectedSource: PropTypes.string
+};
+
+const mapStateToProps = (state, ownProps) => {
+    const selectedSource = ownProps.source ? ownProps.source : state.theory.sources.length ? state.theory.sources[0] : "";
     return {
         sources: state.sources.sources,
         selectedSource
-    }
+    };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-    if (!ownProps.updateSource) {
-        throw new Error("update source function as prop is required");
-    }
     return {
         fetchSources: () => {
             dispatch(fetchSources());
@@ -81,7 +86,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         updateSelectedSource: (event, index, value) => {
             dispatch(ownProps.updateSource(value));
         }
-    }
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SourceSelectionComponent);

@@ -32,16 +32,16 @@ class L4SelectionComponent extends React.Component {
         let menuItems = l4s.filter((l4) => (l4.l3Id === l3Id));
         return (
             <DropdownDisplay onChange={onChange.bind(this)} menuItems={menuItems} value={l4Id} width="100%"/>
-        )
+        );
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        l4s: state.l4s,
+        l4s: state.sections.l4s,
         l3Id: ownProps.l3Id,
         l4Id: ownProps.l4Id
-    }
+    };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -49,7 +49,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         onChange: (event, index, value) => {
             dispatch(ownProps.updateL4(value));
         }
-    }
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(L4SelectionComponent);

@@ -3,8 +3,9 @@
 import React, {PropTypes} from "react";
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from "material-ui/Table";
 import Loader from "./LoaderComponent";
+import FilterComponent from "./FilterComponent";
 
-const ListTableComponent = ({headerColumns, tableRows, isLoading}) => {
+const ListTableComponent = ({headerColumns, tableRows, isLoading, onFilterChange}) => {
     if (isLoading) {
         return <Loader isLoading={isLoading}/>;
     }
@@ -18,6 +19,7 @@ const ListTableComponent = ({headerColumns, tableRows, isLoading}) => {
                 </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
+                <FilterComponent onChangeAction={onFilterChange.bind(this)} />
                 {tableRows.map((row, index) => (
                     <TableRow key={index}>
                         {headerColumns.map((col, colIndex) => (
@@ -37,7 +39,8 @@ ListTableComponent.defaultProps = {
 ListTableComponent.propTypes = {
     headerColumns: PropTypes.array.isRequired,
     tableRows: PropTypes.array.isRequired,
-    isLoading: PropTypes.bool.isRequired
+    isLoading: PropTypes.bool.isRequired,
+    onFilterChange: PropTypes.func
 };
 
 export default ListTableComponent;

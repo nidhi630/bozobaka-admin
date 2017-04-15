@@ -32,7 +32,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onChange: (event, index, value) => {
-            dispatch(ownProps.updateStatus(value));
+            dispatch(ownProps.updateStatus(value, "status"));
         }
     };
 };

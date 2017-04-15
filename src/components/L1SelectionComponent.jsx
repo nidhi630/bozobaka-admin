@@ -26,7 +26,7 @@ class L1SelectionComponent extends React.Component {
     componentWillMount() {
         const {l1Id, sectionId, onChange, l1s} = this.props;
         if (!l1Id && sectionId && l1s.length) {
-            onChange(null, null, nextProps.l1s[0].id);
+            onChange(null, null, l1s[0].id);
         }
     }
 
@@ -34,19 +34,34 @@ class L1SelectionComponent extends React.Component {
         const {l1Id, l1s, onChange, sectionId} = this.props;
         let menuItems = l1s.filter((l1) => (l1.sectionId === sectionId));
 
-        if(!menuItems.length) return null;
+        if (!menuItems.length) {
+            return null;
+        }
         return (
             <DropdownDisplay onChange={onChange.bind(this)} menuItems={menuItems} value={l1Id} width="100%"/>
-        )
+        );
     }
 }
 
+L1SelectionComponent.defaultProps = {
+    l1Id: "",
+    sectionId: ""
+}
+
+L1SelectionComponent.propTypes = {
+    l1Id: PropTypes.string.isRequired,
+    l1s: PropTypes.array,
+    onChange: PropTypes.func,
+    sectionId: PropTypes.string.isRequired,
+    updateL1: PropTypes.func.isRequired
+};
+
 const mapStateToProps = (state, ownProps) => {
     return {
-        l1s: state.l1s,
+        l1s: state.sections.l1s,
         sectionId: ownProps.sectionId,
         l1Id: ownProps.l1Id
-    }
+    };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -54,7 +69,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         onChange: (event, index, value) => {
             dispatch(ownProps.updateL1(value));
         }
-    }
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(L1SelectionComponent);

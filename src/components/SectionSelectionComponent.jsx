@@ -3,7 +3,7 @@
 import {connect} from "react-redux";
 import React, {PropTypes} from "react";
 import DropdownDisplay from "./DropdownDisplayComponent";
-import {getSections, deleteSections} from "./../actions/SectionActions";
+import {getSections as fetchSections, deleteSections} from "./../actions/SectionActions";
 
 class SectionSelectionComponent extends React.Component {
     constructor(props) {
@@ -17,7 +17,7 @@ class SectionSelectionComponent extends React.Component {
             getSections({courseId: nextProps.courseId});
         }
 
-        if (!nextProps.selectedSection && nextProps.sections.length) {
+        if (!nextProps.sectionId && nextProps.sections.length) {
             updateSelectedSection(nextProps.sections[0].id); // select default value as first item
         }
     }
@@ -35,39 +35,52 @@ class SectionSelectionComponent extends React.Component {
     }
 
     render() {
-        const {sections, selectedSection, onChange} = this.props;
+        const {sections, sectionId, onChange} = this.props;
         return (
             <div>
                 {sections.length ?
                     <DropdownDisplay
                         menuItems={sections}
-                        value={selectedSection}
+                        value={sectionId}
                         onChange={onChange.bind(this)}/>
                     :
                     <h3>No sections</h3>}
             </div>
-        )
+        );
     }
 }
 
-SectionSelectionComponent.propTypes = {};
+SectionSelectionComponent.defaultProps = {
+    sectionId: ""
+};
 
-const mapStateToProps = (state) => {
+SectionSelectionComponent.propTypes = {
+    sections: PropTypes.array,
+    sectionId: PropTypes.string.isRequired,
+    updateSelectedSection: PropTypes.func,
+    deleteSections: PropTypes.func,
+    getSections: PropTypes.func,
+    onChange: PropTypes.func,
+    courseId: PropTypes.string,
+    updateSection: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state, ownProps) => {
     return {
         courseId: state.ContentReducer.selectedCourse.id,
-        sections: state.sections,
-        selectedSection: state.theory.sectionId
+        sections: state.sections.sections,
+        sectionId: ownProps.sectionId
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onChange: (event, index, value) => {
-            dispatch(ownProps.updateSection(value));
+            dispatch(ownProps.updateSection(value, "section"));
         },
 
         getSections: (params) => {
-            dispatch(getSections(params));
+            dispatch(fetchSections(params));
         },
 
         updateSelectedSection: (newValue) => {

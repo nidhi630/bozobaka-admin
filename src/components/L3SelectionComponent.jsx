@@ -32,16 +32,16 @@ class L3SelectionComponent extends React.Component {
         let menuItems = l3s.filter((l3) => (l3.l2Id === l2Id));
         return (
             <DropdownDisplay onChange={onChange.bind(this)} menuItems={menuItems} value={l3Id} width="100%"/>
-        )
+        );
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        l3s: state.l3s,
+        l3s: state.sections.l3s,
         l2Id: ownProps.l2Id,
         l3Id: ownProps.l3Id
-    }
+    };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -49,7 +49,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         onChange: (event, index, value) => {
             dispatch(ownProps.updateL3(value));
         }
-    }
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(L3SelectionComponent);
