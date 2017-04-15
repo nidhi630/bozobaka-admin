@@ -5,11 +5,6 @@ import {connect} from "react-redux";
 import DropdownDisplay from "./DropdownDisplayComponent";
 
 class L2SelectionComponent extends React.Component {
-
-    static propTypes() {
-
-    }
-
     constructor(props) {
         super(props);
     }
@@ -17,8 +12,8 @@ class L2SelectionComponent extends React.Component {
     componentWillReceiveProps(nextProps) {
         const {l2Id, onChange} = this.props;
         if (nextProps.l2s.length) {
-            if (!nextProps.l2Id || l2Id !== nextProps.l2Id) {
-                setTimeout(() => onChange(null, null, nextProps.l2s[0].id), 0);
+            if (l2Id !== nextProps.l2Id) {
+                onChange(null, null, nextProps.l2s[0].id);
             }
         }
     }
@@ -36,15 +31,10 @@ class L2SelectionComponent extends React.Component {
     }
 }
 
-L2SelectionComponent.defaultProps = {
-    l2Id: "",
-    l1Id: ""
-};
-
 L2SelectionComponent.propTypes = {
     l2Id: PropTypes.string.isRequired,
     l1Id: PropTypes.string.isRequired,
-    updateL2: PropTypes.func.isRequired,
+    actionOnUpdate: PropTypes.func.isRequired,
     l2s: PropTypes.array,
     onChange: PropTypes.func
 };
@@ -60,7 +50,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onChange: (event, index, value) => {
-            dispatch(ownProps.updateL2(value));
+            dispatch(ownProps.actionOnUpdate(value));
         }
     };
 };

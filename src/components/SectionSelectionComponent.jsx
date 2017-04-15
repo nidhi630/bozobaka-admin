@@ -30,7 +30,7 @@ class SectionSelectionComponent extends React.Component {
     }
 
     componentWillUnmount() {
-        //this.props.updateSelectedSection("");
+        this.props.updateSelectedSection("");
         this.props.deleteSections();
     }
 
@@ -63,7 +63,7 @@ SectionSelectionComponent.propTypes = {
     getSections: PropTypes.func,
     onChange: PropTypes.func,
     courseId: PropTypes.string,
-    updateSection: PropTypes.func.isRequired
+    actionOnUpdate: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -77,7 +77,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onChange: (event, index, value) => {
-            dispatch(ownProps.updateSection(value, "section"));
+            dispatch(ownProps.actionOnUpdate(value));
         },
 
         getSections: (params) => {
@@ -85,7 +85,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
 
         updateSelectedSection: (newValue) => {
-            dispatch(ownProps.updateSection(newValue));
+            dispatch(ownProps.actionOnUpdate(newValue));
         },
 
         deleteSections: () => {

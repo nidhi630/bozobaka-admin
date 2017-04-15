@@ -6,10 +6,6 @@ import DropdownDisplay from "./DropdownDisplayComponent";
 
 class L1SelectionComponent extends React.Component {
 
-    static propTypes() {
-
-    }
-
     constructor(props) {
         super(props);
     }
@@ -43,17 +39,12 @@ class L1SelectionComponent extends React.Component {
     }
 }
 
-L1SelectionComponent.defaultProps = {
-    l1Id: "",
-    sectionId: ""
-}
-
 L1SelectionComponent.propTypes = {
     l1Id: PropTypes.string.isRequired,
     l1s: PropTypes.array,
     onChange: PropTypes.func,
     sectionId: PropTypes.string.isRequired,
-    updateL1: PropTypes.func.isRequired
+    actionOnUpdate: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -67,7 +58,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onChange: (event, index, value) => {
-            dispatch(ownProps.updateL1(value));
+            dispatch(ownProps.actionOnUpdate(value));
         }
     };
 };

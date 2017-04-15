@@ -5,11 +5,6 @@ import {connect} from "react-redux";
 import DropdownDisplay from "./DropdownDisplayComponent";
 
 class L3SelectionComponent extends React.Component {
-
-    static propTypes() {
-
-    }
-
     constructor(props) {
         super(props);
     }
@@ -47,7 +42,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onChange: (event, index, value) => {
-            dispatch(ownProps.updateL3(value));
+            dispatch(ownProps.actionOnUpdate(value));
         }
     };
 };

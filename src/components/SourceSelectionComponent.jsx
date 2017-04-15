@@ -57,7 +57,7 @@ class SourceSelectionComponent extends React.Component {
 
 SourceSelectionComponent.propTypes = {
     sources: PropTypes.array,
-    updateSource: PropTypes.func.isRequired,
+    actionOnUpdate: PropTypes.func.isRequired,
     source: PropTypes.string,
     fetchSources: PropTypes.func,
     deleteSources: PropTypes.func,
@@ -84,7 +84,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
 
         updateSelectedSource: (event, index, value) => {
-            dispatch(ownProps.updateSource(value));
+            dispatch(ownProps.actionOnUpdate(value));
         }
     };
 };

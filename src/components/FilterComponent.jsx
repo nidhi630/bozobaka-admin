@@ -10,7 +10,14 @@ import L2SelectionComponent from "./L2SelectionComponent";
 import SourceSelectionComponent from "./SourceSelectionComponent";
 import {connect} from "react-redux";
 import {
-    setSection
+    setSection,
+    setStatus,
+    setL1,
+    setL2,
+    setHeading,
+    setId,
+    setQuestion,
+    setSource
 } from "./../actions/FilterActions";
 
 class FilterComponent extends React.Component {
@@ -20,11 +27,10 @@ class FilterComponent extends React.Component {
 
     render() {
         const {
-            onKeyDownHandler, status, updateSection, sectionId, usage,
-            l1Id, l2Id, source, onChangeHandler
+            onKeyDownHandler, status, sectionId, usage, l1Id, l2Id, source
         } = this.props;
 
-        console.log("sectionid in filter component", sectionId);
+        console.log(this.props);
         return (
             <TableRow>
                 <TableRowColumn>
@@ -34,7 +40,7 @@ class FilterComponent extends React.Component {
                     <TextField hintText={usage} ref={usage} id={usage} onKeyDown={onKeyDownHandler.bind(this)}/>
                 </TableRowColumn>
                 <TableRowColumn>
-                    <StatusSelection status={status} onChange={onChangeHandler.bind(this)}/>
+                    <StatusSelection status={status} actionOnUpdate={setStatus}/>
                 </TableRowColumn>
                 {usage !== "question" ? null :
                     <TableRowColumn>
@@ -45,16 +51,16 @@ class FilterComponent extends React.Component {
                     </TableRowColumn>
                 }
                 <TableRowColumn>
-                    <SectionSelectionComponent sectionId={sectionId} updateSection={updateSection.bind(this)}/>
+                    <SectionSelectionComponent sectionId={sectionId} actionOnUpdate={setSection}/>
                 </TableRowColumn>
                 <TableRowColumn>
-                    <L1SelectionComponent l1Id={l1Id} sectionId={sectionId} updateL1={onChangeHandler.bind(this)}/>
+                    <L1SelectionComponent l1Id={l1Id} sectionId={sectionId} actionOnUpdate={setL1}/>
                 </TableRowColumn>
                 <TableRowColumn>
-                    <L2SelectionComponent l1Id={l1Id} l2Id={l2Id} updateL2={onChangeHandler.bind(this)}/>
+                    <L2SelectionComponent l1Id={l1Id} l2Id={l2Id} actionOnUpdate={setL2}/>
                 </TableRowColumn>
                 <TableRowColumn>
-                    <SourceSelectionComponent source={source} updateSource={onChangeHandler.bind(this)}/>
+                    <SourceSelectionComponent source={source} actionOnUpdate={setSource}/>
                 </TableRowColumn>
             </TableRow>
         );
@@ -64,7 +70,8 @@ class FilterComponent extends React.Component {
 FilterComponent.propTypes = {
     onKeyDownHandler: PropTypes.func,
     status: PropTypes.string,
-    onChangeHandler: PropTypes.func,
+    updateL1: PropTypes.func,
+    updateL2: PropTypes.func,
     sectionId: PropTypes.string,
     usage: PropTypes.string,
     l1Id: PropTypes.string,
@@ -83,19 +90,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onKeyDownHandler: (event) => {
             console.log(event);
-        },
-
-        onChangeHandler: (newValue, extra) => {
-            console.log(newValue, extra);
-            //dispatch(setSection(newValue));
-            //ownProps.onChangeAction();
-            return {
-                type: "DO_NOTHING"
-            };
-        },
-
-        updateSection: (newValue) => {
-            return setSection(newValue);
         }
     };
 };
