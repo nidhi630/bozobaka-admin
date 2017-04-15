@@ -1,5 +1,7 @@
 "use strict";
 
+import {getDateWithoutTime} from "./../utils/dateTimeUtils";
+
 export default class Theory {
     constructor(theory) {
         this.id = theory.id;
@@ -12,6 +14,7 @@ export default class Theory {
         this.theory = theory.theory;
         this.status = theory.status;
         this.type = theory.type;
+        this.created = theory.created ? getDateWithoutTime(theory.created) : "";
     }
 
     static parseTheories(theories = []) {

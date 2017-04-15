@@ -21,7 +21,7 @@ let defaultState = {
     openDialog: false
 };
 
-export function sourceReducer(state = defaultState, action) {
+export function SourceReducer(state = defaultState, action) {
     switch (action.type) {
         case INIT_SOURCES:
             return {

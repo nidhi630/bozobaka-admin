@@ -10,8 +10,9 @@ import GlobalReducer from "./GlobalReducer";
 import ContentReducer from "./ContentReducer";
 import {TheoryReducer} from "./TheoryReducer";
 import {SectionsReducer, L1sReducer, L2sReducer, L3sReducer, L4sReducer} from "./SectionsReducer";
-import {sourceReducer} from "./SourceReducer";
-import {questionReducer} from "./QuestionReducer";
+import {SourceReducer} from "./SourceReducer";
+import {QuestionReducer} from "./QuestionReducer";
+import {FilterReducer} from "./FiltersReducer";
 
 export default combineReducers({
     GlobalReducer,
@@ -22,6 +23,7 @@ export default combineReducers({
     l3s: L3sReducer,
     l4s: L4sReducer,
     theory: TheoryReducer,
-    sources: sourceReducer,
-    question: questionReducer
+    sources: SourceReducer,
+    question: QuestionReducer,
+    filters: FilterReducer
 });

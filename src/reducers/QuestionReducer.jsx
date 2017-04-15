@@ -36,7 +36,7 @@ let defaultState = {
     questions: []
 };
 
-export function questionReducer(state = defaultState, action) {
+export function QuestionReducer(state = defaultState, action) {
     switch (action.type) {
         case QUESTION_IS_LOADING:
             return {

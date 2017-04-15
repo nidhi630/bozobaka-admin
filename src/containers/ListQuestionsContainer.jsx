@@ -4,7 +4,8 @@ import {connect} from "react-redux";
 import ListQuestionComponent from "./../components/ListQuestionComponent";
 import {fetchQuestions} from "./../actions/QuestionActions";
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
+    console.log(ownProps);
     return {
         questions: state.theory.theories,
         isLoading: state.theory.isLoading,
