@@ -16,7 +16,8 @@ import {
     theoryUpdateL2,
     theoryUpdateL3,
     theoryUpdateL4,
-    theoryUpdateStatus
+    theoryUpdateStatus,
+    theoryUpdateSource
 } from "./../actions/TheoryActions";
 import StatusSelectionComponent from "./StatusSelectionComponent";
 import AddSourceComponent from "./AddSourceComponent";
@@ -50,8 +51,7 @@ export default class AddTheoryComponent extends React.Component {
         }
 
         const {
-            updateHeading, theory, updateTheory, updateSelectedSource,
-            l1Id, l2Id, l3Id, l4Id, sectionId, status, parsedTheory, heading
+            updateHeading, theory, updateTheory, l1Id, l2Id, l3Id, l4Id, sectionId, status, parsedTheory, heading
         } = this.props;
 
         return (
@@ -66,14 +66,14 @@ export default class AddTheoryComponent extends React.Component {
                 <Row>
                     <Col xs={12}>
                         <h3>Section</h3>
-                        <SectionSelectionComponent sectionId={sectionId} updateSection={theoryUpdateSection.bind(this)}/>
+                        <SectionSelectionComponent sectionId={sectionId} actionOnUpdate={theoryUpdateSection.bind(this)}/>
                     </Col>
                 </Row>
                 <br/>
                 <Row>
                     <Col xs={12} sm={5}>
                         <h3>Source</h3>
-                        <SourceSelectionComponent updateSource={updateSelectedSource.bind(this)}/>
+                        <SourceSelectionComponent actionOnUpdate={theoryUpdateSource.bind(this)}/>
                     </Col>
                     <Col xs={12} sm={5}>
                         <AddSourceComponent/>
@@ -112,26 +112,26 @@ export default class AddTheoryComponent extends React.Component {
                 <Row>
                     <Col xs={12} sm={6} md={3}>
                         <h3>L1</h3>
-                        <L1SelectionComponent sectionId={sectionId} l1Id={l1Id} updateL1={theoryUpdateL1.bind(this)}/>
+                        <L1SelectionComponent sectionId={sectionId} l1Id={l1Id} actionOnUpdate={theoryUpdateL1.bind(this)}/>
                     </Col>
                     <Col xs={12} sm={6} md={3}>
                         <h3>L2</h3>
-                        <L2SelectionComponent l1Id={l1Id} l2Id={l2Id} updateL2={theoryUpdateL2.bind(this)}/>
+                        <L2SelectionComponent l1Id={l1Id} l2Id={l2Id} actionOnUpdate={theoryUpdateL2.bind(this)}/>
                     </Col>
                     <Col xs={12} sm={6} md={3}>
                         <h3>L3</h3>
-                        <L3SelectionComponent l2Id={l2Id} l3Id={l3Id} updateL3={theoryUpdateL3.bind(this)}/>
+                        <L3SelectionComponent l2Id={l2Id} l3Id={l3Id} actionOnUpdate={theoryUpdateL3.bind(this)}/>
                     </Col>
                     <Col xs={12} sm={6} md={3}>
                         <h3>L4</h3>
-                        <L4SelectionComponent l4Id={l4Id} l3Id={l3Id} updateL4={theoryUpdateL4.bind(this)}/>
+                        <L4SelectionComponent l4Id={l4Id} l3Id={l3Id} actionOnUpdate={theoryUpdateL4.bind(this)}/>
                     </Col>
                 </Row>
                 <br/>
                 <Row>
                     <Col xs={12}>
                         <h3>Status</h3>
-                        <StatusSelectionComponent updateStatus={theoryUpdateStatus.bind(this)} status={status}/>
+                        <StatusSelectionComponent actionOnUpdate={theoryUpdateStatus.bind(this)} status={status}/>
                     </Col>
                 </Row>
                 <br/><br/>

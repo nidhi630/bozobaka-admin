@@ -171,13 +171,12 @@ export default class ManageCourseComponent extends React.Component {
                                                             l3ToOpen={this.scope.l3ToOpen}
                                                             l4ToOpen={this.scope.l4ToOpen}/> : null}
             </div>
-        )
+        );
     }
 
     fetchDataFromServer() {
         this.setState({showLoader: true});
         ContentService.fetchSections({courseId: this.scope.courseId}).then((sections) => {
-            console.log(sections);
             this.setState({
                 sections: sections,
                 showLoader: false

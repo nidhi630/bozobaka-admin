@@ -46,10 +46,6 @@ const mapDispatchToProps = (dispatch) => {
                 dispatch(theoryUpdateParsedTheory(parsedHtml));
             }, 0);
             dispatch(theoryUpdateTheory(newValue));
-        },
-
-        updateSelectedSource: (value) => {
-            dispatch(theoryUpdateSource(value));
         }
     };
 };

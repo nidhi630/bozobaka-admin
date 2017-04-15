@@ -29,7 +29,11 @@ let defaultNewTheory = {
     theory: "",
     parsedTheory: "",
     status: "Draft",
-    theories: []
+    theories: [],
+    l1Id: "",
+    l2Id: "",
+    l3Id: "",
+    l4Id: ""
 };
 
 export function TheoryReducer(state = defaultNewTheory, action) {

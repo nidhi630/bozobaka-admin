@@ -36,7 +36,6 @@ class SectionSelectionComponent extends React.Component {
 
     render() {
         const {sections, sectionId, onChange} = this.props;
-        console.log("section id in comp", sectionId);
         return (
             <div>
                 {sections.length ?
