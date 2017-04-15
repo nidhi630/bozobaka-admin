@@ -13,21 +13,16 @@ function initVariables() {
     processingInstructions = [
         {
             replaceChildren: true,
-            shouldProcessNode: (node) => (node.attribs && (node.attribs['data-katex'] === 'inline' || node.attribs['data-katex'] === 'block')),
-            processNode: (node, children) => {
-                if (children && children.length > 0) {
-                    let type = node.attribs["data-katex"];
-                    switch (type) {
-                        case 'inline':
-                            return <InlineMath>{children[0]}</InlineMath>;
-                        case 'block':
-                            return <BlockMath>{children[0]}</BlockMath>;
-                    }
+            shouldProcessNode: (node) => (node.attribs && node.attribs["data-katex"]),
+            processNode: (node) => {
+                if (node.attribs["data-block"]) {
+                    return <BlockMath>{node.attribs["data-katex"]}</BlockMath>;
                 }
+                return <InlineMath>{node.attribs["data-katex"]}</InlineMath>;
             }
         },
         {
-            shouldProcessNode: (node) => (true),
+            shouldProcessNode: () => (true),
             processNode: processNodeDefinitions.processDefaultNode
         }
     ];
@@ -35,7 +30,9 @@ function initVariables() {
 }
 
 export function parseKatex(html) {
-    if (!init) initVariables();
+    if (!init) {
+        initVariables();
+    }
     let dom = he.decode(html);
     return htmlToReactParser.parseWithInstructions(dom, () => true, processingInstructions);
 }

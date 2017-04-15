@@ -25,6 +25,7 @@ import LivePreviewComponent from "./LivePreviewComponent";
 import {resetVariables} from "./../services/KatexParser";
 import EditorComponent from "./EditorComponent";
 import DropdownDisplay from "./DropdownDisplayComponent";
+import {InlineMath} from "react-katex";
 
 export default class AddTheoryComponent extends React.Component {
     constructor(props) {
@@ -66,7 +67,8 @@ export default class AddTheoryComponent extends React.Component {
                 <Row>
                     <Col xs={12}>
                         <h3>Section</h3>
-                        <SectionSelectionComponent sectionId={sectionId} actionOnUpdate={theoryUpdateSection.bind(this)}/>
+                        <SectionSelectionComponent sectionId={sectionId}
+                                                   actionOnUpdate={theoryUpdateSection.bind(this)}/>
                     </Col>
                 </Row>
                 <br/>
@@ -91,7 +93,7 @@ export default class AddTheoryComponent extends React.Component {
                     <Col xs={12}>
                         <h3>Heading</h3>
                         <TextField title="Heading" type="text" hintText="Enter Heading" fullWidth={true}
-                                   onChange={updateHeading.bind(this)} defaultValue={heading}/>
+                                   multiLine={true} onChange={updateHeading.bind(this)} defaultValue={heading}/>
                     </Col>
                 </Row>
                 <br/>
@@ -112,7 +114,8 @@ export default class AddTheoryComponent extends React.Component {
                 <Row>
                     <Col xs={12} sm={6} md={3}>
                         <h3>L1</h3>
-                        <L1SelectionComponent sectionId={sectionId} l1Id={l1Id} actionOnUpdate={theoryUpdateL1.bind(this)}/>
+                        <L1SelectionComponent sectionId={sectionId} l1Id={l1Id}
+                                              actionOnUpdate={theoryUpdateL1.bind(this)}/>
                     </Col>
                     <Col xs={12} sm={6} md={3}>
                         <h3>L2</h3>
