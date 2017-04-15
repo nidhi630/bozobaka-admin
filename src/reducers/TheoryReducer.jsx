@@ -14,10 +14,11 @@ import {
     THEORY_UPDATE_THEORY,
     THEORY_UPDATE_STATUS,
     THEORY_UPDATE_PARSED_THEORY,
-    INIT_THEORIES
+    INIT_THEORIES,
+    THEORY_RESET_STATE
 } from "./../actions/ActionConstants";
 
-let defaultNewTheory = {
+let defaultTheory = {
     isLoading: false,
     hasErrored: false,
     errorMessage: "",
@@ -36,7 +37,7 @@ let defaultNewTheory = {
     l4Id: ""
 };
 
-export function TheoryReducer(state = defaultNewTheory, action) {
+export function TheoryReducer(state = defaultTheory, action) {
     switch (action.type) {
         case THEORY_IS_LOADING:
             return {
@@ -46,7 +47,8 @@ export function TheoryReducer(state = defaultNewTheory, action) {
         case THEORY_HAS_ERRORED:
             return {
                 ...state,
-                hasErrored: action.hasErrored
+                hasErrored: action.hasErrored,
+                errorMessage: action.errorMessage
             };
         case THEORY_REQUEST_SUCCESS:
             return {
@@ -108,6 +110,9 @@ export function TheoryReducer(state = defaultNewTheory, action) {
                 ...state,
                 theories: action.theories
             };
+        case THEORY_RESET_STATE:
+            return defaultTheory;
+
         default:
             return state;
     }

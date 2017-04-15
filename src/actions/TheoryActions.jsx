@@ -14,13 +14,15 @@ import {
     THEORY_UPDATE_L4,
     THEORY_UPDATE_STATUS,
     THEORY_UPDATE_PARSED_THEORY,
-    INIT_THEORIES
+    INIT_THEORIES,
+    THEORY_RESET_STATE
 } from "./ActionConstants";
 import {
     updateTheory as updateTheoryRequest,
     fetchTheory as fetchTheoryRequest
 } from "./../services/TheoryService";
 import {getTheoryFilter} from "./../actions/FilterActions";
+import Theory from "./../models/Theory";
 
 export function theoryHasErrored(hasErrored, errorMessage) {
     return {
@@ -121,6 +123,12 @@ export function initTheories(theories) {
     };
 }
 
+export function theoryResetState() {
+    return {
+        type: THEORY_RESET_STATE
+    };
+}
+
 export function fetchTheory(theoryId) {
     return (dispatch, getState) => {
         dispatch(theoryIsLoading(true));
@@ -141,25 +149,37 @@ export function fetchTheory(theoryId) {
     };
 }
 
-export function postTheory() {
+export function theoryPostTheory(status) {
     return (dispatch, getState) => {
         dispatch(theoryIsLoading(true));
 
         /* TODO: validate data before post */
-        const state = getState();
-        const data = state.theory;
-        data.courseId = state.ContentReducer.selectedCourse.id;
+        try {
+            const state = getState();
+            const data = {
+                ...state.theory
+            };
 
-        updateTheoryRequest({
-            method: data.id ? "put" : "post",
-            data
-        }).then(() => {
-            dispatch(theoryIsLoading(false));
-            dispatch(theoryRequestSuccess(true));
-        }).catch((err) => {
-            dispatch(theoryIsLoading(false));
-            dispatch(theoryRequestSuccess(false));
+            if (status) {
+                data.status = status;
+            }
+            data.courseId = state.ContentReducer.selectedCourse.id;
+
+            Theory.validateTheory(data);
+
+            updateTheoryRequest({
+                method: data.id ? "put" : "post",
+                data
+            }).then(() => {
+                dispatch(theoryIsLoading(false));
+                dispatch(theoryRequestSuccess(true));
+            }).catch((err) => {
+                dispatch(theoryIsLoading(false));
+                dispatch(theoryRequestSuccess(false));
+                dispatch(theoryHasErrored(true, err.message));
+            });
+        } catch (err) {
             dispatch(theoryHasErrored(true, err.message));
-        });
+        }
     };
 }

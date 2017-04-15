@@ -25,7 +25,9 @@ import LivePreviewComponent from "./LivePreviewComponent";
 import {resetVariables} from "./../services/KatexParser";
 import EditorComponent from "./EditorComponent";
 import DropdownDisplay from "./DropdownDisplayComponent";
-import {InlineMath} from "react-katex";
+import RaisedButton from "material-ui/RaisedButton";
+import FlatButton from "material-ui/FlatButton";
+import Snackbar from "material-ui/Snackbar";
 
 export default class AddTheoryComponent extends React.Component {
     constructor(props) {
@@ -52,7 +54,8 @@ export default class AddTheoryComponent extends React.Component {
         }
 
         const {
-            updateHeading, theory, updateTheory, l1Id, l2Id, l3Id, l4Id, sectionId, status, parsedTheory, heading
+            updateHeading, theory, updateTheory, l1Id, l2Id, l3Id, l4Id, sectionId, status, parsedTheory, heading,
+            resetState, postTheory, hasErrored, errorMessage
         } = this.props;
 
         return (
@@ -138,6 +141,18 @@ export default class AddTheoryComponent extends React.Component {
                     </Col>
                 </Row>
                 <br/><br/>
+                <Row>
+                    <Col sm={3}>
+                        <FlatButton secondary={true} label="Discard" onClick={resetState.bind(this)}/>
+                    </Col>
+                    <Col sm={3} smOffset={3}>
+                        <FlatButton primary={true} label="Save To Draft" onClick={postTheory.bind(this, "Drafts")}/>
+                    </Col>
+                    <Col sm={3}>
+                        <RaisedButton primary={true} label="Save" onClick={postTheory.bind(this, "")}/>
+                    </Col>
+                </Row>
+                <Snackbar open={hasErrored} message={errorMessage} autoHideDuration={2000}/>
             </div>
         );
     }

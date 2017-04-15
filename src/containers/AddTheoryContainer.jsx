@@ -6,7 +6,9 @@ import {
     theoryUpdateSource,
     theoryUpdateHeading,
     theoryUpdateTheory,
-    theoryUpdateParsedTheory
+    theoryUpdateParsedTheory,
+    theoryResetState,
+    theoryPostTheory
 } from "./../actions/TheoryActions";
 import {parseKatex} from "./../services/KatexParser";
 
@@ -17,20 +19,10 @@ function userHasAccess(role) {
 
 const mapStateToProps = (state) => {
     const role = state.GlobalReducer.loggedInUser.role;
-    const {l1Id, l2Id, l3Id, sectionId, theory, l4Id,
-        status, parsedTheory, heading} = state.theory;
     return {
         hasAccess: userHasAccess(role),
         sources: state.sources.sources,
-        theory,
-        sectionId,
-        l1Id,
-        l2Id,
-        l3Id,
-        l4Id,
-        status,
-        parsedTheory,
-        heading
+        ...state.theory
     };
 };
 
@@ -46,6 +38,14 @@ const mapDispatchToProps = (dispatch) => {
                 dispatch(theoryUpdateParsedTheory(parsedHtml));
             }, 0);
             dispatch(theoryUpdateTheory(newValue));
+        },
+
+        resetState: () => {
+            dispatch(theoryResetState());
+        },
+
+        postTheory: (status) => {
+            dispatch(theoryPostTheory(status));
         }
     };
 };

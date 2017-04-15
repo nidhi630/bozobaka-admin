@@ -24,4 +24,10 @@ export default class Theory {
         });
         return parsedTheories;
     }
+
+    static validateTheory(theory) {
+        if (!theory.sectionId || !theory.l1Id || !theory.l2Id || !theory.l3Id || !theory.heading || !theory.theory) {
+            throw new Error("Invalid Theory Input");
+        }
+    }
 }
