@@ -24,9 +24,7 @@ class SectionSelectionComponent extends React.Component {
 
     componentDidMount() {
         const {sections, courseId, getSections} = this.props;
-        if (!sections.length) {
-            getSections({courseId: courseId});
-        }
+        getSections({courseId: courseId});
     }
 
     componentWillUnmount() {

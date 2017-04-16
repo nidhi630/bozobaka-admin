@@ -25,7 +25,7 @@ let defaultTheory = {
     errorMessage: "",
     requestSuccess: false,
     sectionId: "",
-    sources: [],
+    sources: [""],
     type: "text",
     heading: "",
     theory: "",

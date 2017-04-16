@@ -84,8 +84,7 @@ export function setSource(source) {
 }
 
 function getCommonFilters(state) {
-    /* TODO: add source support */
-    const {id, status, sectionId, l1Id, l2Id} = state.filters;
+    const {id, status, sectionId, l1Id, l2Id, source} = state.filters;
     const filter = {
         courseId: state.ContentReducer.selectedCourse.id
     };
@@ -103,6 +102,9 @@ function getCommonFilters(state) {
     }
     if (l2Id) {
         filter.l2Id = l2Id;
+    }
+    if (source.length) {
+        filter.source = "";
     }
     return filter;
 }

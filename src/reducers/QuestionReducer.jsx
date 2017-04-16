@@ -27,7 +27,7 @@ let defaultState = {
     l2Id: "",
     l3Id: "",
     l4Id: "",
-    sources: [],
+    sources: [""],
     questionType: "Single Correct",
     difficulty: 50,
     status: "draft",

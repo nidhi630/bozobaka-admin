@@ -19,23 +19,8 @@ class SourceSelectionComponent extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        const {selectedSource, updateSelectedSource} = this.props;
-        if (!nextProps.selectedSource && (nextProps.sources.length || selectedSource !== nextProps.selectedSource)) {
-            updateSelectedSource(null, null, nextProps.sources[0].id);
-        }
-    }
-
-    componentWillMount() {
+    componentDidMount() {
         this.props.fetchSources();
-        const {selectedSource, updateSelectedSource, sources} = this.props;
-        if (!selectedSource && sources.length) {
-            setTimeout(() => updateSelectedSource(null, null, sources[0].id), 0);
-        }
-    }
-
-    componentWillUnmount() {
-        this.props.deleteSources();
     }
 
     render() {
@@ -66,10 +51,9 @@ SourceSelectionComponent.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-    const selectedSource = ownProps.source ? ownProps.source : state.theory.sources.length ? state.theory.sources[0] : "";
     return {
         sources: state.sources.sources,
-        selectedSource
+        selectedSource: ownProps.source
     };
 };
 

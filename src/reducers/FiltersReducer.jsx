@@ -20,7 +20,7 @@ let defaultState = {
     sectionId: "",
     l1Id: "",
     l2Id: "",
-    source: "",
+    source: [""],
     minDifficulty: 0,
     maxDifficulty: 100
 };
@@ -73,8 +73,10 @@ export function FilterReducer(state = defaultState, action) {
                 status: action.status
             };
         case FILTER_SOURCE:
-            /* TODO: handle filter source case */
-            return state;
+            return {
+                ...state,
+                source: [action.source]
+            };
         default:
             return state;
     }

@@ -56,7 +56,7 @@ class FilterComponent extends React.Component {
                 <TableRowColumn>
                     {usage === "question" ? <TextField type="text" hintText="question" ref="question" id="question"
                                                        onChange={updateQuestion.bind(this)} defaultValue={question}/>
-                        : <TextField type="text" hintText={usage} ref="theory" id="theory"
+                        : <TextField type="text" hintText="theory" ref="theory" id="theory"
                                      onChange={updateTheory.bind(this)} defaultValue={heading}/>
                     }
 
@@ -64,13 +64,14 @@ class FilterComponent extends React.Component {
                 <TableRowColumn>
                     <StatusSelection status={status} actionOnUpdate={setStatus}/>
                 </TableRowColumn>
-                {usage !== "question" ? null :
+                {usage === "question" ?
                     <TableRowColumn>
                         <TextField type="number" hintText="Min" ref="minDifficulty" id="minDifficulty"
-                                   onChange={updateMinDifficulty.bind(this)} defaultValue={minDifficulty}/>
+                                   onChange={updateMinDifficulty.bind(this)} defaultValue={minDifficulty} style={{width: "50%"}}/>
                         <TextField type="number" hintText="Max" ref="maxDifficulty" id="maxDifficulty"
-                                   onChange={updateMaxDifficulty.bind(this)} defaultValue={maxDifficulty}/>
+                                   onChange={updateMaxDifficulty.bind(this)} defaultValue={maxDifficulty}style={{width: "50%", marginLeft: 10}}/>
                     </TableRowColumn>
+                    : null
                 }
                 <TableRowColumn>
                     <SectionSelectionComponent sectionId={sectionId} actionOnUpdate={setSection}/>
@@ -82,7 +83,7 @@ class FilterComponent extends React.Component {
                     <L2SelectionComponent l1Id={l1Id} l2Id={l2Id} actionOnUpdate={setL2}/>
                 </TableRowColumn>
                 <TableRowColumn>
-                    <SourceSelectionComponent source={source} actionOnUpdate={setSource}/>
+                    <SourceSelectionComponent source={source[0]} actionOnUpdate={setSource}/>
                 </TableRowColumn>
                 <TableRowColumn/>
             </TableRow>
@@ -103,7 +104,7 @@ FilterComponent.propTypes = {
     usage: PropTypes.string,
     l1Id: PropTypes.string,
     l2Id: PropTypes.string,
-    source: PropTypes.string,
+    source: PropTypes.array,
     filterString: PropTypes.string,
     onChangeAction: PropTypes.func,
     updateMaxDifficulty: PropTypes.func,

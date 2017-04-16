@@ -55,7 +55,7 @@ export default class AddTheoryComponent extends React.Component {
 
         const {
             updateHeading, theory, updateTheory, l1Id, l2Id, l3Id, l4Id, sectionId, status, parsedTheory, heading,
-            resetState, postTheory, hasErrored, errorMessage, isLoading, id
+            resetState, postTheory, hasErrored, errorMessage, isLoading, id, sources
         } = this.props;
 
         return (
@@ -79,7 +79,7 @@ export default class AddTheoryComponent extends React.Component {
                 <Row>
                     <Col xs={12} sm={5}>
                         <h3>Source</h3>
-                        <SourceSelectionComponent actionOnUpdate={theoryUpdateSource.bind(this)}/>
+                        <SourceSelectionComponent actionOnUpdate={theoryUpdateSource.bind(this)} source={sources[0]}/>
                     </Col>
                     <Col xs={12} sm={5}>
                         <AddSourceComponent/>

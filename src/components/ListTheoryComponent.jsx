@@ -58,7 +58,8 @@ export default class ListTheoryComponent extends React.Component {
                 <Row>
                     <Col xs={12}>
                         <ListTableComponent headerColumns={this.headerColumns} tableRows={theories}
-                                            isLoading={isLoading} onFilterChange={fetchTheories.bind(this)} usage="theory"/>
+                                            isLoading={isLoading} onFilterChange={fetchTheories.bind(this)}
+                                            usage="theory"/>
                     </Col>
                 </Row>
             </div>

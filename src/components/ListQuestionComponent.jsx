@@ -44,12 +44,12 @@ export default class ListQuestionComponent extends React.Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.fetchQuestions();
     }
 
     render() {
-        const {questions, isLoading} = this.props;
+        const {questions, isLoading, fetchQuestions} = this.props;
         return (
             <div>
                 <br/>
@@ -61,7 +61,7 @@ export default class ListQuestionComponent extends React.Component {
                 <Row>
                     <Col xs={12}>
                         <ListTableComponent headerColumns={this.headerColumns} tableRows={questions}
-                                            isLoading={isLoading}/>
+                                            isLoading={isLoading} usage="question" onFilterChange={fetchQuestions.bind(this)}/>
                     </Col>
                 </Row>
             </div>
