@@ -6,6 +6,7 @@ import Loader from "./LoaderComponent";
 import FilterComponent from "./FilterComponent";
 
 const ListTableComponent = ({headerColumns, tableRows, isLoading, onFilterChange, usage, onCellClick}) => {
+    const style = {whiteSpace: "normal"};
     return (
         <Table fixedHeader={false} fixedFooter={false} onCellClick={onCellClick.bind(this)}>
             <TableHeader displaySelectAll={false} adjustForCheckbox={false} enableSelectAll={false}>
@@ -25,11 +26,11 @@ const ListTableComponent = ({headerColumns, tableRows, isLoading, onFilterChange
                             {headerColumns.map((col, colIndex) => {
                                 switch (col.key) {
                                     case "l1Id":
-                                        return <TableRowColumn key={colIndex}>{row.l1.name}</TableRowColumn>;
+                                        return <TableRowColumn key={colIndex} style={style}>{row.l1.name}</TableRowColumn>;
                                     case "l2Id":
-                                        return <TableRowColumn key={colIndex}>{row.l2.name}</TableRowColumn>;
+                                        return <TableRowColumn key={colIndex} style={style}>{row.l2.name}</TableRowColumn>;
                                     default:
-                                        return <TableRowColumn key={colIndex}>{row[col.key]}</TableRowColumn>;
+                                        return <TableRowColumn key={colIndex} style={style}>{row[col.key]}</TableRowColumn>;
                                 }
                             })}
                         </TableRow>

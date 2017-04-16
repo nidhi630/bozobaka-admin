@@ -49,10 +49,11 @@ class FilterComponent extends React.Component {
         } = this.props;
 
         return (
+
             <TableRow>
-                <TableRowColumn>
-                    {/*<TextField type="text" hintText="id" ref="id" id="id" onChange={updateId.bind(this)} defaultValue={id}/>*/}
-                </TableRowColumn>
+                {/*<TableRowColumn>*/}
+                    {/*/!*<TextField type="text" hintText="id" ref="id" id="id" onChange={updateId.bind(this)} defaultValue={id}/>*!/*/}
+                {/*</TableRowColumn>*/}
                 <TableRowColumn>
                     {usage === "question" ? <TextField type="text" hintText="question" ref="question" id="question"
                                                        onChange={updateQuestion.bind(this)} defaultValue={question}/>

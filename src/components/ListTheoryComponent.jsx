@@ -8,9 +8,6 @@ export default class ListTheoryComponent extends React.Component {
     constructor(props) {
         super(props);
         this.headerColumns = [{
-            displayName: "ID",
-            key: "id"
-        }, {
             displayName: "Theory",
             key: "heading"
         }, {
@@ -62,6 +59,7 @@ export default class ListTheoryComponent extends React.Component {
                                             usage="theory" onCellClick={this.onCellClick.bind(this)}/>
                     </Col>
                 </Row>
+                <br/><br/>
             </div>
         );
     }

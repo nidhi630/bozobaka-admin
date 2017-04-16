@@ -64,6 +64,7 @@ export default class ListQuestionComponent extends React.Component {
                                             isLoading={isLoading} usage="question" onFilterChange={fetchQuestions.bind(this)}/>
                     </Col>
                 </Row>
+                <br/><br/>
             </div>
         );
     }
