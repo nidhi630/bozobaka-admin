@@ -20,4 +20,13 @@ export default class Question {
         });
         return parsedQuestions;
     }
+
+    static validateQuestion(question) {
+        let validatedQuestion = new Question(question);
+        if (!validatedQuestion.sectionId || !validatedQuestion.l1Id || !validatedQuestion.l2Id ||
+            !validatedQuestion.l3Id || !validatedQuestion.question) {
+            throw new Error("Invalid Question Input");
+        }
+        return validatedQuestion;
+    }
 }

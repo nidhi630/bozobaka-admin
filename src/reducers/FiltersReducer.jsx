@@ -16,7 +16,7 @@ import {
 let defaultState = {
     id: "",
     heading: "",
-    status: "Draft",
+    status: "draft",
     sectionId: "",
     l1Id: "",
     l2Id: "",

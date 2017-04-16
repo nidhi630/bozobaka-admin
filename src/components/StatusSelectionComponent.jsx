@@ -7,7 +7,7 @@ import {connect} from "react-redux";
 class StatusSelectionComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.allStatus = ["Draft", "Added", "Accepted", "Published", "Deleted"];
+        this.allStatus = ["draft", "added", "accepted", "published", "trash"];
     }
 
     render() {
@@ -32,9 +32,10 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onChange: (event, index, value) => {
-            dispatch(ownProps.updateStatus(value, "status"));
+            dispatch(ownProps.actionOnUpdate(value));
         }
     };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StatusSelectionComponent);
+

@@ -151,22 +151,17 @@ export function fetchTheory(theoryId) {
 
 export function theoryPostTheory(status) {
     return (dispatch, getState) => {
-        dispatch(theoryIsLoading(true));
-
-        /* TODO: validate data before post */
         try {
             const state = getState();
-            const data = {
+            const data = Theory.validateTheory({
                 ...state.theory
-            };
-
+            });
+            data.courseId = state.ContentReducer.selectedCourse.id;
             if (status) {
                 data.status = status;
             }
-            data.courseId = state.ContentReducer.selectedCourse.id;
 
-            Theory.validateTheory(data);
-
+            dispatch(theoryIsLoading(true));
             updateTheoryRequest({
                 method: data.id ? "put" : "post",
                 data

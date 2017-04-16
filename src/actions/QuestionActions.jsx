@@ -146,9 +146,10 @@ export function postQuestion() {
 
         /* TODO: validate data before post */
         const state = getState();
-        const data = state.theory;
-        data.courseId = state.ContentReducer.selectedCourse.id;
-
+        const data = Question.validateQuestion({
+            ...state.question,
+            courseId: state.ContentReducer.selectedCourse.id
+        });
         updateQuestionRequest({
             method: data.id ? "put" : "post",
             data

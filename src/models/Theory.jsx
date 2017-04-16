@@ -26,8 +26,12 @@ export default class Theory {
     }
 
     static validateTheory(theory) {
-        if (!theory.sectionId || !theory.l1Id || !theory.l2Id || !theory.l3Id || !theory.heading || !theory.theory) {
+        let validatedTheory = new Theory(theory);
+        delete validatedTheory.created;
+        if (!validatedTheory.sectionId || !validatedTheory.l1Id || !validatedTheory.l2Id ||
+            !validatedTheory.l3Id || !validatedTheory.heading || !validatedTheory.theory) {
             throw new Error("Invalid Theory Input");
         }
+        return validatedTheory;
     }
 }

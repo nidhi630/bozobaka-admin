@@ -55,7 +55,7 @@ export default class AddTheoryComponent extends React.Component {
 
         const {
             updateHeading, theory, updateTheory, l1Id, l2Id, l3Id, l4Id, sectionId, status, parsedTheory, heading,
-            resetState, postTheory, hasErrored, errorMessage
+            resetState, postTheory, hasErrored, errorMessage, isLoading
         } = this.props;
 
         return (
@@ -143,15 +143,16 @@ export default class AddTheoryComponent extends React.Component {
                 <br/><br/>
                 <Row>
                     <Col sm={3}>
-                        <FlatButton secondary={true} label="Discard" onClick={resetState.bind(this)}/>
+                        <FlatButton disabled={isLoading} secondary={true} label="Discard" onClick={resetState.bind(this)}/>
                     </Col>
                     <Col sm={3} smOffset={3}>
-                        <FlatButton primary={true} label="Save To Draft" onClick={postTheory.bind(this, "Drafts")}/>
+                        <FlatButton disabled={isLoading} primary={true} label="Save To Draft" onClick={postTheory.bind(this, "draft")}/>
                     </Col>
                     <Col sm={3}>
-                        <RaisedButton primary={true} label="Save" onClick={postTheory.bind(this, "")}/>
+                        <RaisedButton disabled={isLoading} primary={true} label="Save" onClick={postTheory.bind(this, "")}/>
                     </Col>
                 </Row>
+                <br/><br/><br/>
                 <Snackbar open={hasErrored} message={errorMessage} autoHideDuration={2000}/>
             </div>
         );
