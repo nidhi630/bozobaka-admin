@@ -37,6 +37,6 @@ export function errorHandler(reject, err) {
             reject(err);
             break;
         default:
-            reject(err.response.data.error);
+            err.response ? reject(err.response.data.error) : reject(err);
     }
 }

@@ -3,12 +3,12 @@
 import {connect} from "react-redux";
 import AddTheoryComponent from "./../components/AddTheoryComponent";
 import {
-    theoryUpdateSource,
     theoryUpdateHeading,
     theoryUpdateTheory,
     theoryUpdateParsedTheory,
     theoryResetState,
-    theoryPostTheory
+    theoryPostTheory,
+    theoryFetchTheory
 } from "./../actions/TheoryActions";
 import {parseKatex} from "./../services/KatexParser";
 
@@ -21,7 +21,6 @@ const mapStateToProps = (state) => {
     const role = state.GlobalReducer.loggedInUser.role;
     return {
         hasAccess: userHasAccess(role),
-        sources: state.sources.sources,
         ...state.theory
     };
 };
@@ -46,6 +45,10 @@ const mapDispatchToProps = (dispatch) => {
 
         postTheory: (status) => {
             dispatch(theoryPostTheory(status));
+        },
+
+        fetchTheory: (id) => {
+            dispatch(theoryFetchTheory(id));
         }
     };
 };

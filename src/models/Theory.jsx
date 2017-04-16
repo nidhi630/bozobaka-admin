@@ -6,6 +6,7 @@ export default class Theory {
     constructor(theory) {
         this.id = theory.id;
         this.sectionId = theory.sectionId;
+        this.section = theory.section || [];
         this.l1Id = theory.l1Id;
         this.l1 = theory.l1 || [];
         this.l2Id = theory.l2Id;
@@ -18,7 +19,7 @@ export default class Theory {
         this.theory = theory.theory;
         this.status = theory.status;
         this.type = theory.type;
-        this.source = theory.sources.length ? theory.source[0] : [""];
+        this.source = theory.sources;
         this.created = theory.created ? getDateWithoutTime(theory.created) : "";
     }
 
@@ -33,6 +34,11 @@ export default class Theory {
     static validateTheory(theory) {
         let validatedTheory = new Theory(theory);
         delete validatedTheory.created;
+        delete validatedTheory.l1;
+        delete validatedTheory.l2;
+        delete validatedTheory.l3;
+        delete validatedTheory.l4;
+        delete validatedTheory.section;
         if (!validatedTheory.sectionId || !validatedTheory.l1Id || !validatedTheory.l2Id ||
             !validatedTheory.l3Id || !validatedTheory.heading || !validatedTheory.theory) {
             throw new Error("Invalid Theory Input");

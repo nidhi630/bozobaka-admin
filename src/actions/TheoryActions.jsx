@@ -137,16 +137,29 @@ export function theoryId(id) {
     };
 }
 
-export function fetchTheory(theoryId) {
+export function theoryFetchTheory(id) {
     return (dispatch, getState) => {
         dispatch(theoryIsLoading(true));
 
         const filter = getTheoryFilter(getState());
         fetchTheoryRequest({
-            id: theoryId,
+            id: id,
             filter: filter
         }).then((res) => {
-            dispatch(initTheories(res));
+            if (typeof res === "object" && res.constructor === Array) {
+                dispatch(initTheories(res));
+            } else {
+                dispatch(theoryId(res.id));
+                dispatch(theoryUpdateStatus(res.status));
+                dispatch(theoryUpdateL4(res.l4Id));
+                dispatch(theoryUpdateL3(res.l3Id));
+                dispatch(theoryUpdateL2(res.l2Id));
+                dispatch(theoryUpdateL1(res.l1Id));
+                dispatch(theoryUpdateSection(res.sectionId));
+                dispatch(theoryUpdateTheory(res.theory));
+                dispatch(theoryUpdateHeading(res.heading));
+                dispatch(theoryUpdateSource(res.source[0]));
+            }
             dispatch(theoryIsLoading(false));
             dispatch(theoryRequestSuccess(true));
         }).catch((err) => {

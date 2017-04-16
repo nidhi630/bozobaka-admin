@@ -29,7 +29,12 @@ export function fetchTheory(params) {
                 })
             }
         }).then(res => {
-            resolve(Theory.parseTheories(res.data));
+            if (typeof res.data === "object" && res.data.constructor === Array) {
+                resolve(Theory.parseTheories(res.data));
+            } else {
+                resolve(new Theory(res.data));
+            }
+
         }).catch(err => errorHandler(reject, err));
     });
 }

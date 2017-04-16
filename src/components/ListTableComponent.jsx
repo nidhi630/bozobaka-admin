@@ -5,7 +5,7 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import Loader from "./LoaderComponent";
 import FilterComponent from "./FilterComponent";
 
-const ListTableComponent = ({headerColumns, tableRows, isLoading, onFilterChange, usage, onCellClick}) => {
+const ListTableComponent = ({headerColumns, tableRows, onFilterChange, usage, onCellClick}) => {
     const style = {whiteSpace: "normal"};
     return (
         <Table fixedHeader={false} fixedFooter={false} onCellClick={onCellClick.bind(this)}>
@@ -18,20 +18,29 @@ const ListTableComponent = ({headerColumns, tableRows, isLoading, onFilterChange
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
                 <FilterComponent onChangeAction={onFilterChange} usage={usage}/>
-                {isLoading ?
-                    <Loader isLoading={isLoading}/>
-                    :
+                {
                     tableRows.map((row, index) => (
                         <TableRow key={index}>
                             {headerColumns.map((col, colIndex) => {
+                                let value = "";
                                 switch (col.key) {
                                     case "l1Id":
-                                        return <TableRowColumn key={colIndex} style={style}>{row.l1.name}</TableRowColumn>;
+                                        value = row.l1.name;
+                                        break;
                                     case "l2Id":
-                                        return <TableRowColumn key={colIndex} style={style}>{row.l2.name}</TableRowColumn>;
+                                        value = row.l2.name;
+                                        break;
+                                    case "sectionId":
+                                        value = row.section.name;
+                                        break;
+                                    case "source":
+                                        value = row.source.length ? row.source[0].name : "";
+                                        break;
                                     default:
-                                        return <TableRowColumn key={colIndex} style={style}>{row[col.key]}</TableRowColumn>;
+                                        value = row[col.key];
+
                                 }
+                                return <TableRowColumn key={colIndex} style={style}>{value}</TableRowColumn>;
                             })}
                         </TableRow>
                     ))
@@ -48,7 +57,6 @@ ListTableComponent.defaultProps = {
 ListTableComponent.propTypes = {
     headerColumns: PropTypes.array.isRequired,
     tableRows: PropTypes.array.isRequired,
-    isLoading: PropTypes.bool.isRequired,
     onFilterChange: PropTypes.func,
     usage: PropTypes.string,
     onCellClick: PropTypes.func

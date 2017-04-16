@@ -17,7 +17,7 @@ import {
     theoryUpdateL3,
     theoryUpdateL4,
     theoryUpdateStatus,
-    theoryUpdateSource
+    theoryUpdateSource,
 } from "./../actions/TheoryActions";
 import StatusSelectionComponent from "./StatusSelectionComponent";
 import AddSourceComponent from "./AddSourceComponent";
@@ -34,12 +34,11 @@ export default class AddTheoryComponent extends React.Component {
         super(props);
     }
 
-    componentWillReceiveProps(nextProps) {
-
-    }
-
-    componentWillMount() {
-
+    componentDidMount() {
+        const {id} = this.props.location.query;
+        if (id) {
+            this.props.fetchTheory(id);
+        }
     }
 
     componentWillUnmount() {
@@ -55,7 +54,7 @@ export default class AddTheoryComponent extends React.Component {
 
         const {
             updateHeading, theory, updateTheory, l1Id, l2Id, l3Id, l4Id, sectionId, status, parsedTheory, heading,
-            resetState, postTheory, hasErrored, errorMessage, isLoading, id, sources
+            resetState, postTheory, hasErrored, errorMessage, isLoading, id, sources, requestSuccess
         } = this.props;
 
         return (
@@ -97,7 +96,7 @@ export default class AddTheoryComponent extends React.Component {
                     <Col xs={12}>
                         <h3>Heading</h3>
                         <TextField title="Heading" type="text" hintText="Enter Heading" fullWidth={true}
-                                   multiLine={true} onChange={updateHeading.bind(this)} defaultValue={heading}/>
+                                   multiLine={true} onChange={updateHeading.bind(this)} value={heading}/>
                     </Col>
                 </Row>
                 <br/>
@@ -154,7 +153,7 @@ export default class AddTheoryComponent extends React.Component {
                     </Col>
                 </Row>
                 <br/><br/><br/>
-                <Snackbar open={hasErrored} message={errorMessage} autoHideDuration={2000}/>
+                <Snackbar open={hasErrored} message={errorMessage} autoHideDuration={20000}/>
             </div>
         );
     }

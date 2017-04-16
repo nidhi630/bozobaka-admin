@@ -7,14 +7,14 @@ const EditorComponent = ({content, placeHolder, onChange, theme}) => {
     theme = theme || "snow";
     return (
         <ReactQuill
-            defaultValue={content}
+            value={content}
             theme={theme}
             onChange={onChange.bind(this)}
             modules={EditorComponent.modules}
             formats={EditorComponent.formats}
             placeholder={placeHolder}
         />
-    )
+    );
 };
 
 /*
@@ -23,12 +23,12 @@ const EditorComponent = ({content, placeHolder, onChange, theme}) => {
  */
 EditorComponent.modules = {
     toolbar: [
-        [{ 'header': [1, 2, false] }, { 'font': [] }],
-        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-        [{'list': 'ordered'}, {'list': 'bullet'},
-            {'indent': '-1'}, {'indent': '+1'}],
-        ['link', 'image', 'video'],
-        ['clean']
+        [{header: [1, 2, false]}, {font: []}],
+        ["bold", "italic", "underline", "strike", "blockquote"],
+        [{list: "ordered"}, {list: "bullet"},
+            {indent: "-1"}, {indent: "+1"}],
+        ["link", "image", "video"],
+        ["clean"]
     ]
 };
 
@@ -37,10 +37,10 @@ EditorComponent.modules = {
  * See http://quilljs.com/docs/formats/
  */
 EditorComponent.formats = [
-    'header', 'font', 'size',
-    'bold', 'italic', 'underline', 'strike', 'blockquote',
-    'list', 'bullet', 'indent',
-    'link', 'image', 'video'
+    "header", "font", "size",
+    "bold", "italic", "underline", "strike", "blockquote",
+    "list", "bullet", "indent",
+    "link", "image", "video"
 ];
 
 /*

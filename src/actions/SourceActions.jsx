@@ -13,30 +13,34 @@ import {
 import {getSources, postSource as creatNewSource} from "./../services/SourceService";
 
 export function initSources(sources) {
+    let parsedSources = [];
+    sources.forEach((source) => {
+        parsedSources.push(source.name);
+    });
     return {
         type: INIT_SOURCES,
-        sources
-    }
+        sources: parsedSources
+    };
 }
 
 export function sourceUpdateName(name) {
     return {
         type: SOURCE_NAME,
         name
-    }
+    };
 }
 
 export function deleteSources() {
     return {
         type: DELETE_SOURCES
-    }
+    };
 }
 
 export function sourceIsLoading(isLoading) {
     return {
         type: SOURCE_IS_LOADING,
         isLoading
-    }
+    };
 }
 
 export function sourceHasErrored(hasErrored, errorMessage) {
@@ -44,28 +48,28 @@ export function sourceHasErrored(hasErrored, errorMessage) {
         type: SOURCE_HAS_ERRORED,
         hasErrored,
         errorMessage
-    }
+    };
 }
 
 export function sourceRequestState(requestSuccess) {
     return {
         type: SOURCE_REQUEST_STATE,
         requestSuccess
-    }
+    };
 }
 
 export function sourceAddSource(source) {
     return {
         type: SOURCE_ADD_SOURCE,
         source
-    }
+    };
 }
 
 export function sourceDialogState(openDialog) {
     return {
         type: SOURCE_DIALOG_STATE,
         openDialog
-    }
+    };
 }
 
 export function fetchSources() {
@@ -81,8 +85,8 @@ export function fetchSources() {
             dispatch(sourceHasErrored(true, err.message));
             dispatch(sourceIsLoading(false));
             dispatch(sourceRequestState(false));
-        })
-    }
+        });
+    };
 }
 
 export function postSource() {

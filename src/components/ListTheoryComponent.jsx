@@ -3,6 +3,8 @@
 import React, {PropTypes} from "react";
 import {Row, Col} from "react-flexbox-grid";
 import ListTableComponent from "./ListTableComponent";
+import {browserHistory} from "react-router";
+import Urls from "./../models/Urls";
 
 export default class ListTheoryComponent extends React.Component {
     constructor(props) {
@@ -65,7 +67,8 @@ export default class ListTheoryComponent extends React.Component {
     }
 
     onCellClick(rowNumber) {
-        console.log(rowNumber);
+        const url = Urls.ADD_THEORY + "?id=" + this.props.theories[rowNumber].id;
+        browserHistory.push(url);
     }
 }
 
