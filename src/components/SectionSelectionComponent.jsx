@@ -11,19 +11,15 @@ class SectionSelectionComponent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {updateSelectedSection, courseId, getSections, filterString} = this.props;
+        const {updateSelectedSection, courseId, getSections} = this.props;
         if (courseId !== nextProps.courseId) {
             updateSelectedSection(""); // reset section
             getSections({courseId: nextProps.courseId});
         }
-
-        // if (!nextProps.sectionId && nextProps.sections.length) {
-        //     updateSelectedSection(nextProps.sections[0].id); // select default value as first item
-        // }
     }
 
     componentDidMount() {
-        const {sections, courseId, getSections} = this.props;
+        const {courseId, getSections} = this.props;
         getSections({courseId: courseId});
     }
 
@@ -35,22 +31,14 @@ class SectionSelectionComponent extends React.Component {
     render() {
         const {sections, sectionId, onChange} = this.props;
         return (
-            <div>
-                {sections.length ?
-                    <DropdownDisplay
-                        menuItems={sections}
-                        value={sectionId}
-                        onChange={onChange.bind(this)}/>
-                    :
-                    <h3>No sections</h3>}
-            </div>
+            <DropdownDisplay
+                menuItems={sections}
+                value={sectionId}
+                onChange={onChange.bind(this)}/>
         );
     }
 }
 
-SectionSelectionComponent.defaultProps = {
-
-};
 
 SectionSelectionComponent.propTypes = {
     sections: PropTypes.array,

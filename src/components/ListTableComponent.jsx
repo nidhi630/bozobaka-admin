@@ -5,9 +5,9 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import Loader from "./LoaderComponent";
 import FilterComponent from "./FilterComponent";
 
-const ListTableComponent = ({headerColumns, tableRows, isLoading, onFilterChange, usage}) => {
+const ListTableComponent = ({headerColumns, tableRows, isLoading, onFilterChange, usage, onCellClick}) => {
     return (
-        <Table fixedHeader={false} fixedFooter={false} selectable={false}>
+        <Table fixedHeader={false} fixedFooter={false} onCellClick={onCellClick.bind(this)}>
             <TableHeader displaySelectAll={false} adjustForCheckbox={false} enableSelectAll={false}>
                 <TableRow>
                     {headerColumns.map((col, index) => (
@@ -17,12 +17,21 @@ const ListTableComponent = ({headerColumns, tableRows, isLoading, onFilterChange
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
                 <FilterComponent onChangeAction={onFilterChange} usage={usage}/>
-                {isLoading ? <Loader isLoading={isLoading}/> :
+                {isLoading ?
+                    <Loader isLoading={isLoading}/>
+                    :
                     tableRows.map((row, index) => (
                         <TableRow key={index}>
-                            {headerColumns.map((col, colIndex) => (
-                                <TableRowColumn key={colIndex}>{row[col.key]}</TableRowColumn>
-                            ))}
+                            {headerColumns.map((col, colIndex) => {
+                                switch (col.key) {
+                                    case "l1Id":
+                                        return <TableRowColumn key={colIndex}>{row.l1.name}</TableRowColumn>;
+                                    case "l2Id":
+                                        return <TableRowColumn key={colIndex}>{row.l2.name}</TableRowColumn>;
+                                    default:
+                                        return <TableRowColumn key={colIndex}>{row[col.key]}</TableRowColumn>;
+                                }
+                            })}
                         </TableRow>
                     ))
                 }
@@ -40,7 +49,8 @@ ListTableComponent.propTypes = {
     tableRows: PropTypes.array.isRequired,
     isLoading: PropTypes.bool.isRequired,
     onFilterChange: PropTypes.func,
-    usage: PropTypes.string
+    usage: PropTypes.string,
+    onCellClick: PropTypes.func
 };
 
 export default ListTableComponent;

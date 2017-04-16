@@ -2,13 +2,13 @@
 
 const URLs = {
     DASHBOARD: "/",
-    ADD_QUESTION: "add-question",
+    ADD_QUESTION: "question",
     DRAFTS: "drafts",
     MANAGE: "manage",
     MANAGE_COURSE: "manage-course",
     LIST_QUESTIONS: "list-questions",
     LIST_THEORY: "list-theory",
-    ADD_THEORY: "add-theory",
+    ADD_THEORY: "theory",
     PUBLISH: "publish",
     TRASH: "trash",
     REVIEW_QUESTION: "review-question",

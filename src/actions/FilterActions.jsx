@@ -103,8 +103,10 @@ function getCommonFilters(state) {
     if (l2Id) {
         filter.l2Id = l2Id;
     }
-    if (source.length) {
-        filter.source = "";
+    if (source.length && source[0]) {
+        filter.source = {
+            inq: source[0]
+        };
     }
     return filter;
 }

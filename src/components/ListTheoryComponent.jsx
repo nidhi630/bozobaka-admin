@@ -41,7 +41,7 @@ export default class ListTheoryComponent extends React.Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.fetchTheories();
     }
 
@@ -59,11 +59,15 @@ export default class ListTheoryComponent extends React.Component {
                     <Col xs={12}>
                         <ListTableComponent headerColumns={this.headerColumns} tableRows={theories}
                                             isLoading={isLoading} onFilterChange={fetchTheories.bind(this)}
-                                            usage="theory"/>
+                                            usage="theory" onCellClick={this.onCellClick.bind(this)}/>
                     </Col>
                 </Row>
             </div>
         );
+    }
+
+    onCellClick(rowNumber) {
+        console.log(rowNumber);
     }
 }
 
