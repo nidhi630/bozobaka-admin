@@ -10,12 +10,12 @@ class L3SelectionComponent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {l3Id, onChange} = this.props;
-        if (nextProps.l3s.length) {
-            if (!nextProps.l3Id || l3Id !== nextProps.l3Id) {
-                setTimeout(() => onChange(null, null, nextProps.l3s[0].id), 0);
-            }
-        }
+        // const {l3Id, onChange} = this.props;
+        // if (nextProps.l3s.length) {
+        //     if (!nextProps.l3Id || l3Id !== nextProps.l3Id) {
+        //         setTimeout(() => onChange(null, null, nextProps.l3s[0].id), 0);
+        //     }
+        // }
     }
 
     componentWillMount() {

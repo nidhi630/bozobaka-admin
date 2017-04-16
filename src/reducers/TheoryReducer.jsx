@@ -29,7 +29,7 @@ let defaultTheory = {
     heading: "",
     theory: "",
     parsedTheory: "",
-    status: "Draft",
+    status: "draft",
     theories: [],
     l1Id: "",
     l2Id: "",

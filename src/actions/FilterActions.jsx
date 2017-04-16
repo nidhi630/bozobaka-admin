@@ -102,7 +102,7 @@ function getCommonFilters(state) {
         filter.l1Id = l1Id;
     }
     if (l2Id) {
-        filter.l1Id = l2Id;
+        filter.l2Id = l2Id;
     }
     return filter;
 }
@@ -117,18 +117,18 @@ export function getQuestionFilter(state) {
     };
 
     if (question) {
-        filter.question = {ilike: question};
+        filter.question = {regexp: "/^" + question + "/i"};
     }
 
     return filter;
 }
 
 export function getTheoryFilter(state) {
-    const {theory} = state.filters;
+    const {heading} = state.filters;
     const filter = getCommonFilters(state);
 
-    if (theory) {
-        filter.theory = {ilike: theory};
+    if (heading) {
+        filter.heading = {regexp: "/^" + heading + "/i"};
     }
 
     return filter;

@@ -6,9 +6,9 @@ import Loader from "./LoaderComponent";
 import FilterComponent from "./FilterComponent";
 
 const ListTableComponent = ({headerColumns, tableRows, isLoading, onFilterChange, usage}) => {
-    if (isLoading) {
-        return <Loader isLoading={isLoading}/>;
-    }
+    // if (isLoading) {
+    //     return <Loader isLoading={isLoading}/>;
+    // }
     return (
         <Table fixedHeader={false} fixedFooter={false} selectable={false}>
             <TableHeader displaySelectAll={false} adjustForCheckbox={false} enableSelectAll={false}>
@@ -19,14 +19,16 @@ const ListTableComponent = ({headerColumns, tableRows, isLoading, onFilterChange
                 </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
-                <FilterComponent onChangeAction={onFilterChange.bind(this)} usage={usage} />
-                {tableRows.map((row, index) => (
-                    <TableRow key={index}>
-                        {headerColumns.map((col, colIndex) => (
-                            <TableRowColumn key={colIndex}>{row[col.key]}</TableRowColumn>
-                        ))}
-                    </TableRow>
-                ))}
+                <FilterComponent onChangeAction={onFilterChange} usage={usage}/>
+                {isLoading ? <Loader isLoading={isLoading}/> :
+                    tableRows.map((row, index) => (
+                        <TableRow key={index}>
+                            {headerColumns.map((col, colIndex) => (
+                                <TableRowColumn key={colIndex}>{row[col.key]}</TableRowColumn>
+                            ))}
+                        </TableRow>
+                    ))
+                }
             </TableBody>
         </Table>
     );

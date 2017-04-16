@@ -30,7 +30,7 @@ let defaultState = {
     sources: [],
     questionType: "Single Correct",
     difficulty: 50,
-    status: "Draft",
+    status: "draft",
     question: "",
     parsedQuestion: "",
     questions: []

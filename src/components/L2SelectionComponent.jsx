@@ -10,12 +10,12 @@ class L2SelectionComponent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {l2Id, onChange} = this.props;
-        if (nextProps.l2s.length) {
-            if (l2Id !== nextProps.l2Id) {
-                onChange(null, null, nextProps.l2s[0].id);
-            }
-        }
+        // const {l2Id, onChange} = this.props;
+        // if (nextProps.l2s.length) {
+        //     if (l2Id !== nextProps.l2Id) {
+        //         onChange(null, null, nextProps.l2s[0].id);
+        //     }
+        // }
     }
 
     componentWillMount() {

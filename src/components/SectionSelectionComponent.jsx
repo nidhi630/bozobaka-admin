@@ -11,18 +11,18 @@ class SectionSelectionComponent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {updateSelectedSection, courseId, getSections} = this.props;
+        const {updateSelectedSection, courseId, getSections, filterString} = this.props;
         if (courseId !== nextProps.courseId) {
             updateSelectedSection(""); // reset section
             getSections({courseId: nextProps.courseId});
         }
 
-        if (!nextProps.sectionId && nextProps.sections.length) {
-            updateSelectedSection(nextProps.sections[0].id); // select default value as first item
-        }
+        // if (!nextProps.sectionId && nextProps.sections.length) {
+        //     updateSelectedSection(nextProps.sections[0].id); // select default value as first item
+        // }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const {sections, courseId, getSections} = this.props;
         if (!sections.length) {
             getSections({courseId: courseId});

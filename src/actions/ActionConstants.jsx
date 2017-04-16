@@ -81,5 +81,5 @@ export const FILTER_QUESTION = "FILTER_QUESTION";
 export const FILTER_STATUS = "FILTER_STATUS";
 export const FILTER_SECTION = "FILTER_SECTION";
 export const FILTER_L1 = "FILTER_L1";
-export const FILTER_L2 = "FILTER_L1";
+export const FILTER_L2 = "FILTER_L2";
 export const FILTER_SOURCE = "FILTER_SOURCE";

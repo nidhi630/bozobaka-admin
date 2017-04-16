@@ -17,37 +17,59 @@ import {
     setHeading,
     setId,
     setQuestion,
-    setSource
+    setSource,
+    setMinDifficulty,
+    setMaxDifficulty,
+    getTheoryFilter,
+    getQuestionFilter
 } from "./../actions/FilterActions";
 
 class FilterComponent extends React.Component {
     constructor(props) {
         super(props);
+        this.filterActionTimeout = null;
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const {filterString, onChangeAction} = this.props;
+        if (nextProps.filterString !== filterString) {
+            if (this.filterActionTimeout) {
+                window.clearTimeout(this.filterActionTimeout);
+            }
+            this.filterActionTimeout = setTimeout(() => {
+                onChangeAction();
+            }, 500);
+        }
     }
 
     render() {
         const {
-            onKeyDownHandler, status, sectionId, usage, l1Id, l2Id, source
+            status, sectionId, usage, l1Id, l2Id, source, updateId, updateMinDifficulty,
+            updateMaxDifficulty, updateQuestion, updateTheory, id, question, heading, minDifficulty, maxDifficulty
         } = this.props;
 
-        console.log(this.props);
         return (
             <TableRow>
                 <TableRowColumn>
-                    <TextField hintText="id" ref="id" id="id" onKeyDown={onKeyDownHandler.bind(this)}/>
+                    {/*<TextField type="text" hintText="id" ref="id" id="id" onChange={updateId.bind(this)} defaultValue={id}/>*/}
                 </TableRowColumn>
                 <TableRowColumn>
-                    <TextField hintText={usage} ref={usage} id={usage} onKeyDown={onKeyDownHandler.bind(this)}/>
+                    {usage === "question" ? <TextField type="text" hintText="question" ref="question" id="question"
+                                                       onChange={updateQuestion.bind(this)} defaultValue={question}/>
+                        : <TextField type="text" hintText={usage} ref="theory" id="theory"
+                                     onChange={updateTheory.bind(this)} defaultValue={heading}/>
+                    }
+
                 </TableRowColumn>
                 <TableRowColumn>
                     <StatusSelection status={status} actionOnUpdate={setStatus}/>
                 </TableRowColumn>
                 {usage !== "question" ? null :
                     <TableRowColumn>
-                        <TextField hintText="Min" ref="minDifficulty" id="minDifficulty"
-                                   onKeyDown={onKeyDownHandler.bind(this)}/>
-                        <TextField hintText="Max" ref="maxDifficulty" id="maxDifficulty"
-                                   onKeyDown={onKeyDownHandler.bind(this)}/>
+                        <TextField type="number" hintText="Min" ref="minDifficulty" id="minDifficulty"
+                                   onChange={updateMinDifficulty.bind(this)} defaultValue={minDifficulty}/>
+                        <TextField type="number" hintText="Max" ref="maxDifficulty" id="maxDifficulty"
+                                   onChange={updateMaxDifficulty.bind(this)} defaultValue={maxDifficulty}/>
                     </TableRowColumn>
                 }
                 <TableRowColumn>
@@ -62,34 +84,63 @@ class FilterComponent extends React.Component {
                 <TableRowColumn>
                     <SourceSelectionComponent source={source} actionOnUpdate={setSource}/>
                 </TableRowColumn>
+                <TableRowColumn/>
             </TableRow>
         );
     }
 }
 
 FilterComponent.propTypes = {
-    onKeyDownHandler: PropTypes.func,
+    id: PropTypes.string,
+    heading: PropTypes.string,
+    question: PropTypes.string,
     status: PropTypes.string,
     updateL1: PropTypes.func,
     updateL2: PropTypes.func,
+    minDifficulty: PropTypes.number,
+    maxDifficulty: PropTypes.number,
     sectionId: PropTypes.string,
     usage: PropTypes.string,
     l1Id: PropTypes.string,
     l2Id: PropTypes.string,
-    source: PropTypes.string
+    source: PropTypes.string,
+    filterString: PropTypes.string,
+    onChangeAction: PropTypes.func,
+    updateMaxDifficulty: PropTypes.func,
+    updateMinDifficulty: PropTypes.func,
+    updateId: PropTypes.func,
+    updateQuestion: PropTypes.func,
+    updateTheory: PropTypes.func
 };
 
 const mapStateToProps = (state, ownProps) => {
     return {
         usage: ownProps.usage,
-        ...state.filters
+        ...state.filters,
+        filterString: ownProps.usage === "theory" ? JSON.stringify(getTheoryFilter(state)) : JSON.stringify(getQuestionFilter(state))
     };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        onKeyDownHandler: (event) => {
-            console.log(event);
+        updateId: (event, newValue) => {
+            dispatch(setId(newValue));
+        },
+
+        updateMinDifficulty: (event, newValue) => {
+            dispatch(setMinDifficulty(newValue));
+        },
+
+        updateMaxDifficulty: (event, newValue) => {
+            dispatch(setMaxDifficulty(newValue));
+        },
+
+        updateTheory: (event, newValue) => {
+            dispatch(setHeading(newValue));
+        },
+
+        updateQuestion: (event, newValue) => {
+            dispatch(setQuestion(newValue));
         }
     };
 };

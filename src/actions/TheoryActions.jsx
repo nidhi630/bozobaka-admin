@@ -165,7 +165,8 @@ export function theoryPostTheory(status) {
             updateTheoryRequest({
                 method: data.id ? "put" : "post",
                 data
-            }).then(() => {
+            }).then((theory) => {
+                console.log("theory after post", theory);
                 dispatch(theoryIsLoading(false));
                 dispatch(theoryRequestSuccess(true));
             }).catch((err) => {
