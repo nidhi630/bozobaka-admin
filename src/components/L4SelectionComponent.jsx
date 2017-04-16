@@ -5,26 +5,8 @@ import {connect} from "react-redux";
 import DropdownDisplay from "./DropdownDisplayComponent";
 
 class L4SelectionComponent extends React.Component {
-
-    static propTypes() {
-
-    }
-
     constructor(props) {
         super(props);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        const {l4Id, onChange} = this.props;
-        if (nextProps.l4s.length) {
-            if (!nextProps.l4Id || l4Id !== nextProps.l4Id) {
-                setTimeout(() => onChange(null, null, nextProps.l4s[0].id), 0);
-            }
-        }
-    }
-
-    componentWillMount() {
-
     }
 
     render() {
@@ -47,7 +29,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onChange: (event, index, value) => {
-            dispatch(ownProps.updateL4(value));
+            dispatch(ownProps.actionOnUpdate(value));
         }
     };
 };
