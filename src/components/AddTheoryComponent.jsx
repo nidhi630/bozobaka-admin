@@ -55,7 +55,7 @@ export default class AddTheoryComponent extends React.Component {
 
         const {
             updateHeading, theory, updateTheory, l1Id, l2Id, l3Id, l4Id, sectionId, status, parsedTheory, heading,
-            resetState, postTheory, hasErrored, errorMessage, isLoading
+            resetState, postTheory, hasErrored, errorMessage, isLoading, id
         } = this.props;
 
         return (
@@ -64,6 +64,7 @@ export default class AddTheoryComponent extends React.Component {
                 <Row>
                     <Col xs={12}>
                         <h1>Add Theory</h1>
+                        <b>{id}</b>
                     </Col>
                 </Row>
                 <br/>

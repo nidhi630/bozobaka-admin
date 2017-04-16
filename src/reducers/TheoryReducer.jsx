@@ -15,7 +15,8 @@ import {
     THEORY_UPDATE_STATUS,
     THEORY_UPDATE_PARSED_THEORY,
     INIT_THEORIES,
-    THEORY_RESET_STATE
+    THEORY_RESET_STATE,
+    THEORY_UPDATE_ID
 } from "./../actions/ActionConstants";
 
 let defaultTheory = {
@@ -112,7 +113,11 @@ export function TheoryReducer(state = defaultTheory, action) {
             };
         case THEORY_RESET_STATE:
             return defaultTheory;
-
+        case THEORY_UPDATE_ID:
+            return {
+                ...state,
+                id: action.id
+            };
         default:
             return state;
     }

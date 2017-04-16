@@ -15,7 +15,8 @@ import {
     THEORY_UPDATE_STATUS,
     THEORY_UPDATE_PARSED_THEORY,
     INIT_THEORIES,
-    THEORY_RESET_STATE
+    THEORY_RESET_STATE,
+    THEORY_UPDATE_ID
 } from "./ActionConstants";
 import {
     updateTheory as updateTheoryRequest,
@@ -129,6 +130,13 @@ export function theoryResetState() {
     };
 }
 
+export function theoryId(id) {
+    return {
+        type: THEORY_UPDATE_ID,
+        id
+    };
+}
+
 export function fetchTheory(theoryId) {
     return (dispatch, getState) => {
         dispatch(theoryIsLoading(true));
@@ -163,10 +171,11 @@ export function theoryPostTheory(status) {
 
             dispatch(theoryIsLoading(true));
             updateTheoryRequest({
-                method: data.id ? "put" : "post",
+                method: data.id ? "patch" : "post",
                 data
             }).then((theory) => {
                 console.log("theory after post", theory);
+                dispatch(theoryId(theory.id));
                 dispatch(theoryIsLoading(false));
                 dispatch(theoryRequestSuccess(true));
             }).catch((err) => {
