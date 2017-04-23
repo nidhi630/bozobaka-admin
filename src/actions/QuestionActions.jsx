@@ -20,7 +20,9 @@ import {
     QUESTION_UPDATE_QUESTION,
     QUESTION_ADD_OPTION,
     QUESTION_UPDATE_OPTION,
-    QUESTION_REMOVE_OPTION
+    QUESTION_REMOVE_OPTION,
+    QUESTION_UPDATE_SOLUTION,
+    QUESTION_UPDATE_HINT
 } from "./../actions/ActionConstants";
 import {
     fetchQuestion as fetchQuestionRequest,
@@ -166,6 +168,22 @@ export function questionRemoveOption(index) {
     return {
         type: QUESTION_REMOVE_OPTION,
         index
+    };
+}
+
+export function questionUpdateSolution(solution, parsedSolution) {
+    return {
+        type: QUESTION_UPDATE_SOLUTION,
+        solution,
+        parsedSolution
+    };
+}
+
+export function questionUpdateHint(hint, parsedHint) {
+    return {
+        type: QUESTION_UPDATE_HINT,
+        hint,
+        parsedHint
     };
 }
 

@@ -41,7 +41,7 @@ class OptionsComponent extends React.Component {
                             <h4>Preview</h4>
                             <LivePreview content={option.parsed}/>
                         </Col>
-                        <FlatButton label="Remove" onTouchTap={removeOption.bind(this, index)}/>
+                        <FlatButton secondary={true} label="Remove" onTouchTap={removeOption.bind(this, index)}/>
                         <br/>
                     </Row>))
                 }
@@ -53,10 +53,10 @@ class OptionsComponent extends React.Component {
 }
 
 OptionsComponent.propTypes = {
-    options: PropTypes.array.isRequired,
-    onChange: PropTypes.func.isRequired,
-    removeOption: PropTypes.func.isRequired,
-    addOptions: PropTypes.func.isRequired
+    options: PropTypes.array,
+    onChange: PropTypes.func,
+    removeOption: PropTypes.func,
+    addOptions: PropTypes.func
 };
 
 const mapStateToProps = (state) => {

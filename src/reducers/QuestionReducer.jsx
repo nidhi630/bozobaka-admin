@@ -20,7 +20,9 @@ import {
     QUESTION_RESET_STATE,
     QUESTION_UPDATE_OPTION,
     QUESTION_ADD_OPTION,
-    QUESTION_REMOVE_OPTION
+    QUESTION_REMOVE_OPTION,
+    QUESTION_UPDATE_SOLUTION,
+    QUESTION_UPDATE_HINT
 } from "./../actions/ActionConstants";
 
 const defaultOption = {
@@ -45,7 +47,15 @@ let defaultState = {
     question: "",
     parsedQuestion: "",
     questions: [],
-    options: [defaultOption]
+    options: [defaultOption],
+    solution: {
+        raw: "",
+        parsed: null
+    },
+    hint: {
+        raw: "",
+        parsed: null
+    }
 };
 
 export function QuestionReducer(state = defaultState, action) {
@@ -159,6 +169,22 @@ export function QuestionReducer(state = defaultState, action) {
                 ]
             };
         }
+        case QUESTION_UPDATE_SOLUTION:
+            return {
+                ...state,
+                solution: {
+                    raw: action.solution,
+                    parsed: action.parsedSolution
+                }
+            };
+        case QUESTION_UPDATE_HINT:
+            return {
+                ...state,
+                hint: {
+                    raw: action.hint,
+                    parsed: action.parsedHint
+                }
+            };
         default:
             return state;
     }

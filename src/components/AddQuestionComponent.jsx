@@ -51,7 +51,7 @@ export default class AddQuestionComponent extends React.Component {
         const {
             difficulty, onDifficultyChange, l1Id, l2Id, l3Id, l4Id, sectionId, status, sources, id, resetState,
             postQuestion, hasErrored, errorMessage, question, updateQuestion, parsedQuestion, isLoading, questionTypes,
-            questionType, onQuestionTypeChange
+            questionType, onQuestionTypeChange, updateSolution, updateHint, solution, hint
         } = this.props;
 
         return (
@@ -103,6 +103,30 @@ export default class AddQuestionComponent extends React.Component {
                 </Row>
                 <br/><br/>
                 <OptionsComponent/>
+                <br/><br/>
+                <Row>
+                    <Col xs={12} sm={6} md={7}>
+                        <h3>Solution</h3>
+                        <EditorComponent content={solution.raw} onChange={updateSolution.bind(this)}
+                                         placeHolder="Enter Solution"/>
+                    </Col>
+                    <Col xs={12} sm={6} md={5}>
+                        <h3>Solution Preview</h3>
+                        <LivePreviewComponent content={solution.parsed}/>
+                    </Col>
+                </Row>
+                <br/><br/>
+                <Row>
+                    <Col xs={12} sm={6} md={7}>
+                        <h3>Hint</h3>
+                        <EditorComponent content={hint.raw} onChange={updateHint.bind(this)}
+                                         placeHolder="Enter Hint"/>
+                    </Col>
+                    <Col xs={12} sm={6} md={5}>
+                        <h3>Hint Preview</h3>
+                        <LivePreviewComponent content={hint.parsed}/>
+                    </Col>
+                </Row>
                 <br/><br/>
                 <Row>
                     <Col xs={12} sm={6} md={3}>
@@ -182,5 +206,7 @@ AddQuestionComponent.propTypes = {
     location: PropTypes.object,
     questionTypes: PropTypes.array,
     questionType: PropTypes.string,
-    onQuestionTypeChange: PropTypes.func
+    onQuestionTypeChange: PropTypes.func,
+    updateSolution: PropTypes.func,
+    updateHint: PropTypes.func
 };
