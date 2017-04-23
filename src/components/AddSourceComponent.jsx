@@ -36,17 +36,12 @@ class AddSourceComponent extends React.Component {
         return (
             <div>
                 <RaisedButton label="Add Source" primary={true} onClick={setDialogState.bind(this, true)}/>
-                <Dialog
-                    title="Add Source"
-                    actions={actions}
-                    modal={false}
-                    open={openDialog}
+                <Dialog title="Add Source" actions={actions} modal={false} open={openDialog}
                     onRequestClose={setDialogState.bind(this)}>
-                    <TextField title="Source" hintText="Add Source Name"
-                               onChange={sourceTextChange.bind(this)} fullWidth={true} />
+                    <TextField title="Source" hintText="Add Source Name" onChange={sourceTextChange.bind(this)}
+                               fullWidth={true} />
                     {isLoading ? <CircularProgress/> : null}
                 </Dialog>
-
             </div>
         );
     }
@@ -69,6 +64,7 @@ const mapDispatchToProps = (dispatch) => {
         },
 
         setDialogState: (state = false) => {
+            state = typeof state !== "boolean" ? false : state;
             dispatch(sourceDialogState(state));
         },
 

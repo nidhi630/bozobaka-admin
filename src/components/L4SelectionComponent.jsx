@@ -18,6 +18,14 @@ class L4SelectionComponent extends React.Component {
     }
 }
 
+L4SelectionComponent.propTypes = {
+    l3Id: PropTypes.string,
+    l4s: PropTypes.array,
+    l4Id: PropTypes.string,
+    onChange: PropTypes.func,
+    actionOnUpdate: PropTypes.func
+};
+
 const mapStateToProps = (state, ownProps) => {
     return {
         l4s: state.sections.l4s,

@@ -31,6 +31,14 @@ class L3SelectionComponent extends React.Component {
     }
 }
 
+L3SelectionComponent.propTypes = {
+    l3Id: PropTypes.string,
+    l3s: PropTypes.array,
+    l2Id: PropTypes.string,
+    onChange: PropTypes.func,
+    actionOnUpdate: PropTypes.func
+};
+
 const mapStateToProps = (state, ownProps) => {
     return {
         l3s: state.sections.l3s,

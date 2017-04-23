@@ -1,27 +1,24 @@
 "use strict";
 
-import {connect} from 'react-redux';
-import React from 'react';
-import AddQuestionComponent from './../components/AddQuestionComponent';
+import {connect} from "react-redux";
+import AddQuestionComponent from "./../components/AddQuestionComponent";
 import {getAllQuestionTypes} from "./../models/allQuestionTypes";
 import {
     questionUpdateDifficulty,
-    questionUpdateSource
+    questionResetState,
+    questionPostQuestion,
+    questionFetchQuestions,
+    questionUpdateParsedQuestion,
+    questionUpdateQuestion
 } from "./../actions/QuestionActions";
+import {parseKatex} from "./../services/KatexParser";
 
 const mapStateToProps = (state) => {
-    const {l1Id, l2Id, l3Id, sectionId, difficulty, l4Id, status} = state.question;
     return {
         ...state.GlobalReducer,
         ...state.ContentReducer,
         questionTypes: getAllQuestionTypes(),
-        sectionId,
-        l1Id,
-        l2Id,
-        l3Id,
-        l4Id,
-        difficulty,
-        status
+        ...state.question
     };
 };
 
@@ -31,16 +28,26 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(questionUpdateDifficulty(value));
         },
 
-        updateSelectedSource: (value) => {
-            dispatch(questionUpdateSource(value));
+        updateQuestion: (newValue) => {
+            setTimeout(() => {
+                let parsedHtml = parseKatex(newValue);
+                dispatch(questionUpdateParsedQuestion(parsedHtml));
+            }, 0);
+            dispatch(questionUpdateQuestion(newValue));
+        },
+
+        resetState: () => {
+            dispatch(questionResetState());
+        },
+
+        postQuestion: (status) => {
+            dispatch(questionPostQuestion(status));
+        },
+
+        fetchQuestion: (id) => {
+            dispatch(questionFetchQuestions(id));
         }
     };
 };
 
-
-const AddQuestionContainer = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(AddQuestionComponent);
-
-export default AddQuestionContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(AddQuestionComponent);

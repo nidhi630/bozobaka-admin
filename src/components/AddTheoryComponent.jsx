@@ -87,7 +87,7 @@ export default class AddTheoryComponent extends React.Component {
                 <br/>
                 <Row>
                     <Col xs={12}>
-                        <h3>Question Type</h3>
+                        <h3>Type</h3>
                         <DropdownDisplay menuItems={["Text"]} onChange={() => (true)} value={"Text"}/>
                     </Col>
                 </Row>
@@ -103,11 +103,8 @@ export default class AddTheoryComponent extends React.Component {
                 <Row>
                     <Col xs={12} sm={6} md={7}>
                         <h3>Theory</h3>
-                        <EditorComponent
-                            content={theory}
-                            onChange={updateTheory.bind(this)}
-                            placeHolder="Enter Theory"
-                        />
+                        <EditorComponent content={theory} onChange={updateTheory.bind(this)}
+                                         placeHolder="Enter Theory"/>
                     </Col>
                     <Col xs={12} sm={6} md={5}>
                         <LivePreviewComponent content={parsedTheory}/>
@@ -143,13 +140,16 @@ export default class AddTheoryComponent extends React.Component {
                 <br/><br/>
                 <Row>
                     <Col sm={3}>
-                        <FlatButton disabled={isLoading} secondary={true} label="Discard" onClick={resetState.bind(this)}/>
+                        <FlatButton disabled={isLoading} secondary={true} label="Discard"
+                                    onClick={resetState.bind(this)}/>
                     </Col>
                     <Col sm={3} smOffset={3}>
-                        <FlatButton disabled={isLoading} primary={true} label="Save To Draft" onClick={postTheory.bind(this, "draft")}/>
+                        <FlatButton disabled={isLoading} primary={true} label="Save To Draft"
+                                    onClick={postTheory.bind(this, "draft")}/>
                     </Col>
                     <Col sm={3}>
-                        <RaisedButton disabled={isLoading} primary={true} label="Save" onClick={postTheory.bind(this, "")}/>
+                        <RaisedButton disabled={isLoading} primary={true} label="Save"
+                                      onClick={postTheory.bind(this, "")}/>
                     </Col>
                 </Row>
                 <br/><br/><br/>

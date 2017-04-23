@@ -14,13 +14,17 @@ import {
     QUESTION_UPDATE_DIFFICULTY,
     QUESTION_UPDATE_STATUS,
     QUESTION_UPDATE_PARSED_QUESTION,
-    INIT_QUESTIONS
+    INIT_QUESTIONS,
+    QUESTION_RESET_STATE,
+    QUESTION_UPDATE_ID,
+    QUESTION_UPDATE_QUESTION
 } from "./../actions/ActionConstants";
 import {
     fetchQuestion as fetchQuestionRequest,
     updateQuestion as updateQuestionRequest
 } from "./../services/QuestionService";
 import {getQuestionFilter} from "./../actions/FilterActions";
+import Question from "./../models/Question";
 
 export function questionUpdateSource(sourceId) {
     return {
@@ -36,6 +40,7 @@ export function questionHasErrored(hasErrored, errorMessage) {
         errorMessage
     };
 }
+
 export function questionIsLoading(isLoading) {
     return {
         isLoading,
@@ -120,7 +125,26 @@ export function initQuestions(questions) {
     };
 }
 
-export function fetchQuestions(questionId) {
+export function questionResetState() {
+    return {
+        type: QUESTION_RESET_STATE
+    };
+}
+
+export function questionUpdateId(id) {
+    return {
+        type: QUESTION_UPDATE_ID,
+        id
+    };
+}
+
+export function questionUpdateQuestion(question) {
+    return {
+        type: QUESTION_UPDATE_QUESTION,
+        question
+    }
+}
+export function questionFetchQuestions(questionId) {
     return (dispatch, getState) => {
         dispatch(questionIsLoading(true));
 
@@ -140,26 +164,36 @@ export function fetchQuestions(questionId) {
     };
 }
 
-export function postQuestion() {
+export function questionPostQuestion() {
     return (dispatch, getState) => {
-        dispatch(questionIsLoading(true));
+        try {
+            const state = getState();
+            const data = Question.validateQuestion({
+                ...state.question,
+                courseId: state.ContentReducer.selectedCourse.id
+            });
+            data.courseId = state.ContentReducer.selectedCourse.id;
+            if (status) {
+                data.status = status;
+            }
 
-        /* TODO: validate data before post */
-        const state = getState();
-        const data = Question.validateQuestion({
-            ...state.question,
-            courseId: state.ContentReducer.selectedCourse.id
-        });
-        updateQuestionRequest({
-            method: data.id ? "put" : "post",
-            data
-        }).then(() => {
-            dispatch(questionIsLoading(false));
-            dispatch(questionRequestSuccess(true));
-        }).catch((err) => {
-            dispatch(questionIsLoading(false));
-            dispatch(questionRequestSuccess(false));
+            dispatch(questionIsLoading(true));
+
+            updateQuestionRequest({
+                method: data.id ? "patch" : "post",
+                data
+            }).then((theory) => {
+                console.log("question after post", theory);
+                dispatch(questionUpdateId(theory.id));
+                dispatch(questionIsLoading(false));
+                dispatch(questionRequestSuccess(true));
+            }).catch((err) => {
+                dispatch(questionIsLoading(false));
+                dispatch(questionRequestSuccess(false));
+                dispatch(questionHasErrored(true, err.message));
+            });
+        } catch (err) {
             dispatch(questionHasErrored(true, err.message));
-        });
+        }
     };
 }

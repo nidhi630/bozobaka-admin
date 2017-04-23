@@ -2,7 +2,7 @@
 
 import {connect} from "react-redux";
 import ListQuestionComponent from "./../components/ListQuestionComponent";
-import {fetchQuestions} from "./../actions/QuestionActions";
+import {questionFetchQuestions} from "./../actions/QuestionActions";
 
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -15,7 +15,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         fetchQuestions: () => {
-            dispatch(fetchQuestions());
+            dispatch(questionFetchQuestions());
         }
     };
 };

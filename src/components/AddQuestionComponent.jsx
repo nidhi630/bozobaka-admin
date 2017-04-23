@@ -1,6 +1,6 @@
 "use strict";
 
-import React from "react";
+import React, {PropTypes} from "react";
 import {Row, Col} from "react-flexbox-grid";
 import SectionSelectionComponent from "./SectionSelectionComponent";
 import {
@@ -9,7 +9,8 @@ import {
     questionUpdateL3,
     questionUpdateL4,
     questionUpdateStatus,
-    questionUpdateSection
+    questionUpdateSection,
+    questionUpdateSource
 } from "./../actions/QuestionActions";
 import L1SelectionComponent from "./L1SelectionComponent";
 import L2SelectionComponent from "./L2SelectionComponent";
@@ -19,58 +20,150 @@ import StatusSelectionComponent from "./StatusSelectionComponent";
 import SourceSelectionComponent from "./SourceSelectionComponent";
 import AddSourceComponent from "./AddSourceComponent";
 import TextField from "material-ui/TextField";
+import Snackbar from "material-ui/Snackbar";
+import {resetVariables} from "./../services/KatexParser";
+import EditorComponent from "./EditorComponent";
+import LivePreviewComponent from "./LivePreviewComponent";
+import FlatButton from "material-ui/FlatButton";
+import RaisedButton from "material-ui/RaisedButton";
 
 export default class AddQuestionComponent extends React.Component {
     constructor(props) {
         super(props);
     }
 
+    componentDidMount() {
+        const {id} = this.props.location.query;
+        if (id) {
+            this.props.fetchQuestion(id);
+        }
+    }
+
+    componentWillUnmount() {
+        setTimeout(() => {
+            resetVariables();
+        }, 0);
+    }
+
     render() {
-        const {difficulty, onDifficultyChange, l1Id, l2Id, l3Id, l4Id, sectionId, status,
-            updateSelectedSource} = this.props;
+        const {
+            difficulty, onDifficultyChange, l1Id, l2Id, l3Id, l4Id, sectionId, status, sources, id, resetState,
+            postQuestion, hasErrored, errorMessage, question, updateQuestion, parsedQuestion, isLoading
+        } = this.props;
 
         return (
             <div>
-                <h2>Add Question</h2>
+                <br/>
                 <Row>
                     <Col xs={12}>
-                        <SectionSelectionComponent updateSection={questionUpdateSection.bind(this)}/>
+                        <h2>Add Question</h2>
+                        <b>{id}</b>
                     </Col>
                 </Row>
+                <br/>
                 <Row>
-                    <Col xs={12} sm={6}>
-                        <SourceSelectionComponent updateSource={updateSelectedSource.bind(this)}/>
+                    <Col xs={12}>
+                        <h3>Section</h3>
+                        <SectionSelectionComponent sectionId={sectionId}
+                                                   actionOnUpdate={questionUpdateSection.bind(this)}/>
                     </Col>
-                    <Col xs={12} sm={6}>
+                </Row>
+                <br/>
+                <Row>
+                    <Col xs={12} sm={5}>
+                        <h3>Source</h3>
+                        <SourceSelectionComponent actionOnUpdate={questionUpdateSource.bind(this)} source={sources[0]}/>
+                    </Col>
+                    <Col xs={12} sm={5}>
                         <AddSourceComponent/>
                     </Col>
                 </Row>
+                <br/>
                 <Row>
-                    <Col xs={12} sm={6} md={4}>
-                        <L1SelectionComponent sectionId={sectionId} l1Id={l1Id} updateL1={questionUpdateL1.bind(this)}/>
+                    <Col xs={12} sm={6} md={7}>
+                        <h3>Question</h3>
+                        <EditorComponent content={question} onChange={updateQuestion.bind(this)}
+                                         placeHolder="Enter Question"/>
                     </Col>
-                    <Col xs={12} sm={6} md={4}>
-                        <L2SelectionComponent l1Id={l1Id} l2Id={l2Id} updateL2={questionUpdateL2.bind(this)}/>
-                    </Col>
-                    <Col xs={12} sm={6} md={4}>
-                        <L3SelectionComponent l2Id={l2Id} l3Id={l3Id} updateL3={questionUpdateL3.bind(this)}/>
-                    </Col>
-                    <Col xs={12} sm={6} md={4}>
-                        <L4SelectionComponent l4Id={l4Id} l3Id={l3Id} updateL4={questionUpdateL4.bind(this)}/>
+                    <Col xs={12} sm={6} md={5}>
+                        <LivePreviewComponent content={parsedQuestion}/>
                     </Col>
                 </Row>
+                <br/><br/>
                 <Row>
-                    <Col xs={12}>
-                        <TextField title="Difficulty" hintText="Set Difficulty" type="number"
-                                   value={difficulty} onChange={onDifficultyChange.bind(this)}/>
+                    <Col xs={12} sm={6} md={3}>
+                        <h3>L1</h3>
+                        <L1SelectionComponent sectionId={sectionId} l1Id={l1Id}
+                                              actionOnUpdate={questionUpdateL1.bind(this)}/>
+                    </Col>
+                    <Col xs={12} sm={6} md={3}>
+                        <h3>L2</h3>
+                        <L2SelectionComponent l1Id={l1Id} l2Id={l2Id} actionOnUpdate={questionUpdateL2.bind(this)}/>
+                    </Col>
+                    <Col xs={12} sm={6} md={3}>
+                        <h3>L3</h3>
+                        <L3SelectionComponent l2Id={l2Id} l3Id={l3Id} actionOnUpdate={questionUpdateL3.bind(this)}/>
+                    </Col>
+                    <Col xs={12} sm={6} md={3}>
+                        <h3>L4</h3>
+                        <L4SelectionComponent l4Id={l4Id} l3Id={l3Id} actionOnUpdate={questionUpdateL4.bind(this)}/>
                     </Col>
                 </Row>
+                <br/>
                 <Row>
                     <Col xs={12}>
+                        <TextField title="Difficulty" hintText="Set Difficulty" type="number" value={difficulty}
+                                   floatingLabelText="Difficulty" onChange={onDifficultyChange.bind(this)}/>
+                    </Col>
+                </Row>
+                <br/>
+                <Row>
+                    <Col xs={12}>
+                        <h3>Status</h3>
                         <StatusSelectionComponent updateStatus={questionUpdateStatus.bind(this)} status={status}/>
                     </Col>
                 </Row>
+                <br/><br/>
+                <Row>
+                    <Col sm={3}>
+                        <FlatButton disabled={isLoading} secondary={true} label="Discard"
+                                    onClick={resetState.bind(this)}/>
+                    </Col>
+                    <Col sm={3} smOffset={3}>
+                        <FlatButton disabled={isLoading} primary={true} label="Save To Draft"
+                                    onClick={postQuestion.bind(this, "draft")}/>
+                    </Col>
+                    <Col sm={3}>
+                        <RaisedButton disabled={isLoading} primary={true} label="Save"
+                                      onClick={postQuestion.bind(this, "")}/>
+                    </Col>
+                </Row>
+                <br/><br/><br/>
+                <Snackbar open={hasErrored} message={errorMessage} autoHideDuration={20000}/>
             </div>
         );
     }
 }
+
+AddQuestionComponent.propTypes = {
+    difficulty: PropTypes.number,
+    hasErrored: PropTypes.bool,
+    errorMessage: PropTypes.string,
+    isLoading: PropTypes.bool,
+    postQuestion: PropTypes.func,
+    resetState: PropTypes.func,
+    status: PropTypes.string,
+    sectionId: PropTypes.string,
+    l1Id: PropTypes.string,
+    l2Id: PropTypes.string,
+    l3Id: PropTypes.string,
+    l4Id: PropTypes.string,
+    parsedQuestion: PropTypes.string,
+    question: PropTypes.string,
+    updateQuestion: PropTypes.func,
+    sources: PropTypes.array,
+    onDifficultyChange: PropTypes.func,
+    id: PropTypes.string,
+    fetchQuestion: PropTypes.func,
+    location: PropTypes.object
+};
