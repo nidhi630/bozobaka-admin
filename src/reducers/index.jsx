@@ -13,6 +13,7 @@ import {SectionsReducer} from "./SectionsReducer";
 import {SourceReducer} from "./SourceReducer";
 import {QuestionReducer} from "./QuestionReducer";
 import {FilterReducer} from "./FiltersReducer";
+import {ExamReducer} from "./ExamReducer";
 
 export default combineReducers({
     GlobalReducer,
@@ -21,5 +22,6 @@ export default combineReducers({
     theory: TheoryReducer,
     sources: SourceReducer,
     question: QuestionReducer,
-    filters: FilterReducer
+    filters: FilterReducer,
+    exam: ExamReducer
 });

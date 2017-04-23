@@ -30,6 +30,7 @@ import DropdownDisplay from "./DropdownDisplayComponent";
 import OptionsComponent from "./OptionsComponent";
 import SingleCorrectAnswer from "./SingleCorrectAnswerComponent";
 import MultiCorrectAnswer from "./MultiCorrectAnswerComponent";
+import ExamsAppearedComponent from "./ExamsAppearedComponent";
 
 export default class AddQuestionComponent extends React.Component {
     constructor(props) {
@@ -174,6 +175,8 @@ export default class AddQuestionComponent extends React.Component {
                         <StatusSelectionComponent updateStatus={questionUpdateStatus.bind(this)} status={status}/>
                     </Col>
                 </Row>
+                <br/><br/>
+                <ExamsAppearedComponent/>
                 <br/><br/>
                 <Row>
                     <Col sm={3}>

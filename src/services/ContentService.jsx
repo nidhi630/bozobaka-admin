@@ -9,6 +9,7 @@ import {
     CONTENT_WRITERS,
     ADD_USER,
     SECTIONS,
+    EXAMS,
     getCourseSectionEndpoint,
     getL1Endpoint,
     getL2Endpoint,
@@ -24,6 +25,7 @@ import L1 from "./../models/L1";
 import L2 from "./../models/L2";
 import L3 from "./../models/L3";
 import L4 from "./../models/L4";
+import Exam from "./../models/Exam";
 
 function getCourseCountWithContentUrl(courseId) {
     return courseId ? COURSES_WITH_COUNT + "/" + courseId : COURSES_WITH_COUNT;
@@ -232,6 +234,16 @@ const ContentService = {
                 data: data
             }).then((res) => {
                 resolve(new L4(res.data));
+            }).catch((err) => errorHandler(reject, err));
+        });
+    },
+
+    fetchExams() {
+        return new Promise((resolve, reject) => {
+            makeRequest({
+                url: EXAMS
+            }).then((res) => {
+                resolve(Exam.parseExams(res.data));
             }).catch((err) => errorHandler(reject, err));
         });
     }

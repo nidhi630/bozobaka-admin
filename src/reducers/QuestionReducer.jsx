@@ -23,7 +23,10 @@ import {
     QUESTION_REMOVE_OPTION,
     QUESTION_UPDATE_SOLUTION,
     QUESTION_UPDATE_HINT,
-    QUESTION_UPDATE_ANSWER
+    QUESTION_UPDATE_ANSWER,
+    QUESTION_UPDATE_APPEARED_IN,
+    QUESTION_REMOVE_APPREAD_IN,
+    QUESTION_ADD_APPEARED_IN
 } from "./../actions/ActionConstants";
 
 const defaultOption = {
@@ -60,7 +63,8 @@ let defaultState = {
     answer: {
         single: 1,
         multiple: []
-    }
+    },
+    appearedIn: []
 };
 
 function multipleAnswerReducer(state = [], action) {
@@ -225,6 +229,32 @@ export function QuestionReducer(state = defaultState, action) {
                 default:
                     return state;
             }
+
+        case QUESTION_UPDATE_APPEARED_IN:
+            return {
+                ...state,
+                appearedIn: [
+                    ...state.appearedIn.slice(0, action.index),
+                    action.exam,
+                    ...state.appearedIn.slice(action.index + 1)
+                ]
+            };
+        case QUESTION_ADD_APPEARED_IN:
+            return {
+                ...state,
+                appearedIn: [
+                    ...state.appearedIn,
+                    action.exam
+                ]
+            };
+        case QUESTION_REMOVE_APPREAD_IN:
+            return {
+                ...state,
+                appearedIn: [
+                    ...state.appearedIn.slice(0, action.index),
+                    ...state.appearedIn.slice(action.index + 1)
+                ]
+            };
         default:
             return state;
     }

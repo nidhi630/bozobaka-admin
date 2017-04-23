@@ -23,7 +23,10 @@ import {
     QUESTION_REMOVE_OPTION,
     QUESTION_UPDATE_SOLUTION,
     QUESTION_UPDATE_HINT,
-    QUESTION_UPDATE_ANSWER
+    QUESTION_UPDATE_ANSWER,
+    QUESTION_ADD_APPEARED_IN,
+    QUESTION_REMOVE_APPREAD_IN,
+    QUESTION_UPDATE_APPEARED_IN
 } from "./../actions/ActionConstants";
 import {
     fetchQuestion as fetchQuestionRequest,
@@ -193,6 +196,28 @@ export function questionUpdateAnswer(answer, index) {
         type: QUESTION_UPDATE_ANSWER,
         index,
         answer
+    };
+}
+
+export function questionAddAppearedIn(exam) {
+    return {
+        type: QUESTION_ADD_APPEARED_IN,
+        exam
+    };
+}
+
+export function questionRemoveAppearedIn(index) {
+    return {
+        type: QUESTION_REMOVE_APPREAD_IN,
+        index
+    };
+}
+
+export function questionUpdateAppearedIn(exam, index) {
+    return {
+        type: QUESTION_UPDATE_APPEARED_IN,
+        index,
+        exam
     };
 }
 
