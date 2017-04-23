@@ -17,7 +17,7 @@ import {
     theoryUpdateL3,
     theoryUpdateL4,
     theoryUpdateStatus,
-    theoryUpdateSource,
+    theoryUpdateSource
 } from "./../actions/TheoryActions";
 import StatusSelectionComponent from "./StatusSelectionComponent";
 import AddSourceComponent from "./AddSourceComponent";
