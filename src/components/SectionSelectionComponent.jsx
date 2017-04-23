@@ -31,10 +31,7 @@ class SectionSelectionComponent extends React.Component {
     render() {
         const {sections, sectionId, onChange} = this.props;
         return (
-            <DropdownDisplay
-                menuItems={sections}
-                value={sectionId}
-                onChange={onChange.bind(this)}/>
+            <DropdownDisplay menuItems={sections} value={sectionId} onChange={onChange.bind(this)}/>
         );
     }
 }

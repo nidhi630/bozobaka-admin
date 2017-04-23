@@ -1,6 +1,5 @@
 "use strict";
 
-import React from "react";
 import ManageComponent from "./../components/ManageComponent";
 import {connect} from "react-redux";
 import ContentActions from "./../actions/ContentActions";
@@ -8,8 +7,9 @@ import ContentActions from "./../actions/ContentActions";
 const mapStateToProps = (state) => {
     return {
         ...state.GlobalReducer,
-        ...state.ContentReducer
-    }
+        ...state.ContentReducer,
+        sections: state.sections
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -28,12 +28,7 @@ const mapDispatchToProps = (dispatch) => {
             remove ? dispatch(ContentActions.deleteReviewerData(reviewer.id)) :
                 dispatch(ContentActions.updateReviewerData(reviewer));
         }
-    }
+    };
 };
 
-const ManageContainer = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ManageComponent);
-
-export default ManageContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(ManageComponent);

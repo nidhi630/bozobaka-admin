@@ -20,8 +20,8 @@ export default class ManageComponent extends React.Component {
             contentWriters: [],
             openCourseDialog: false,
             openReviewerContentWriterDialog: false,
-            openAdminDialog: false,
-        }
+            openAdminDialog: false
+        };
     }
 
     componentWillReceiveProps(nextProps) {
@@ -45,13 +45,15 @@ export default class ManageComponent extends React.Component {
 
         return (
             <div>
+                <br/>
                 <h2>Manage</h2>
+                <br/>
                 <Row>
                     <Col xs={6} sm={4}>
                         <h2 style={sectionTitleStyle}>Courses</h2>
                     </Col>
                     <Col xs={6} sm={8}>
-                        <RaisedButton label="Add" onClick={this.editCourse.bind(this, null)} primary={true}/>
+                        <RaisedButton label="Add" onClick={this.editCourse.bind(this)} primary={true}/>
                     </Col>
                     <Col xs={12}>
                         <Table fixedFooter={false} onCellClick={this.editCourse.bind(this)}>
@@ -67,7 +69,7 @@ export default class ManageComponent extends React.Component {
 
                             <TableBody displayRowCheckbox={false} showRowHover={true}>
                                 {this.props.courses.map((course, index) => (
-                                    <TableRow key={index}>
+                                    <TableRow key={course.id}>
                                         <TableRowColumn>{course.id}</TableRowColumn>
                                         <TableRowColumn>{course.displayName}</TableRowColumn>
                                         <TableRowColumn>{this.getDisplayText(course.admins)}</TableRowColumn>
@@ -84,7 +86,7 @@ export default class ManageComponent extends React.Component {
                         <h2 style={sectionTitleStyle}>Admins</h2>
                     </Col>
                     <Col xs={6} sm={8}>
-                        <RaisedButton label="Add" onClick={this.editAdmin.bind(this, null)} primary={true}/>
+                        <RaisedButton label="Add" onClick={this.editAdmin.bind(this)} primary={true}/>
                     </Col>
                     <Col xs={12}>
                         <Table fixedFooter={false} onCellClick={this.editAdmin.bind(this)}>
@@ -98,7 +100,7 @@ export default class ManageComponent extends React.Component {
 
                             <TableBody displayRowCheckbox={false} showRowHover={true}>
                                 {this.state.admins.map((admin, index) => (
-                                    <TableRow key={index}>
+                                    <TableRow key={admin.id}>
                                         <TableRowColumn>{admin.id}</TableRowColumn>
                                         <TableRowColumn>{admin.displayName}</TableRowColumn>
                                         <TableRowColumn
@@ -170,19 +172,21 @@ export default class ManageComponent extends React.Component {
                                                                     admins={this.state.admins}
                                                                     onDialogClose={this.handleDialogClose.bind(this)}
                                                                     updateCourse={this.updateCourseData.bind(this)}/>
-                    : <div></div>}
+                    : null}
                 {this.state.openReviewerContentWriterDialog ?
                     <EditReviewerContentWriterComponent showDialog={this.state.openReviewerContentWriterDialog}
                                                         userRole={this.state.userRole}
+                                                        courses={this.props.courses}
+                                                        allSection={this.props.sections}
                                                         onDialogClose={this.handleDialogClose.bind(this)}
                                                         userToOpen={this.userToOpen}/> :
-                    <div></div>}
+                    null}
                 {this.state.openAdminDialog ?
                     <EditAdminComponent showDialog={this.state.openAdminDialog}
                                         adminToOpen={this.adminToOpen}
                                         courses={this.props.courses}
                                         onDialogClose={this.handleDialogClose.bind(this)}/>
-                    : <div></div>
+                    : null
                 }
             </div>
         );
@@ -191,7 +195,7 @@ export default class ManageComponent extends React.Component {
     fetchDataFromServer(admin = true, reviewer = true, contentWriter = true) {
         if (admin) {
             ContentService.fetchAdmins().then((admins) => {
-                for (let i = 0; i < admins.length; i++) {
+                for (let i = 0; i < admins.length; i = i + 1) {
                     admins[i].courseDisplayText = this.getDisplayText(admins[i].courses);
                 }
                 this.setState({admins: admins});
@@ -211,7 +215,7 @@ export default class ManageComponent extends React.Component {
         if (contentWriter) {
             ContentService.fetchContentWriters()
                 .then((contentWriters) => {
-                    this.setState({contentWriters: contentWriters})
+                    this.setState({contentWriters: contentWriters});
                 }).catch((err) => {
                 console.log(err);
             });
@@ -264,7 +268,7 @@ export default class ManageComponent extends React.Component {
                 return {openAdminDialog: false};
             } else if (prevState.openReviewerContentWriterDialog) {
                 update ? this.userRole === "reviewer" ? this.fetchDataFromServer(false, true, false)
-                        : this.fetchDataFromServer(false, false, true) : null;
+                    : this.fetchDataFromServer(false, false, true) : null;
                 return {openReviewerContentWriterDialog: false};
             }
         });

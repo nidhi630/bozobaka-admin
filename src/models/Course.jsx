@@ -8,13 +8,13 @@ class Course {
         this.name = c.name;
         this.displayName = c.displayName ? c.displayName : c.name;
         this.language = c.language;
-        
+
         if (c.admins) {
             this.admins = Admin.parseAdmins(c.admins);
         }
 
         if (typeof c.reviewerCount === "number") {
-            this.reviewerCount = c.reviewerCount
+            this.reviewerCount = c.reviewerCount;
         }
 
         if (typeof c.contentWriterCount === "number") {
@@ -24,7 +24,7 @@ class Course {
 
     static parseCourses(courses) {
         let courseObjs = [];
-        for (let i = 0; i < courses.length; i++) {
+        for (let i = 0; i < courses.length; i = i + 1) {
             courseObjs.push(new Course(courses[i]));
         }
         return courseObjs;
