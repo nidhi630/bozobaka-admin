@@ -28,6 +28,8 @@ import FlatButton from "material-ui/FlatButton";
 import RaisedButton from "material-ui/RaisedButton";
 import DropdownDisplay from "./DropdownDisplayComponent";
 import OptionsComponent from "./OptionsComponent";
+import SingleCorrectAnswer from "./SingleCorrectAnswerComponent";
+import MultiCorrectAnswer from "./MultiCorrectAnswerComponent";
 
 export default class AddQuestionComponent extends React.Component {
     constructor(props) {
@@ -53,6 +55,15 @@ export default class AddQuestionComponent extends React.Component {
             postQuestion, hasErrored, errorMessage, question, updateQuestion, parsedQuestion, isLoading, questionTypes,
             questionType, onQuestionTypeChange, updateSolution, updateHint, solution, hint
         } = this.props;
+
+        let AnswerComponent;
+        switch (questionType) {
+            case "multiple":
+                AnswerComponent = <MultiCorrectAnswer/>;
+                break;
+            default:
+                AnswerComponent = <SingleCorrectAnswer/>;
+        }
 
         return (
             <div>
@@ -127,6 +138,8 @@ export default class AddQuestionComponent extends React.Component {
                         <LivePreviewComponent content={hint.parsed}/>
                     </Col>
                 </Row>
+                <br/><br/>
+                {AnswerComponent}
                 <br/><br/>
                 <Row>
                     <Col xs={12} sm={6} md={3}>
@@ -208,5 +221,8 @@ AddQuestionComponent.propTypes = {
     questionType: PropTypes.string,
     onQuestionTypeChange: PropTypes.func,
     updateSolution: PropTypes.func,
-    updateHint: PropTypes.func
+    updateHint: PropTypes.func,
+    solution: PropTypes.object,
+    hint: PropTypes.object
+
 };

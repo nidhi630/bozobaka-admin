@@ -22,7 +22,8 @@ import {
     QUESTION_ADD_OPTION,
     QUESTION_REMOVE_OPTION,
     QUESTION_UPDATE_SOLUTION,
-    QUESTION_UPDATE_HINT
+    QUESTION_UPDATE_HINT,
+    QUESTION_UPDATE_ANSWER
 } from "./../actions/ActionConstants";
 
 const defaultOption = {
@@ -47,7 +48,7 @@ let defaultState = {
     question: "",
     parsedQuestion: "",
     questions: [],
-    options: [defaultOption],
+    options: [defaultOption, defaultOption, defaultOption, defaultOption],
     solution: {
         raw: "",
         parsed: null
@@ -55,8 +56,28 @@ let defaultState = {
     hint: {
         raw: "",
         parsed: null
+    },
+    answer: {
+        single: 1,
+        multiple: []
     }
 };
+
+function multipleAnswerReducer(state = [], action) {
+    switch (action.index) {
+        case -1:
+            return [
+                ...state,
+                action.answer
+            ];
+        default:
+            const position = state.indexOf(action.answer);
+            return [
+                ...state.slice(0, position),
+                ...state.slice(position + 1)
+            ];
+    }
+}
 
 export function QuestionReducer(state = defaultState, action) {
     switch (action.type) {
@@ -185,6 +206,25 @@ export function QuestionReducer(state = defaultState, action) {
                     parsed: action.parsedHint
                 }
             };
+        case QUESTION_UPDATE_ANSWER:
+            switch (state.questionType) {
+                case "single":
+                    return {
+                        ...state,
+                        answer: {
+                            single: action.answer
+                        }
+                    };
+                case "multiple":
+                    return {
+                        ...state,
+                        answer: {
+                            multiple: multipleAnswerReducer(state.answer.multiple, action)
+                        }
+                    };
+                default:
+                    return state;
+            }
         default:
             return state;
     }

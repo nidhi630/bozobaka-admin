@@ -22,7 +22,8 @@ import {
     QUESTION_UPDATE_OPTION,
     QUESTION_REMOVE_OPTION,
     QUESTION_UPDATE_SOLUTION,
-    QUESTION_UPDATE_HINT
+    QUESTION_UPDATE_HINT,
+    QUESTION_UPDATE_ANSWER
 } from "./../actions/ActionConstants";
 import {
     fetchQuestion as fetchQuestionRequest,
@@ -184,6 +185,14 @@ export function questionUpdateHint(hint, parsedHint) {
         type: QUESTION_UPDATE_HINT,
         hint,
         parsedHint
+    };
+}
+
+export function questionUpdateAnswer(answer, index) {
+    return {
+        type: QUESTION_UPDATE_ANSWER,
+        index,
+        answer
     };
 }
 
