@@ -1,5 +1,13 @@
 "use strict";
 
 export function getAllQuestionTypes() {
-    return ["Single Correct", "Multiple Correct", "Match The Following", "Text", "Numeric", "Long Answer"];
+    return [{
+        id: "single",
+        name: "single",
+        displayName: "Single Correct"
+    }, {
+        id: "multiple",
+        name: "multiple",
+        displayName: "Multiple Correct"
+    }];
 }

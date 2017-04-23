@@ -31,7 +31,7 @@ let defaultState = {
     l3Id: "",
     l4Id: "",
     sources: [""],
-    questionType: "Single Correct",
+    questionType: "single",
     difficulty: 50,
     status: "draft",
     question: "",

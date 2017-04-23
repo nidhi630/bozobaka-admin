@@ -26,6 +26,7 @@ import EditorComponent from "./EditorComponent";
 import LivePreviewComponent from "./LivePreviewComponent";
 import FlatButton from "material-ui/FlatButton";
 import RaisedButton from "material-ui/RaisedButton";
+import DropdownDisplay from "./DropdownDisplayComponent";
 
 export default class AddQuestionComponent extends React.Component {
     constructor(props) {
@@ -48,7 +49,8 @@ export default class AddQuestionComponent extends React.Component {
     render() {
         const {
             difficulty, onDifficultyChange, l1Id, l2Id, l3Id, l4Id, sectionId, status, sources, id, resetState,
-            postQuestion, hasErrored, errorMessage, question, updateQuestion, parsedQuestion, isLoading
+            postQuestion, hasErrored, errorMessage, question, updateQuestion, parsedQuestion, isLoading, questionTypes,
+            questionType, onQuestionTypeChange
         } = this.props;
 
         return (
@@ -76,6 +78,13 @@ export default class AddQuestionComponent extends React.Component {
                     </Col>
                     <Col xs={12} sm={5}>
                         <AddSourceComponent/>
+                    </Col>
+                </Row>
+                <br/>
+                <Row>
+                    <Col xs={12}>
+                        <h3>Question Type</h3>
+                        <DropdownDisplay onChange={onQuestionTypeChange.bind(this)} menuItems={questionTypes} value={questionType} hideDefault={true}/>
                     </Col>
                 </Row>
                 <br/>
@@ -166,5 +175,8 @@ AddQuestionComponent.propTypes = {
     onDifficultyChange: PropTypes.func,
     id: PropTypes.string,
     fetchQuestion: PropTypes.func,
-    location: PropTypes.object
+    location: PropTypes.object,
+    questionTypes: PropTypes.array,
+    questionType: PropTypes.string,
+    onQuestionTypeChange: PropTypes.func
 };

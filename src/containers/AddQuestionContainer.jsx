@@ -9,7 +9,8 @@ import {
     questionPostQuestion,
     questionFetchQuestions,
     questionUpdateParsedQuestion,
-    questionUpdateQuestion
+    questionUpdateQuestion,
+    questionUpdateQuestionType
 } from "./../actions/QuestionActions";
 import {parseKatex} from "./../services/KatexParser";
 
@@ -51,6 +52,10 @@ const mapDispatchToProps = (dispatch) => {
 
         fetchQuestion: (id) => {
             dispatch(questionFetchQuestions(id));
+        },
+
+        onQuestionTypeChange: (event, index, value) => {
+            dispatch(questionUpdateQuestionType(value));
         }
     };
 };
