@@ -54,7 +54,6 @@ class OptionsComponent extends React.Component {
                         </Col>
                     </Row>))
                 }
-                <br/>
                 <RaisedButton label="Add Option" onTouchTap={addOptions.bind(this)} primary={true}/>
             </div>
         );
