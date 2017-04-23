@@ -114,7 +114,7 @@ const ContentService = {
         return new Promise((resolve, reject) => {
             makeRequest({
                 method: config.method,
-                url: config.method === "post" ? ADMINS : CONTENT_WRITERS + "/" + contentWriter.id,
+                url: config.method === "post" ? ADD_USER : CONTENT_WRITERS + "/" + contentWriter.id,
                 data: contentWriter
             }).then((res) => {
                 switch (config.method) {

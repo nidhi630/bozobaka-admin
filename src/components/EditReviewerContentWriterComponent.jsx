@@ -23,7 +23,7 @@ export default class EditReviewerContentWriterComponent extends React.Component 
             snackbarMessage: "",
             sections: this.props.userToOpen.sections ? this.props.userToOpen.sections : [],
             allCourses: []
-        }
+        };
     }
 
     componentWillMount() {
