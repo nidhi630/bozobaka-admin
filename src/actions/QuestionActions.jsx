@@ -17,7 +17,10 @@ import {
     INIT_QUESTIONS,
     QUESTION_RESET_STATE,
     QUESTION_UPDATE_ID,
-    QUESTION_UPDATE_QUESTION
+    QUESTION_UPDATE_QUESTION,
+    QUESTION_ADD_OPTION,
+    QUESTION_UPDATE_OPTION,
+    QUESTION_REMOVE_OPTION
 } from "./../actions/ActionConstants";
 import {
     fetchQuestion as fetchQuestionRequest,
@@ -142,8 +145,30 @@ export function questionUpdateQuestion(question) {
     return {
         type: QUESTION_UPDATE_QUESTION,
         question
-    }
+    };
 }
+
+export function questionAddOption() {
+    return {
+        type: QUESTION_ADD_OPTION
+    };
+}
+
+export function questionUpdateOption(index, option) {
+    return {
+        type: QUESTION_UPDATE_OPTION,
+        index,
+        option
+    };
+}
+
+export function questionRemoveOption(index) {
+    return {
+        type: QUESTION_REMOVE_OPTION,
+        index
+    };
+}
+
 export function questionFetchQuestions(questionId) {
     return (dispatch, getState) => {
         dispatch(questionIsLoading(true));

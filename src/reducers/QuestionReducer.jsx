@@ -17,8 +17,16 @@ import {
     INIT_QUESTIONS,
     QUESTION_UPDATE_ID,
     QUESTION_UPDATE_QUESTION,
-    QUESTION_RESET_STATE
+    QUESTION_RESET_STATE,
+    QUESTION_UPDATE_OPTION,
+    QUESTION_ADD_OPTION,
+    QUESTION_REMOVE_OPTION
 } from "./../actions/ActionConstants";
+
+const defaultOption = {
+    raw: "",
+    parsed: null
+};
 
 let defaultState = {
     isLoading: false,
@@ -36,7 +44,8 @@ let defaultState = {
     status: "draft",
     question: "",
     parsedQuestion: "",
-    questions: []
+    questions: [],
+    options: [defaultOption]
 };
 
 export function QuestionReducer(state = defaultState, action) {
@@ -123,7 +132,33 @@ export function QuestionReducer(state = defaultState, action) {
             };
         case QUESTION_RESET_STATE:
             return defaultState;
-
+        case QUESTION_ADD_OPTION:
+            return {
+                ...state,
+                options: [
+                    ...state.options,
+                    defaultOption
+                ]
+            };
+        case QUESTION_UPDATE_OPTION: {
+            return {
+                ...state,
+                options: [
+                    ...state.options.slice(0, action.index),
+                    action.option,
+                    ...state.options.slice(action.index + 1)
+                ]
+            };
+        }
+        case QUESTION_REMOVE_OPTION: {
+            return {
+                ...state,
+                options: [
+                    ...state.options.slice(0, action.index),
+                    ...state.options.slice(action.index + 1)
+                ]
+            };
+        }
         default:
             return state;
     }

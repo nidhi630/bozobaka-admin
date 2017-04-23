@@ -11,7 +11,7 @@ const LivePreviewComponent = ({content}) => {
 };
 
 LivePreviewComponent.propTypes = {
-    content: PropTypes.node.isRequired
+    content: PropTypes.node
 };
 
 export default LivePreviewComponent;

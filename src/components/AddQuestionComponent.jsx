@@ -27,6 +27,7 @@ import LivePreviewComponent from "./LivePreviewComponent";
 import FlatButton from "material-ui/FlatButton";
 import RaisedButton from "material-ui/RaisedButton";
 import DropdownDisplay from "./DropdownDisplayComponent";
+import OptionsComponent from "./OptionsComponent";
 
 export default class AddQuestionComponent extends React.Component {
     constructor(props) {
@@ -84,7 +85,8 @@ export default class AddQuestionComponent extends React.Component {
                 <Row>
                     <Col xs={12}>
                         <h3>Question Type</h3>
-                        <DropdownDisplay onChange={onQuestionTypeChange.bind(this)} menuItems={questionTypes} value={questionType} hideDefault={true}/>
+                        <DropdownDisplay onChange={onQuestionTypeChange.bind(this)} menuItems={questionTypes}
+                                         value={questionType} hideDefault={true}/>
                     </Col>
                 </Row>
                 <br/>
@@ -99,6 +101,8 @@ export default class AddQuestionComponent extends React.Component {
                         <LivePreviewComponent content={parsedQuestion}/>
                     </Col>
                 </Row>
+                <br/><br/>
+                <OptionsComponent/>
                 <br/><br/>
                 <Row>
                     <Col xs={12} sm={6} md={3}>
