@@ -13,7 +13,7 @@ import {
 import {parseKatex} from "./../services/KatexParser";
 
 function userHasAccess(role) {
-    let rolesWithAccess = ["admin"];
+    let rolesWithAccess = ["admin", "superAdmin"];
     return (rolesWithAccess.indexOf(role) > -1);
 }
 

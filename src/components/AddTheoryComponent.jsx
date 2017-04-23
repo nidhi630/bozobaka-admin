@@ -54,7 +54,7 @@ export default class AddTheoryComponent extends React.Component {
 
         const {
             updateHeading, theory, updateTheory, l1Id, l2Id, l3Id, l4Id, sectionId, status, parsedTheory, heading,
-            resetState, postTheory, hasErrored, errorMessage, isLoading, id, sources, requestSuccess
+            resetState, postTheory, hasErrored, errorMessage, isLoading, id, sources
         } = this.props;
 
         return (
@@ -107,6 +107,7 @@ export default class AddTheoryComponent extends React.Component {
                                          placeHolder="Enter Theory"/>
                     </Col>
                     <Col xs={12} sm={6} md={5}>
+                        <h3>Theory Preview</h3>
                         <LivePreviewComponent content={parsedTheory}/>
                     </Col>
                 </Row>
@@ -158,3 +159,30 @@ export default class AddTheoryComponent extends React.Component {
         );
     }
 }
+
+AddTheoryComponent.propTypes = {
+    hasErrored: PropTypes.bool,
+    errorMessage: PropTypes.string,
+    isLoading: PropTypes.bool,
+    postTheory: PropTypes.func,
+    resetState: PropTypes.func,
+    status: PropTypes.string,
+    sectionId: PropTypes.string,
+    l1Id: PropTypes.string,
+    l2Id: PropTypes.string,
+    l3Id: PropTypes.string,
+    l4Id: PropTypes.string,
+    parsedTheory: PropTypes.node,
+    theory: PropTypes.string,
+    updateQuestion: PropTypes.func,
+    sources: PropTypes.array,
+    onDifficultyChange: PropTypes.func,
+    id: PropTypes.string,
+    fetchQuestion: PropTypes.func,
+    location: PropTypes.object,
+    updateHeading: PropTypes.func,
+    updateTheory: PropTypes.func,
+    heading: PropTypes.string,
+    fetchTheory: PropTypes.func,
+    hasAccess: PropTypes.bool
+};

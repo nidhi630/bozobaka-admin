@@ -13,10 +13,15 @@ import {
 } from "./../actions/QuestionActions";
 import {parseKatex} from "./../services/KatexParser";
 
+function userHasAccess(role) {
+    let rolesWithAccess = ["contentWriter", "superAdmin"];
+    return (rolesWithAccess.indexOf(role) > -1);
+}
+
 const mapStateToProps = (state) => {
+    const role = state.GlobalReducer.loggedInUser.role;
     return {
-        ...state.GlobalReducer,
-        ...state.ContentReducer,
+        hasAccess: userHasAccess(role),
         questionTypes: getAllQuestionTypes(),
         ...state.question
     };

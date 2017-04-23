@@ -57,7 +57,7 @@ export default class AddQuestionComponent extends React.Component {
                 <Row>
                     <Col xs={12}>
                         <h2>Add Question</h2>
-                        <b>{id}</b>
+                        <p><b>{id}</b></p>
                     </Col>
                 </Row>
                 <br/>
@@ -86,6 +86,7 @@ export default class AddQuestionComponent extends React.Component {
                                          placeHolder="Enter Question"/>
                     </Col>
                     <Col xs={12} sm={6} md={5}>
+                        <h3>Question Preview</h3>
                         <LivePreviewComponent content={parsedQuestion}/>
                     </Col>
                 </Row>
@@ -158,7 +159,7 @@ AddQuestionComponent.propTypes = {
     l2Id: PropTypes.string,
     l3Id: PropTypes.string,
     l4Id: PropTypes.string,
-    parsedQuestion: PropTypes.string,
+    parsedQuestion: PropTypes.node,
     question: PropTypes.string,
     updateQuestion: PropTypes.func,
     sources: PropTypes.array,

@@ -16,7 +16,8 @@ import {
     QUESTION_UPDATE_PARSED_QUESTION,
     INIT_QUESTIONS,
     QUESTION_UPDATE_ID,
-    QUESTION_UPDATE_QUESTION
+    QUESTION_UPDATE_QUESTION,
+    QUESTION_RESET_STATE
 } from "./../actions/ActionConstants";
 
 let defaultState = {
@@ -120,6 +121,9 @@ export function QuestionReducer(state = defaultState, action) {
                 ...state,
                 question: action.question
             };
+        case QUESTION_RESET_STATE:
+            return defaultState;
+
         default:
             return state;
     }
