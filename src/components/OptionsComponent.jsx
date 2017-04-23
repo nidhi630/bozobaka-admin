@@ -72,7 +72,6 @@ const mapDispatchToProps = (dispatch) => {
         },
 
         removeOption: (index) => {
-            debugger;
             dispatch(questionRemoveOption(index));
         },
 
