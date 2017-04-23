@@ -21,6 +21,7 @@ import FlatButton from "material-ui/FlatButton";
 class OptionsComponent extends React.Component {
     constructor(props) {
         super(props);
+        this.optionName = "ABCDEFGHIJKLMNOPQRSTUVZXYZ";
     }
 
     render() {
@@ -33,7 +34,14 @@ class OptionsComponent extends React.Component {
                 {options.map((option, index) => (
                     <Row key={index.toString()}>
                         <Col xs={6}>
-                            <h4>Option {index + 1}</h4>
+                            <Row>
+                                <Col xs={6}>
+                                    <h4>Option {this.optionName[index]}</h4>
+                                </Col>
+                                <Col xs={6}>
+                                    <FlatButton secondary={true} label="Remove" onTouchTap={removeOption.bind(this, index)}/>
+                                </Col>
+                            </Row>
                             <Editor content={option.raw} placeHolder="option" onChange={onChange.bind(this, index)}
                                     modules="optionsModules"/>
                         </Col>
@@ -41,8 +49,9 @@ class OptionsComponent extends React.Component {
                             <h4>Preview</h4>
                             <LivePreview content={option.parsed}/>
                         </Col>
-                        <FlatButton secondary={true} label="Remove" onTouchTap={removeOption.bind(this, index)}/>
-                        <br/>
+                        <Col xs={12}>
+                            <br/>
+                        </Col>
                     </Row>))
                 }
                 <br/>
