@@ -213,11 +213,12 @@ export function questionRemoveAppearedIn(index) {
     };
 }
 
-export function questionUpdateAppearedIn(exam, index) {
+export function questionUpdateAppearedIn(id, year, index) {
     return {
         type: QUESTION_UPDATE_APPEARED_IN,
         index,
-        exam
+        id,
+        year
     };
 }
 

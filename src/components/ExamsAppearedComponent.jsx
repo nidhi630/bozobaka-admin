@@ -7,8 +7,13 @@ import DropdownDisplay from "./DropdownDisplayComponent";
 import {
     fetchExams as fetchExamsRequest
 } from "./../actions/ExamActions";
-import DatePicker from "material-ui/DatePicker";
 import RaisedButton from "material-ui/RaisedButton";
+import {
+    questionAddAppearedIn,
+    questionRemoveAppearedIn,
+    questionUpdateAppearedIn
+} from "./../actions/QuestionActions";
+import TextField from "material-ui/TextField";
 
 class ExamsAppearedComponent extends React.Component {
     constructor(props) {
@@ -20,36 +25,39 @@ class ExamsAppearedComponent extends React.Component {
     }
 
     render() {
-        const {exams, appearedIn, onExamChange, onYearChange, addAppearedIn} = this.props;
+        const {exams, appearedIn, onExamChange, onYearChange, addAppearedIn, removeAppearedIn} = this.props;
 
         return (
             <div>
                 <h3>Appeared In</h3>
                 <br/>
-                {
-                    appearedIn.map((app, index) => (
-                        <Row>
-                            <Col xs={6} sm={5}>
-                                <DropdownDisplay menuItems={exams} onChange={onExamChange.bind(this, index)}/>
-                            </Col>
-                            <Col xs={6} sm={5}>
-                                <DatePicker hintText="Year"
-                                            container="inline"
-                                            defaultDate={app.year}
-                                            formatDate={(date) => (date.getYear())}
-                                            onChange={onYearChange.bind(this, index)}/>
-                            </Col>
-                            <Col xs={12} sm={2}>
-                            </Col>
-                        </Row>
-                    ))
-                }
+                {appearedIn.map((exam, index) => (
+                    <Row key={index.toString()}>
+                        <Col xs={6} sm={5}>
+                            <br/>
+                            <DropdownDisplay menuItems={exams} onChange={onExamChange.bind(this, index)}
+                                             value={exam.id}/>
+                        </Col>
+                        <Col xs={6} sm={5}>
+                            <TextField name={"year" + index} hintText="Enter Year" floatingLabelText="Year"
+                                       defaultValue={exam.year} type="number"
+                                       onChange={onYearChange.bind(this, index)}/>
+                        </Col>
+                        <Col xs={12} sm={2}>
+                            <RaisedButton label="remove" onClick={removeAppearedIn.bind(this, index)}/>
+                        </Col>
+                    </Row>
+                ))}
                 <br/>
-                <RaisedButton label="Add Another" onTouchTap={addAppearedIn.bind(this)} />
+                <RaisedButton label="Add Another Exam" onClick={addAppearedIn.bind(this)} primary={true}/>
             </div>
         );
     }
 }
+
+ExamsAppearedComponent.defaultProps = {
+    exams: []
+};
 
 ExamsAppearedComponent.propTypes = {
     exams: PropTypes.array,
@@ -57,12 +65,13 @@ ExamsAppearedComponent.propTypes = {
     appearedIn: PropTypes.array,
     onYearChange: PropTypes.func,
     onExamChange: PropTypes.func,
-    addAppearedIn: PropTypes.func
+    addAppearedIn: PropTypes.func,
+    removeAppearedIn: PropTypes.func
 };
 
 const mapStateToProps = (state) => {
     return {
-        ...state.exams,
+        ...state.exam,
         appearedIn: state.question.appearedIn
     };
 };
@@ -73,16 +82,20 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(fetchExamsRequest());
         },
 
-        onExamChange: () => {
-            console.log(arguments);
+        onExamChange: (index, event, position, newValue) => {
+            dispatch(questionUpdateAppearedIn(newValue, null, index));
         },
 
-        onYearChange: () => {
-            console.log(arguments);
+        onYearChange: (index, event, newValue) => {
+            dispatch(questionUpdateAppearedIn(null, newValue, index));
         },
 
         addAppearedIn: () => {
-            dispatch
+            dispatch(questionAddAppearedIn({}));
+        },
+
+        removeAppearedIn: (index) => {
+            dispatch(questionRemoveAppearedIn(index));
         }
     };
 };

@@ -1,8 +1,8 @@
 
 export default class Exam {
     constructor(exam) {
+        this.id = exam.id;
         this.name = exam.name;
-        this.year = exam.year;
         this.created = exam.created;
         this.updated = exam.updated;
     }
