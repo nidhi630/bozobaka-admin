@@ -12,7 +12,8 @@ import {
     questionUpdateQuestion,
     questionUpdateQuestionType,
     questionUpdateSolution,
-    questionUpdateHint
+    questionUpdateHint,
+    questionHasErrored
 } from "./../actions/QuestionActions";
 import {parseKatex} from "./../services/KatexParser";
 
@@ -66,6 +67,10 @@ const mapDispatchToProps = (dispatch) => {
 
         updateHint: (newValue) => {
             dispatch(questionUpdateHint(newValue, parseKatex(newValue)));
+        },
+
+        resetErrorState: () => {
+            dispatch(questionHasErrored(false, ""));
         }
     };
 };

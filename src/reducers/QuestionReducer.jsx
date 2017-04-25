@@ -93,7 +93,8 @@ export function QuestionReducer(state = defaultState, action) {
         case QUESTION_HAS_ERRORED:
             return {
                 ...state,
-                hasErrored: action.hasErrored
+                hasErrored: action.hasErrored,
+                errorMessage: action.errorMessage
             };
         case QUESTION_REQUEST_SUCCESS:
             return {

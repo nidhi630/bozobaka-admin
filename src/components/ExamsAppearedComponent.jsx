@@ -30,7 +30,6 @@ class ExamsAppearedComponent extends React.Component {
         return (
             <div>
                 <h3>Appeared In</h3>
-                <br/>
                 {appearedIn.map((exam, index) => (
                     <Row key={index.toString()}>
                         <Col xs={6} sm={5}>
@@ -44,6 +43,7 @@ class ExamsAppearedComponent extends React.Component {
                                        onChange={onYearChange.bind(this, index)}/>
                         </Col>
                         <Col xs={12} sm={2}>
+                            <br/>
                             <RaisedButton label="remove" onClick={removeAppearedIn.bind(this, index)}/>
                         </Col>
                     </Row>

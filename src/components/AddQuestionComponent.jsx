@@ -54,7 +54,7 @@ export default class AddQuestionComponent extends React.Component {
         const {
             difficulty, onDifficultyChange, l1Id, l2Id, l3Id, l4Id, sectionId, status, sources, id, resetState,
             postQuestion, hasErrored, errorMessage, question, updateQuestion, parsedQuestion, isLoading, questionTypes,
-            questionType, onQuestionTypeChange, updateSolution, updateHint, solution, hint
+            questionType, onQuestionTypeChange, updateSolution, updateHint, solution, hint, resetErrorState
         } = this.props;
 
         let AnswerComponent;
@@ -172,7 +172,7 @@ export default class AddQuestionComponent extends React.Component {
                 <Row>
                     <Col xs={12}>
                         <h3>Status</h3>
-                        <StatusSelectionComponent updateStatus={questionUpdateStatus.bind(this)} status={status}/>
+                        <StatusSelectionComponent actionOnUpdate={questionUpdateStatus.bind(this)} status={status}/>
                     </Col>
                 </Row>
                 <br/><br/>
@@ -193,7 +193,8 @@ export default class AddQuestionComponent extends React.Component {
                     </Col>
                 </Row>
                 <br/><br/><br/>
-                <Snackbar open={hasErrored} message={errorMessage} autoHideDuration={20000}/>
+                <Snackbar open={hasErrored} message={errorMessage} autoHideDuration={200000} action="ok"
+                          onActionTouchTap={resetErrorState.bind(this)}/>
             </div>
         );
     }
@@ -226,6 +227,6 @@ AddQuestionComponent.propTypes = {
     updateSolution: PropTypes.func,
     updateHint: PropTypes.func,
     solution: PropTypes.object,
-    hint: PropTypes.object
-
+    hint: PropTypes.object,
+    resetErrorState: PropTypes.func
 };
