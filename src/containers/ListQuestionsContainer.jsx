@@ -6,9 +6,9 @@ import {questionFetchQuestions} from "./../actions/QuestionActions";
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        questions: state.theory.theories,
-        isLoading: state.theory.isLoading,
-        courseId: state.ContentReducer.selectedCourse.id
+        questions: state.question.questions,
+        isLoading: state.question.isLoading,
+        courseId: state.ContentReducer.selectedCourse.id,
     };
 };
 

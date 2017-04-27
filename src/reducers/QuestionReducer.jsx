@@ -44,7 +44,7 @@ let defaultState = {
     l2Id: "",
     l3Id: "",
     l4Id: "",
-    sources: [""],
+    source: [],
     questionType: "single",
     difficulty: 50,
     status: "draft",
@@ -129,7 +129,7 @@ export function QuestionReducer(state = defaultState, action) {
         case QUESTION_UPDATE_SOURCE:
             return {
                 ...state,
-                sources: [action.sourceId]
+                source: [action.sourceId]
             };
         case QUESTION_UPDATE_QUESTION_TYPE:
             return {

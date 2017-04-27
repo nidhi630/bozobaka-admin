@@ -44,32 +44,28 @@ class FilterComponent extends React.Component {
 
     render() {
         const {
-            status, sectionId, usage, l1Id, l2Id, source, updateId, updateMinDifficulty,
-            updateMaxDifficulty, updateQuestion, updateTheory, id, question, heading, minDifficulty, maxDifficulty
+            status, sectionId, usage, l1Id, l2Id, source, updateMinDifficulty,
+            updateMaxDifficulty, updateQuestion, updateTheory, question, heading, minDifficulty, maxDifficulty
         } = this.props;
 
         return (
 
             <TableRow>
-                {/*<TableRowColumn>*/}
-                    {/*/!*<TextField type="text" hintText="id" ref="id" id="id" onChange={updateId.bind(this)} defaultValue={id}/>*!/*/}
-                {/*</TableRowColumn>*/}
                 <TableRowColumn>
                     {usage === "question" ? <TextField type="text" hintText="question" ref="question" id="question"
                                                        onChange={updateQuestion.bind(this)} defaultValue={question}/>
                         : <TextField type="text" hintText="theory" ref="theory" id="theory"
                                      onChange={updateTheory.bind(this)} defaultValue={heading}/>
                     }
-
                 </TableRowColumn>
                 <TableRowColumn>
                     <StatusSelection status={status} actionOnUpdate={setStatus}/>
                 </TableRowColumn>
                 {usage === "question" ?
                     <TableRowColumn>
-                        <TextField type="number" hintText="Min" ref="minDifficulty" id="minDifficulty"
+                        <TextField type="number" hintText="Min" ref="minDifficulty" id="minDifficulty" min="0" max="100"
                                    onChange={updateMinDifficulty.bind(this)} defaultValue={minDifficulty} style={{width: "50%"}}/>
-                        <TextField type="number" hintText="Max" ref="maxDifficulty" id="maxDifficulty"
+                        <TextField type="number" hintText="Max" ref="maxDifficulty" id="maxDifficulty" min="0" max="100"
                                    onChange={updateMaxDifficulty.bind(this)} defaultValue={maxDifficulty}style={{width: "50%", marginLeft: 10}}/>
                     </TableRowColumn>
                     : null
@@ -130,11 +126,11 @@ const mapDispatchToProps = (dispatch) => {
         },
 
         updateMinDifficulty: (event, newValue) => {
-            dispatch(setMinDifficulty(newValue));
+            dispatch(setMinDifficulty(parseInt(newValue, 10)));
         },
 
         updateMaxDifficulty: (event, newValue) => {
-            dispatch(setMaxDifficulty(newValue));
+            dispatch(setMaxDifficulty(parseInt(newValue, 10)));
         },
 
         updateTheory: (event, newValue) => {

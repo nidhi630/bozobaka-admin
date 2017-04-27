@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onDifficultyChange: (event, value) => {
-            dispatch(questionUpdateDifficulty(value));
+            dispatch(questionUpdateDifficulty(parseInt(value, 10)));
         },
 
         updateQuestion: (newValue) => {

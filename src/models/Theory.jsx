@@ -8,12 +8,12 @@ export default class Theory {
         this.sectionId = theory.sectionId;
         this.section = theory.section || [];
         this.l1Id = theory.l1Id;
-        this.l1 = theory.l1 || [];
+        this.l1 = theory.l1 || {};
         this.l2Id = theory.l2Id;
-        this.l2 = theory.l2 || [];
+        this.l2 = theory.l2 || {};
         this.l3Id = theory.l3Id;
-        this.l3 = theory.l3 || [];
-        this.l4 = theory.l4 || [];
+        this.l3 = theory.l3 || {};
+        this.l4 = theory.l4 || {};
         this.l4Id = theory.l4Id;
         this.heading = theory.heading;
         this.theory = theory.theory;

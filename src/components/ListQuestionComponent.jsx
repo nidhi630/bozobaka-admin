@@ -3,14 +3,13 @@
 import React, {PropTypes} from "react";
 import {Row, Col} from "react-flexbox-grid";
 import ListTableComponent from "./ListTableComponent";
+import Urls from "./../models/Urls";
+import {browserHistory} from "react-router";
 
 export default class ListQuestionComponent extends React.Component {
     constructor(props) {
         super(props);
         this.headerColumns = [{
-            displayName: "ID",
-            key: "id"
-        }, {
             displayName: "Question",
             key: "question"
         }, {
@@ -60,13 +59,19 @@ export default class ListQuestionComponent extends React.Component {
                 </Row>
                 <Row>
                     <Col xs={12}>
-                        <ListTableComponent headerColumns={this.headerColumns} tableRows={questions}
-                                            isLoading={isLoading} usage="question" onFilterChange={fetchQuestions.bind(this)}/>
+                        <ListTableComponent headerColumns={this.headerColumns} tableRows={questions} isLoading={isLoading}
+                                            usage="question" onFilterChange={fetchQuestions.bind(this)}
+                                            onCellClick={this.onCellClick.bind(this)}/>
                     </Col>
                 </Row>
                 <br/><br/>
             </div>
         );
+    }
+
+    onCellClick(rowNumber) {
+        const url = Urls.ADD_QUESTION + "?id=" + this.props.questions[rowNumber].id;
+        browserHistory.push(url);
     }
 }
 

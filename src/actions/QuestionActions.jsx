@@ -260,9 +260,9 @@ export function questionPostQuestion() {
             updateQuestionRequest({
                 method: data.id ? "patch" : "post",
                 data
-            }).then((theory) => {
-                console.log("question after post", theory);
-                dispatch(questionUpdateId(theory.id));
+            }).then((question) => {
+                console.log("question after post", question);
+                dispatch(questionUpdateId(question.id));
                 dispatch(questionIsLoading(false));
                 dispatch(questionRequestSuccess(true));
             }).catch((err) => {
