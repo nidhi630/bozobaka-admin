@@ -150,7 +150,7 @@ export function QuestionReducer(state = defaultState, action) {
         case QUESTION_UPDATE_STATUS:
             return {
                 ...state,
-                staus: action.status
+                status: action.status
             };
         case QUESTION_UPDATE_PARSED_QUESTION:
             return {

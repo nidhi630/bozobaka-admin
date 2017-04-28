@@ -13,13 +13,13 @@ import {
 import {getSources, postSource as creatNewSource} from "./../services/SourceService";
 
 export function initSources(sources) {
-    let parsedSources = [];
-    sources.forEach((source) => {
-        parsedSources.push(source.name);
-    });
+    // let parsedSources = [];
+    // sources.forEach((source) => {
+    //     parsedSources.push(source.name);
+    // });
     return {
         type: INIT_SOURCES,
-        sources: parsedSources
+        sources: sources
     };
 }
 

@@ -25,6 +25,7 @@ class SourceSelectionComponent extends React.Component {
 
     render() {
         const {sources, updateSelectedSource, selectedSource} = this.props;
+        console.log("source selectection component", sources);
         return (
             <div>
                 {sources.length ?

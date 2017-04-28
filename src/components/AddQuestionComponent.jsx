@@ -217,7 +217,7 @@ AddQuestionComponent.propTypes = {
     parsedQuestion: PropTypes.node,
     question: PropTypes.string,
     updateQuestion: PropTypes.func,
-    source: PropTypes.array,
+    sources: PropTypes.array,
     onDifficultyChange: PropTypes.func,
     id: PropTypes.string,
     fetchQuestion: PropTypes.func,
