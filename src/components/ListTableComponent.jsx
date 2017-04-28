@@ -40,6 +40,9 @@ const ListTableComponent = ({headerColumns, tableRows, onFilterChange, usage, on
                                     case "question":
                                         value = <LivePreview content={parseKatex(row.question)}/>;
                                         break;
+                                    case "theory":
+                                        value = <LivePreview content={parseKatex(row.theory)}/>;
+                                        break;
                                     default:
                                         value = row[col.key];
 

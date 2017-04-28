@@ -52,6 +52,7 @@ export default class Question {
         validatedQuestion.hint = validatedQuestion.hint.raw;
         validatedQuestion.options = validatedQuestion.options.map((option) => (option.raw));
         validatedQuestion.appearedInExams = validatedQuestion.appearedIn;
+        delete validatedQuestion.source;
         delete validatedQuestion.appearedIn;
         if (!validatedQuestion.sectionId || !validatedQuestion.l1Id || !validatedQuestion.l2Id ||
             !validatedQuestion.l3Id || !validatedQuestion.question) {

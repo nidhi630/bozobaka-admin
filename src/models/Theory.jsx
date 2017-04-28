@@ -40,6 +40,7 @@ export default class Theory {
         delete validatedTheory.l3;
         delete validatedTheory.l4;
         delete validatedTheory.section;
+        delete validatedTheory.source;
         if (!validatedTheory.sectionId || !validatedTheory.l1Id || !validatedTheory.l2Id ||
             !validatedTheory.l3Id || !validatedTheory.heading || !validatedTheory.theory) {
             throw new Error("Invalid Theory Input");
