@@ -2,8 +2,9 @@
 
 import React, {PropTypes} from "react";
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from "material-ui/Table";
-import Loader from "./LoaderComponent";
 import FilterComponent from "./FilterComponent";
+import LivePreview from "./LivePreviewComponent";
+import {parseKatex} from "./../services/KatexParser";
 
 const ListTableComponent = ({headerColumns, tableRows, onFilterChange, usage, onCellClick}) => {
     const style = {whiteSpace: "normal"};
@@ -34,7 +35,10 @@ const ListTableComponent = ({headerColumns, tableRows, onFilterChange, usage, on
                                         value = row.section.name;
                                         break;
                                     case "source":
-                                        value = row.source.length ? row.source[0].name : "";
+                                        value = row.source.name;
+                                        break;
+                                    case "question":
+                                        value = <LivePreview content={parseKatex(row.question)}/>;
                                         break;
                                     default:
                                         value = row[col.key];

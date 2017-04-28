@@ -1,34 +1,20 @@
 "use strict";
 
+import {getDateWithoutTime} from "./../utils/dateTimeUtils";
+
 export default class Question {
     constructor(question) {
         this.id = question.id;
-
         this.sectionId = question.sectionId;
-        if (question.section) {
-            this.section = question.section;
-        }
-
+        this.section = question.section || {};
         this.l1Id = question.l1Id;
-        if (question.l1) {
-            this.l1 = question.l1;
-        }
-
+        this.l1 = question.l1 || {};
         this.l2Id = question.l2Id;
-        if (question.l2) {
-            this.l2 = question.l2;
-        }
-
+        this.l2 = question.l2 || {};
         this.l3Id = question.l3Id;
-        if (question.l3) {
-            this.l3 = question.l3;
-        }
-
+        this.l3 = question.l3 || {};
         this.l4Id = question.l4Id;
-        if (question.l4) {
-            this.l4 = question.l4;
-        }
-
+        this.l4 = question.l4 || {};
         this.question = question.question;
         this.status = question.status;
         this.type = question.type || question.questionType;
@@ -48,7 +34,7 @@ export default class Question {
         if (question.source) {
             this.source = question.source;
         }
-        this.created = question.created;
+        this.created = question.created ? getDateWithoutTime(question.created) : "";
         this.updated = question.updated;
     }
 
