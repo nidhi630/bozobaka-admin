@@ -67,7 +67,8 @@ export default class ListTheoryComponent extends React.Component {
     }
 
     onCellClick(rowNumber) {
-        const url = Urls.ADD_THEORY + "?id=" + this.props.theories[rowNumber].id;
+        const thoery = this.props.theories[rowNumber - 1];
+        const url = Urls.ADD_THEORY + "?id=" + thoery.id;
         browserHistory.push(url);
     }
 }

@@ -231,7 +231,37 @@ export function questionFetchQuestions(questionId) {
             id: questionId,
             filter: filters
         }).then((res) => {
-            dispatch(initQuestions(res));
+            if (typeof res === "object" && res.constructor === Array) {
+                dispatch(initQuestions(res));
+            } else {
+                dispatch(questionUpdateId(res.id));
+                dispatch(questionUpdateStatus(res.status));
+                dispatch(questionUpdateL4(res.l4Id));
+                dispatch(questionUpdateL3(res.l3Id));
+                dispatch(questionUpdateL2(res.l2Id));
+                dispatch(questionUpdateL1(res.l1Id));
+                dispatch(questionUpdateSection(res.sectionId));
+                dispatch(questionUpdateQuestion(res.question));
+                dispatch(questionUpdateQuestionType(res.type));
+                dispatch(questionUpdateSource(res.source[0] ? res.source[0].id : res.source[0]));
+                dispatch(questionUpdateHint(res.hint.raw, null));
+                dispatch(questionUpdateSolution(res.solution.raw, null));
+                dispatch(questionUpdateDifficulty(res.difficulty));
+
+                if (res.type === "single") {
+                    dispatch(questionUpdateAnswer(res.answer.single));
+                } else {
+                    res.answer.multiple.forEach((answer, index) => {
+                        dispatch(questionUpdateAnswer(answer, index));
+                    });
+                }
+                res.options.forEach((option, index) => {
+                    dispatch(questionUpdateOption(index, option));
+                });
+                res.appearedIn.forEach((exam, index) => {
+                    dispatch(questionUpdateAppearedIn(exam.id, exam.year, index));
+                });
+            }
             dispatch(questionIsLoading(false));
             dispatch(questionRequestSuccess(true));
         }).catch((err) => {

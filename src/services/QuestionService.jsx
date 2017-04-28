@@ -30,7 +30,11 @@ export function fetchQuestion(params) {
             }
         }).then(res => {
             console.log("questions get", res);
-            resolve(Question.parseQuestions(res.data));
+            if (typeof res.data === "object" && res.data.constructor === Array) {
+                resolve(Question.parseQuestions(res.data));
+            } else {
+                resolve(new Question(res.data));
+            }
         }).catch(err => errorHandler(reject, err));
     });
 }

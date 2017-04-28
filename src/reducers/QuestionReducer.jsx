@@ -44,7 +44,7 @@ let defaultState = {
     l2Id: "",
     l3Id: "",
     l4Id: "",
-    source: [],
+    sources: [],
     questionType: "single",
     difficulty: 50,
     status: "draft",
@@ -76,6 +76,12 @@ function multipleAnswerReducer(state = [], action) {
             ];
         default:
             const position = state.indexOf(action.answer);
+            if (position === -1) {
+                return [
+                    ...state,
+                    action.answer
+                ];
+            }
             return [
                 ...state.slice(0, position),
                 ...state.slice(position + 1)
@@ -129,7 +135,7 @@ export function QuestionReducer(state = defaultState, action) {
         case QUESTION_UPDATE_SOURCE:
             return {
                 ...state,
-                source: [action.sourceId]
+                sources: [action.sourceId]
             };
         case QUESTION_UPDATE_QUESTION_TYPE:
             return {

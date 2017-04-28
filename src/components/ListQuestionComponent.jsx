@@ -70,7 +70,8 @@ export default class ListQuestionComponent extends React.Component {
     }
 
     onCellClick(rowNumber) {
-        const url = Urls.ADD_QUESTION + "?id=" + this.props.questions[rowNumber].id;
+        const question = this.props.questions[rowNumber - 1];
+        const url = Urls.ADD_QUESTION + "?id=" + question.id;
         browserHistory.push(url);
     }
 }

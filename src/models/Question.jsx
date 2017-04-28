@@ -44,7 +44,7 @@ export default class Question {
             raw: question.hint.raw || question.hint
         };
         this.difficulty = question.difficulty;
-        this.source = question.source;
+        this.source = question.sources;
         this.created = question.created;
         this.updated = question.updated;
     }
@@ -62,6 +62,8 @@ export default class Question {
         validatedQuestion.solution = validatedQuestion.solution.raw;
         validatedQuestion.hint = validatedQuestion.hint.raw;
         validatedQuestion.options = validatedQuestion.options.map((option) => (option.raw));
+        validatedQuestion.appearedInExams = validatedQuestion.appearedIn;
+        delete validatedQuestion.appearedIn;
         if (!validatedQuestion.sectionId || !validatedQuestion.l1Id || !validatedQuestion.l2Id ||
             !validatedQuestion.l3Id || !validatedQuestion.question) {
             throw new Error("Invalid Question Input");
