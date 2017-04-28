@@ -243,7 +243,7 @@ export function questionFetchQuestions(questionId) {
                 dispatch(questionUpdateSection(res.sectionId));
                 dispatch(questionUpdateQuestion(res.question));
                 dispatch(questionUpdateQuestionType(res.type));
-                dispatch(questionUpdateSource(res.source[0] ? res.source[0].id : res.source[0]));
+                dispatch(questionUpdateSource(res.sourceId));
                 dispatch(questionUpdateHint(res.hint.raw, null));
                 dispatch(questionUpdateSolution(res.solution.raw, null));
                 dispatch(questionUpdateDifficulty(res.difficulty));

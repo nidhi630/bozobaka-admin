@@ -13,10 +13,6 @@ import TextField from "material-ui/TextField";
 class SourceSelectionComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            openDialog: false,
-            name: ""
-        };
     }
 
     componentDidMount() {
@@ -25,7 +21,6 @@ class SourceSelectionComponent extends React.Component {
 
     render() {
         const {sources, updateSelectedSource, selectedSource} = this.props;
-        console.log("source selectection component", sources);
         return (
             <div>
                 {sources.length ?

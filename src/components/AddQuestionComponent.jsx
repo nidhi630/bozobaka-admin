@@ -52,7 +52,7 @@ export default class AddQuestionComponent extends React.Component {
 
     render() {
         const {
-            difficulty, onDifficultyChange, l1Id, l2Id, l3Id, l4Id, sectionId, status, sources, id, resetState,
+            difficulty, onDifficultyChange, l1Id, l2Id, l3Id, l4Id, sectionId, status, sourceId, id, resetState,
             postQuestion, hasErrored, errorMessage, question, updateQuestion, parsedQuestion, isLoading, questionTypes,
             questionType, onQuestionTypeChange, updateSolution, updateHint, solution, hint, resetErrorState
         } = this.props;
@@ -87,7 +87,7 @@ export default class AddQuestionComponent extends React.Component {
                 <Row>
                     <Col xs={12} sm={5}>
                         <h3>Source</h3>
-                        <SourceSelectionComponent actionOnUpdate={questionUpdateSource.bind(this)} source={sources[0]}/>
+                        <SourceSelectionComponent actionOnUpdate={questionUpdateSource.bind(this)} source={sourceId}/>
                     </Col>
                     <Col xs={12} sm={5}>
                         <AddSourceComponent/>
@@ -217,7 +217,7 @@ AddQuestionComponent.propTypes = {
     parsedQuestion: PropTypes.node,
     question: PropTypes.string,
     updateQuestion: PropTypes.func,
-    sources: PropTypes.array,
+    sourceId: PropTypes.string,
     onDifficultyChange: PropTypes.func,
     id: PropTypes.string,
     fetchQuestion: PropTypes.func,

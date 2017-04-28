@@ -44,7 +44,10 @@ export default class Question {
             raw: question.hint.raw || question.hint
         };
         this.difficulty = question.difficulty;
-        this.source = question.sources;
+        this.sourceId = question.sourceId;
+        if (question.source) {
+            this.source = question.source;
+        }
         this.created = question.created;
         this.updated = question.updated;
     }

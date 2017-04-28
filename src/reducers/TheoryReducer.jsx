@@ -25,7 +25,7 @@ let defaultTheory = {
     errorMessage: "",
     requestSuccess: false,
     sectionId: "",
-    sources: [""],
+    sourceId: [""],
     type: "text",
     heading: "",
     theory: "",
@@ -84,7 +84,7 @@ export function TheoryReducer(state = defaultTheory, action) {
         case THEORY_UPDATE_SOURCE:
             return {
                 ...state,
-                sources: [action.sourceId]
+                sourceId: action.sourceId
             };
         case THEORY_UPDATE_HEADING:
             return {

@@ -19,7 +19,7 @@ export default class Theory {
         this.theory = theory.theory;
         this.status = theory.status;
         this.type = theory.type;
-        this.source = theory.sources;
+        this.sourceId = theory.sourceId;
         this.created = theory.created ? getDateWithoutTime(theory.created) : "";
     }
 

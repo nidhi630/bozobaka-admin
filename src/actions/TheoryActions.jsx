@@ -158,7 +158,7 @@ export function theoryFetchTheory(id) {
                 dispatch(theoryUpdateSection(res.sectionId));
                 dispatch(theoryUpdateTheory(res.theory));
                 dispatch(theoryUpdateHeading(res.heading));
-                dispatch(theoryUpdateSource(res.source[0]));
+                dispatch(theoryUpdateSource(res.sourceId));
             }
             dispatch(theoryIsLoading(false));
             dispatch(theoryRequestSuccess(true));
