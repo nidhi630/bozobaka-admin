@@ -30,10 +30,12 @@ class SidebarComponent extends React.Component {
             admin: ["Dashboard", "Add Theory", "List Of Theory", "Publish", "Manage Course", "List Of Questions", "Trash"],
             reviewer: ["Dashboard", "Review Of Questions", "Marked For Later", "Trash"],
             contentWriter: ["Dashboard", "Add Question", "List Of Questions", "Drafts", "Trash"]
-        }
+        };
+
+        this.componentOptions = [];
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.componentOptions = this.roleOptionsMap[this.props.loggedInUser.role];
     }
 

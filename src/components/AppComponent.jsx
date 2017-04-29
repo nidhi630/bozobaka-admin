@@ -1,31 +1,37 @@
 "use strict";
 
-import React from "react";
-import LoginContainer from "./../containers/LoginContainer";
+import React, {PropTypes} from "react";
+import LoginComponent from "./../components/LoginComponent";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import DashboardContainer from "./../containers/DashboardContainer";
 import SidebarContainer from "./../containers/SidebarContainer";
 import HeaderContainer from "./../containers/HeaderContainer";
-import CircularProgress from 'material-ui/CircularProgress';
+import CircularProgress from "material-ui/CircularProgress";
 import {getUserProfile} from "./../services/UserService";
 import ContentService from "./../services/ContentService";
 import axios from "axios";
-import Snackbar from 'material-ui/Snackbar';
+import Snackbar from "material-ui/Snackbar";
 import {browserHistory} from "react-router";
 import {Grid} from "react-flexbox-grid";
 
-class AppComponent extends React.Component {
+export default class AppComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showLoader: this.props.isLoggedIn,
+            showLoader: false,
             error: false,
-            message: ""
+            message: "",
+            coursesLoaded: false
         };
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setSelectedCourse(nextProps.courses, nextProps);
+        if (nextProps.isLoggedIn && !this.state.coursesLoaded) {
+            this.fetchDataFromServer();
+        }
+        if (nextProps.courses.length) {
+            this.setSelectedCourse(nextProps.courses, nextProps);
+        }
     }
 
     componentDidMount() {
@@ -35,37 +41,39 @@ class AppComponent extends React.Component {
     }
 
     render() {
+        const {isLoggedIn, children} = this.props;
+        const {showLoader, error, message} = this.state;
+
         return (
             <MuiThemeProvider>
-                {this.state.showLoader ?
+                {showLoader ?
                     <div className="page-loader">
-                        <CircularProgress size={100} thickness={4}/>
-                        <Snackbar
-                            open={this.state.error}
-                            message={this.state.message}
-                            autoHideDuration={100000}
-                            onRequestClose={this.handleRequestClose}
-                        />
+                        <CircularProgress/>
+                        <Snackbar open={error} message={message} autoHideDuration={100000} action="ok"
+                                  onActionTouchTap={this.snackbarAction.bind(this)} />
                     </div>
                     :
-                    this.props.isLoggedIn ?
+                    isLoggedIn ?
                         <div>
                             <HeaderContainer />
                             <div>
                                 <SidebarContainer />
                                 <Grid>
-                                    {this.props.children ? this.props.children : <DashboardContainer/>}
+                                    {children ? children : <DashboardContainer/>}
                                 </Grid>
                             </div>
                         </div>
                         :
-                        <LoginContainer/>
+                        <LoginComponent/>
                 }
             </MuiThemeProvider>
-        )
+        );
     }
 
     fetchDataFromServer() {
+        if (this.state.showLoader) return;
+
+        this.setState({showLoader: true});
         axios.all([getUserProfile(), ContentService.fetchCourses()])
             .then(axios.spread((user, courses) => {
                 this.props.updateCourses(courses);
@@ -73,8 +81,9 @@ class AppComponent extends React.Component {
                 this.setSelectedCourse(courses, this.props);
                 this.setState({
                     showLoader: false,
-                    error: false
-                })
+                    error: false,
+                    coursesLoaded: true
+                });
             }))
             .catch((err) => {
                 console.log(err);
@@ -89,7 +98,7 @@ class AppComponent extends React.Component {
         let selectedCourseInUrl = props.location.query.selectedCourse;
         if (!selectedCourseInUrl) {
             props.setSelectedCourse(props.courses, courses[0].id);
-        } else if(!props.selectedCourse) {
+        } else if (!props.selectedCourse) {
             props.setSelectedCourse(props.courses, selectedCourseInUrl);
         } else if (selectedCourseInUrl !== this.props.selectedCourse.id) {
             let found = false;
@@ -107,7 +116,20 @@ class AppComponent extends React.Component {
             }
         }
     }
+
+    snackbarAction() {
+        this.setState({error: false});
+    }
 }
 
-export default AppComponent;
+
+AppComponent.propTypes = {
+    courses: PropTypes.array,
+    selectedCourse: PropTypes.object,
+    updateCourses: PropTypes.func,
+    setLoggedInUser: PropTypes.func,
+    children: PropTypes.node,
+    isLoggedIn: PropTypes.bool
+};
+
 

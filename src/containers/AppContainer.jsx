@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
     return {
         ...state.GlobalReducer,
         ...state.ContentReducer
-    }
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch) => {
         },
 
         setSelectedCourse: (courses, newCourseID) => {
-            for (let i=0; i<courses.length; i++) {
+            for (let i = 0; i < courses.length; i++) {
                 if (courses[i].id === newCourseID) {
                     dispatch(ContentActions.updateSelectedCourse(courses[i]));
                     break;
@@ -31,7 +31,7 @@ const mapDispatchToProps = (dispatch) => {
         setLoggedInUser: (user) => {
             dispatch(GlobalActions.setLoggedInUser(user));
         }
-    }
+    };
 };
 
 const AppContainer = connect(
