@@ -84,6 +84,7 @@ export default class ManageComponent extends React.Component {
                     </Col>
                 </Row>
                 <br/>
+                <br/>
                 <Row>
                     <Col xs={6} sm={4}>
                         <h2 style={sectionTitleStyle}>Admins</h2>
@@ -115,6 +116,7 @@ export default class ManageComponent extends React.Component {
                     </Col>
                 </Row>
                 <br/>
+                <br/>
                 <Row>
                     <Col xs={6} sm={4}>
                         <h2 style={sectionTitleStyle}>Reviewers</h2>
@@ -143,6 +145,7 @@ export default class ManageComponent extends React.Component {
                     </Col>
                 </Row>
                 <br/>
+                <br/>
                 <Row>
                     <Col xs={6} sm={4}>
                         <h2 style={sectionTitleStyle}>Question Writers</h2>
@@ -170,7 +173,7 @@ export default class ManageComponent extends React.Component {
                         </Table>
                     </Col>
                 </Row>
-
+                <br/><br/>
                 {openCourseDialog ?
                     <EditCourseComponent showDialog={openCourseDialog} courseToOpen={this.courseToOpen} admins={admins}
                                          onDialogClose={this.handleDialogClose.bind(this)} updateCourse={this.updateCourseData.bind(this)}/>
@@ -227,12 +230,12 @@ export default class ManageComponent extends React.Component {
     }
 
     editCourse(courseIndex) {
-        this.courseToOpen = typeof courseIndex === 'number' ? this.props.courses[courseIndex] : {};
+        this.courseToOpen = typeof courseIndex === "number" ? this.props.courses[courseIndex] : {};
         this.setState({openCourseDialog: true});
     }
 
     editAdmin(adminIndex) {
-        typeof adminIndex === "number" ? this.adminToOpen = this.state.admins[adminIndex] : this.adminToOpen = {};
+        this.adminToOpen = typeof adminIndex === "number" ? this.state.admins[adminIndex] : {};
         this.setState({openAdminDialog: true});
     }
 

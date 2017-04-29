@@ -36,7 +36,12 @@ const ContentService = {
         return new Promise((resolve, reject) => {
             makeRequest({
                 method: "get",
-                url: getCourseCountWithContentUrl(courseId)
+                url: getCourseCountWithContentUrl(courseId),
+                params: {
+                    filter: {
+                        include: ["adminIds"]
+                    }
+                }
             }).then((res) => {
                 resolve(Course.parseCourses(res.data));
             }).catch((err) => errorHandler(reject, err));

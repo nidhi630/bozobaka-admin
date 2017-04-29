@@ -6,7 +6,8 @@ import User from "./User";
 export default class Admin extends User {
     constructor(admin) {
         super(admin);
-        this.courses = admin.courses ? Course.parseCourses(admin.courses) : [];
+        this.courseIds = admin.courseIds || [];
+        this.courses = admin.courses ? Course.parseCourses(admin.courses || []) : [];
     }
 
     static parseAdmins(admins) {

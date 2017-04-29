@@ -31,6 +31,9 @@ export default class EditCourseComponent extends React.Component {
 
     render() {
 
+        const courseTitleStyle = {marginTop: 10};
+        const removeButtonStyle = {marginTop: 30};
+
         const {admins} = this.props;
         const {dialogTitle, openDialog, course} = this.state;
 
@@ -76,8 +79,12 @@ export default class EditCourseComponent extends React.Component {
                         </Row>
                         <br/>
                         <Row>
-                            <h3>Admins</h3>
-                            <br/>
+                            <Col xs={8} style={courseTitleStyle}>
+                                <h3>Admins</h3>
+                            </Col>
+                            <Col xs={2}>
+                                <RaisedButton primary={true} label="Add Admin" onTouchTap={this.addCourseAdmin.bind(this)}/>
+                            </Col>
                         </Row>
                         <br/>
                         {course && course.adminIds ? course.adminIds.map((courseAdmin, index) => (
@@ -87,14 +94,12 @@ export default class EditCourseComponent extends React.Component {
                                                      menuItems={admins} value={courseAdmin}/>
                                 </Col>
                                 <Col xs={12} sm={4}>
-                                    <FlatButton secondary={true} label="remove"
+                                    <FlatButton secondary={true} label="remove" style={removeButtonStyle}
                                                 onTouchTap={this.removeCourseAdmin.bind(this, index)}/>
                                 </Col>
                             </Row>
                         )) : null}
                         <br/>
-                        <RaisedButton primary={true} label="Add Another Admin"
-                                      onTouchTap={this.addCourseAdmin.bind(this)}/>
                         {this.state.requestInProgress ?
                             <Row center="xs">
                                 <Col xs={12}><CircularProgress/></Col>
