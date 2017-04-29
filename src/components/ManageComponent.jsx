@@ -25,9 +25,7 @@ export default class ManageComponent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            hasAccess: nextProps.loggedInUser.role === "superAdmin"
-        });
+        this.setState({hasAccess: nextProps.loggedInUser.role === "superAdmin"});
     }
 
     componentDidMount() {
@@ -42,6 +40,10 @@ export default class ManageComponent extends React.Component {
         let sectionTitleStyle = {
             paddingTop: 10
         };
+
+        const {courses, sections} = this.props;
+        const {reviewers, admins, contentWriters, openCourseDialog, openReviewerContentWriterDialog,
+            openAdminDialog, userRole} = this.state;
 
         return (
             <div>
@@ -68,7 +70,7 @@ export default class ManageComponent extends React.Component {
                             </TableHeader>
 
                             <TableBody displayRowCheckbox={false} showRowHover={true}>
-                                {this.props.courses.map((course, index) => (
+                                {courses.map((course) => (
                                     <TableRow key={course.id}>
                                         <TableRowColumn>{course.id}</TableRowColumn>
                                         <TableRowColumn>{course.displayName}</TableRowColumn>
@@ -81,6 +83,7 @@ export default class ManageComponent extends React.Component {
                         </Table>
                     </Col>
                 </Row>
+                <br/>
                 <Row>
                     <Col xs={6} sm={4}>
                         <h2 style={sectionTitleStyle}>Admins</h2>
@@ -99,7 +102,7 @@ export default class ManageComponent extends React.Component {
                             </TableHeader>
 
                             <TableBody displayRowCheckbox={false} showRowHover={true}>
-                                {this.state.admins.map((admin, index) => (
+                                {admins.map((admin) => (
                                     <TableRow key={admin.id}>
                                         <TableRowColumn>{admin.id}</TableRowColumn>
                                         <TableRowColumn>{admin.displayName}</TableRowColumn>
@@ -111,6 +114,7 @@ export default class ManageComponent extends React.Component {
                         </Table>
                     </Col>
                 </Row>
+                <br/>
                 <Row>
                     <Col xs={6} sm={4}>
                         <h2 style={sectionTitleStyle}>Reviewers</h2>
@@ -128,17 +132,17 @@ export default class ManageComponent extends React.Component {
                             </TableHeader>
 
                             <TableBody displayRowCheckbox={false} showRowHover={true}>
-                                {
-                                    this.state.reviewers.map((reviewer, index) => (
-                                        <TableRow key={index}>
-                                            <TableRowColumn>{reviewer.id}</TableRowColumn>
-                                            <TableRowColumn>{reviewer.displayName}</TableRowColumn>
-                                        </TableRow>
-                                    ))}
+                                {reviewers.map((reviewer, index) => (
+                                    <TableRow key={index}>
+                                        <TableRowColumn>{reviewer.id}</TableRowColumn>
+                                        <TableRowColumn>{reviewer.displayName}</TableRowColumn>
+                                    </TableRow>
+                                ))}
                             </TableBody>
                         </Table>
                     </Col>
                 </Row>
+                <br/>
                 <Row>
                     <Col xs={6} sm={4}>
                         <h2 style={sectionTitleStyle}>Question Writers</h2>
@@ -156,35 +160,30 @@ export default class ManageComponent extends React.Component {
                             </TableHeader>
 
                             <TableBody displayRowCheckbox={false} showRowHover={true}>
-                                {
-                                    this.state.contentWriters.map((contentWriter, index) => (
-                                        <TableRow key={index}>
-                                            <TableRowColumn>{contentWriter.id}</TableRowColumn>
-                                            <TableRowColumn>{contentWriter.displayName}</TableRowColumn>
-                                        </TableRow>
-                                    ))}
+                                {contentWriters.map((contentWriter, index) => (
+                                    <TableRow key={index}>
+                                        <TableRowColumn>{contentWriter.id}</TableRowColumn>
+                                        <TableRowColumn>{contentWriter.displayName}</TableRowColumn>
+                                    </TableRow>
+                                ))}
                             </TableBody>
                         </Table>
                     </Col>
                 </Row>
-                {this.state.openCourseDialog ? <EditCourseComponent showDialog={this.state.openCourseDialog}
-                                                                    courseToOpen={this.courseToOpen}
-                                                                    admins={this.state.admins}
-                                                                    onDialogClose={this.handleDialogClose.bind(this)}
-                                                                    updateCourse={this.updateCourseData.bind(this)}/>
+
+                {openCourseDialog ?
+                    <EditCourseComponent showDialog={openCourseDialog} courseToOpen={this.courseToOpen} admins={admins}
+                                         onDialogClose={this.handleDialogClose.bind(this)} updateCourse={this.updateCourseData.bind(this)}/>
                     : null}
-                {this.state.openReviewerContentWriterDialog ?
-                    <EditReviewerContentWriterComponent showDialog={this.state.openReviewerContentWriterDialog}
-                                                        userRole={this.state.userRole}
-                                                        courses={this.props.courses}
-                                                        allSection={this.props.sections}
+
+                {openReviewerContentWriterDialog ?
+                    <EditReviewerContentWriterComponent showDialog={openReviewerContentWriterDialog}
+                                                        userRole={userRole} courses={courses} allSection={sections}
                                                         onDialogClose={this.handleDialogClose.bind(this)}
                                                         userToOpen={this.userToOpen}/> :
                     null}
-                {this.state.openAdminDialog ?
-                    <EditAdminComponent showDialog={this.state.openAdminDialog}
-                                        adminToOpen={this.adminToOpen}
-                                        courses={this.props.courses}
+                {openAdminDialog ?
+                    <EditAdminComponent showDialog={openAdminDialog} adminToOpen={this.adminToOpen} courses={courses}
                                         onDialogClose={this.handleDialogClose.bind(this)}/>
                     : null
                 }
@@ -244,7 +243,7 @@ export default class ManageComponent extends React.Component {
 
     editQuestionWriter(index) {
         this.userToOpen = (typeof index === "number") ? this.state.contentWriters[index] : {};
-        this.setState({openReviewerContentWriterDialog: true, userRole: "contentWriter",});
+        this.setState({openReviewerContentWriterDialog: true, userRole: "contentWriter"});
     }
 
     getDisplayText(items = []) {

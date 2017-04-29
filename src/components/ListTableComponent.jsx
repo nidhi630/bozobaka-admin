@@ -18,7 +18,7 @@ const ListTableComponent = ({headerColumns, tableRows, onFilterChange, usage, on
                 </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
-                <FilterComponent onChangeAction={onFilterChange} usage={usage}/>
+                {onFilterChange ? <FilterComponent onChangeAction={onFilterChange} usage={usage}/> : null}
                 {
                     tableRows.map((row, index) => (
                         <TableRow key={index}>

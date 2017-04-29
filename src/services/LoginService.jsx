@@ -8,7 +8,7 @@ import {makeRequest} from "./APIService";
 import {LOGIN} from "./../models/APIEndpoints";
 
 const USER_ID_KEY = "userId";
-const ACCESS_TOKEN_KEY = "ACCESS_TOKEN_KEY";
+const ACCESS_TOKEN_KEY = "brownboard.token";
 
 const LoginService = {
     ACCESS_TOKEN: undefined,

@@ -95,6 +95,7 @@ export default class AppComponent extends React.Component {
     }
 
     setSelectedCourse(courses, props) {
+        if (courses.length === 0) return;
         let selectedCourseInUrl = props.location.query.selectedCourse;
         if (!selectedCourseInUrl) {
             props.setSelectedCourse(props.courses, courses[0].id);
