@@ -8,8 +8,8 @@ class Course {
         this.name = c.name || "";
         this.displayName = c.displayName ? c.displayName : c.name;
         this.language = c.language || "";
-        this.adminIds = c.adminIds || [];
         this.admins = Admin.parseAdmins(c.admins || []);
+        this.adminIds = c.adminIds && c.adminIds.length ? c.adminIds : this.admins.length ? this.admins.map(admin => admin.id) : [];
         this.reviewerCount = c.reviewerCount || 0;
         this.contentWriterCount = c.contentWriterCount || 0;
     }

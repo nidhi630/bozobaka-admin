@@ -11,17 +11,20 @@ import MenuItem from "material-ui/MenuItem";
 import ContentService from "./../services/ContentService";
 import CircularProgress from "material-ui/CircularProgress";
 import Snackbar from "material-ui/Snackbar";
+import {makeRequest} from "./../services/APIService";
+import Course from "./../models/Course";
+import DropdownDisplay from "./DropdownDisplayComponent";
 
 export default class EditReviewerContentWriterComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             openDialog: false,
-            dialogTitle: this.props.userToOpen.id ? "Edit " + this.props.userRole : "Add New " + this.props.userRole,
+            dialogTitle: props.userToOpen.id ? "Edit " + props.userRole : "Add New " + props.userRole,
             requestInProgress: false,
             openSnackbar: false,
             snackbarMessage: "",
-            sections: this.props.userToOpen.sections ? this.props.userToOpen.sections : [],
+            sections: props.userToOpen.sections ? props.userToOpen.sections : [],
             allCourses: []
         };
     }
@@ -31,39 +34,19 @@ export default class EditReviewerContentWriterComponent extends React.Component 
     }
 
     componentDidMount() {
-        /* TODO: Fetch list of all courses along with the sections */
-        this.setState({
-            allCourses: [{
-                id: "aaa",
-                displayName: "course 1",
-                sections: [{
-                    id: "aab",
-                    displayName: "section 11",
-                }, {
-                    id: "aac",
-                    displayName: "section 12",
-                }]
-            }, {
-                id: "aba",
-                displayName: "course 2",
-                sections: [{
-                    id: "abb",
-                    displayName: "section 21",
-                }, {
-                    id: "abc",
-                    displayName: "section 22",
-                }]
-            }, {
-                id: "aca",
-                displayName: "course 3",
-                sections: [{
-                    id: "acb",
-                    displayName: "section 31",
-                }, {
-                    id: "acc",
-                    displayName: "section 32",
-                }]
-            }]
+        makeRequest({
+            url: "courses?filter={\"include\":[\"sections\",\"admins\"]}"
+        }).then((res) => {
+            console.log(res);
+            this.setState({
+                allCourses: Course.parseCourses(res.data)
+            });
+        }).catch((error) => {
+            console.log(error);
+            this.setState({
+                openSnackbar: true,
+                snackbarMessage: error.message
+            });
         });
     }
 
@@ -71,11 +54,14 @@ export default class EditReviewerContentWriterComponent extends React.Component 
         const courseSectionTitleStyle = {marginTop: 10};
         const removeButtonStyle = {marginTop: 30};
 
+        const {userToOpen} = this.props;
+        const {dialogTitle, openDialog, openSnackbar, snackbarMessage, requestInProgress, allCourses, sections} = this.state;
+
         const actions = (
             <Row>
                 <Col xs={3}>
                     <FlatButton secondary={true} label="Delete" onTouchTap={this.deleteUser.bind(this)}
-                                disabled={!this.props.userToOpen.id}/>
+                                disabled={!userToOpen.id}/>
                 </Col>
                 <Col xs={6}>
                     <FlatButton label="Cancel" onTouchTap={this.cancelButton.bind(this)}/>
@@ -88,44 +74,26 @@ export default class EditReviewerContentWriterComponent extends React.Component 
 
         return (
             <div>
-                <Dialog title={this.state.dialogTitle} actions={actions} modal={false} open={this.state.openDialog}
+                <Dialog title={dialogTitle} actions={actions} modal={false} open={openDialog}
                         autoScrollBodyContent={true}>
                     <Row>
                         <Col xs={12} sm={6}>
-                            <TextField
-                                ref="firstName"
-                                type="text"
-                                hintText="Enter first name"
-                                floatingLabelText="First Name"
-                                defaultValue={this.props.userToOpen.firstName}
+                            <TextField ref="firstName" type="text" hintText="Enter first name"
+                                floatingLabelText="First Name" defaultValue={userToOpen.firstName}
                                 required/>
                         </Col>
                         <Col xs={12} sm={6}>
-                            <TextField
-                                ref="lastName"
-                                type="text"
-                                hintText="Enter last name"
-                                floatingLabelText="Last Name"
-                                defaultValue={this.props.userToOpen.lastName}
+                            <TextField ref="lastName" type="text" hintText="Enter last name"
+                                floatingLabelText="Last Name" defaultValue={userToOpen.lastName}
                                 required/>
                         </Col>
                     </Row>
-                    <TextField
-                        ref="email"
-                        type="email"
-                        hintText="Enter email"
-                        floatingLabelText="Email"
-                        defaultValue={this.props.userToOpen.email ? this.props.userToOpen.email : ""}
-                        required/>
+                    <TextField ref="email" type="email" hintText="Enter email" floatingLabelText="Email"
+                        defaultValue={userToOpen.email || ""} required/>
                     <br />
-                    <TextField
-                        ref="password"
-                        title="Minimum 6 characters required"
-                        pattern=".{6,}"
-                        type="password"
-                        hintText="Enter your password"
-                        floatingLabelText="Password"
-                        defaultValue={this.props.userToOpen.password ? this.props.userToOpen.password : ""}
+                    <TextField ref="password" title="Minimum 6 characters required" pattern=".{6,}" type="password"
+                        hintText="Enter your password" floatingLabelText="Password"
+                        defaultValue={userToOpen.password || ""}
                         required/>
                     <br />
                     <br />
@@ -141,48 +109,38 @@ export default class EditReviewerContentWriterComponent extends React.Component 
                         </Col>
                     </Row>
                     <br />
-                    {this.state.allCourses.length > 0 ?
-                        <div>
-                            {this.state.sections.map((section, index) => (
-                                <Row key={index}>
-                                    <Col xs={5}>
-                                        <SelectField
-                                            floatingLabelText="Course"
-                                            value={section.course.id}
-                                            onChange={this.updateCourse.bind(this, index)}>
-                                            {this.state.allCourses.map((course, courseIndex) => (
-                                                <MenuItem key={courseIndex} value={course.id}
-                                                          primaryText={course.displayName}/>
-                                            ))}
-                                        </SelectField>
-                                    </Col>
-                                    <Col xs={5}>
-                                        <SelectField
-                                            floatingLabelText="Section"
-                                            value={section.id}
-                                            onChange={this.updateSection.bind(this, index)}>
-                                            {this.getMenuItemsForSelectedCourse.bind(this, section.course.id)}
-                                        </SelectField>
-                                    </Col>
-                                    <Col xs={2}>
-                                        <FlatButton secondary={true} label="remove"
-                                                    onTouchTap={this.removeSection.bind(this, index)}
-                                                    style={removeButtonStyle}/>
-                                    </Col>
-                                </Row>
-                            ))}
-                        </div>
-                        :
-                        <div></div>}
-                    {this.state.requestInProgress ?
+                    <div>
+                        {sections.map((section, index) => (
+                            <Row key={index}>
+                                <Col xs={5}>
+                                    <DropdownDisplay menuItems={allCourses} value={section.courseId} onChange={this.updateCourse.bind(this, index)}/>
+                                </Col>
+                                <Col xs={5}>
+                                    <DropdownDisplay menuItems={this.getMenuItemsForSelectedCourse.bind(this, section.course.id)}
+                                                     value={section.id} onChange={this.updateSection.bind(this, index)}/>
+                                </Col>
+                                <Col xs={2}>
+                                    <FlatButton secondary={true} label="remove"
+                                                onTouchTap={this.removeSection.bind(this, index)}
+                                                style={removeButtonStyle}/>
+                                </Col>
+                            </Row>
+                        ))}
+                    </div>
+                    {requestInProgress ?
                         <Row center="xs">
                             <Col xs={12}><CircularProgress/></Col>
-                        </Row> : <div></div>}
+                        </Row> : null}
                 </Dialog>
 
-                <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMessage} autoHideDuration={5000}/>
+                <Snackbar open={openSnackbar} message={snackbarMessage} autoHideDuration={200000}
+                          action="ok" onActionTouchTap={this.resetSnackbar.bind(this)}/>
             </div>
-        )
+        );
+    }
+
+    resetSnackbar() {
+        this.setState({openSnackbar: false});
     }
 
     getMenuItemsForSelectedCourse(selectedCourseId) {
@@ -246,9 +204,7 @@ export default class EditReviewerContentWriterComponent extends React.Component 
                 request = ContentService.updateReviewers(this.props.userToOpen, {method: "delete"});
             }
             request.then((res) => {
-                this.setState({
-                    requestInProgress: false
-                });
+                this.setState({requestInProgress: false});
                 this.cancelButton(true);
             }).catch((err) => {
                 console.log(err);

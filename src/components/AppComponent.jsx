@@ -34,7 +34,7 @@ export default class AppComponent extends React.Component {
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         if (this.props.isLoggedIn) {
             this.fetchDataFromServer();
         }
@@ -71,8 +71,9 @@ export default class AppComponent extends React.Component {
     }
 
     fetchDataFromServer() {
-        if (this.state.showLoader) return;
-
+        if (this.state.coursesLoaded || this.state.showLoader) {
+            return;
+        }
         this.setState({showLoader: true});
         axios.all([getUserProfile(), ContentService.fetchCourses()])
             .then(axios.spread((user, courses) => {
@@ -95,8 +96,10 @@ export default class AppComponent extends React.Component {
     }
 
     setSelectedCourse(courses, props) {
-        if (courses.length === 0) return;
-        let selectedCourseInUrl = props.location.query.selectedCourse;
+        if (courses.length === 0) {
+            return;
+        }
+        const selectedCourseInUrl = props.location.query.selectedCourse;
         if (!selectedCourseInUrl) {
             props.setSelectedCourse(props.courses, courses[0].id);
         } else if (!props.selectedCourse) {

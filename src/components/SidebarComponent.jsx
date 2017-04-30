@@ -1,12 +1,12 @@
 "use strict";
 
-import React from "react";
+import React, {PropTypes} from "react";
 import Drawer from "material-ui/Drawer";
 import MenuItem from "material-ui/MenuItem";
 import {Link} from "react-router";
 import URLs from "../models/Urls";
 
-class SidebarComponent extends React.Component {
+export default class SidebarComponent extends React.Component {
     constructor(props) {
         super(props);
 
@@ -31,21 +31,20 @@ class SidebarComponent extends React.Component {
             reviewer: ["Dashboard", "Review Of Questions", "Marked For Later", "Trash"],
             contentWriter: ["Dashboard", "Add Question", "List Of Questions", "Drafts", "Trash"]
         };
-
-        this.componentOptions = [];
-    }
-
-    componentDidMount() {
-        this.componentOptions = this.roleOptionsMap[this.props.loggedInUser.role];
     }
 
     render() {
+        if (!this.props.loggedInUser.role) {
+            return null;
+        }
+
+        const componentOptions = this.roleOptionsMap[this.props.loggedInUser.role];
         return (
             <Drawer
                 open={this.props.openNavigationDrawer}
                 docked={false}
                 onRequestChange={this.props.toggleDrawer}>
-                {this.componentOptions.map(
+                {componentOptions.map(
                     (option, index) => (
                         <Link key={index} to={this.urlConfig[option]}>
                             <MenuItem>{option}</MenuItem>
@@ -57,4 +56,8 @@ class SidebarComponent extends React.Component {
     }
 }
 
-export default SidebarComponent;
+SidebarComponent.propTypes = {
+    openNavigationDrawer: PropTypes.bool,
+    toggleDrawer: PropTypes.func,
+    loggedInUser: PropTypes.object
+};

@@ -27,21 +27,12 @@ import L3 from "./../models/L3";
 import L4 from "./../models/L4";
 import Exam from "./../models/Exam";
 
-function getCourseCountWithContentUrl(courseId) {
-    return courseId ? COURSES_WITH_COUNT + "/" + courseId : COURSES_WITH_COUNT;
-}
-
 const ContentService = {
     fetchCourses(courseId) {
         return new Promise((resolve, reject) => {
             makeRequest({
                 method: "get",
-                url: getCourseCountWithContentUrl(courseId),
-                params: {
-                    filter: {
-                        include: ["adminIds"]
-                    }
-                }
+                url: courseId ? COURSES_WITH_COUNT + "/" + courseId : COURSES_WITH_COUNT
             }).then((res) => {
                 resolve(Course.parseCourses(res.data));
             }).catch((err) => errorHandler(reject, err));

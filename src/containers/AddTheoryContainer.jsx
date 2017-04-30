@@ -8,7 +8,8 @@ import {
     theoryUpdateParsedTheory,
     theoryResetState,
     theoryPostTheory,
-    theoryFetchTheory
+    theoryFetchTheory,
+    theoryHasErrored
 } from "./../actions/TheoryActions";
 import {parseKatex} from "./../services/KatexParser";
 
@@ -49,6 +50,10 @@ const mapDispatchToProps = (dispatch) => {
 
         fetchTheory: (id) => {
             dispatch(theoryFetchTheory(id));
+        },
+
+        resetErrorState: () => {
+            dispatch(theoryHasErrored(false, ""));
         }
     };
 };

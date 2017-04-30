@@ -87,11 +87,11 @@ export default class EditAdminComponent extends React.Component {
                     </Row>
                     <br />
                     <div>
-                        {admin.courseIds ? admin.courseIds.map((assignedCourse, index) => (
-                            <Row key={assignedCourse}>
+                        {admin.courseIds ? admin.courseIds.map((courseId, index) => (
+                            <Row key={courseId}>
                                 <Col xs={12} sm={8}>
                                     <DropdownDisplay onChange={this.updateCourse.bind(this, index)}
-                                                     menuItems={courses} value={assignedCourse}/>
+                                                     menuItems={courses} value={courseId}/>
                                 </Col>
                                 <Col xs={12} sm={4}>
                                     <FlatButton secondary={true} label="remove" style={removeButtonStyle}
@@ -128,7 +128,7 @@ export default class EditAdminComponent extends React.Component {
                 ...admin,
                 courseIds: !admin.courseIds ? [""] : [
                     ...admin.courseIds,
-                    [""]
+                    ""
                 ]
             }
         });
@@ -163,7 +163,9 @@ export default class EditAdminComponent extends React.Component {
 
     deleteAdmin() {
         const {admin} = this.state;
-        if (!admin.id) return;
+        if (!admin.id) {
+            return;
+        }
         this.setState({
             requestInProgress: true,
             openSnackbar: false
@@ -174,9 +176,8 @@ export default class EditAdminComponent extends React.Component {
                 this.setState({
                     requestInProgress: false
                 });
-                this.cancelButton(true);
+                this.cancelButton(null, true);
             }).catch((err) => {
-            console.log(err);
             this.setState({
                 openSnackbar: true,
                 snackbarMessage: err.message,
@@ -185,7 +186,7 @@ export default class EditAdminComponent extends React.Component {
         });
     }
 
-    cancelButton(update = false) {
+    cancelButton(event, update = false) {
         this.setState({openDialog: false});
         this.props.onDialogClose(update);
     }
@@ -193,7 +194,7 @@ export default class EditAdminComponent extends React.Component {
     saveAdmin() {
         const {admin} = this.state;
 
-        if (!admin.firstName || !admin.lastName || !admin.email || !admin.password) {
+        if (!admin.firstName || !admin.lastName || !admin.email || (!admin.id && !admin.password)) {
             return;
         }
 
@@ -202,6 +203,7 @@ export default class EditAdminComponent extends React.Component {
         } else {
             admin.courseIds = [];
         }
+        delete admin.courses;
         admin.role = "admin";
 
         const config = {method: admin.id ? "put" : "post"};
@@ -214,9 +216,8 @@ export default class EditAdminComponent extends React.Component {
         ContentService.updateAdmin(admin, config)
             .then(() => {
                 this.setState({requestInProgress: false});
-                this.cancelButton(true);
+                this.cancelButton(null, true);
             }).catch((err) => {
-            console.log(err);
             this.setState({
                 openSnackbar: true,
                 snackbarMessage: err.message,

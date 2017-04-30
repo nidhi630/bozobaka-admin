@@ -35,7 +35,7 @@ export default class EditCourseComponent extends React.Component {
         const removeButtonStyle = {marginTop: 30};
 
         const {admins} = this.props;
-        const {dialogTitle, openDialog, course} = this.state;
+        const {dialogTitle, openDialog, course, openSnackbar, snackbarMessage, requestInProgress} = this.state;
 
         const actions = (
             <Row>
@@ -82,8 +82,9 @@ export default class EditCourseComponent extends React.Component {
                             <Col xs={8} style={courseTitleStyle}>
                                 <h3>Admins</h3>
                             </Col>
-                            <Col xs={2}>
-                                <RaisedButton primary={true} label="Add Admin" onTouchTap={this.addCourseAdmin.bind(this)}/>
+                            <Col xs={4}>
+                                <RaisedButton primary={true} label="Add Admin"
+                                              onTouchTap={this.addCourseAdmin.bind(this)}/>
                             </Col>
                         </Row>
                         <br/>
@@ -100,19 +101,24 @@ export default class EditCourseComponent extends React.Component {
                             </Row>
                         )) : null}
                         <br/>
-                        {this.state.requestInProgress ?
+                        {requestInProgress ?
                             <Row center="xs">
                                 <Col xs={12}><CircularProgress/></Col>
                             </Row> : <br/>}
                     </form>
                 </Dialog>
 
-                <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMessage} autoHideDuration={2000}/>
+                <Snackbar open={openSnackbar} message={snackbarMessage} autoHideDuration={200000}
+                          action="ok" onActionTouchTap={this.resetSnackbar.bind(this)}/>
             </div>
         );
     }
 
-    cancelButton(update = false) {
+    resetSnackbar() {
+        this.setState({openSnackbar: false});
+    }
+
+    cancelButton(event, update = false) {
         this.setState({openDialog: false});
         this.props.onDialogClose(update);
     }
@@ -208,7 +214,7 @@ export default class EditCourseComponent extends React.Component {
             .then((res) => {
                 this.props.updateCourse(res);
                 this.setState({requestInProgress: false});
-                this.cancelButton(true);
+                this.cancelButton(null, true);
             }).catch((err) => {
             this.setState({
                 openSnackbar: true,
@@ -226,7 +232,7 @@ export default class EditCourseComponent extends React.Component {
                     console.log(res);
                     this.props.updateCourse(this.props.courseToOpen, true);
                     this.setState({requestInProgress: false});
-                    this.cancelButton(true);
+                    this.cancelButton(null, true);
                 }).catch((err) => {
                 console.log(err);
                 this.setState({

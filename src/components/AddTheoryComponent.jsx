@@ -54,7 +54,7 @@ export default class AddTheoryComponent extends React.Component {
 
         const {
             updateHeading, theory, updateTheory, l1Id, l2Id, l3Id, l4Id, sectionId, status, parsedTheory, heading,
-            resetState, postTheory, hasErrored, errorMessage, isLoading, id, sourceId
+            resetState, postTheory, hasErrored, errorMessage, isLoading, id, sourceId, resetErrorState
         } = this.props;
 
         return (
@@ -154,7 +154,8 @@ export default class AddTheoryComponent extends React.Component {
                     </Col>
                 </Row>
                 <br/><br/><br/>
-                <Snackbar open={hasErrored} message={errorMessage} autoHideDuration={20000}/>
+                <Snackbar open={hasErrored} message={errorMessage} autoHideDuration={200000} action="ok"
+                          onActionTouchTap={resetErrorState.bind(this)}/>
             </div>
         );
     }
