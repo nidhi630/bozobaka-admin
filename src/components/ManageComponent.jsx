@@ -42,8 +42,10 @@ export default class ManageComponent extends React.Component {
         };
 
         const {courses, sections} = this.props;
-        const {reviewers, admins, contentWriters, openCourseDialog, openReviewerContentWriterDialog,
-            openAdminDialog, userRole} = this.state;
+        const {
+            reviewers, admins, contentWriters, openCourseDialog, openReviewerContentWriterDialog,
+            openAdminDialog, userRole
+        } = this.state;
 
         return (
             <div>
@@ -135,7 +137,7 @@ export default class ManageComponent extends React.Component {
 
                             <TableBody displayRowCheckbox={false} showRowHover={true}>
                                 {reviewers.map((reviewer, index) => (
-                                    <TableRow key={index}>
+                                    <TableRow key={reviewer.id}>
                                         <TableRowColumn>{reviewer.id}</TableRowColumn>
                                         <TableRowColumn>{reviewer.displayName}</TableRowColumn>
                                     </TableRow>
@@ -164,7 +166,7 @@ export default class ManageComponent extends React.Component {
 
                             <TableBody displayRowCheckbox={false} showRowHover={true}>
                                 {contentWriters.map((contentWriter, index) => (
-                                    <TableRow key={index}>
+                                    <TableRow key={contentWriter.id}>
                                         <TableRowColumn>{contentWriter.id}</TableRowColumn>
                                         <TableRowColumn>{contentWriter.displayName}</TableRowColumn>
                                     </TableRow>
@@ -176,7 +178,8 @@ export default class ManageComponent extends React.Component {
                 <br/><br/>
                 {openCourseDialog ?
                     <EditCourseComponent showDialog={openCourseDialog} courseToOpen={this.courseToOpen} admins={admins}
-                                         onDialogClose={this.handleDialogClose.bind(this)} updateCourse={this.updateCourseData.bind(this)}/>
+                                         onDialogClose={this.handleDialogClose.bind(this)}
+                                         updateCourse={this.updateCourseData.bind(this)}/>
                     : null}
 
                 {openReviewerContentWriterDialog ?
@@ -269,8 +272,11 @@ export default class ManageComponent extends React.Component {
                 update ? this.fetchDataFromServer(true, false, false) : null;
                 return {openAdminDialog: false};
             } else if (prevState.openReviewerContentWriterDialog) {
-                update ? this.userRole === "reviewer" ? this.fetchDataFromServer(false, true, false)
-                    : this.fetchDataFromServer(false, false, true) : null;
+                if (update && this.state.userRole == "reviewer") {
+                    this.fetchDataFromServer(false, true, false);
+                } else if (update) {
+                    this.fetchDataFromServer(false, false, true);
+                }
                 return {openReviewerContentWriterDialog: false};
             }
         });

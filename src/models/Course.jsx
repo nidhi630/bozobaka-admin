@@ -12,6 +12,7 @@ class Course {
         this.adminIds = c.adminIds && c.adminIds.length ? c.adminIds : this.admins.length ? this.admins.map(admin => admin.id) : [];
         this.reviewerCount = c.reviewerCount || 0;
         this.contentWriterCount = c.contentWriterCount || 0;
+        this.sections = c.sections || [];
     }
 
     static parseCourses(courses) {

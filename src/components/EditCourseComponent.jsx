@@ -195,10 +195,12 @@ export default class EditCourseComponent extends React.Component {
     }
 
     saveCourse(event) {
-        const {course} = this.state;
+        const course = {
+            ...this.state.course
+        };
 
         if (!this.validCourse(course)) return;
-
+        delete course.admins;
         let config = {method: "post"};
 
         if (this.props.courseToOpen.id) {
