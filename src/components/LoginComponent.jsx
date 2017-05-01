@@ -91,6 +91,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         toggleLoginStatus: (status) => {
+
             dispatch(GlobalActions.toggleLoginStatus(status));
         }
     };
