@@ -37,7 +37,7 @@ export default class ListQuestionComponent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {courseId, fetchQuestions, route,updateStatusFilter} = this.props;
+        const {courseId, fetchQuestions, route, updateStatusFilter} = this.props;
         if (courseId !== nextProps.courseId) {
             fetchQuestions();
         }
@@ -56,13 +56,38 @@ export default class ListQuestionComponent extends React.Component {
     }
 
     render() {
-        const {questions, isLoading, fetchQuestions} = this.props;
+        const {questions, isLoading, fetchQuestions, route} = this.props;
+
+        const styles = {
+            pageTitle: {
+                fontWeight: 400
+            }
+        };
+
+        let pageTitle;
+        switch (route.status) {
+            case "trash":
+                pageTitle = "Trash Questions";
+                break;
+            case "later":
+                pageTitle = "Marked For Later";
+                break;
+            case "added":
+                pageTitle = "Review Added Questions";
+                break;
+            case "draft":
+                pageTitle = "Draft Questions";
+                break;
+            default:
+                pageTitle = "List Of Questions";
+        }
+
         return (
             <div>
                 <br/>
                 <Row>
                     <Col xs={12}>
-                        <h1>List Of Questions</h1>
+                        <h1 style={styles.pageTitle}>{pageTitle}</h1>
                     </Col>
                 </Row>
                 <Row>
@@ -90,5 +115,5 @@ ListQuestionComponent.propTypes = {
     isLoading: PropTypes.bool.isRequired,
     courseId: PropTypes.string.isRequired,
     route: PropTypes.object,
-    updateStatusFilter: PropTypes.func
+    updateStatusFilter: PropTypes.func,
 };
