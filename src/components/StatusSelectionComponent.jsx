@@ -7,7 +7,7 @@ import {connect} from "react-redux";
 class StatusSelectionComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.allStatus = ["draft", "added", "accepted", "published", "trash"];
+        this.allStatus = ["draft", "added", "accepted", "published", "trash", "later"];
     }
 
     render() {

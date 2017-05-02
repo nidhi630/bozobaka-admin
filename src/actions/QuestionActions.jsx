@@ -227,6 +227,7 @@ export function questionFetchQuestions(questionId) {
         dispatch(questionIsLoading(true));
 
         const filters = getQuestionFilter(getState());
+
         fetchQuestionRequest({
             id: questionId,
             filter: filters

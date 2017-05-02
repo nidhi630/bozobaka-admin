@@ -76,15 +76,15 @@ export function setL2(l2Id) {
     };
 }
 
-export function setSource(source) {
+export function setSource(sourceId) {
     return {
         type: FILTER_SOURCE,
-        source
+        sourceId
     };
 }
 
 function getCommonFilters(state) {
-    const {id, status, sectionId, l1Id, l2Id, source} = state.filters;
+    const {id, status, sectionId, l1Id, l2Id, sourceId} = state.filters;
     const filter = {
         courseId: state.ContentReducer.selectedCourse.id
     };
@@ -103,10 +103,8 @@ function getCommonFilters(state) {
     if (l2Id) {
         filter.l2Id = l2Id;
     }
-    if (source.length && source[0]) {
-        filter.source = {
-            inq: source[0]
-        };
+    if (sourceId) {
+        filter.sourceId = sourceId;
     }
     return filter;
 }
@@ -116,8 +114,7 @@ export function getQuestionFilter(state) {
     const filter = getCommonFilters(state);
 
     filter.difficulty = {
-        gte: minDifficulty,
-        lte: maxDifficulty
+        between: [minDifficulty, maxDifficulty]
     };
 
     if (question) {

@@ -37,10 +37,18 @@ export default class ListQuestionComponent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {courseId, fetchQuestions} = this.props;
+        const {courseId, fetchQuestions, route,updateStatusFilter} = this.props;
         if (courseId !== nextProps.courseId) {
             fetchQuestions();
         }
+        if (route.path !== nextProps.route.path) {
+            updateStatusFilter(nextProps.route.status);
+            fetchQuestions();
+        }
+    }
+
+    componentWillMount() {
+        this.props.updateStatusFilter(this.props.route.status);
     }
 
     componentDidMount() {
@@ -80,5 +88,7 @@ ListQuestionComponent.propTypes = {
     questions: PropTypes.array.isRequired,
     fetchQuestions: PropTypes.func.isRequired,
     isLoading: PropTypes.bool.isRequired,
-    courseId: PropTypes.string.isRequired
+    courseId: PropTypes.string.isRequired,
+    route: PropTypes.object,
+    updateStatusFilter: PropTypes.func
 };

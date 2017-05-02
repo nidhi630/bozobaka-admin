@@ -44,7 +44,7 @@ class FilterComponent extends React.Component {
 
     render() {
         const {
-            status, sectionId, usage, l1Id, l2Id, source, updateMinDifficulty,
+            status, sectionId, usage, l1Id, l2Id, sourceId, updateMinDifficulty,
             updateMaxDifficulty, updateQuestion, updateTheory, question, heading, minDifficulty, maxDifficulty
         } = this.props;
 
@@ -80,7 +80,7 @@ class FilterComponent extends React.Component {
                     <L2SelectionComponent l1Id={l1Id} l2Id={l2Id} actionOnUpdate={setL2}/>
                 </TableRowColumn>
                 <TableRowColumn>
-                    <SourceSelectionComponent source={source[0]} actionOnUpdate={setSource}/>
+                    <SourceSelectionComponent source={sourceId} actionOnUpdate={setSource}/>
                 </TableRowColumn>
                 <TableRowColumn/>
             </TableRow>
@@ -101,7 +101,7 @@ FilterComponent.propTypes = {
     usage: PropTypes.string,
     l1Id: PropTypes.string,
     l2Id: PropTypes.string,
-    source: PropTypes.array,
+    sourceId: PropTypes.string,
     filterString: PropTypes.string,
     onChangeAction: PropTypes.func,
     updateMaxDifficulty: PropTypes.func,

@@ -3,12 +3,14 @@
 import {connect} from "react-redux";
 import ListQuestionComponent from "./../components/ListQuestionComponent";
 import {questionFetchQuestions} from "./../actions/QuestionActions";
+import {setStatus} from "./../actions/FilterActions";
+import Urls from "./../models/Urls";
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     return {
         questions: state.question.questions,
         isLoading: state.question.isLoading,
-        courseId: state.ContentReducer.selectedCourse.id,
+        courseId: state.ContentReducer.selectedCourse.id
     };
 };
 
@@ -16,6 +18,10 @@ const mapDispatchToProps = (dispatch) => {
     return {
         fetchQuestions: () => {
             dispatch(questionFetchQuestions());
+        },
+
+        updateStatusFilter: (status) => {
+            dispatch(setStatus(status));
         }
     };
 };
