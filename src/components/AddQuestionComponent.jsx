@@ -52,9 +52,9 @@ export default class AddQuestionComponent extends React.Component {
 
     render() {
         const {
-            difficulty, onDifficultyChange, l1Id, l2Id, l3Id, l4Id, sectionId, status, sourceId, id, resetState,
+            difficulty, onDifficultyChange, l1Id, l2Id, l3Id, l4Id, sectionId, status, sourceId, id,
             postQuestion, hasErrored, errorMessage, question, updateQuestion, parsedQuestion, isLoading, questionTypes,
-            questionType, onQuestionTypeChange, updateSolution, updateHint, solution, hint, resetErrorState
+            questionType, onQuestionTypeChange, updateSolution, updateHint, solution, hint, resetErrorState, userRole
         } = this.props;
 
         let AnswerComponent;
@@ -181,16 +181,26 @@ export default class AddQuestionComponent extends React.Component {
                 <br/><br/>
                 <Row>
                     <Col sm={3}>
-                        <FlatButton disabled={isLoading} secondary={true} label="Discard"
-                                    onClick={resetState.bind(this)}/>
+                        <FlatButton disabled={isLoading || !id} secondary={true} label="Discard"
+                                    onClick={postQuestion.bind(this, "trash")}/>
                     </Col>
                     <Col sm={3} smOffset={3}>
-                        <FlatButton disabled={isLoading} primary={true} label="Save To Draft"
-                                    onClick={postQuestion.bind(this, "draft")}/>
+                        {userRole === "reviewer" ?
+                            <FlatButton disabled={isLoading} primary={true} label="LATER"
+                                        onClick={postQuestion.bind(this, "later")}/>
+                            :
+                            <FlatButton disabled={isLoading} primary={true} label="SAVE DRAFT"
+                                        onClick={postQuestion.bind(this, "draft")}/>
+                        }
                     </Col>
                     <Col sm={3}>
-                        <RaisedButton disabled={isLoading} primary={true} label="Save"
-                                      onClick={postQuestion.bind(this, "")}/>
+                        {userRole === "reviewer" ?
+                            <RaisedButton disabled={isLoading} primary={true} label="ACCEPT"
+                                          onClick={postQuestion.bind(this, "accepted")}/>
+                            :
+                            <RaisedButton disabled={isLoading} primary={true} label="SAVE"
+                                          onClick={postQuestion.bind(this, "")}/>
+                        }
                     </Col>
                 </Row>
                 <br/><br/><br/>
@@ -229,5 +239,6 @@ AddQuestionComponent.propTypes = {
     updateHint: PropTypes.func,
     solution: PropTypes.object,
     hint: PropTypes.object,
-    resetErrorState: PropTypes.func
+    resetErrorState: PropTypes.func,
+    userRole: PropTypes.string
 };

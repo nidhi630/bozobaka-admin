@@ -27,7 +27,8 @@ const mapStateToProps = (state) => {
     return {
         hasAccess: userHasAccess(role),
         questionTypes: getAllQuestionTypes(),
-        ...state.question
+        ...state.question,
+        userRole: state.GlobalReducer.loggedInUser.role
     };
 };
 
