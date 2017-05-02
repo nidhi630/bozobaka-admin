@@ -4,9 +4,9 @@
 
 "use strict";
 
-import React from 'react';
+import React, {PropTypes} from "react";
 
-import DashboardContainer from "./../containers/DashboardContainer";
+import DashboardComponent from "./../components/DashboardComponent";
 import SidebarContainer from "./../containers/SidebarContainer";
 import HeaderContainer from "./../containers/HeaderContainer";
 
@@ -16,10 +16,14 @@ const MainComponent = (props) => {
             <HeaderContainer />
             <div>
                 <SidebarContainer />
-                {props.children ? props.children : <DashboardContainer/>}
+                {props.children ? props.children : <DashboardComponent/>}
             </div>
         </div>
-    )
+    );
+};
+
+MainComponent.proptypes = {
+    children: PropTypes.node
 };
 
 export default MainComponent;

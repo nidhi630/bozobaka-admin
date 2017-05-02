@@ -3,7 +3,6 @@
 import React, {PropTypes} from "react";
 import LoginComponent from "./../components/LoginComponent";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import DashboardContainer from "./../containers/DashboardContainer";
 import SidebarContainer from "./../containers/SidebarContainer";
 import HeaderContainer from "./../containers/HeaderContainer";
 import CircularProgress from "material-ui/CircularProgress";
@@ -13,6 +12,7 @@ import axios from "axios";
 import Snackbar from "material-ui/Snackbar";
 import {browserHistory} from "react-router";
 import {Grid} from "react-flexbox-grid";
+import DashboardComponent from "./DashboardComponent";
 
 export default class AppComponent extends React.Component {
     constructor(props) {
@@ -59,7 +59,7 @@ export default class AppComponent extends React.Component {
                             <div>
                                 <SidebarContainer />
                                 <Grid>
-                                    {children ? children : <DashboardContainer/>}
+                                    {children ? children : <DashboardComponent/>}
                                 </Grid>
                             </div>
                         </div>

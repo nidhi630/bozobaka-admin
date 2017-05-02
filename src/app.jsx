@@ -7,7 +7,6 @@ import injectTapEventPlugin from "react-tap-event-plugin";
 import {Provider} from "react-redux";
 import App from "./containers/AppContainer";
 import AddQuestion from "./containers/AddQuestionContainer";
-import Dashboard from "./containers/DashboardContainer";
 import Urls from "./models/Urls";
 import Manage from "./containers/ManageContainer";
 import ManageCourse from "./containers/ManageCourseContainer";
@@ -15,6 +14,7 @@ import configureStore from "./store";
 import AddTheory from "./containers/AddTheoryContainer";
 import ListTheories from "./containers/ListTheoriesContainer";
 import ListQuestions from "./containers/ListQuestionsContainer";
+import Dashboard from "./components/DashboardComponent";
 
 require("style-loader!css-loader!./styles/styles.css");
 require("style-loader!css-loader!./../node_modules/react-quill/dist/quill.snow.css");

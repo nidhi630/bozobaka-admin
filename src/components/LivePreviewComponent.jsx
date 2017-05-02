@@ -7,7 +7,7 @@ const LivePreviewComponent = ({content}) => {
         <div>
             {content}
         </div>
-    )
+    );
 };
 
 LivePreviewComponent.propTypes = {
