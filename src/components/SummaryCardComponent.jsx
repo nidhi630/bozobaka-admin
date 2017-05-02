@@ -7,11 +7,11 @@ const SummaryCardComponent = ({value, title}) => {
     const styles = {
         valueStyle: {
             fontSize: "5em",
-            fontWeight: 300
+            fontWeight: 400
         },
         titleStyle: {
-            fontSize: "1.2em",
-            fontWeight: 500
+            fontSize: "1.3em",
+            fontWeight: 300
         },
         paperStyle: {
             textAlign: "center"
