@@ -80,13 +80,13 @@ class DashboardComponent extends React.Component {
                     :
                     <Row between="sm">
                         <Col xs={12} sm={5} md={3}>
-                            <SummaryCardComponent title="Questions Added" value={10}/>
+                            <SummaryCardComponent title="Questions Added" value={235}/>
                         </Col>
                         <Col xs={12} sm={5} md={3}>
-                            <SummaryCardComponent title="Questions Added" value={10}/>
+                            <SummaryCardComponent title="Questions Added" value={200}/>
                         </Col>
                         <Col xs={12} sm={5} md={3}>
-                            <SummaryCardComponent title="Questions Added" value={10}/>
+                            <SummaryCardComponent title="Questions Added" value={235}/>
                         </Col>
                     </Row>
                 }
@@ -96,7 +96,7 @@ class DashboardComponent extends React.Component {
                         <Col xs={6} sm={4} md={3}>
                             <RaisedButton style={styles.actionButtonStyle} labelStyle={styles.labelStyle}
                                           fullWidth={true} label="Review Question"
-                                          primary={true} onClick={DashboardComponent.reviewQuestioButton}/>
+                                          primary={true} onClick={() => browserHistory.push(URLs.REVIEW_QUESTION)}/>
                         </Col>
                         : null
                     }
@@ -104,7 +104,7 @@ class DashboardComponent extends React.Component {
                         <Col xs={6} sm={4} md={3}>
                             <RaisedButton style={styles.actionButtonStyle} labelStyle={styles.labelStyle}
                                           fullWidth={true} label="Add Question"
-                                          primary={true} onClick={DashboardComponent.addQuestionButton}/>
+                                          primary={true} onClick={() => browserHistory.push(URLs.ADD_QUESTION)}/>
                         </Col>
                         : null
                     }
@@ -130,14 +130,6 @@ class DashboardComponent extends React.Component {
                 </Row>
             </Grid>
         );
-    }
-
-    static addQuestionButton() {
-        browserHistory.push(URLs.ADD_QUESTION);
-    }
-
-    static reviewQuestioButton() {
-        browserHistory.push(URLs.REVIEW_QUESTION);
     }
 }
 
