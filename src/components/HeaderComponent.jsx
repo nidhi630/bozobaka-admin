@@ -43,10 +43,6 @@ export default class HeaderComponent extends React.Component {
     }
 }
 
-HeaderComponent.defaultProps = {
-    selectedCourse: 1
-};
-
 HeaderComponent.propTypes = {
     logout: PropTypes.func,
     toggleNavigationDrawer: PropTypes.func,

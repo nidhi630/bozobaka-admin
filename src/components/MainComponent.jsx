@@ -22,7 +22,7 @@ const MainComponent = (props) => {
     );
 };
 
-MainComponent.proptypes = {
+MainComponent.propTypes = {
     children: PropTypes.node
 };
 

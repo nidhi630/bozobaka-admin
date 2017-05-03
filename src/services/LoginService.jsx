@@ -11,8 +11,8 @@ const USER_ID_KEY = "userId";
 const ACCESS_TOKEN_KEY = "brownboard.token";
 
 const LoginService = {
-    ACCESS_TOKEN: undefined,
-    USER_ID: undefined,
+    ACCESS_TOKEN: null,
+    USER_ID: null,
 
     getAccessToken() {
         if (!this.ACCESS_TOKEN) {
@@ -62,8 +62,8 @@ const LoginService = {
     logout() {
         window.localStorage.removeItem(ACCESS_TOKEN_KEY);
         window.localStorage.removeItem(USER_ID_KEY);
-        this.ACCESS_TOKEN = undefined;
-        this.USER_ID = undefined;
+        this.ACCESS_TOKEN = null;
+        this.USER_ID = null;
     }
 };
 

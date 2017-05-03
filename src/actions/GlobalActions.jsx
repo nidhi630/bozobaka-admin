@@ -4,7 +4,7 @@
 
 "use strict";
 
-import {TOGGLE_LOGIN_STATUS, TOGGLE_NAVIGATION_DRAWER, SET_LOGGED_IN_USER} from './ActionConstants';
+import {TOGGLE_LOGIN_STATUS, TOGGLE_NAVIGATION_DRAWER, SET_LOGGED_IN_USER} from "./ActionConstants";
 
 const GlobalActions = {
     toggleLoginStatus(newStatus) {
@@ -13,17 +13,18 @@ const GlobalActions = {
             status: newStatus
         };
     },
+
     toggleNavigationDrawer(newStatus) {
         return {
             type: TOGGLE_NAVIGATION_DRAWER,
             status: newStatus
-        }
+        };
     },
     setLoggedInUser(user) {
         return {
             type: SET_LOGGED_IN_USER,
             loggedInUser: user
-        }
+        };
     }
 };
 

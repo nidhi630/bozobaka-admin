@@ -32,6 +32,9 @@ export default class AppComponent extends React.Component {
         if (nextProps.courses.length) {
             this.setSelectedCourse(nextProps.courses, nextProps);
         }
+        if (!this.props.isLoggedIn && nextProps.isLoggedIn) {
+            this.fetchDataFromServer(true);
+        }
     }
 
     componentWillMount() {
@@ -70,8 +73,8 @@ export default class AppComponent extends React.Component {
         );
     }
 
-    fetchDataFromServer() {
-        if (this.state.coursesLoaded || this.state.showLoader) {
+    fetchDataFromServer(force = false) {
+        if ((this.state.coursesLoaded || this.state.showLoader) && !force) {
             return;
         }
         this.setState({showLoader: true});
@@ -133,7 +136,8 @@ AppComponent.propTypes = {
     updateCourses: PropTypes.func,
     setLoggedInUser: PropTypes.func,
     children: PropTypes.node,
-    isLoggedIn: PropTypes.bool
+    isLoggedIn: PropTypes.bool,
+    loggedInUser: PropTypes.object
 };
 
 

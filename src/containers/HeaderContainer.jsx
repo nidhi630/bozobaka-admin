@@ -12,27 +12,30 @@ const mapStateToProps = (state) => {
     return {
         ...state.GlobalReducer,
         ...state.ContentReducer
-    }
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         handleCourseChange: (courses, value) => {
-            for (let i=0; i<courses.length; i++) {
+            for (let i = 0; i < courses.length; i++) {
                 if (courses[i].id === value) {
                     dispatch(ContentActions.updateSelectedCourse(courses[i]));
                     break;
                 }
             }
         },
+
         logout: () => {
             LoginService.logout();
+            dispatch(GlobalActions.setLoggedInUser({}));
             dispatch(GlobalActions.toggleLoginStatus(false));
         },
+
         toggleNavigationDrawer: () => {
             dispatch(GlobalActions.toggleNavigationDrawer(true));
         }
-    }
+    };
 };
 
 const HeaderContainer = connect(
