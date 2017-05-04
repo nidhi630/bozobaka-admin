@@ -273,7 +273,7 @@ export function questionFetchQuestions(questionId) {
     };
 }
 
-export function questionPostQuestion() {
+export function questionPostQuestion(status) {
     return (dispatch, getState) => {
         try {
             const state = getState();

@@ -54,6 +54,13 @@ export default class Question {
         validatedQuestion.appearedInExams = validatedQuestion.appearedIn;
         delete validatedQuestion.source;
         delete validatedQuestion.appearedIn;
+        delete validatedQuestion.l3;
+        delete validatedQuestion.l1;
+        delete validatedQuestion.l2;
+        delete validatedQuestion.l4;
+        delete validatedQuestion.section;
+        delete validatedQuestion.created;
+        delete validatedQuestion.updated;
         if (!validatedQuestion.sectionId || !validatedQuestion.l1Id || !validatedQuestion.l2Id ||
             !validatedQuestion.l3Id || !validatedQuestion.question) {
             throw new Error("Invalid Question Input");
