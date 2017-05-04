@@ -115,5 +115,5 @@ ListQuestionComponent.propTypes = {
     isLoading: PropTypes.bool.isRequired,
     courseId: PropTypes.string.isRequired,
     route: PropTypes.object,
-    updateStatusFilter: PropTypes.func,
+    updateStatusFilter: PropTypes.func
 };
