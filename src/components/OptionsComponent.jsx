@@ -47,6 +47,7 @@ class OptionsComponent extends React.Component {
                         </Col>
                         <Col xs={6}>
                             <h4>Preview</h4>
+                            <br/>
                             <LivePreview content={option.parsed}/>
                         </Col>
                         <Col xs={12}>

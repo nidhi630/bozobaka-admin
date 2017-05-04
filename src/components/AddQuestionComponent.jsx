@@ -72,7 +72,7 @@ export default class AddQuestionComponent extends React.Component {
                 <Row>
                     <Col xs={12}>
                         <h2>Add Question</h2>
-                        <p><b>{id}</b></p>
+                        {id ? <p><br/><b>{id}</b></p> : null}
                     </Col>
                 </Row>
                 <br/>
@@ -90,6 +90,7 @@ export default class AddQuestionComponent extends React.Component {
                         <SourceSelectionComponent actionOnUpdate={questionUpdateSource.bind(this)} source={sourceId}/>
                     </Col>
                     <Col xs={12} sm={5}>
+                        <br/>
                         <AddSourceComponent/>
                     </Col>
                 </Row>

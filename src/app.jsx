@@ -39,6 +39,7 @@ render(
                 <Route path={Urls.REVIEW_QUESTION} component={ListQuestions} status="added"/>
                 <Route path={Urls.TRASH} components={ListQuestions} status="trash"/>
                 <Route path={Urls.MARKED_LATER} component={ListQuestions} status="later"/>
+                <Route path={Urls.DRAFTS} components={ListQuestions} status="draft"/>
             </Route>
         </Router>
     </Provider>
