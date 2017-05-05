@@ -96,8 +96,9 @@ export default class ListQuestionComponent extends React.Component {
                 </Row>
                 <Row>
                     <Col xs={12}>
-                        <ListTableComponent headerColumns={this.headerColumns} tableRows={questions} isLoading={isLoading}
-                                            usage="question" onFilterChange={fetchQuestions.bind(this)}
+                        <ListTableComponent headerColumns={this.headerColumns} tableRows={questions}
+                                            isLoading={isLoading} usage="question"
+                                            onFilterChange={fetchQuestions.bind(this)}
                                             onCellClick={this.onCellClick.bind(this)}/>
                     </Col>
                 </Row>
