@@ -31,6 +31,7 @@ export default class Question {
         };
         this.difficulty = question.difficulty;
         this.sourceId = question.sourceId;
+        this.rank = question.rank;
         if (question.source) {
             this.source = question.source;
         }

@@ -7,7 +7,22 @@ import LivePreview from "./LivePreviewComponent";
 import {parseKatex} from "./../services/KatexParser";
 
 const ListTableComponent = ({headerColumns, tableRows, onFilterChange, usage, onCellClick}) => {
-    const style = {whiteSpace: "normal"};
+    const style = {
+        tableRowColumn: {
+            whiteSpace: "normal",
+            width: "100%",
+            paddingLeft: 5,
+            paddingRight: 5,
+            backgroundColor: "inherit"
+        },
+        sort: {
+            textDecoration: "underline",
+            paddingLeft: 20,
+            cursor: "pointer",
+            color: "#0F55FF"
+        }
+    };
+
     return (
         <Table fixedHeader={false} fixedFooter={false} onCellClick={onCellClick.bind(this)}>
             <TableHeader displaySelectAll={false} adjustForCheckbox={false} enableSelectAll={false}>
@@ -18,10 +33,11 @@ const ListTableComponent = ({headerColumns, tableRows, onFilterChange, usage, on
                 </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
-                {onFilterChange ? <FilterComponent onChangeAction={onFilterChange} usage={usage}/> : null}
+                {onFilterChange ? <FilterComponent onChangeAction={onFilterChange} usage={usage}
+                                                   headerColumns={headerColumns}/> : null}
                 {
                     tableRows.map((row, index) => (
-                        <TableRow key={index}>
+                        <TableRow key={index} striped={true}>
                             {headerColumns.map((col, colIndex) => {
                                 let value = "";
                                 switch (col.key) {
@@ -43,11 +59,20 @@ const ListTableComponent = ({headerColumns, tableRows, onFilterChange, usage, on
                                     case "theory":
                                         value = <LivePreview content={parseKatex(row.theory)}/>;
                                         break;
+                                    case "action":
+                                        value = <span style={style.sort}>{col.actionLabel}</span>;
+                                        break;
+                                    case "contentType":
+                                        value = row.question ? "Question" : "Theory";
+                                        break;
+                                    case "rank":
+                                        value = <span style={style.sort}>{row[col.key]}</span>;
+                                        break;
                                     default:
                                         value = row[col.key];
-
                                 }
-                                return <TableRowColumn key={colIndex} style={style}>{value}</TableRowColumn>;
+                                return (<TableRowColumn key={colIndex}
+                                                       style={style.tableRowColumn}>{value}</TableRowColumn>);
                             })}
                         </TableRow>
                     ))

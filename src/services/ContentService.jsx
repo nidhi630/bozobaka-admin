@@ -10,6 +10,7 @@ import {
     ADD_USER,
     SECTIONS,
     EXAMS,
+    UPDATE_RANK,
     getCourseSectionEndpoint,
     getL1Endpoint,
     getL2Endpoint,
@@ -240,6 +241,21 @@ const ContentService = {
                 url: EXAMS
             }).then((res) => {
                 resolve(Exam.parseExams(res.data));
+            }).catch((err) => errorHandler(reject, err));
+        });
+    },
+
+    updateRank(data) {
+        return new Promise((resolve, reject) => {
+            makeRequest({
+                url: UPDATE_RANK,
+                data: data
+            }).then((res) => {
+                if (res.data.message === "done") {
+                    resolve(res.data);
+                } else {
+                    reject(res.data);
+                }
             }).catch((err) => errorHandler(reject, err));
         });
     }

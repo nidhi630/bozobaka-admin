@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import ListQuestionComponent from "./../components/ListQuestionComponent";
 import {questionFetchQuestions} from "./../actions/QuestionActions";
 import {setStatus} from "./../actions/FilterActions";
-import Urls from "./../models/Urls";
 
 const mapStateToProps = (state) => {
     return {

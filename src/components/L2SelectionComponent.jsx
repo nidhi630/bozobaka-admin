@@ -23,10 +23,10 @@ class L2SelectionComponent extends React.Component {
     }
 
     render() {
-        const {l2Id, l2s, onChange, l1Id} = this.props;
+        const {l2Id, l2s, onChange, l1Id, width} = this.props;
         let menuItems = l2s.filter((l2) => (l2.l1Id === l1Id));
         return (
-            <DropdownDisplay onChange={onChange.bind(this)} menuItems={menuItems} value={l2Id} width="100%"/>
+            <DropdownDisplay onChange={onChange.bind(this)} menuItems={menuItems} value={l2Id} width={width}/>
         );
     }
 }
@@ -36,7 +36,8 @@ L2SelectionComponent.propTypes = {
     l1Id: PropTypes.string.isRequired,
     actionOnUpdate: PropTypes.func.isRequired,
     l2s: PropTypes.array,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    width: PropTypes.string || PropTypes.number
 };
 
 const mapStateToProps = (state, ownProps) => {

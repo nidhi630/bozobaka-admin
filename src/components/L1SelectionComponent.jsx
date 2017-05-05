@@ -27,11 +27,11 @@ class L1SelectionComponent extends React.Component {
     }
 
     render() {
-        const {l1Id, l1s, onChange, sectionId} = this.props;
+        const {l1Id, l1s, onChange, sectionId, width} = this.props;
         let menuItems = l1s.filter((l1) => (l1.sectionId === sectionId));
 
         return (
-            <DropdownDisplay onChange={onChange.bind(this)} menuItems={menuItems} value={l1Id} width="100%"/>
+            <DropdownDisplay onChange={onChange.bind(this)} menuItems={menuItems} value={l1Id} width={width}/>
         );
     }
 }
@@ -41,7 +41,8 @@ L1SelectionComponent.propTypes = {
     l1s: PropTypes.array,
     onChange: PropTypes.func,
     sectionId: PropTypes.string.isRequired,
-    actionOnUpdate: PropTypes.func.isRequired
+    actionOnUpdate: PropTypes.func.isRequired,
+    width: PropTypes.string || PropTypes.number
 };
 
 const mapStateToProps = (state, ownProps) => {

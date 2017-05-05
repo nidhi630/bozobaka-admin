@@ -29,9 +29,9 @@ class SectionSelectionComponent extends React.Component {
     }
 
     render() {
-        const {sections, sectionId, onChange} = this.props;
+        const {sections, sectionId, onChange, width} = this.props;
         return (
-            <DropdownDisplay menuItems={sections} value={sectionId} onChange={onChange.bind(this)}/>
+            <DropdownDisplay menuItems={sections} value={sectionId} onChange={onChange.bind(this)} width={width}/>
         );
     }
 }
@@ -45,14 +45,16 @@ SectionSelectionComponent.propTypes = {
     getSections: PropTypes.func,
     onChange: PropTypes.func,
     courseId: PropTypes.string,
-    actionOnUpdate: PropTypes.func.isRequired
+    actionOnUpdate: PropTypes.func.isRequired,
+    width: PropTypes.string || PropTypes.number
 };
 
 const mapStateToProps = (state, ownProps) => {
     return {
         courseId: state.ContentReducer.selectedCourse.id,
         sections: state.sections.sections,
-        sectionId: ownProps.sectionId
+        sectionId: ownProps.sectionId,
+        width: ownProps.width
     };
 };
 

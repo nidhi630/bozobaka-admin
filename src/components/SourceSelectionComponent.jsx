@@ -20,18 +20,10 @@ class SourceSelectionComponent extends React.Component {
     }
 
     render() {
-        const {sources, updateSelectedSource, selectedSource} = this.props;
+        const {sources, updateSelectedSource, selectedSource, width} = this.props;
         return (
-            <div>
-                {sources.length ?
-                    <Col xs={8} sm={6}>
-                        <DropdownDisplay menuItems={sources} value={selectedSource}
-                                         onChange={updateSelectedSource.bind(this)}/>
-                    </Col>
-                    :
-                    null
-                }
-            </div>
+            <DropdownDisplay menuItems={sources} value={selectedSource}
+                             onChange={updateSelectedSource.bind(this)} width={width}/>
         );
     }
 }
@@ -43,7 +35,8 @@ SourceSelectionComponent.propTypes = {
     fetchSources: PropTypes.func,
     deleteSources: PropTypes.func,
     updateSelectedSource: PropTypes.func,
-    selectedSource: PropTypes.string
+    selectedSource: PropTypes.string,
+    width: PropTypes.string || PropTypes.number
 };
 
 const mapStateToProps = (state, ownProps) => {

@@ -15,6 +15,7 @@ import AddTheory from "./containers/AddTheoryContainer";
 import ListTheories from "./containers/ListTheoriesContainer";
 import ListQuestions from "./containers/ListQuestionsContainer";
 import Dashboard from "./components/DashboardComponent";
+import PublishContainer from "./containers/PublishContainer";
 
 require("style-loader!css-loader!./styles/styles.css");
 require("style-loader!css-loader!./../node_modules/react-quill/dist/quill.snow.css");
@@ -40,6 +41,7 @@ render(
                 <Route path={Urls.TRASH} components={ListQuestions} status="trash"/>
                 <Route path={Urls.MARKED_LATER} component={ListQuestions} status="later"/>
                 <Route path={Urls.DRAFTS} components={ListQuestions} status="draft"/>
+                <Route path={Urls.PUBLISH} components={PublishContainer}/>
             </Route>
         </Router>
     </Provider>

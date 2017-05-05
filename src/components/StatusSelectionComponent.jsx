@@ -11,16 +11,17 @@ class StatusSelectionComponent extends React.Component {
     }
 
     render() {
-        const {onChange, status} = this.props;
+        const {onChange, status, width} = this.props;
         return (
-            <DropdownDisplay menuItems={this.allStatus} onChange={onChange.bind(this)} value={status}/>
+            <DropdownDisplay menuItems={this.allStatus} onChange={onChange.bind(this)} value={status} width={width}/>
         );
     }
 }
 
 StatusSelectionComponent.propTypes = {
     onChange: PropTypes.func,
-    status: PropTypes.string
+    status: PropTypes.string,
+    width: PropTypes.string || PropTypes.number
 };
 
 const mapStateToProps = (state, ownProps) => {

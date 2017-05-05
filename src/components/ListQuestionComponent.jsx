@@ -55,6 +55,10 @@ export default class ListQuestionComponent extends React.Component {
         this.props.fetchQuestions();
     }
 
+    componentWillUnmount() {
+        this.props.updateStatusFilter("draft");
+    }
+
     render() {
         const {questions, isLoading, fetchQuestions, route} = this.props;
 

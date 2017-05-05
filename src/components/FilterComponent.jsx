@@ -23,6 +23,9 @@ import {
     getTheoryFilter,
     getQuestionFilter
 } from "./../actions/FilterActions";
+import {publishContentType} from "./../actions/PublishActions";
+
+import DropdownDisplay from "./DropdownDisplayComponent";
 
 class FilterComponent extends React.Component {
     constructor(props) {
@@ -44,45 +47,94 @@ class FilterComponent extends React.Component {
 
     render() {
         const {
-            status, sectionId, usage, l1Id, l2Id, sourceId, updateMinDifficulty,
-            updateMaxDifficulty, updateQuestion, updateTheory, question, heading, minDifficulty, maxDifficulty
+            status, sectionId, l1Id, l2Id, sourceId, updateMinDifficulty, contentType, updateContentType,
+            updateMaxDifficulty, updateQuestion, updateTheory, question, heading, minDifficulty, maxDifficulty,
+            headerColumns
         } = this.props;
 
-        return (
+        const style = {
+            tableRowColumn: {
+                whiteSpace: "normal",
+                width: "100%",
+                paddingLeft: 0,
+                paddingRight: 0,
+                backgroundColor: "inherit"
+            },
+            textField: {
+                width: "100%"
+            },
+            dropdown: {
+                width: "100%"
+            },
+            difficulty: {
+                display: "inline-flex"
+            }
+        };
 
-            <TableRow>
-                <TableRowColumn>
-                    {usage === "question" ? <TextField type="text" hintText="question" ref="question" id="question"
-                                                       onChange={updateQuestion.bind(this)} defaultValue={question}/>
-                        : <TextField type="text" hintText="theory" ref="theory" id="theory"
-                                     onChange={updateTheory.bind(this)} defaultValue={heading}/>
-                    }
-                </TableRowColumn>
-                <TableRowColumn>
-                    <StatusSelection status={status} actionOnUpdate={setStatus}/>
-                </TableRowColumn>
-                {usage === "question" ?
-                    <TableRowColumn>
-                        <TextField type="number" hintText="Min" ref="minDifficulty" id="minDifficulty" min="0" max="100"
-                                   onChange={updateMinDifficulty.bind(this)} defaultValue={minDifficulty} style={{width: "50%"}}/>
-                        <TextField type="number" hintText="Max" ref="maxDifficulty" id="maxDifficulty" min="0" max="100"
-                                   onChange={updateMaxDifficulty.bind(this)} defaultValue={maxDifficulty}style={{width: "50%", marginLeft: 10}}/>
-                    </TableRowColumn>
-                    : null
+        return (
+            <TableRow striped={true}>
+                {
+                    headerColumns.map((row, index) => {
+                        let value;
+                        switch (row.key) {
+                            case "question":
+                                value = (<TextField type="text" hintText="question" ref="question" id="question"
+                                                    onChange={updateQuestion.bind(this)} defaultValue={question}
+                                                    style={style.textField}/>);
+                                break;
+                            case "heading":
+                            case "theory":
+                                value = (<TextField type="text" hintText="theory" ref="theory" id="theory"
+                                                    onChange={updateTheory.bind(this)} defaultValue={heading}
+                                                    style={style.textField}/>);
+                                break;
+                            case "status":
+                                value = (<StatusSelection status={status} actionOnUpdate={setStatus}
+                                                          width={style.dropdown.width}/>);
+                                break;
+                            case "l1Id":
+                                value =
+                                    (<L1SelectionComponent l1Id={l1Id} sectionId={sectionId} actionOnUpdate={setL1}
+                                                          width={style.dropdown.width}/>);
+                                break;
+                            case "l2Id":
+                                value = (<L2SelectionComponent l1Id={l1Id} l2Id={l2Id} actionOnUpdate={setL2}
+                                                              width={style.dropdown.width}/>);
+                                break;
+                            case "source":
+                                value = (<SourceSelectionComponent source={sourceId} actionOnUpdate={setSource}
+                                                                  width={style.dropdown.width}/>);
+                                break;
+                            case "sectionId":
+                                value = (<SectionSelectionComponent sectionId={sectionId} actionOnUpdate={setSection}
+                                                                   width={style.dropdown.width}/>);
+                                break;
+                            case "difficulty":
+                                value = (<div style={style.difficulty}>
+                                    <TextField type="number" hintText="Min" ref="minDifficulty" id="minDifficulty"
+                                               min="0" max="100"
+                                               onChange={updateMinDifficulty.bind(this)} defaultValue={minDifficulty}
+                                               style={{width: "50%"}}/>
+                                    <TextField type="number" hintText="Max" ref="maxDifficulty" id="maxDifficulty"
+                                               min="0" max="100"
+                                               onChange={updateMaxDifficulty.bind(this)} defaultValue={maxDifficulty}
+                                               style={{width: "50%", marginLeft: 10}}/>
+                                </div>);
+                                break;
+                            case "contentType":
+                                value = (
+                                    <DropdownDisplay menuItems={["question", "theory"]} value={contentType}
+                                                     onChange={updateContentType.bind(this)} hideDefault={true}
+                                                     width={style.dropdown.width}/>
+                                );
+                                break;
+                            default:
+                                value = null;
+                        }
+                        return (<TableRowColumn key={index.toString()}
+                                               style={style.tableRowColumn}>{value}</TableRowColumn>);
+                    })
                 }
-                <TableRowColumn>
-                    <SectionSelectionComponent sectionId={sectionId} actionOnUpdate={setSection}/>
-                </TableRowColumn>
-                <TableRowColumn>
-                    <L1SelectionComponent l1Id={l1Id} sectionId={sectionId} actionOnUpdate={setL1}/>
-                </TableRowColumn>
-                <TableRowColumn>
-                    <L2SelectionComponent l1Id={l1Id} l2Id={l2Id} actionOnUpdate={setL2}/>
-                </TableRowColumn>
-                <TableRowColumn>
-                    <SourceSelectionComponent source={sourceId} actionOnUpdate={setSource}/>
-                </TableRowColumn>
-                <TableRowColumn/>
             </TableRow>
         );
     }
@@ -108,13 +160,17 @@ FilterComponent.propTypes = {
     updateMinDifficulty: PropTypes.func,
     updateId: PropTypes.func,
     updateQuestion: PropTypes.func,
-    updateTheory: PropTypes.func
+    updateTheory: PropTypes.func,
+    headerColumns: PropTypes.array,
+    updateContentType: PropTypes.func,
+    contentType: PropTypes.string
 };
 
 const mapStateToProps = (state, ownProps) => {
     return {
         usage: ownProps.usage,
         ...state.filters,
+        contentType: state.publish.contentType,
         filterString: ownProps.usage === "theory" ? JSON.stringify(getTheoryFilter(state)) : JSON.stringify(getQuestionFilter(state))
     };
 };
@@ -139,6 +195,10 @@ const mapDispatchToProps = (dispatch) => {
 
         updateQuestion: (event, newValue) => {
             dispatch(setQuestion(newValue));
+        },
+
+        updateContentType: (event, key, newValue) => {
+            dispatch(publishContentType(newValue));
         }
     };
 };

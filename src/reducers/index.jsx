@@ -14,6 +14,7 @@ import {SourceReducer} from "./SourceReducer";
 import {QuestionReducer} from "./QuestionReducer";
 import {FilterReducer} from "./FiltersReducer";
 import {ExamReducer} from "./ExamReducer";
+import {PublishReducer} from "./PublishReducer";
 
 export default combineReducers({
     GlobalReducer,
@@ -23,5 +24,6 @@ export default combineReducers({
     sources: SourceReducer,
     question: QuestionReducer,
     filters: FilterReducer,
-    exam: ExamReducer
+    exam: ExamReducer,
+    publish: PublishReducer
 });

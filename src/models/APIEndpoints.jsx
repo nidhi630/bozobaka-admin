@@ -22,6 +22,7 @@ export const L4s = "/l4s";
 export const SOURCES = "/sources";
 export const QUESTIONS = "/questions";
 export const EXAMS = "/exams";
+export const UPDATE_RANK = "/courses/updateRank";
 
 export function getCourseSectionEndpoint(courseId, sectionId) {
     let endPoint = COURSES + "/" + courseId + SECTIONS;
