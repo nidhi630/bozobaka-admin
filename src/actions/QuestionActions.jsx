@@ -217,7 +217,7 @@ export function questionUpdateAppearedIn(id, year, index) {
     return {
         type: QUESTION_UPDATE_APPEARED_IN,
         index,
-        id,
+        name: id,
         year
     };
 }

@@ -240,9 +240,9 @@ export function QuestionReducer(state = defaultState, action) {
         case QUESTION_UPDATE_APPEARED_IN:
             const updatedExam = {};
             if (action.id !== null) {
-                updatedExam.id = action.id;
+                updatedExam.name = action.name;
             } else {
-                updatedExam.id = state.appearedIn[action.index].id;
+                updatedExam.name = state.appearedIn[action.index].name;
             }
             if (action.year !== null) {
                 updatedExam.year = action.year;

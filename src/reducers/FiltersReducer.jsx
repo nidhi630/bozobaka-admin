@@ -10,7 +10,8 @@ import {
     FILTER_L1,
     FILTER_L2,
     FILTER_SOURCE,
-    FILTER_SECTION
+    FILTER_SECTION,
+    FILTER_QT
 } from "./../actions/ActionConstants";
 
 let defaultState = {
@@ -22,7 +23,8 @@ let defaultState = {
     l2Id: "",
     sourceId: "",
     minDifficulty: 0,
-    maxDifficulty: 100
+    maxDifficulty: 100,
+    qt: ""
 };
 
 export function FilterReducer(state = defaultState, action) {
@@ -76,6 +78,11 @@ export function FilterReducer(state = defaultState, action) {
             return {
                 ...state,
                 sourceId: action.sourceId
+            };
+        case FILTER_QT:
+            return {
+                ...state,
+                qt: action.qt
             };
         default:
             return state;

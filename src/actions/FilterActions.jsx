@@ -10,7 +10,8 @@ import {
     FILTER_L1,
     FILTER_L2,
     FILTER_SOURCE,
-    FILTER_SECTION
+    FILTER_SECTION,
+    FILTER_QT
 } from "./../actions/ActionConstants";
 
 export function setId(id) {
@@ -80,6 +81,13 @@ export function setSource(sourceId) {
     return {
         type: FILTER_SOURCE,
         sourceId
+    };
+}
+
+export function setQT(qt) {
+    return {
+        type: FILTER_QT,
+        qt
     };
 }
 

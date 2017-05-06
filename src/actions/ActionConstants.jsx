@@ -96,6 +96,7 @@ export const FILTER_SECTION = "FILTER_SECTION";
 export const FILTER_L1 = "FILTER_L1";
 export const FILTER_L2 = "FILTER_L2";
 export const FILTER_SOURCE = "FILTER_SOURCE";
+export const FILTER_QT = "FILTER_QT";
 
 // exams
 export const INIT_EXAMS = "INIT_EXAMS";

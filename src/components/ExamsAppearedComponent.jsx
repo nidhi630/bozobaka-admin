@@ -26,6 +26,7 @@ class ExamsAppearedComponent extends React.Component {
 
     render() {
         const {exams, appearedIn, onExamChange, onYearChange, addAppearedIn, removeAppearedIn} = this.props;
+        const menuItems = exams.map(exam => exam.name);
 
         return (
             <div>
@@ -34,8 +35,8 @@ class ExamsAppearedComponent extends React.Component {
                     <Row key={index.toString()}>
                         <Col xs={6} sm={5}>
                             <br/>
-                            <DropdownDisplay menuItems={exams} onChange={onExamChange.bind(this, index)}
-                                             value={exam.id}/>
+                            <DropdownDisplay menuItems={menuItems} onChange={onExamChange.bind(this, index)}
+                                             value={exam.name}/>
                         </Col>
                         <Col xs={6} sm={5}>
                             <TextField name={"year" + index} hintText="Enter Year" floatingLabelText="Year"

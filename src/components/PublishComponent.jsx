@@ -61,7 +61,7 @@ export default class PublishComponent extends React.Component {
     }
 
     render() {
-        const {published, fetchPublished, sortDialog, sortDialogStatus, isLoading, publishDialogStatus, userRole} = this.props;
+        const {published, fetchPublished, sortDialog, sortDialogStatus, isLoading, publishDialog, userRole} = this.props;
 
         if (userRole === "contentWriter" || userRole === "reviewer") {
             return <NoAccessErrorComponent/>;
@@ -121,7 +121,7 @@ export default class PublishComponent extends React.Component {
                         <br/>
                     </Row>
                 </Dialog>
-                {publishDialogStatus ? <PublishPopup rankToSet={this.selectedItem.rank + 1}/> : null}
+                {publishDialog ? <PublishPopup rankToSet={this.selectedItem.rank + 1}/> : null}
             </div>
         );
     }
@@ -176,5 +176,6 @@ PublishComponent.propTypes = {
     updateSort: PropTypes.func,
     clearData: PropTypes.func,
     publishDialog: PropTypes.bool,
-    publishDialogStatus: PropTypes.func
+    publishDialogStatus: PropTypes.func,
+    userRole: PropTypes.string
 };

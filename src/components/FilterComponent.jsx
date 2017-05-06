@@ -21,7 +21,8 @@ import {
     setMinDifficulty,
     setMaxDifficulty,
     getTheoryFilter,
-    getQuestionFilter
+    getQuestionFilter,
+    setQT
 } from "./../actions/FilterActions";
 import {publishContentType} from "./../actions/PublishActions";
 
@@ -49,7 +50,7 @@ class FilterComponent extends React.Component {
         const {
             status, sectionId, l1Id, l2Id, sourceId, updateMinDifficulty, contentType, updateContentType,
             updateMaxDifficulty, updateQuestion, updateTheory, question, heading, minDifficulty, maxDifficulty,
-            headerColumns, usage
+            headerColumns, usage, qt, updateQT
         } = this.props;
 
         const style = {
@@ -86,6 +87,11 @@ class FilterComponent extends React.Component {
                             case "theory":
                                 value = (<TextField type="text" hintText="theory" ref="theory" id="theory"
                                                     onChange={updateTheory.bind(this)} defaultValue={heading}
+                                                    style={style.textField}/>);
+                                break;
+                            case "qt":
+                                value = (<TextField type="text" hintText="question/theory" id="theory"
+                                                    onChange={updateQT.bind(this)} defaultValue={qt}
                                                     style={style.textField}/>);
                                 break;
                             case "status":
@@ -163,7 +169,9 @@ FilterComponent.propTypes = {
     updateTheory: PropTypes.func,
     headerColumns: PropTypes.array,
     updateContentType: PropTypes.func,
-    contentType: PropTypes.string
+    contentType: PropTypes.string,
+    qt: PropTypes.string,
+    updateQT: PropTypes.func
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -199,6 +207,10 @@ const mapDispatchToProps = (dispatch) => {
 
         updateContentType: (event, key, newValue) => {
             dispatch(publishContentType(newValue));
+        },
+
+        updateQT: (event, newValue) => {
+            dispatch(setQT(newValue));
         }
     };
 };
