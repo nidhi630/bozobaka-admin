@@ -45,9 +45,8 @@ export default class AddQuestionComponent extends React.Component {
     }
 
     componentWillUnmount() {
-        setTimeout(() => {
-            resetVariables();
-        }, 0);
+        resetVariables();
+        this.props.resetState();
     }
 
     render() {
