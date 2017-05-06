@@ -70,7 +70,7 @@ export default class PublishComponent extends React.Component {
     }
 
     render() {
-        const {questions, fetchData, theories, contentType, unpublish, sortDialog, sortDialogStatus, isLoading} = this.props;
+        const {questions, fetchData, theories, contentType, sortDialog, sortDialogStatus, isLoading} = this.props;
         const tableRows = contentType === "question" ? questions : theories;
 
         const styles = {
@@ -82,7 +82,7 @@ export default class PublishComponent extends React.Component {
         const actions = (
             <Row>
                 <Col xs={6} sm={3}>
-                    <FlatButton secondary={true} label="Unpublish" onClick={unpublish.bind(this)}/>
+                    <FlatButton secondary={true} label="Unpublish" onClick={this.unpublish.bind(this)}/>
                 </Col>
                 <Col xs={6} sm={6}>
                     <FlatButton label="Cancel" onClick={sortDialogStatus.bind(this, false)}/>
@@ -101,7 +101,7 @@ export default class PublishComponent extends React.Component {
                         <h1 style={styles.pageTitle}>Publish</h1>
                     </Col>
                     <Col xs={2}>
-                        {isLoading ? <CircularProgress diameter={8}/> : null}
+                        {isLoading ? <CircularProgress size={32}/> : null}
                     </Col>
                     <br/><br/>
                 </Row>
@@ -129,6 +129,10 @@ export default class PublishComponent extends React.Component {
                 </Dialog>
             </div>
         );
+    }
+
+    componentWillUnmount() {
+        this.props.clearData();
     }
 
     onCellClick(rowNumber, columnsId) {
@@ -160,6 +164,11 @@ export default class PublishComponent extends React.Component {
             console.log(error);
         }
     }
+
+    unpublish() {
+        this.props.unpublish(this.selectedItem.id);
+        this.props.sortDialogStatus(null, false);
+    }
 }
 
 PublishComponent.propTypes = {
@@ -173,5 +182,6 @@ PublishComponent.propTypes = {
     sortDialog: PropTypes.bool,
     unpublish: PropTypes.func,
     sortDialogStatus: PropTypes.func,
-    updateSort: PropTypes.func
+    updateSort: PropTypes.func,
+    clearData: PropTypes.func
 };

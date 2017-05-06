@@ -118,7 +118,7 @@ export function getQuestionFilter(state) {
     };
 
     if (question) {
-        filter.question = {regexp: "/^" + question + "/i"};
+        filter.question = {regexp: "/" + question + "/i"};
     }
 
     return filter;
@@ -129,7 +129,7 @@ export function getTheoryFilter(state) {
     const filter = getCommonFilters(state);
 
     if (heading) {
-        filter.heading = {regexp: "/^" + heading + "/i"};
+        filter.heading = {regexp: "/" + heading + "/i"};
     }
 
     return filter;

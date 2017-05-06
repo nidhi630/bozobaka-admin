@@ -25,8 +25,9 @@ export function fetchTheory(params) {
             url,
             params: {
                 filter: JSON.stringify({
-                    where: params.filter
-                })
+                    where: params.filter,
+                    order: params.order
+                }),
             }
         }).then(res => {
             if (typeof res.data === "object" && res.data.constructor === Array) {

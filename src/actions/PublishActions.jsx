@@ -6,7 +6,8 @@ import {
     PUBLISH_INIT_THEORIES,
     PUBLISH_IS_LOADING,
     PUBLISH_TYPE,
-    PUBLISH_SORT_DIALOG
+    PUBLISH_SORT_DIALOG,
+    PUBLISH_RESET_STATE
 } from "./ActionConstants";
 
 import ContentService from "./../services/ContentService";
@@ -57,14 +58,25 @@ export function publishSortDialogStatus(sortDialog) {
     };
 }
 
+export function resetState() {
+    return {
+        type: PUBLISH_RESET_STATE
+    };
+}
+
 export function fetchData() {
     return (dispatch, getState) => {
         dispatch(publishIsLoading(true));
 
         const state = getState();
+
         if (state.publish.contentType === "question") {
+            const filter = getQuestionFilter(state);
+            filter.status = "publish";
+
             fetchQuestion({
-                filter: getQuestionFilter(state)
+                filter,
+                order: "rank ASC"
             }).then(questions => {
                 console.log(questions);
                 dispatch(publishInitQuestions(questions));
@@ -74,8 +86,12 @@ export function fetchData() {
                 dispatch(publishHasErrored(true, err.message));
             });
         } else {
+            const filter = getTheoryFilter(state);
+            filter.status = "publish";
+
             fetchTheory({
-                filter: getTheoryFilter(state)
+                filter: filter,
+                order: "rank ASC"
             }).then(theories => {
                 console.log(theories);
                 dispatch(publishInitTheories(theories));
@@ -127,7 +143,7 @@ export function unpublish(id) {
             request = updateTheory(params);
         }
         request.then(res => {
-            fetchData();
+            dispatch(fetchData());
         }).catch(err => {
             dispatch(publishIsLoading(false));
             dispatch(publishHasErrored(true, err.message));

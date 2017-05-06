@@ -5,7 +5,8 @@ import {
     PUBLISH_TYPE,
     PUBLISH_IS_LOADING,
     PUBLISH_HAS_ERRORED,
-    PUBLISH_SORT_DIALOG
+    PUBLISH_SORT_DIALOG,
+    PUBLISH_RESET_STATE
 } from "./../actions/ActionConstants";
 
 const defaultState = {
@@ -55,6 +56,8 @@ export function PublishReducer(state = defaultState, action) {
                 ...state,
                 sortDialog: action.sortDialog
             };
+        case PUBLISH_RESET_STATE:
+            return defaultState;
         default:
             return state;
     }

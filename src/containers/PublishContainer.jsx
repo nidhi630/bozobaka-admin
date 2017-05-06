@@ -7,7 +7,8 @@ import {
     fetchData,
     publishSortDialogStatus,
     updateRank,
-    unpublish
+    unpublish,
+    resetState
 } from "./../actions/PublishActions";
 
 const mapStateToProps = (state) => {
@@ -37,6 +38,10 @@ const mapDispatchToProps = (dispatch) => {
 
         unpublish: (id) => {
             dispatch(unpublish(id));
+        },
+
+        clearData: () => {
+            dispatch(resetState());
         }
     };
 };

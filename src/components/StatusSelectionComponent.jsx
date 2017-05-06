@@ -7,7 +7,25 @@ import {connect} from "react-redux";
 class StatusSelectionComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.allStatus = ["draft", "added", "accepted", "published", "trash", "later"];
+        this.allStatus = [{
+            id: "draft",
+            displayName: "Draft"
+        }, {
+            id: "added",
+            displayName: "Added"
+        }, {
+            id: "accepted",
+            displayName: "Accepted"
+        }, {
+            id: "publish",
+            displayName: "Published"
+        }, {
+            id: "trash",
+            displayName: "Trash"
+        }, {
+            id: "later",
+            displayName: "Marked For Later"
+        }];
     }
 
     render() {
