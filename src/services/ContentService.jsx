@@ -249,7 +249,8 @@ const ContentService = {
         return new Promise((resolve, reject) => {
             makeRequest({
                 url: UPDATE_RANK,
-                data: data
+                data: data,
+                method: "post"
             }).then((res) => {
                 if (res.data.message === "done") {
                     resolve(res.data);

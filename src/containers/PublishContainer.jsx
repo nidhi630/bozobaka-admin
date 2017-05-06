@@ -4,7 +4,10 @@ import {connect} from "react-redux";
 import PublishComponent from "./../components/PublishComponent";
 import {setStatus} from "./../actions/FilterActions";
 import {
-    fetchData
+    fetchData,
+    publishSortDialogStatus,
+    updateRank,
+    unpublish
 } from "./../actions/PublishActions";
 
 const mapStateToProps = (state) => {
@@ -22,6 +25,18 @@ const mapDispatchToProps = (dispatch) => {
 
         updateStatusFilter: (status) => {
             dispatch(setStatus(status));
+        },
+
+        sortDialogStatus: (status) => {
+            dispatch(publishSortDialogStatus(status || false));
+        },
+
+        updateSort: (id, rank) => {
+            dispatch(updateRank(id, rank));
+        },
+
+        unpublish: (id) => {
+            dispatch(unpublish(id));
         }
     };
 };

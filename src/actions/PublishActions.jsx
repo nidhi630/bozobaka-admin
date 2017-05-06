@@ -5,13 +5,14 @@ import {
     PUBLISH_INIT_QUESTIONS,
     PUBLISH_INIT_THEORIES,
     PUBLISH_IS_LOADING,
-    PUBLISH_TYPE
+    PUBLISH_TYPE,
+    PUBLISH_SORT_DIALOG
 } from "./ActionConstants";
 
 import ContentService from "./../services/ContentService";
-import {fetchQuestion} from "./../services/QuestionService";
+import {fetchQuestion, updateQuestion} from "./../services/QuestionService";
 import {getQuestionFilter, getTheoryFilter} from "./FilterActions";
-import {fetchTheory} from "./../services/TheoryService";
+import {fetchTheory, updateTheory} from "./../services/TheoryService";
 
 export function publishHasErrored(hasErrored, errorMessage) {
     return {
@@ -46,6 +47,13 @@ export function publishIsLoading(isLoading) {
     return {
         type: PUBLISH_IS_LOADING,
         isLoading
+    };
+}
+
+export function publishSortDialogStatus(sortDialog) {
+    return {
+        type: PUBLISH_SORT_DIALOG,
+        sortDialog
     };
 }
 
@@ -91,9 +99,36 @@ export function updateRank(id, rank) {
             id: id,
             currentRank: rank,
             type: state.publish.contentType
-        }).then(() => {
-            fetchData();
+        }).then((res) => {
+            dispatch(fetchData());
         }).catch((err) => {
+            dispatch(publishIsLoading(false));
+            dispatch(publishHasErrored(true, err.message));
+        });
+    };
+}
+
+export function unpublish(id) {
+    return (dispatch, getState) => {
+        dispatch(publishIsLoading(true));
+
+        const state = getState();
+        const params = {
+            method: "patch",
+            data: {
+                status: "added",
+                id: id
+            }
+        };
+        let request;
+        if (state.publish.contentType === "question") {
+            request = updateQuestion(params);
+        } else {
+            request = updateTheory(params);
+        }
+        request.then(res => {
+            fetchData();
+        }).catch(err => {
             dispatch(publishIsLoading(false));
             dispatch(publishHasErrored(true, err.message));
         });

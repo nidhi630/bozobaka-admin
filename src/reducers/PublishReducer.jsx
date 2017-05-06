@@ -4,7 +4,8 @@ import {
     PUBLISH_INIT_THEORIES,
     PUBLISH_TYPE,
     PUBLISH_IS_LOADING,
-    PUBLISH_HAS_ERRORED
+    PUBLISH_HAS_ERRORED,
+    PUBLISH_SORT_DIALOG
 } from "./../actions/ActionConstants";
 
 const defaultState = {
@@ -13,7 +14,8 @@ const defaultState = {
     isLoading: false,
     hasErrored: false,
     errorMessage: "",
-    contentType: "question"
+    contentType: "question",
+    sortDialog: false
 };
 
 export function PublishReducer(state = defaultState, action) {
@@ -48,6 +50,11 @@ export function PublishReducer(state = defaultState, action) {
                 isLoading: action.isLoading
             };
         }
+        case PUBLISH_SORT_DIALOG:
+            return {
+                ...state,
+                sortDialog: action.sortDialog
+            };
         default:
             return state;
     }
