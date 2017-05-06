@@ -28,6 +28,7 @@ import DropdownDisplay from "./DropdownDisplayComponent";
 import RaisedButton from "material-ui/RaisedButton";
 import FlatButton from "material-ui/FlatButton";
 import Snackbar from "material-ui/Snackbar";
+import CircularProgress from "material-ui/CircularProgress";
 
 export default class AddTheoryComponent extends React.Component {
     constructor(props) {
@@ -61,9 +62,12 @@ export default class AddTheoryComponent extends React.Component {
             <div>
                 <br/>
                 <Row>
-                    <Col xs={12}>
-                        <h1>Add Theory</h1>
-                        <b>{id}</b>
+                    <Col xs={8}>
+                        <h2>Add Theory</h2>
+                        {id ? <p><br/>ID: <b>{id}</b></p> : null}
+                    </Col>
+                    <Col xs={4}>
+                        {isLoading ? <CircularProgress size={32}/> : null}
                     </Col>
                 </Row>
                 <br/>
@@ -185,5 +189,6 @@ AddTheoryComponent.propTypes = {
     updateTheory: PropTypes.func,
     heading: PropTypes.string,
     fetchTheory: PropTypes.func,
-    hasAccess: PropTypes.bool
+    hasAccess: PropTypes.bool,
+    resetErrorState: PropTypes.func
 };

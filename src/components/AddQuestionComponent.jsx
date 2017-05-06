@@ -31,6 +31,7 @@ import OptionsComponent from "./OptionsComponent";
 import SingleCorrectAnswer from "./SingleCorrectAnswerComponent";
 import MultiCorrectAnswer from "./MultiCorrectAnswerComponent";
 import ExamsAppearedComponent from "./ExamsAppearedComponent";
+import CircularProgress from "material-ui/CircularProgress";
 
 export default class AddQuestionComponent extends React.Component {
     constructor(props) {
@@ -69,9 +70,12 @@ export default class AddQuestionComponent extends React.Component {
             <div>
                 <br/>
                 <Row>
-                    <Col xs={12}>
+                    <Col xs={8}>
                         <h2>Add Question</h2>
-                        {id ? <p><br/><b>{id}</b></p> : null}
+                        {id ? <p><br/>ID: <b>{id}</b></p> : null}
+                    </Col>
+                    <Col xs={4}>
+                        {isLoading ? <CircularProgress size={32}/> : null}
                     </Col>
                 </Row>
                 <br/>
