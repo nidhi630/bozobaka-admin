@@ -175,6 +175,7 @@ export function unpublish(item) {
             method: "patch",
             data: {
                 status: "accept",
+                rank: 0,
                 id: item.id
             }
         };
