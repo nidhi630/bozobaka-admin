@@ -7,7 +7,8 @@ import {
     PUBLISH_HAS_ERRORED,
     PUBLISH_SORT_DIALOG,
     PUBLISH_RESET_STATE,
-    PUBLISH_UPDATE_PUBLISHED
+    PUBLISH_UPDATE_PUBLISHED,
+    PUBLISH_PUBLISH_DIALOG
 } from "./../actions/ActionConstants";
 
 const defaultState = {
@@ -18,11 +19,17 @@ const defaultState = {
     hasErrored: false,
     errorMessage: "",
     contentType: "",
-    sortDialog: false
+    sortDialog: false,
+    publishDialog: false
 };
 
 export function PublishReducer(state = defaultState, action) {
     switch (action.type) {
+        case PUBLISH_PUBLISH_DIALOG:
+            return {
+                ...state,
+                publishDialog: action.publishDialog
+            };
         case PUBLISH_UPDATE_PUBLISHED:
             return {
                 ...state,

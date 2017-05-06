@@ -10,6 +10,8 @@ import FlatButton from "material-ui/FlatButton";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 import CircularProgress from "material-ui/CircularProgress";
+import PublishPopup from "./PublishingPopupComponent";
+import NoAccessErrorComponent from "./NoAccessErrorComponent";
 
 export default class PublishComponent extends React.Component {
     constructor(props) {
@@ -59,7 +61,11 @@ export default class PublishComponent extends React.Component {
     }
 
     render() {
-        const {published, fetchPublished, sortDialog, sortDialogStatus, isLoading} = this.props;
+        const {published, fetchPublished, sortDialog, sortDialogStatus, isLoading, publishDialogStatus, userRole} = this.props;
+
+        if (userRole === "contentWriter" || userRole === "reviewer") {
+            return <NoAccessErrorComponent/>;
+        }
 
         const styles = {
             pageTitle: {
@@ -115,6 +121,7 @@ export default class PublishComponent extends React.Component {
                         <br/>
                     </Row>
                 </Dialog>
+                {publishDialogStatus ? <PublishPopup rankToSet={this.selectedItem.rank + 1}/> : null}
             </div>
         );
     }
@@ -125,12 +132,12 @@ export default class PublishComponent extends React.Component {
 
     onCellClick(rowNumber, columnsId) {
         const index = rowNumber - 1;
-        const {published, sortDialogStatus} = this.props;
+        const {published, sortDialogStatus, publishDialogStatus} = this.props;
         this.selectedItem = published[index];
         
         if (columnsId === 7) {
             // add below
-            alert("add below");
+            publishDialogStatus(true);
         } else if (columnsId === 6) {
             // change sort
             sortDialogStatus(true);
@@ -167,5 +174,7 @@ PublishComponent.propTypes = {
     unpublish: PropTypes.func,
     sortDialogStatus: PropTypes.func,
     updateSort: PropTypes.func,
-    clearData: PropTypes.func
+    clearData: PropTypes.func,
+    publishDialog: PropTypes.bool,
+    publishDialogStatus: PropTypes.func
 };

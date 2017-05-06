@@ -49,7 +49,7 @@ class FilterComponent extends React.Component {
         const {
             status, sectionId, l1Id, l2Id, sourceId, updateMinDifficulty, contentType, updateContentType,
             updateMaxDifficulty, updateQuestion, updateTheory, question, heading, minDifficulty, maxDifficulty,
-            headerColumns
+            headerColumns, usage
         } = this.props;
 
         const style = {
@@ -124,7 +124,7 @@ class FilterComponent extends React.Component {
                             case "contentType":
                                 value = (
                                     <DropdownDisplay menuItems={["question", "theory"]} value={contentType}
-                                                     onChange={updateContentType.bind(this)} hideDefault={false}
+                                                     onChange={updateContentType.bind(this)} hideDefault={usage === "publish2"}
                                                      width={style.dropdown.width}/>
                                 );
                                 break;

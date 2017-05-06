@@ -8,7 +8,8 @@ import {
     PUBLISH_TYPE,
     PUBLISH_SORT_DIALOG,
     PUBLISH_RESET_STATE,
-    PUBLISH_UPDATE_PUBLISHED
+    PUBLISH_UPDATE_PUBLISHED,
+    PUBLISH_PUBLISH_DIALOG
 } from "./ActionConstants";
 
 import ContentService from "./../services/ContentService";
@@ -69,6 +70,13 @@ export function publishSortDialogStatus(sortDialog) {
     };
 }
 
+export function publishPublishDialogStatus(publishDialog) {
+    return {
+        type: PUBLISH_PUBLISH_DIALOG,
+        publishDialog
+    };
+}
+
 export function resetState() {
     return {
         type: PUBLISH_RESET_STATE
@@ -83,7 +91,7 @@ export function fetchData() {
 
         if (state.publish.contentType === "question") {
             const filter = getQuestionFilter(state);
-            filter.status = "publish";
+            filter.status = "accept";
 
             fetchQuestion({
                 filter,
@@ -98,7 +106,7 @@ export function fetchData() {
             });
         } else {
             const filter = getTheoryFilter(state);
-            filter.status = "publish";
+            filter.status = "accept";
 
             fetchTheory({
                 filter: filter,
@@ -125,7 +133,8 @@ export function fetchPublished() {
         };
         if (state.publish.contentType) {
             filter.where = {
-                entityType: state.publish.contentType
+                entityType: state.publish.contentType,
+                status: "publish"
             };
         }
         makeRequest({
@@ -190,3 +199,25 @@ export function unpublish(item) {
     };
 }
 
+export function publishItem(item, rank) {
+    return (dispatch) => {
+        dispatch(publishIsLoading(true));
+
+        const params = {
+            method: "patch",
+            data: {
+                status: "publish",
+                rank: rank,
+                id: item.id
+            }
+        };
+
+        let request = item.question ? updateQuestion(params) : updateTheory(params);
+        request.then(() => {
+            dispatch(fetchPublished());
+        }).catch(err => {
+            dispatch(publishIsLoading(false));
+            dispatch(publishHasErrored(true, err.message));
+        });
+    };
+}

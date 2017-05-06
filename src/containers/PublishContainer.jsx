@@ -9,13 +9,15 @@ import {
     updateRank,
     unpublish,
     resetState,
-    fetchPublished
+    fetchPublished,
+    publishPublishDialogStatus
 } from "./../actions/PublishActions";
 
 const mapStateToProps = (state) => {
     return {
         ...state.publish,
-        courseId: state.ContentReducer.selectedCourse.id
+        courseId: state.ContentReducer.selectedCourse.id,
+        userRole: state.GlobalReducer.loggedInUser.role
     };
 };
 
@@ -47,6 +49,10 @@ const mapDispatchToProps = (dispatch) => {
 
         clearData: () => {
             dispatch(resetState());
+        },
+
+        publishDialogStatus: (status) => {
+            dispatch(publishPublishDialogStatus(status || false));
         }
     };
 };
