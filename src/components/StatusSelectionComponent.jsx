@@ -14,7 +14,7 @@ class StatusSelectionComponent extends React.Component {
             id: "added",
             displayName: "Added"
         }, {
-            id: "accepted",
+            id: "accept",
             displayName: "Accepted"
         }, {
             id: "publish",

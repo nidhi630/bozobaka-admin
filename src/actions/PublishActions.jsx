@@ -7,19 +7,30 @@ import {
     PUBLISH_IS_LOADING,
     PUBLISH_TYPE,
     PUBLISH_SORT_DIALOG,
-    PUBLISH_RESET_STATE
+    PUBLISH_RESET_STATE,
+    PUBLISH_UPDATE_PUBLISHED
 } from "./ActionConstants";
 
 import ContentService from "./../services/ContentService";
 import {fetchQuestion, updateQuestion} from "./../services/QuestionService";
 import {getQuestionFilter, getTheoryFilter} from "./FilterActions";
 import {fetchTheory, updateTheory} from "./../services/TheoryService";
+import {makeRequest} from "./../services/APIService";
+import Theory from "./../models/Theory";
+import Question from "./../models/Question";
 
 export function publishHasErrored(hasErrored, errorMessage) {
     return {
         type: PUBLISH_HAS_ERRORED,
         hasErrored,
         errorMessage
+    };
+}
+
+export function publishUpdatePublished(published) {
+    return {
+        type: PUBLISH_UPDATE_PUBLISHED,
+        published
     };
 }
 
@@ -104,19 +115,51 @@ export function fetchData() {
     };
 }
 
-export function updateRank(id, rank) {
+export function fetchPublished() {
     return (dispatch, getState) => {
         dispatch(publishIsLoading(true));
 
         const state = getState();
+        const filter = {
+            order: "rank ASC"
+        };
+        if (state.publish.contentType) {
+            filter.where = {
+                entityType: state.publish.contentType
+            };
+        }
+        makeRequest({
+            url: "courses/" + state.ContentReducer.selectedCourse.id + "/publish",
+            params: {
+                filter: JSON.stringify(filter)
+            }
+        }).then(res => {
+            let published = [];
+            res.data.forEach((data) => {
+                let item = data.question ? new Question(data) : new Theory(data);
+                published.push(item);
+            });
+            dispatch(publishUpdatePublished(published));
+            dispatch(publishIsLoading(false));
+        }).catch(err => {
+            dispatch(publishIsLoading(false));
+            dispatch(publishHasErrored(true, err.message));
+        });
+    };
+}
 
+export function updateRank(item, rank) {
+    return (dispatch, getState) => {
+        dispatch(publishIsLoading(true));
+
+        const state = getState();
         ContentService.updateRank({
             courseId: state.ContentReducer.selectedCourse.id,
-            id: id,
+            id: item.id,
             currentRank: rank,
-            type: state.publish.contentType
+            type: item.question ? "question" : "theory"
         }).then((res) => {
-            dispatch(fetchData());
+            dispatch(fetchPublished());
         }).catch((err) => {
             dispatch(publishIsLoading(false));
             dispatch(publishHasErrored(true, err.message));
@@ -124,29 +167,25 @@ export function updateRank(id, rank) {
     };
 }
 
-export function unpublish(id) {
-    return (dispatch, getState) => {
+export function unpublish(item) {
+    return (dispatch) => {
         dispatch(publishIsLoading(true));
 
-        const state = getState();
         const params = {
             method: "patch",
             data: {
-                status: "added",
-                id: id
+                status: "accept",
+                id: item.id
             }
         };
-        let request;
-        if (state.publish.contentType === "question") {
-            request = updateQuestion(params);
-        } else {
-            request = updateTheory(params);
-        }
-        request.then(res => {
-            dispatch(fetchData());
+
+        let request = item.question ? updateQuestion(params) : updateTheory(params);
+        request.then(() => {
+            dispatch(fetchPublished());
         }).catch(err => {
             dispatch(publishIsLoading(false));
             dispatch(publishHasErrored(true, err.message));
         });
     };
 }
+

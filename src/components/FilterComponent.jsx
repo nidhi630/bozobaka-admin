@@ -124,7 +124,7 @@ class FilterComponent extends React.Component {
                             case "contentType":
                                 value = (
                                     <DropdownDisplay menuItems={["question", "theory"]} value={contentType}
-                                                     onChange={updateContentType.bind(this)} hideDefault={true}
+                                                     onChange={updateContentType.bind(this)} hideDefault={false}
                                                      width={style.dropdown.width}/>
                                 );
                                 break;

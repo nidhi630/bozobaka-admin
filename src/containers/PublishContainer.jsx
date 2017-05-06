@@ -8,7 +8,8 @@ import {
     publishSortDialogStatus,
     updateRank,
     unpublish,
-    resetState
+    resetState,
+    fetchPublished
 } from "./../actions/PublishActions";
 
 const mapStateToProps = (state) => {
@@ -24,6 +25,10 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(fetchData());
         },
 
+        fetchPublished: () => {
+            dispatch(fetchPublished());
+        },
+
         updateStatusFilter: (status) => {
             dispatch(setStatus(status));
         },
@@ -32,12 +37,12 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(publishSortDialogStatus(status || false));
         },
 
-        updateSort: (id, rank) => {
-            dispatch(updateRank(id, rank));
+        updateSort: (item, rank) => {
+            dispatch(updateRank(item, rank));
         },
 
-        unpublish: (id) => {
-            dispatch(unpublish(id));
+        unpublish: (item) => {
+            dispatch(unpublish(item));
         },
 
         clearData: () => {

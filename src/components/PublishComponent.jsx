@@ -15,8 +15,8 @@ export default class PublishComponent extends React.Component {
     constructor(props) {
         super(props);
         this.headerColumns = [{
-            displayName: "Question",
-            key: "question"
+            displayName: "Question/Theory",
+            key: "qt"
         }, {
             displayName: "Type",
             key: "contentType"
@@ -41,23 +41,12 @@ export default class PublishComponent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {courseId, fetchData, contentType} = this.props;
+        const {courseId, fetchPublished, contentType} = this.props;
         if (courseId !== nextProps.courseId) {
-            fetchData();
+            fetchPublished();
         }
         if (contentType !== nextProps.contentType) {
-            if (nextProps.contentType === "question") {
-                this.headerColumns[0] = {
-                    displayName: "Question",
-                    key: "question"
-                };
-            } else {
-                this.headerColumns[0] = {
-                    displayName: "Theory",
-                    key: "theory"
-                };
-            }
-            fetchData();
+            fetchPublished();
         }
     }
 
@@ -66,12 +55,11 @@ export default class PublishComponent extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchData();
+        this.props.fetchPublished();
     }
 
     render() {
-        const {questions, fetchData, theories, contentType, sortDialog, sortDialogStatus, isLoading} = this.props;
-        const tableRows = contentType === "question" ? questions : theories;
+        const {published, fetchPublished, sortDialog, sortDialogStatus, isLoading} = this.props;
 
         const styles = {
             pageTitle: {
@@ -107,8 +95,8 @@ export default class PublishComponent extends React.Component {
                 </Row>
                 <Row>
                     <Col xs={12}>
-                        <ListTableComponent headerColumns={this.headerColumns} tableRows={tableRows} usage="publish"
-                                            isLoading={isLoading} onFilterChange={fetchData.bind(this)}
+                        <ListTableComponent headerColumns={this.headerColumns} tableRows={published} usage="publish"
+                                            isLoading={isLoading} onFilterChange={fetchPublished.bind(this)}
                                             onCellClick={this.onCellClick.bind(this)}/>
                     </Col>
                 </Row>
@@ -137,28 +125,25 @@ export default class PublishComponent extends React.Component {
 
     onCellClick(rowNumber, columnsId) {
         const index = rowNumber - 1;
-        const {questions, theories, contentType, sortDialogStatus} = this.props;
-
+        const {published, sortDialogStatus} = this.props;
+        this.selectedItem = published[index];
+        
         if (columnsId === 7) {
             // add below
             alert("add below");
         } else if (columnsId === 6) {
             // change sort
-            this.selectedItem = contentType === "question" ? questions[index] : theories[index];
             sortDialogStatus(true);
         } else {
-            const question = questions[index];
-            const url = Urls.ADD_QUESTION + "?id=" + question.id;
-            browserHistory.push(url);
+            const url = this.selectedItem.question ? Urls.ADD_QUESTION : Urls.ADD_THEORY;
+            browserHistory.push(url + "?id=" + this.selectedItem.id);
         }
     }
 
     updateSort() {
         try {
             const rank = parseInt(this.refs.newRankValue.input.value, 10);
-            const id = this.selectedItem.id;
-
-            this.props.updateSort(id, rank);
+            this.props.updateSort(this.selectedItem, rank);
             this.props.sortDialogStatus(null, false);
         } catch (error) {
             console.log(error);
@@ -166,19 +151,18 @@ export default class PublishComponent extends React.Component {
     }
 
     unpublish() {
-        this.props.unpublish(this.selectedItem.id);
+        this.props.unpublish(this.selectedItem);
         this.props.sortDialogStatus(null, false);
     }
 }
 
 PublishComponent.propTypes = {
-    questions: PropTypes.array.isRequired,
-    fetchData: PropTypes.func.isRequired,
-    isLoading: PropTypes.bool.isRequired,
-    courseId: PropTypes.string.isRequired,
+    published: PropTypes.array,
+    fetchPublished: PropTypes.func,
+    isLoading: PropTypes.bool,
+    courseId: PropTypes.string,
     updateStatusFilter: PropTypes.func,
     contentType: PropTypes.string,
-    theories: PropTypes.array,
     sortDialog: PropTypes.bool,
     unpublish: PropTypes.func,
     sortDialogStatus: PropTypes.func,

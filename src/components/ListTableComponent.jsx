@@ -59,6 +59,10 @@ const ListTableComponent = ({headerColumns, tableRows, onFilterChange, usage, on
                                     case "theory":
                                         value = <LivePreview content={parseKatex(row.theory)}/>;
                                         break;
+                                    case "qt":
+                                        value = row.question ? <LivePreview content={parseKatex(row.question)}/> :
+                                            <LivePreview content={parseKatex(row.theory)}/>;
+                                        break;
                                     case "action":
                                         value = <span style={style.sort}>{col.actionLabel}</span>;
                                         break;

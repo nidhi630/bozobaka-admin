@@ -6,21 +6,28 @@ import {
     PUBLISH_IS_LOADING,
     PUBLISH_HAS_ERRORED,
     PUBLISH_SORT_DIALOG,
-    PUBLISH_RESET_STATE
+    PUBLISH_RESET_STATE,
+    PUBLISH_UPDATE_PUBLISHED
 } from "./../actions/ActionConstants";
 
 const defaultState = {
+    published: [],
     questions: [],
     theories: [],
     isLoading: false,
     hasErrored: false,
     errorMessage: "",
-    contentType: "question",
+    contentType: "",
     sortDialog: false
 };
 
 export function PublishReducer(state = defaultState, action) {
     switch (action.type) {
+        case PUBLISH_UPDATE_PUBLISHED:
+            return {
+                ...state,
+                published: action.published
+            };
         case PUBLISH_TYPE:
             return {
                 ...state,
