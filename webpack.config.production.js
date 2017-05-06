@@ -26,6 +26,11 @@ let config = {
                 },
                 test: /\.jsx?$/,
                 exclude: /(node_module|bower_components)/
+            },
+            {
+                test: /\.css$/,
+                loader: "style-loader!css-loader?modules",
+                include: /flexboxgrid/
             }
         ]
     },
