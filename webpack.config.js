@@ -4,20 +4,18 @@
 
 "use strict";
 
-const path = require("path");
+const AssetsPlugin = require("assets-webpack-plugin");
+const webpack = require("webpack");
 
-let config = {
-    context: __dirname,
+const config = {
     devtool: "cheap-module-source-map",
-    entry: [
-        "./src/app.jsx"
-    ],
+    entry: "./src/app.jsx",
     output: {
         path: __dirname,
-        filename: "./public/js/bundle.js"
+        filename: "./public/js/[name]-[chunkhash].js"
     },
     resolve: {
-        extensions: [".js", ".jsx", ".css"]
+        extensions: [".js", ".jsx"]
     },
     module: {
         loaders: [
@@ -37,6 +35,17 @@ let config = {
         ]
     },
     plugins: [
+        new AssetsPlugin({
+            filename: "manifest.json",
+            prettyPrint: true
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "vendor",
+            minChunks: function (module) {
+                // this assumes your vendor imports exist in the node_modules directory
+                return module.context && module.context.indexOf("node_modules") !== -1;
+            }
+        })
     ]
 };
 
