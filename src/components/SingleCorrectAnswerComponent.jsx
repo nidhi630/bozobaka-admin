@@ -36,7 +36,7 @@ export class SingleCorrectAnswerComponent extends React.Component {
                 <br/>
                 <Row>
                     <Col xs={12}>
-                        <RadioButtonGroup name="answer" defaultSelected={answer} onChange={onChange.bind(this)}>
+                        <RadioButtonGroup name="answer" valueSelected={answer} onChange={onChange.bind(this)}>
                             {options}
                         </RadioButtonGroup>
                     </Col>

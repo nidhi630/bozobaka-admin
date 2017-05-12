@@ -174,12 +174,12 @@ export default class AddQuestionComponent extends React.Component {
                     </Col>
                 </Row>
                 <br/>
-                <Row>
-                    <Col xs={12}>
-                        <h3>Status</h3>
-                        <StatusSelectionComponent actionOnUpdate={questionUpdateStatus.bind(this)} status={status}/>
-                    </Col>
-                </Row>
+                {/*<Row>*/}
+                    {/*<Col xs={12}>*/}
+                        {/*<h3>Status</h3>*/}
+                        {/*<StatusSelectionComponent actionOnUpdate={questionUpdateStatus.bind(this)} status={status}/>*/}
+                    {/*</Col>*/}
+                {/*</Row>*/}
                 <br/><br/>
                 <ExamsAppearedComponent/>
                 <br/><br/>
@@ -200,7 +200,7 @@ export default class AddQuestionComponent extends React.Component {
                     <Col sm={3}>
                         {userRole === "reviewer" ?
                             <RaisedButton disabled={isLoading} primary={true} label="ACCEPT"
-                                          onClick={postQuestion.bind(this, "accepted")}/>
+                                          onClick={postQuestion.bind(this, "accept")}/>
                             :
                             <RaisedButton disabled={isLoading} primary={true} label="SAVE"
                                           onClick={postQuestion.bind(this, "")}/>
