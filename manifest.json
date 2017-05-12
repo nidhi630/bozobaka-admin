@@ -1,8 +1,8 @@
 {
   "main": {
-    "js": "./public/js/main-8c3b7be2c1f133b8910b.js"
+    "js": "./js/main-afe41683ca966ddf0b9b.js"
   },
   "vendor": {
-    "js": "./public/js/vendor-33088131b907d53f2139.js"
+    "js": "./js/vendor-b47aa1ec2021004e4418.js"
   }
 }

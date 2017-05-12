@@ -1,12 +1,23 @@
 "use strict";
 
-const express = require("express");
-const path = require("path");
+import http from "http";
+import express from "express";
+import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
+import path from "path";
+import config from "./config";
 
 // create our app
-let app = express();
+const app = express();
 
-app.use(express.static("public"));
+// create server
+const server = http.createServer(app);
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public")));
+
 app.set("views", path.join(__dirname, "public"));
 
 // set the view engine to ejs
@@ -14,14 +25,13 @@ app.set("view engine", "ejs");
 
 // send all requests to index so browserHistory in React Router works
 app.get("*", function (req, res) {
-    const manifest = require("./manifest.json");
-
+    const {main, vendor} = config.bundle.js;
     res.render("index", {
-        bundlePath: manifest.main.js.substring(8),
-        vendorPath: manifest.vendor.js.substring(8)
+        bundlePath: main,
+        vendorPath: vendor
     });
 });
 
-app.listen(3000, function () {
-    console.log("listening on http://localhost:3000");
+server.listen(config.port, function () {
+    console.log("listening on http://localhost:" + config.port);
 });
