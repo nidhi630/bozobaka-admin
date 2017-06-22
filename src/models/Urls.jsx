@@ -12,7 +12,8 @@ const URLs = {
     PUBLISH: "publish",
     TRASH: "trash",
     REVIEW_QUESTION: "review-question",
-    MARKED_LATER: "marked-later"
+    MARKED_LATER: "marked-later",
+    TEST: "test",
 };
 
 export default URLs;

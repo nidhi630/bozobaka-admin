@@ -22,12 +22,13 @@ export default class SidebarComponent extends React.Component {
             "Manage Course": URLs.MANAGE_COURSE,
             "Trash": URLs.TRASH,
             "Review Questions": URLs.REVIEW_QUESTION,
-            "Marked For Later": URLs.MARKED_LATER
+            "Marked For Later": URLs.MARKED_LATER,
+            "Test": URLs.TEST,
         };
 
         this.roleOptionsMap = {
             superAdmin: ["Dashboard", "Manage", "List Of Questions", "List Of Theory"],
-            admin: ["Dashboard", "Add Theory", "List Of Theory", "Publish", "Manage Course", "List Of Questions", "Trash"],
+            admin: ["Dashboard", "Add Theory", "List Of Theory", "Publish", "Manage Course", "List Of Questions", "Trash" , "Test"],
             reviewer: ["Dashboard", "Review Questions", "Marked For Later", "Trash"],
             contentWriter: ["Dashboard", "Add Question", "List Of Questions", "Drafts", "Trash"]
         };
