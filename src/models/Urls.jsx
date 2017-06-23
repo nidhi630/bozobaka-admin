@@ -14,6 +14,7 @@ const URLs = {
     REVIEW_QUESTION: "review-question",
     MARKED_LATER: "marked-later",
     TEST: "test",
+    TEST_DETAIL: "test_detail"
 };
 
 export default URLs;

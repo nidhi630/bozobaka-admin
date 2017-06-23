@@ -4,12 +4,10 @@ import React, {PropTypes} from "react";
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from "material-ui/RaisedButton";
 import {Grid, Row, Col} from "react-flexbox-grid";
-import SummaryCardComponent from "./SummaryCardComponent";
 import {browserHistory} from "react-router";
 import URLs from "./../models/Urls";
 import {connect} from "react-redux";
-import LivePreview from "./LivePreviewComponent";
-import {InlineMath, BlockMath} from "react-katex";
+import TestRowComponent from './TestRowComponent'
 
 export default class TestComponent extends React.Component {
     constructor(props) {
@@ -40,20 +38,29 @@ export default class TestComponent extends React.Component {
 	};
 
     handleAddTest(){
+
     	this.setState({openModel: false});
+    	const { name, time, sections} = this.state;
+    	const id = Math.random();
+    	if(name && time){
+    		const data = [{'testId': id, 'testName': name, 'testTime': time, 'testSection': sections}];
+    	}
     }
 
     handleDeleteTest(){
     	this.setState({openModel: false});
     }
 
-    handleSectionsData(value, isChecked){
+    handleSectionsData(e){
+    	const value = e.target.value;
+    	const isChecked = e.target.checked;
     	const { sections } = this.state;
     	sections.map(element => {
     		 if(element.title === value){
     		 	const temp = element;
     		 	temp.isSelected = isChecked;
     		 	this.setState({element: temp})
+    		 	console.log(sections)
     		 }
     	});
     }
@@ -77,17 +84,22 @@ export default class TestComponent extends React.Component {
 	      />,
 	    ];
     	return(
-    		<div className="home">
+    		<div style={{ margin: '0 auto' }}>
                 <br/>
-                <Row>
+                <Row style={{ marginBottom: 20 }}>
                     <Col xs={12}>
                         <h1>Test</h1>
                     </Col>
                 </Row>
-                <Row>
+                <Row style={{ marginBottom: 20 }}>
                 	<Col xs={12}>
                 		<RaisedButton primary={true} label="ADD" onTouchTap={this.handleOpen}/>
                 	</Col>
+                </Row>
+                <Row style={{ marginBottom: 20 }}>
+                    <Col xs={12}>
+                        <TestRowComponent router={this.props.router}/>
+                    </Col>
                 </Row>
                 <Dialog
 		          actions={actions}
@@ -101,26 +113,50 @@ export default class TestComponent extends React.Component {
 	                    </Col>
 	                </Row>
 	                <br/>
-	                    <span style={{fontSize: 20}}>Name</span>
+	                    <span className="model_Text">Name</span>
 	                    <br/>
-					  	<input type="text" name="name" value={this.state.name}
-					  	onChange={(e) => this.setState({name: e.target.value})}/>
+					  	<input 
+					  		type="text" 
+					  		name="name" 
+					  		value={this.state.name}
+					  		onChange={(e) => this.setState({name: e.target.value})}
+					  	/>
 					  	<br/>
-					  	<span style={{fontSize: 20}}>Time</span>
+					  	<span className="model_Text">Time</span>
 	                    <br/>
-					  	<input type="text" name="time" value={this.state.time}
-					  	onChange={(e) => this.setState({time: e.target.value})}/>
+					  	<input 
+					  		type="text"
+					  		name="time"
+					  		value={this.state.time}
+					  		onChange={(e) => this.setState({time: e.target.value})}
+					  	/>
 					  	<br/>
-					  	<span style={{fontSize: 20}}>Sections:</span>
+					  	<span className="model_Text">Sections:</span>
 					  	<br/>
-					  	<input type="checkbox" name="sections" value="Quant "
-					  	onChange={(e) => this.handleSectionsData(e.target.value.trim(), e.target.checked)}/><span>Quant</span>
-					  	<input type="checkbox" name="sections" value="Verbal "
-					  	onChange={(e) => this.handleSectionsData(e.target.value.trim(), e.target.checked)}/><span>Verbal</span>
-					  	<input type="checkbox" name="sections" value="Reasoning"
-					  	onChange={(e) => this.handleSectionsData(e.target.value.trim(), e.target.checked)}/><span>Reasoning</span>
-					  	<input type="checkbox" name="sections" value="General Awareness"
-					  	onChange={(e) => this.handleSectionsData(e.target.value.trim(), e.target.checked)}/><span>General Awareness</span>
+					  	<input
+					  		type="checkbox"
+					  		name="sections"
+					  		value="Quant"
+					  		onChange={(e) => this.handleSectionsData(e)}
+					  	/><span className="modelSectionText">Quant</span>
+					  	<input 
+					  		type="checkbox" 
+					  		name="sections" 
+					  		value="Verbal"
+					  		onChange={(e) => this.handleSectionsData(e)}
+					  	/><span className="modelSectionText">Verbal</span>
+					  	<input 
+					  		type="checkbox" 
+					  		name="sections" 
+					  		value="Reasoning"
+					  		onChange={(e) => this.handleSectionsData(e)}
+					  	/><span className="modelSectionText">Reasoning</span>
+					  	<input 
+					  		type="checkbox" 
+					  		name="sections" 
+					  		value="General Awareness"
+					  		onChange={(e) => this.handleSectionsData(e)}
+					  	/><span className="modelSectionText">General Awareness</span>
 		        </Dialog>
             </div>
     	);

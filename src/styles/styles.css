@@ -46,3 +46,20 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
+/* Test */
+
+input[type=checkbox] {
+  transform: scale(1.5);
+}
+
+.modelSectionText{
+    font-size: 18px;
+    color: black;
+}
+
+.model_Text{
+    font-size: 24px;
+    font-weight: 600;
+    color: black;
+}
