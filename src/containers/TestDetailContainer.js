@@ -18,10 +18,6 @@ const mapDispatchToProps = (dispatch) => {
         fetchQuestions: () => {
             dispatch(questionFetchQuestions());
         },
-
-        updateStatusFilter: (status) => {
-            dispatch(setStatus(status));
-        }
     };
 };
 
