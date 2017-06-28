@@ -4,6 +4,7 @@ import React, {PropTypes} from "react";
 import {Grid, Row, Col} from "react-flexbox-grid";
 import Dialog from 'material-ui/Dialog';
 import {browserHistory} from "react-router";
+import Icon from 'material-ui/FontIcon';
 import Toggle from 'material-ui/Toggle';
 import RaisedButton from 'material-ui/RaisedButton';
 import URLs from "./../models/Urls";
@@ -36,40 +37,48 @@ export default class TestDetailComponent extends React.Component {
             key: "l2Id"
         }, {
             displayName: "Action",
-            key: "action"
+            key: "actionCheckbox",
         }];
         this.state={
           openModel: false,
+          selected: [],
         }
    }
 
    componentWillReceiveProps(nextProps) {
-        const {courseId, fetchQuestions, route, updateStatusFilter } = this.props;
+        const {courseId, fetchQuestions, route} = this.props;
         if (courseId !== nextProps.courseId) {
             fetchQuestions();
         }
         if (route.path !== nextProps.route.path) {
-            updateStatusFilter(nextProps.route.status);
             fetchQuestions();
         }
-    }
-
-    componentWillMount() {
-        this.props.updateStatusFilter(this.props.route.status);
     }
 
     componentDidMount() {
         this.props.fetchQuestions();
     }
-
-    componentWillUnmount() {
-        this.props.updateStatusFilter("draft");
-    }
-
-    onCellClick(rowNumber) {
-        const question = this.props.questions[rowNumber - 1];
-        const url = Urls.ADD_QUESTION + "?id=" + question.id;
-        browserHistory.push(url);
+    onCellClick(rowNumber, columnId) {
+        // const { selected } = this.state;
+        // let temp_obj = {};
+        // const tempArr = selected.slice();
+        // if(tempArr.length > 0){
+        // tempArr.map(element => {
+        //      if(element.id === rowNumber){
+        //         const temp = element;
+        //         temp.ischecked = !(element.ischecked);
+        //      }else{
+        //         temp_obj = {id: rowNumber, ischecked: true};
+        //         tempArr.push(temp_obj);
+        //     }
+        //      this.setState({selected: tempArr})
+        // });
+        // }
+        // else{
+        //     temp_obj = {id: rowNumber, ischecked: true};
+        //     tempArr.push(temp_obj);
+        //     this.setState({selected: tempArr})
+        //  }
     }
 
   handleOpen() {
@@ -78,7 +87,6 @@ export default class TestDetailComponent extends React.Component {
 
   render(){
     const {questions, isLoading, fetchQuestions, route} = this.props;
-
     const styles = {
         pageTitle: {
             fontWeight: 400
@@ -114,6 +122,45 @@ export default class TestDetailComponent extends React.Component {
             <RaisedButton primary={true} label="ADD QUESTION" onTouchTap={this.handleOpen}/>
           </Col>
         </Row>
+        <div>
+            {questions ? (
+                //questions.map((question) => (
+                <Row style={{
+                    borderColor: 'black',
+                    borderWidth: 1,
+                    borderStyle: 'solid',
+                    height: 50,
+                    justifyContent: 'center',
+                    display:'flex',
+                    alignItems:'center',
+                    marginTop: 20
+                }}>
+                    <Col xs={1} onClick={this.goToTestDetailPage}>
+                        <h3>TEST_Id</h3>
+                    </Col>
+                    <Col xs={2} onClick={this.goToTestDetailPage}>
+                        <h3>QUESTION</h3>
+                    </Col>
+                    <Col xs={2} onClick={this.goToTestDetailPage}>
+                        <h3>THEORY</h3>
+                    </Col>
+                    <Col xs={2} onClick={this.goToTestDetailPage}>
+                        <h3>SECTION</h3>
+                    </Col>
+                    <Col xs={2} onClick={this.goToTestDetailPage}>
+                        <h3>L1</h3>
+                    </Col>
+                    <Col xs={2} onClick={this.goToTestDetailPage}>
+                        <h3>L2</h3>
+                    </Col>
+                    <Col  xs={1}>
+                        <Icon className="fa fa-trash-o"
+                          style={iconStyles}
+                        />
+                    </Col>
+                </Row>//))
+            ): (<Row/>)}
+        </div>
         <Dialog
             modal={true}
             open={this.state.openModel}
@@ -140,3 +187,7 @@ export default class TestDetailComponent extends React.Component {
  		);
   }
 }
+
+const iconStyles = {
+  marginRight: 24,
+};

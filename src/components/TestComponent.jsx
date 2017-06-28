@@ -55,12 +55,12 @@ export default class TestComponent extends React.Component {
     	const value = e.target.value;
     	const isChecked = e.target.checked;
     	const { sections } = this.state;
-    	sections.map(element => {
+    	const tempArr = sections.slice()
+    	tempArr.map(element => {
     		 if(element.title === value){
     		 	const temp = element;
     		 	temp.isSelected = isChecked;
-    		 	this.setState({element: temp})
-    		 	console.log(sections)
+    		 	this.setState({sections: tempArr})
     		 }
     	});
     }
@@ -68,14 +68,10 @@ export default class TestComponent extends React.Component {
     render(){
     	const actions = [
 	      <RaisedButton
-	        label="DELETE"
-	        primary={true}
-	        onTouchTap={this.handleDeleteTest}
-	      />,
-	      <RaisedButton
 	        label="CANCEL"
 	        primary={true}
 	        onTouchTap={this.handleClose}
+	        style={{marginRight:200}}
 	      />,
 	      <RaisedButton
 	        label="ADD"
@@ -105,11 +101,12 @@ export default class TestComponent extends React.Component {
 		          actions={actions}
 		          modal={true}
 		          open={this.state.openModel}
+		          style={{width: 800}}
 		        >
 		        	<br/>
 		        	<Row>
 	                    <Col xs={12}>
-	                        <h1>Add Test</h1>
+	                        <h1 style={{color:'black'}}>Add Test</h1>
 	                    </Col>
 	                </Row>
 	                <br/>
@@ -120,6 +117,7 @@ export default class TestComponent extends React.Component {
 					  		name="name" 
 					  		value={this.state.name}
 					  		onChange={(e) => this.setState({name: e.target.value})}
+					  		style={{height:40, width: 400, borderColor: 'lightgreen', marginBottom:30}}
 					  	/>
 					  	<br/>
 					  	<span className="model_Text">Time</span>
@@ -129,29 +127,30 @@ export default class TestComponent extends React.Component {
 					  		name="time"
 					  		value={this.state.time}
 					  		onChange={(e) => this.setState({time: e.target.value})}
+					  		style={{height:40, width: 400, borderColor: 'lightgreen', marginBottom:30}}
 					  	/>
 					  	<br/>
 					  	<span className="model_Text">Sections:</span>
 					  	<br/>
-					  	<input
+					  	<input style={{marginRight:5}}
 					  		type="checkbox"
 					  		name="sections"
 					  		value="Quant"
 					  		onChange={(e) => this.handleSectionsData(e)}
 					  	/><span className="modelSectionText">Quant</span>
-					  	<input 
+					  	<input style={{marginRight:5}}
 					  		type="checkbox" 
 					  		name="sections" 
 					  		value="Verbal"
 					  		onChange={(e) => this.handleSectionsData(e)}
 					  	/><span className="modelSectionText">Verbal</span>
-					  	<input 
+					  	<input style={{marginRight:5}} 
 					  		type="checkbox" 
 					  		name="sections" 
 					  		value="Reasoning"
 					  		onChange={(e) => this.handleSectionsData(e)}
 					  	/><span className="modelSectionText">Reasoning</span>
-					  	<input 
+					  	<input style={{marginRight:5}}
 					  		type="checkbox" 
 					  		name="sections" 
 					  		value="General Awareness"
