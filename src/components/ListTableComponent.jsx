@@ -66,6 +66,9 @@ const ListTableComponent = ({headerColumns, tableRows, onFilterChange, usage, on
                                     case "action":
                                         value = <span style={style.sort}>{col.actionLabel}</span>;
                                         break;
+                                    case "actionCheckbox":
+                                        value = <input style={style.sort} type="checkbox" />;
+                                        break;
                                     case "contentType":
                                         value = row.question ? "Question" : "Theory";
                                         break;
